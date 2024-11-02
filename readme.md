@@ -5,3 +5,5 @@ A duplication in C# of the [Windows-classic-samples](https://github.com/Microsof
 * Test and validate that the structures, methods and interfaces in Vanara using known code and outcomes.
 * Demonstrate the use of the Vanara libraries in a side-by-side model with the native C++ code.
 * Exposed gaps in the Vanara libraries for future development.
+
+## [Work in Progress]: Add WinUI 3 based Samples.
