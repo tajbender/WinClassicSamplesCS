@@ -27,7 +27,7 @@ while (pSearch.GetNextRow(hSearch) != HRESULT.S_ADS_NOMORE_ROWS)
 	var col = pSearch.GetColumn(hSearch, pszAttr[0]);
 	if (col.HasValue)
 	{
-		Console.WriteLine(col.Value.pADsValues[0].Value);
+		Console.WriteLine(col.Value.pADsValues[0]);
 	}
 }
 

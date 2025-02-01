@@ -184,7 +184,7 @@ static class BuildChain
 		//
 
 		ChainPolicy.pvExtraPolicyPara = default;
-		if (!CertVerifyCertificateChainPolicy(CertVerifyChainPolicy.CERT_CHAIN_POLICY_BASE, pChainContext, ChainPolicy, ref PolicyStatus))
+		if (!CertVerifyCertificateChainPolicy((IntPtr)CertVerifyChainPolicy.CERT_CHAIN_POLICY_BASE, pChainContext, ChainPolicy, ref PolicyStatus))
 		{
 			hr = (HRESULT)Win32Error.GetLastError();
 			goto CleanUp;

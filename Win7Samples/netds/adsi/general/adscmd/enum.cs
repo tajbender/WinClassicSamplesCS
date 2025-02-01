@@ -6,7 +6,7 @@ internal partial class Program
 	{
 		try
 		{
-			var pADsContainer = ADsObject.GetObject(pszADsPath) as IADsContainerObject<IADsObject> ?? throw new ArgumentException("Invalid path", nameof(pszADsPath));
+			var pADsContainer = ADsObject.GetObject(pszADsPath) as IADsContainerObject ?? throw new ArgumentException("Invalid path", nameof(pszADsPath));
 			foreach (var i in pADsContainer.Children)
 				Console.WriteLine($"  {i.Name}({i.Class})");
 			return 0;

@@ -87,13 +87,13 @@ internal static class LsaPrivs
 
 	private static bool GetAccountSid(string? SystemName, string AccountName, out SafePSID Sid)
 	{
-		var cbSid = 128;    // initial allocation attempt
+		int cbSid = 128;    // initial allocation attempt
 		var cchReferencedDomain = 16; // initial allocation size
 
 		//
 		// initial memory allocations
 		//
-		Sid = new SafePSID(cbSid);
+		Sid = new SafePSID((SizeT)cbSid);
 
 		var ReferencedDomain = new StringBuilder(cchReferencedDomain);
 

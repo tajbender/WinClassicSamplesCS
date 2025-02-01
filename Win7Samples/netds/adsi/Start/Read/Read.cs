@@ -33,4 +33,4 @@ var pAttrInfo = pDirObject!.GetObjectAttributes("objectClass");
 Console.WriteLine("Getting the objectClass multivalue attribute using IDirectoryObject :");
 foreach (var attr in pAttrInfo)
 	foreach (var v in attr.pADsValues)
-		Console.WriteLine($"  {v.value}");
+		Console.WriteLine($"  {v}");
