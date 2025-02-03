@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 
-internal class Win32Application : VisibleWindow
+internal class Win32Application
 {
 	private readonly DXSample pSample;
+	private CREATESTRUCT m_createStruct = default;
 	private RECT m_windowRect;
 	private readonly WindowStyles m_windowStyle = WindowStyles.WS_OVERLAPPEDWINDOW;
 
@@ -12,7 +13,20 @@ internal class Win32Application : VisibleWindow
 		pSample.Win32App = this;
 	}
 
+	public SafeHWND Handle { get; private set; } = new(default, false);
+
 	public bool IsFullscreen { get; private set; } = false;
+
+	public string Text
+	{
+		get
+		{
+			StringBuilder sb = new(GetWindowTextLength(Handle) + 1);
+			GetWindowText(Handle, sb, sb.Capacity);
+			return sb.ToString();
+		}
+		set => SetWindowText(Handle, value);
+	}
 
 	public void SetWindowZorderToTopMost(bool setToTopMost)
 	{
@@ -102,22 +116,32 @@ internal class Win32Application : VisibleWindow
 			// Parse the command line parameters
 			sample.ParseCommandLineArgs(Environment.GetCommandLineArgs());
 
+			Win32Application val = new(sample);
+
 			// Initialize the window class.
-			WindowClass windowClass = new("DXSampleClass", styles: WindowClassStyles.CS_VREDRAW | WindowClassStyles.CS_HREDRAW);
+			WindowClass windowClass = new("DXSampleClass", default, val.WndProc, WindowClassStyles.CS_VREDRAW | WindowClassStyles.CS_HREDRAW);
 
 			// Create the window and store a handle to it.
 			RECT windowRect = new(0, 0, sample.Width, sample.Height);
-			using Win32Application val = new(sample);
 			AdjustWindowRect(ref windowRect, val.m_windowStyle, false);
-			val.CreateHandle(windowClass, sample.Title, windowRect.Size, null, val.m_windowStyle);
+			val.Handle = CreateWindow(windowClass.ClassName, sample.Title, val.m_windowStyle, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.Width, windowRect.Height);
 
 			// Initialize the sample. OnInit is defined in each child-implementation of DXSample.
 			sample.OnInit();
 
-			val.Show();
+			ShowWindow(val.Handle, ShowWindowCommand.SW_NORMAL);
 
 			// Main sample loop.
-			new MessagePump().Run(val);
+			MSG msg = default;
+			while (msg.message != (uint)WindowMessage.WM_QUIT)
+			{
+				// Process any messages in the queue.
+				if (PeekMessage(out msg, default, 0, 0, PM.PM_REMOVE))
+				{
+					TranslateMessage(msg);
+					DispatchMessage(msg);
+				}
+			}
 		}
 		catch (Exception ex)
 		{
@@ -131,13 +155,12 @@ internal class Win32Application : VisibleWindow
 		return 0;
 	}
 
-	protected override IntPtr WndProc(HWND hwnd, uint msg, IntPtr wParam, IntPtr lParam)
+	protected IntPtr WndProc(HWND hwnd, uint msg, IntPtr wParam, IntPtr lParam)
 	{
 		switch ((WindowMessage)msg)
 		{
 			case WindowMessage.WM_CREATE:
-				// CREATESTRUCT captured already in VisualWindow.CreateParams
-				return default;
+				return HANDLE_WM_CREATE(hwnd, wParam, lParam, (HWND _, CREATESTRUCT cs) => { m_createStruct = cs; return true; } );
 
 			case WindowMessage.WM_KEYDOWN:
 				return HANDLE_WM_KEYDOWN(hwnd, wParam, lParam, (HWND _, VK vk, WM_KEY_LPARAM _) => pSample.OnKeyDown(vk));
@@ -202,8 +225,11 @@ internal class Win32Application : VisibleWindow
 				return HANDLE_WM_LBUTTONUP(hwnd, wParam, lParam, (HWND _, MouseButtonState _, POINTS pt) => pSample.OnLeftButtonUp((uint)pt.x, (uint)pt.y));
 
 			case WindowMessage.WM_DESTROY:
+				PostQuitMessage(0);
 				break;
 		}
-		return base.WndProc(hwnd, msg, wParam, lParam);
+
+		// Handle any messages the switch statement didn't.
+		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
 }
