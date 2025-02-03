@@ -1,54 +1,36 @@
 ﻿internal partial class D3D12DepthBoundsTest(int width, int height, string name) : DXSample(width, height, name)
 {
 	private const int FrameCount = 2;
+
+	// Pipeline objects.
+	D3D12_VIEWPORT m_viewport = new(0, 0, width, height);
 	readonly ID3D12Resource[] m_renderTargets = new ID3D12Resource[FrameCount];
-
 	bool DepthBoundsTestSupported;
-
 	ID3D12CommandAllocator? m_commandAllocator;
-
 	ID3D12GraphicsCommandList1? m_commandList;
-
 	ID3D12CommandQueue? m_commandQueue;
-
 	ID3D12PipelineState? m_depthOnlyPipelineState;
-
 	ID3D12Resource? m_depthStencil;
-
 	ID3D12Device2? m_device;
-
 	ID3D12DescriptorHeap? m_dsvHeap;
-
-	ID3D12Fence? m_fence;
-
-	SafeEventHandle m_fenceEvent = SafeEventHandle.Null;
-
-	ulong m_fenceValue;
-
-	// Synchronization objects.
-	int m_frameIndex = 0;
-
-	uint m_frameNumber = 0;
-
 	ID3D12PipelineState? m_pipelineState;
-
 	ID3D12RootSignature? m_rootSignature;
-
 	uint m_rtvDescriptorSize = 0;
-
 	ID3D12DescriptorHeap? m_rtvHeap;
-
 	RECT m_scissorRect = new(0, 0, width, height);
-
 	IDXGISwapChain3? m_swapChain;
 
 	// App resources.
 	ID3D12Resource? m_vertexBuffer;
-
 	D3D12_VERTEX_BUFFER_VIEW m_vertexBufferView;
 
-	// Pipeline objects.
-	D3D12_VIEWPORT m_viewport = new(0, 0, width, height);
+	// Synchronization objects.
+	int m_frameIndex = 0;
+	uint m_frameNumber = 0;
+	SafeEventHandle m_fenceEvent = SafeEventHandle.Null;
+	ID3D12Fence? m_fence;
+	ulong m_fenceValue;
+
 	public override void OnDestroy()
 	{
 		// Ensure that the GPU is no longer referencing resources that are about to be
@@ -145,7 +127,7 @@
 				PrimitiveTopologyType = new(D3D12_PRIMITIVE_TOPOLOGY_TYPE.D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE),
 				VS = new(new(vertexShader)),
 				PS = new(new(pixelShader)),
-				//DepthStencilState = new(depthDesc),
+				DepthStencilState = new(depthDesc),
 				DSVFormat = new(DXGI_FORMAT.DXGI_FORMAT_D32_FLOAT),
 				RTVFormats = new(RTFormatArray),
 			};
@@ -417,8 +399,12 @@
 
 		HRESULT.ThrowIfFailed(m_commandList.Close());
 	}
+
 	private void WaitForPreviousFrame()
 	{
+		if (m_fence is null)
+			return;
+
 		// WAITING FOR THE FRAME TO COMPLETE BEFORE CONTINUING IS NOT BEST PRACTICE.
 		// This is code implemented as such for simplicity. The D3D12HelloFrameBuffering
 		// sample illustrates how to use fences for efficient resource usage and to
@@ -439,17 +425,18 @@
 		m_frameIndex = (int)m_swapChain!.GetCurrentBackBufferIndex();
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[StructLayout(LayoutKind.Sequential, Pack = 8)]
 	struct RENDER_WITH_DBT_PSO_STREAM
 	{
-		public CD3DX12_PIPELINE_STATE_STREAM_DEPTH_STENCIL_FORMAT DSVFormat;
-		public CD3DX12_PIPELINE_STATE_STREAM_RENDER_TARGET_FORMATS RTVFormats;
 		public CD3DX12_PIPELINE_STATE_STREAM_ROOT_SIGNATURE RootSignature;
 		public CD3DX12_PIPELINE_STATE_STREAM_INPUT_LAYOUT InputLayout;
 		public CD3DX12_PIPELINE_STATE_STREAM_PRIMITIVE_TOPOLOGY PrimitiveTopologyType;
 		public CD3DX12_PIPELINE_STATE_STREAM_VS VS;
 		public CD3DX12_PIPELINE_STATE_STREAM_PS PS;
-		//public CD3DX12_PIPELINE_STATE_STREAM_DEPTH_STENCIL1 DepthStencilState; // New depth stencil subobject with depth bounds test toggle
+		public CD3DX12_PIPELINE_STATE_STREAM_DEPTH_STENCIL1 DepthStencilState; // New depth stencil subobject with depth bounds test toggle
+		private readonly int spacing;
+		public CD3DX12_PIPELINE_STATE_STREAM_DEPTH_STENCIL_FORMAT DSVFormat;
+		public CD3DX12_PIPELINE_STATE_STREAM_RENDER_TARGET_FORMATS RTVFormats;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
