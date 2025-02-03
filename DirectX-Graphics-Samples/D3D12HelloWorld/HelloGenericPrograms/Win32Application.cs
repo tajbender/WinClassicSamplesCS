@@ -142,6 +142,8 @@ internal class Win32Application
 					DispatchMessage(msg);
 				}
 			}
+
+			return msg.wParam.ToInt32();
 		}
 		catch (Exception ex)
 		{
@@ -152,7 +154,6 @@ internal class Win32Application
 		{
 			sample.OnDestroy();
 		}
-		return 0;
 	}
 
 	protected IntPtr WndProc(HWND hwnd, uint msg, IntPtr wParam, IntPtr lParam)
