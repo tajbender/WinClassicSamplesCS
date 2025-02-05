@@ -94,6 +94,12 @@ internal abstract class DXSample
 		return byteCode;
 	}
 
+	[Conditional("DEBUG")]
+	protected internal static void DumpVal<T>(T val, string name) where T : struct => DumpVal(SafeCoTaskMemHandle.CreateFromStructure(val), name);
+
+	[Conditional("DEBUG")]
+	protected internal static void DumpVal(SafeAllocatedMemoryHandleBase val, string name) => Debug.WriteLine($"{name}\r\n{val.DangerousGetHandle().ToHexDumpString(val.Size, 32, 32, 0, true)}");
+
 	protected internal static string GetAssetsPath() => Path.GetDirectoryName(Environment.ProcessPath) ?? "";
 
 	protected internal static void NAME_D3D12_OBJECT<T>(T obj, [CallerArgumentExpression(nameof(obj))] string? objName = null) where T : ID3D12Object => SetName(obj, objName);

@@ -455,6 +455,8 @@ internal partial class D3D1211on12(int width, int height, string name) : DXSampl
 	// Wait for pending GPU work to complete.
 	private void WaitForGpu()
 	{
+		if (m_fence is null) return;
+
 		// Schedule a Signal command in the queue.
 		m_commandQueue!.Signal(m_fence!, m_fenceValues[m_frameIndex]).ThrowIfFailed();
 

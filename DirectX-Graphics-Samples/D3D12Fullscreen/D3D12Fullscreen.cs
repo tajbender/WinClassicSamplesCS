@@ -5,8 +5,10 @@ using static Vanara.PInvoke.DirectXMath;
 internal partial class D3D12Fullscreen(int width, int height, string name) : DXSample(width, height, name)
 {
 	private const int FrameCount = 2;
-	private static readonly float[] ClearColor = [0.0f, 0.2f, 0.4f, 1.0f];
-	private static readonly float[] LetterboxColor = [0.0f, 0.0f, 0.0f, 1.0f];
+	private static readonly float[] ClearColor = [0.0f, 0.2f, 0.4f, 1f];
+	private static readonly float[] LetterboxColor = [0, 0, 0, 1];
+	private static readonly float QuadHeight = 720.0f;
+	private static readonly float QuadWidth = 20.0f;
 
 	private static readonly Resolution[] m_resolutionOptions = [
 		new(800u, 600u),
@@ -18,84 +20,50 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 		new(3440u, 1440u),
 		new(3840u, 2160u)
 	];
-
 	private static readonly int m_resolutionOptionsCount = m_resolutionOptions.Length;
-	private static readonly float QuadHeight = 720.0f;
-	private static readonly float QuadWidth = 20.0f;
-	private static uint m_resolutionIndex = 2;
-
-	private uint m_cbvSrvDescriptorSize;
-
-	private ID3D12DescriptorHeap? m_cbvSrvHeap;
-
-	private ID3D12CommandQueue? m_commandQueue;
-
-	private ID3D12Device? m_device;
-
-	private ID3D12Fence? m_fence;
-
-	private SafeEventHandle m_fenceEvent = SafeEventHandle.Null;
-
-	private readonly ulong[] m_fenceValues = new ulong[FrameCount];
-
-	// Synchronization objects.
-	private int m_frameIndex;
-
-	private ID3D12Resource? m_intermediateRenderTarget;
-
-	private IntPtr m_pCbvDataBegin;
-
-	private readonly ID3D12CommandAllocator[] m_postCommandAllocators = new ID3D12CommandAllocator[FrameCount];
-
-	private ID3D12GraphicsCommandList? m_postCommandList;
-
-	private ID3D12PipelineState? m_postPipelineState;
-
-	private ID3D12RootSignature? m_postRootSignature;
-
-	private RECT m_postScissorRect;
-
-	private ID3D12Resource? m_postVertexBuffer;
-
-	private D3D12_VERTEX_BUFFER_VIEW m_postVertexBufferView;
-
-	private D3D12_VIEWPORT m_postViewport;
-
-	private ID3D12Resource?[]? m_renderTargets = new ID3D12Resource[FrameCount];
-
-	private uint m_rtvDescriptorSize;
-
-	private ID3D12DescriptorHeap? m_rtvHeap;
-
-	private readonly ID3D12CommandAllocator[] m_sceneCommandAllocators = new ID3D12CommandAllocator[FrameCount];
-
-	private ID3D12GraphicsCommandList? m_sceneCommandList;
-
-	private ID3D12Resource? m_sceneConstantBuffer;
-
-	private SceneConstantBuffer m_sceneConstantBufferData;
-
-	private ID3D12PipelineState? m_scenePipelineState;
-
-	private ID3D12RootSignature? m_sceneRootSignature;
-
-	private RECT m_sceneScissorRect;
-
-	// App resources.
-	private ID3D12Resource? m_sceneVertexBuffer;
-
-	private D3D12_VERTEX_BUFFER_VIEW m_sceneVertexBufferView;
+	private static uint m_resolutionIndex = 2;  // Index of the current scene rendering resolution from m_resolutionOptions.
 
 	// Pipeline objects.
 	private D3D12_VIEWPORT m_sceneViewport;
-
-	// Index of the current scene rendering resolution from m_resolutionOptions.
+	private uint m_cbvSrvDescriptorSize;
+	private ID3D12DescriptorHeap? m_cbvSrvHeap;
+	private ID3D12CommandQueue? m_commandQueue;
+	private ID3D12Device? m_device;
+	private ID3D12Resource? m_intermediateRenderTarget;
+	private readonly ID3D12CommandAllocator[] m_postCommandAllocators = new ID3D12CommandAllocator[FrameCount];
+	private ID3D12GraphicsCommandList? m_postCommandList;
+	private ID3D12PipelineState? m_postPipelineState;
+	private ID3D12RootSignature? m_postRootSignature;
+	private RECT m_postScissorRect;
+	private D3D12_VIEWPORT m_postViewport;
+	private ID3D12Resource?[]? m_renderTargets = new ID3D12Resource[FrameCount];
+	private uint m_rtvDescriptorSize;
+	private ID3D12DescriptorHeap? m_rtvHeap;
+	private readonly ID3D12CommandAllocator[] m_sceneCommandAllocators = new ID3D12CommandAllocator[FrameCount];
+	private ID3D12GraphicsCommandList? m_sceneCommandList;
+	private ID3D12PipelineState? m_scenePipelineState;
+	private ID3D12RootSignature? m_sceneRootSignature;
+	private RECT m_sceneScissorRect;
 	private IDXGISwapChain3? m_swapChain;
 
-	private bool m_windowedMode = true;
+	// Synchronization objects.
+	private int m_frameIndex;
+	private ID3D12Fence? m_fence;
+	private SafeEventHandle m_fenceEvent = SafeEventHandle.Null;
+	private readonly ulong[] m_fenceValues = new ulong[FrameCount];
+
+	// App resources.
+	private ID3D12Resource? m_sceneVertexBuffer;
+	private D3D12_VERTEX_BUFFER_VIEW m_sceneVertexBufferView;
+	private ID3D12Resource? m_postVertexBuffer;
+	private D3D12_VERTEX_BUFFER_VIEW m_postVertexBufferView;
+	private ID3D12Resource? m_sceneConstantBuffer;
+	private SceneConstantBuffer m_sceneConstantBufferData;
+	private IntPtr m_pCbvDataBegin;
 
 	// Track the state of the window. If it's minimized the app may decide not to render frames.
 	private bool m_windowVisible = true;
+	private bool m_windowedMode = true;
 
 	public override void OnDestroy()
 	{
@@ -107,50 +75,14 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// Fullscreen state should always be false before exiting the app.
 			m_swapChain!.SetFullscreenState(false);
 		}
+
+		m_fenceEvent.Dispose();
 	}
 
 	public override void OnInit()
 	{
 		LoadPipeline();
 		LoadAssets();
-	}
-
-	// Set up appropriate views for the intermediate render target.
-	void LoadSceneResolutionDependentResources()
-	{
-		// Update resolutions shown in app title.
-		UpdateTitle();
-
-		// Set up the scene viewport and scissor rect to match the current scene rendering resolution.
-		{
-			m_sceneViewport.Width = (float)(m_resolutionOptions[m_resolutionIndex].Width);
-			m_sceneViewport.Height = (float)(m_resolutionOptions[m_resolutionIndex].Height);
-
-			m_sceneScissorRect.right = (int)(m_resolutionOptions[m_resolutionIndex].Width);
-			m_sceneScissorRect.bottom = (int)(m_resolutionOptions[m_resolutionIndex].Height);
-		}
-
-		// Update post-process viewport and scissor rectangle.
-		UpdatePostViewAndScissor();
-
-		// Create RTV for the intermediate render target.
-		{
-			m_renderTargets![m_frameIndex]!.GetDesc(out var swapChainDesc);
-			D3D12_CLEAR_VALUE clearValue = new(swapChainDesc.Format, ClearColor);
-			var renderTargetDesc = D3D12_RESOURCE_DESC.Tex2D(swapChainDesc.Format, m_resolutionOptions[m_resolutionIndex].Width,
-				m_resolutionOptions[m_resolutionIndex].Height, 1, 1, swapChainDesc.SampleDesc.Count, swapChainDesc.SampleDesc.Quality,
-				D3D12_RESOURCE_FLAGS.D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET, D3D12_TEXTURE_LAYOUT.D3D12_TEXTURE_LAYOUT_UNKNOWN, 0u);
-
-			m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(out var rh);
-			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(rh, (int)FrameCount, m_rtvDescriptorSize);
-			m_intermediateRenderTarget = m_device!.CreateCommittedResource<ID3D12Resource>(new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_DEFAULT),
-				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE, renderTargetDesc, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET, clearValue);
-			m_device!.CreateRenderTargetView(m_intermediateRenderTarget, default, rtvHandle);
-			NAME_D3D12_OBJECT(m_intermediateRenderTarget);
-		}
-
-		// Create SRV for the intermediate render target.
-		m_device.CreateShaderResourceView(m_intermediateRenderTarget, default, m_cbvSrvHeap!.GetCPUDescriptorHandleForHeapStart());
 	}
 
 	public override void OnKeyDown(VK key)
@@ -220,101 +152,14 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 		}
 	}
 
-	// Fill the command list with all the render commands and dependent state.
-	void PopulateCommandLists()
-	{
-		// Command list allocators can only be reset when the associated 
-		// command lists have finished execution on the GPU; apps should use 
-		// fences to determine GPU execution progress.
-		HRESULT.ThrowIfFailed(m_sceneCommandAllocators[m_frameIndex].Reset());
-		HRESULT.ThrowIfFailed(m_postCommandAllocators[m_frameIndex].Reset());
-
-		// However, when ExecuteCommandList() is called on a particular command 
-		// list, that command list can then be reset at any time and must be before 
-		// re-recording.
-		HRESULT.ThrowIfFailed(m_sceneCommandList!.Reset(m_sceneCommandAllocators[m_frameIndex], m_scenePipelineState));
-		HRESULT.ThrowIfFailed(m_postCommandList!.Reset(m_postCommandAllocators[m_frameIndex], m_postPipelineState));
-
-		// Populate m_sceneCommandList to render scene to intermediate render target.
-		{
-			// Set necessary state.
-			m_sceneCommandList.SetGraphicsRootSignature(m_sceneRootSignature);
-
-			ID3D12DescriptorHeap[] ppHeaps = [m_cbvSrvHeap!];
-			m_sceneCommandList.SetDescriptorHeaps(ppHeaps.Length, ppHeaps);
-
-			D3D12_GPU_DESCRIPTOR_HANDLE cbvHandle = new(m_cbvSrvHeap!.GetGPUDescriptorHandleForHeapStart(), m_frameIndex + 1, m_cbvSrvDescriptorSize);
-			m_sceneCommandList.SetGraphicsRootDescriptorTable(0, cbvHandle);
-			m_sceneCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			m_sceneCommandList.RSSetViewports(1, [m_sceneViewport]);
-			m_sceneCommandList.RSSetScissorRects(1, [m_sceneScissorRect]);
-
-			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), FrameCount, m_rtvDescriptorSize);
-			m_sceneCommandList.OMSetRenderTargets(1, [rtvHandle], false, default);
-
-			// Record commands.
-			m_sceneCommandList.ClearRenderTargetView(rtvHandle, ClearColor, 0, default);
-			m_sceneCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-			m_sceneCommandList.IASetVertexBuffers(0, 1, [m_sceneVertexBufferView]);
-
-			using (new PIXEvent(m_sceneCommandList, "Draw a thin rectangle"))
-				m_sceneCommandList.DrawInstanced(4, 1, 0, 0);
-		}
-
-		HRESULT.ThrowIfFailed(m_sceneCommandList.Close());
-
-		// Populate m_postCommandList to scale intermediate render target to screen.
-		{
-			// Set necessary state.
-			m_postCommandList.SetGraphicsRootSignature(m_postRootSignature);
-
-			ID3D12DescriptorHeap[] ppHeaps = [m_cbvSrvHeap!];
-			m_postCommandList.SetDescriptorHeaps(ppHeaps.Length, ppHeaps);
-
-			// Indicate that the back buffer will be used as a render target and the
-			// intermediate render target will be used as a SRV.
-			D3D12_RESOURCE_BARRIER[] barriers = [
-				D3D12_RESOURCE_BARRIER.CreateTransition(m_renderTargets![m_frameIndex]!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET),
-				D3D12_RESOURCE_BARRIER.CreateTransition(m_intermediateRenderTarget!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE)
-			];
-
-			m_postCommandList.ResourceBarrier(barriers.Length, barriers);
-
-			m_postCommandList.SetGraphicsRootDescriptorTable(0, m_cbvSrvHeap!.GetGPUDescriptorHandleForHeapStart());
-			m_postCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			m_postCommandList.RSSetViewports(1, [m_postViewport]);
-			m_postCommandList.RSSetScissorRects(1, [m_postScissorRect]);
-
-			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
-			m_postCommandList.OMSetRenderTargets(1, [rtvHandle], false, default);
-
-			// Record commands.
-			m_postCommandList.ClearRenderTargetView(rtvHandle, LetterboxColor, 0, default);
-			m_postCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-			m_postCommandList.IASetVertexBuffers(0, 1, [m_postVertexBufferView]);
-
-			using (new PIXEvent(m_postCommandList, "Draw texture to screen."))
-				m_postCommandList.DrawInstanced(4, 1, 0, 0);
-
-			// Revert resource states back to original values.
-			barriers[0].Transition.StateBefore = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET;
-			barriers[0].Transition.StateAfter = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT;
-			barriers[1].Transition.StateBefore = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-			barriers[1].Transition.StateAfter = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET;
-
-			m_postCommandList.ResourceBarrier(barriers.Length, barriers);
-		}
-
-		HRESULT.ThrowIfFailed(m_postCommandList.Close());
-	}
-
 	public override void OnRender()
 	{
 		if (m_windowVisible)
 		{
 			try
 			{
-				using (var evt = new PIXEvent(m_commandQueue!, "Render"))
+				//using (var evt = new PIXEvent(m_commandQueue!, "Render"))
+				PIXEvent.PIXBeginEvent(m_commandQueue!, 0, "Render");
 				{
 					// Record all the commands we need to render the scene into the command lists.
 					PopulateCommandLists();
@@ -323,6 +168,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 					ID3D12CommandList[] ppCommandLists = [m_sceneCommandList!, m_postCommandList!];
 					m_commandQueue!.ExecuteCommandLists(ppCommandLists.Length, ppCommandLists);
 				}
+				PIXEvent.PIXEndEvent(m_commandQueue!);
 
 				// When using sync interval 0, it is recommended to always pass the tearing flag when it is supported, even when presenting
 				// in windowed mode. However, this flag cannot be used if the app is in fullscreen mode as a result of calling SetFullscreenState.
@@ -367,7 +213,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			DXGI_SWAP_CHAIN_DESC desc = m_swapChain!.GetDesc();
 			m_swapChain.ResizeBuffers(FrameCount, (uint)width, (uint)height, desc.BufferDesc.Format, desc.Flags);
 
-			m_swapChain.GetFullscreenState(out var fullscreenState);
+			_ = m_swapChain.GetFullscreenState(out var fullscreenState);
 			m_windowedMode = !fullscreenState;
 
 			// Reset the frame index to the current back buffer index.
@@ -399,7 +245,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 		XMStoreFloat4x4(out m_sceneConstantBufferData.transform, transform.XMMatrixTranspose());
 
 		int offset = m_frameIndex * Marshal.SizeOf(typeof(SceneConstantBuffer));
-		m_pCbvDataBegin.Offset(offset).Write(m_sceneConstantBufferData);
+		Marshal.StructureToPtr(m_sceneConstantBufferData, m_pCbvDataBegin.Offset(offset), false);
 	}
 
 	// Load the sample assets.
@@ -462,6 +308,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				RegisterSpace = 0,
 				ShaderVisibility = D3D12_SHADER_VISIBILITY.D3D12_SHADER_VISIBILITY_PIXEL
 			};
+			DumpVal(sampler, nameof(sampler));
 
 			D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc = new(new D3D12_ROOT_SIGNATURE_DESC1(1, rootParameters, 1, sampler, rootSignatureFlags));
 
@@ -511,6 +358,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				RTVFormats = [DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, 0, 0, 0, 0, 0],
 				SampleDesc = new() { Count = 1 }
 			};
+			DumpVal(psoDesc, nameof(psoDesc));
 			m_scenePipelineState = m_device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
 			NAME_D3D12_OBJECT(m_scenePipelineState);
 
@@ -518,6 +366,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			psoDesc.pRootSignature = m_postRootSignature;
 			psoDesc.VS = new(postVertexShader);
 			psoDesc.PS = new(postPixelShader);
+			DumpVal(psoDesc, nameof(psoDesc));
 
 			m_postPipelineState = m_device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
 			NAME_D3D12_OBJECT(m_postPipelineState);
@@ -559,14 +408,16 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 			uint vertexBufferSize = quadVertices.Size;
 
-			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_DEFAULT),
+			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
+				new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_DEFAULT),
 				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
 				D3D12_RESOURCE_DESC.Buffer(vertexBufferSize),
 				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST,
 				default,
 				out m_sceneVertexBuffer));
 
-			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
+			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
+				new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
 				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
 				D3D12_RESOURCE_DESC.Buffer(vertexBufferSize),
 				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -579,17 +430,20 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// from the upload heap to the vertex buffer.
 			D3D12_RANGE readRange = new(0, 0); // We do not intend to read from this resource on the CPU.
 			HRESULT.ThrowIfFailed(sceneVertexBufferUpload!.Map(0, readRange, out var pVertexDataBegin));
-			quadVertices.DangerousGetHandle().CopyTo(pVertexDataBegin, quadVertices.Size);
+			quadVertices.CopyTo(pVertexDataBegin, quadVertices.Size);
 			sceneVertexBufferUpload!.Unmap(0, default);
 
 			commandList!.CopyBufferRegion(m_sceneVertexBuffer!, 0, sceneVertexBufferUpload, 0, vertexBufferSize);
-			commandList.ResourceBarrier(1, [D3D12_RESOURCE_BARRIER.CreateTransition(m_sceneVertexBuffer!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST,
-				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
+			commandList.ResourceBarrier(1, [D3D12_RESOURCE_BARRIER.CreateTransition(m_sceneVertexBuffer!,
+				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
 
 			// Initialize the vertex buffer views.
-			m_sceneVertexBufferView.BufferLocation = m_sceneVertexBuffer!.GetGPUVirtualAddress();
-			m_sceneVertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(SceneVertex));
-			m_sceneVertexBufferView.SizeInBytes = vertexBufferSize;
+			m_sceneVertexBufferView = new()
+			{
+				BufferLocation = m_sceneVertexBuffer!.GetGPUVirtualAddress(),
+				StrideInBytes = (uint)Marshal.SizeOf(typeof(SceneVertex)),
+				SizeInBytes = vertexBufferSize
+			};
 		}
 
 		// Create/update the fullscreen quad vertex buffer.
@@ -597,9 +451,9 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// Define the geometry for a fullscreen quad.
 			SafeNativeArray<PostVertex> postquadVertices = [
 				new(-1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f), // Bottom left.
-				new(-1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f), // Top left.
-				new(1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f), // Bottom right.
-				new(1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f) // Top right.
+				new(-1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 1.0f), // Top left.
+				new( 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f), // Bottom right.
+				new( 1.0f,  1.0f, 0.0f, 1.0f, 1.0f, 1.0f)  // Top right.
 			];
 
 			uint vertexBufferSize = postquadVertices.Size;
@@ -624,53 +478,61 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// from the upload heap to the vertex buffer.
 			D3D12_RANGE readRange = new(0, 0); // We do not intend to read from this resource on the CPU.
 			HRESULT.ThrowIfFailed(postVertexBufferUpload!.Map(0, readRange, out var pVertexDataBegin));
-			postquadVertices.DangerousGetHandle().CopyTo(pVertexDataBegin, postquadVertices.Size);
+			postquadVertices.CopyTo(pVertexDataBegin, postquadVertices.Size);
 			postVertexBufferUpload!.Unmap(0, default);
 
 			commandList.CopyBufferRegion(m_postVertexBuffer!, 0, postVertexBufferUpload, 0, vertexBufferSize);
-			commandList.ResourceBarrier(1, [D3D12_RESOURCE_BARRIER.CreateTransition(m_postVertexBuffer!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST,
-				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
+			commandList.ResourceBarrier(1, [D3D12_RESOURCE_BARRIER.CreateTransition(m_postVertexBuffer!,
+				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
 
 			// Initialize the vertex buffer views.
-			m_postVertexBufferView.BufferLocation = m_postVertexBuffer!.GetGPUVirtualAddress();
-			m_postVertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(PostVertex));
-			m_postVertexBufferView.SizeInBytes = vertexBufferSize;
+			m_postVertexBufferView = new()
+			{
+				BufferLocation = m_postVertexBuffer!.GetGPUVirtualAddress(),
+				StrideInBytes = (uint)Marshal.SizeOf(typeof(PostVertex)),
+				SizeInBytes = vertexBufferSize
+			};
 		}
 
 		// Create the constant buffer.
 		{
-			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(new(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
-			D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
-			D3D12_RESOURCE_DESC.Buffer((ulong)Marshal.SizeOf(typeof(SceneConstantBuffer)) * FrameCount),
-			D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_GENERIC_READ,
-			default,
-			out m_sceneConstantBuffer));
+			var constantBufferByteSize = (uint)Marshal.SizeOf(typeof(SceneConstantBuffer));
+
+			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
+				new(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
+				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
+				D3D12_RESOURCE_DESC.Buffer((ulong)constantBufferByteSize * FrameCount),
+				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_GENERIC_READ,
+				default,
+				out m_sceneConstantBuffer));
 
 			NAME_D3D12_OBJECT(m_sceneConstantBuffer!);
 
-			// Describe and create constant buffer views.
-			D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = new()
+			unsafe
 			{
-				BufferLocation = m_sceneConstantBuffer!.GetGPUVirtualAddress(),
-				SizeInBytes = (uint)Marshal.SizeOf(typeof(SceneConstantBuffer))
-			};
+				// Describe and create constant buffer views.
+				D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = new()
+				{
+					BufferLocation = m_sceneConstantBuffer!.GetGPUVirtualAddress(),
+					SizeInBytes = constantBufferByteSize
+				};
 
-			D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = new(m_cbvSrvHeap!.GetCPUDescriptorHandleForHeapStart(), 1, m_cbvSrvDescriptorSize);
+				D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = new(m_cbvSrvHeap!.GetCPUDescriptorHandleForHeapStart(), 1, m_cbvSrvDescriptorSize);
 
-			using (var pcbvDesc = new PinnedObject(cbvDesc))
 				for (uint n = 0; n < FrameCount; n++)
 				{
-					m_device!.CreateConstantBufferView((IntPtr)pcbvDesc, cpuHandle);
+					m_device!.CreateConstantBufferView(&cbvDesc, cpuHandle);
 
-					cbvDesc.BufferLocation += cbvDesc.SizeInBytes;
+					cbvDesc.BufferLocation += constantBufferByteSize;
 					cpuHandle.Offset((int)m_cbvSrvDescriptorSize);
 				}
+			}
 
 			// Map and initialize the constant buffer. We don't unmap this until the
 			// app closes. Keeping things mapped for the lifetime of the resource is okay.
 			D3D12_RANGE readRange = new(0, 0); // We do not intend to read from this resource on the CPU.
 			HRESULT.ThrowIfFailed(m_sceneConstantBuffer.Map(0, readRange, out m_pCbvDataBegin));
-			m_pCbvDataBegin.Write(m_sceneConstantBufferData);
+			Marshal.StructureToPtr(m_sceneConstantBufferData, m_pCbvDataBegin, false);
 		}
 
 		// Close the resource creation command list and execute it to begin the vertex buffer copy into
@@ -685,11 +547,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			m_fenceValues[m_frameIndex]++;
 
 			// Create an event handle to use for frame synchronization.
-			m_fenceEvent = CreateEvent(default, false, false, default);
-			if (m_fenceEvent.IsInvalid)
-			{
-				Win32Error.ThrowLastError();
-			}
+			Win32Error.ThrowLastErrorIfInvalid(m_fenceEvent = CreateEvent());
 
 			// Wait for the command list to execute before continuing.
 			WaitForGpu();
@@ -700,8 +558,6 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	private void LoadPipeline()
 	{
 		DXGI_CREATE_FACTORY dxgiFactoryFlags = 0;
-		D3D11_CREATE_DEVICE_FLAG d3d11DeviceFlags = D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT;
-		D2D1_FACTORY_OPTIONS d2dFactoryOptions = default;
 
 #if DEBUG
 		// Enable the debug layer
@@ -714,8 +570,6 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 				// Enable additional debug layers.
 				dxgiFactoryFlags |= DXGI_CREATE_FACTORY.DXGI_CREATE_FACTORY_DEBUG;
-				d3d11DeviceFlags |= D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_DEBUG;
-				d2dFactoryOptions.debugLevel = D2D1_DEBUG_LEVEL.D2D1_DEBUG_LEVEL_INFORMATION;
 			}
 		}
 #endif
@@ -745,6 +599,11 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 		NAME_D3D12_OBJECT(m_commandQueue);
 
 		// Describe the swap chain.
+		// The resolution of the swap chain buffers will match the resolution of the window, enabling the
+		// app to enter iFlip when in fullscreen mode. We will also keep a separate buffer that is not part
+		// of the swap chain as an intermediate render target, whose resolution will control the rendering
+		// resolution of the scene.
+		// It is recommended to always use the tearing flag when it is available.
 		DXGI_SWAP_CHAIN_DESC1 swapChainDesc = new()
 		{
 			BufferCount = FrameCount,
@@ -781,8 +640,6 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			};
 			m_rtvHeap = m_device!.CreateDescriptorHeap<ID3D12DescriptorHeap>(rtvHeapDesc);
 
-			m_rtvDescriptorSize = m_device!.GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE.D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
 			// Describe and create a constant buffer view (CBV) and shader resource view (SRV) descriptor heap.
 			D3D12_DESCRIPTOR_HEAP_DESC cbvSrvHeapDesc = new()
 			{
@@ -792,7 +649,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			};
 			m_cbvSrvHeap = m_device!.CreateDescriptorHeap<ID3D12DescriptorHeap>(cbvSrvHeapDesc);
 
-			m_rtvDescriptorSize = m_device.GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE.D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+			m_rtvDescriptorSize = m_device!.GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE.D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 			m_cbvSrvDescriptorSize = m_device.GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE.D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 		}
 
@@ -802,6 +659,43 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			m_device!.CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE.D3D12_COMMAND_LIST_TYPE_DIRECT, out m_sceneCommandAllocators[n]!).ThrowIfFailed();
 			m_device!.CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE.D3D12_COMMAND_LIST_TYPE_DIRECT, out m_postCommandAllocators[n]!).ThrowIfFailed();
 		}
+	}
+
+	// Set up appropriate views for the intermediate render target.
+	private void LoadSceneResolutionDependentResources()
+	{
+		// Update resolutions shown in app title.
+		UpdateTitle();
+
+		// Set up the scene viewport and scissor rect to match the current scene rendering resolution.
+		{
+			m_sceneViewport.Width = (float)(m_resolutionOptions[m_resolutionIndex].Width);
+			m_sceneViewport.Height = (float)(m_resolutionOptions[m_resolutionIndex].Height);
+
+			m_sceneScissorRect.right = (int)(m_resolutionOptions[m_resolutionIndex].Width);
+			m_sceneScissorRect.bottom = (int)(m_resolutionOptions[m_resolutionIndex].Height);
+		}
+
+		// Update post-process viewport and scissor rectangle.
+		UpdatePostViewAndScissor();
+
+		// Create RTV for the intermediate render target.
+		{
+			m_renderTargets![m_frameIndex]!.GetDesc(out var swapChainDesc);
+			D3D12_CLEAR_VALUE clearValue = new(swapChainDesc.Format, ClearColor);
+			var renderTargetDesc = D3D12_RESOURCE_DESC.Tex2D(swapChainDesc.Format, m_resolutionOptions[m_resolutionIndex].Width,
+				m_resolutionOptions[m_resolutionIndex].Height, 1, 1, swapChainDesc.SampleDesc.Count, swapChainDesc.SampleDesc.Quality,
+				D3D12_RESOURCE_FLAGS.D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET, D3D12_TEXTURE_LAYOUT.D3D12_TEXTURE_LAYOUT_UNKNOWN, 0u);
+
+			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), (int)FrameCount, m_rtvDescriptorSize);
+			m_intermediateRenderTarget = m_device!.CreateCommittedResource<ID3D12Resource>(new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_DEFAULT),
+				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE, renderTargetDesc, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET, clearValue);
+			m_device!.CreateRenderTargetView(m_intermediateRenderTarget, default, rtvHandle);
+			NAME_D3D12_OBJECT(m_intermediateRenderTarget);
+		}
+
+		// Create SRV for the intermediate render target.
+		m_device.CreateShaderResourceView(m_intermediateRenderTarget, default, m_cbvSrvHeap!.GetCPUDescriptorHandleForHeapStart());
 	}
 
 	private void LoadSizeDependentResources()
@@ -848,6 +742,96 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 		// Set the fence value for the next frame.
 		m_fenceValues[m_frameIndex] = currentFenceValue + 1;
+	}
+
+	// Fill the command list with all the render commands and dependent state.
+	private void PopulateCommandLists()
+	{
+		// Command list allocators can only be reset when the associated 
+		// command lists have finished execution on the GPU; apps should use 
+		// fences to determine GPU execution progress.
+		HRESULT.ThrowIfFailed(m_sceneCommandAllocators[m_frameIndex].Reset());
+		HRESULT.ThrowIfFailed(m_postCommandAllocators[m_frameIndex].Reset());
+
+		// However, when ExecuteCommandList() is called on a particular command 
+		// list, that command list can then be reset at any time and must be before 
+		// re-recording.
+		HRESULT.ThrowIfFailed(m_sceneCommandList!.Reset(m_sceneCommandAllocators[m_frameIndex], m_scenePipelineState));
+		HRESULT.ThrowIfFailed(m_postCommandList!.Reset(m_postCommandAllocators[m_frameIndex], m_postPipelineState));
+
+		// Populate m_sceneCommandList to render scene to intermediate render target.
+		{
+			// Set necessary state.
+			m_sceneCommandList.SetGraphicsRootSignature(m_sceneRootSignature);
+
+			m_sceneCommandList.SetDescriptorHeaps(1, [m_cbvSrvHeap!]);
+
+			D3D12_GPU_DESCRIPTOR_HANDLE cbvHandle = new(m_cbvSrvHeap!.GetGPUDescriptorHandleForHeapStart(), m_frameIndex + 1, m_cbvSrvDescriptorSize);
+			m_sceneCommandList.SetGraphicsRootDescriptorTable(0, cbvHandle);
+			m_sceneCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			m_sceneCommandList.RSSetViewports(1, [m_sceneViewport]);
+			m_sceneCommandList.RSSetScissorRects(1, [m_sceneScissorRect]);
+
+			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), FrameCount, m_rtvDescriptorSize);
+			m_sceneCommandList.OMSetRenderTargets(1, [rtvHandle], false, default);
+
+			// Record commands.
+			m_sceneCommandList.ClearRenderTargetView(rtvHandle, ClearColor, 0, default);
+			m_sceneCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+			m_sceneCommandList.IASetVertexBuffers(0, 1, [m_sceneVertexBufferView]);
+
+			//using (new PIXEvent(m_sceneCommandList, "Draw a thin rectangle"))
+			PIXEvent.PIXBeginEvent(m_sceneCommandList, 0, "Draw a thin rectangle");
+			m_sceneCommandList.DrawInstanced(4, 1, 0, 0);
+			PIXEvent.PIXEndEvent(m_sceneCommandList);
+		}
+
+		HRESULT.ThrowIfFailed(m_sceneCommandList.Close());
+
+		// Populate m_postCommandList to scale intermediate render target to screen.
+		{
+			// Set necessary state.
+			m_postCommandList.SetGraphicsRootSignature(m_postRootSignature);
+
+			m_postCommandList.SetDescriptorHeaps(1, [m_cbvSrvHeap!]);
+
+			// Indicate that the back buffer will be used as a render target and the
+			// intermediate render target will be used as a SRV.
+			D3D12_RESOURCE_BARRIER[] barriers = [
+				D3D12_RESOURCE_BARRIER.CreateTransition(m_renderTargets![m_frameIndex]!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET),
+				D3D12_RESOURCE_BARRIER.CreateTransition(m_intermediateRenderTarget!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE)
+			];
+
+			m_postCommandList.ResourceBarrier(barriers.Length, barriers);
+
+			m_postCommandList.SetGraphicsRootDescriptorTable(0, m_cbvSrvHeap!.GetGPUDescriptorHandleForHeapStart());
+			m_postCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			m_postCommandList.RSSetViewports(1, [m_postViewport]);
+			m_postCommandList.RSSetScissorRects(1, [m_postScissorRect]);
+
+			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
+			m_postCommandList.OMSetRenderTargets(1, [rtvHandle], false, default);
+
+			// Record commands.
+			m_postCommandList.ClearRenderTargetView(rtvHandle, LetterboxColor, 0, default);
+			m_postCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+			m_postCommandList.IASetVertexBuffers(0, 1, [m_postVertexBufferView]);
+
+			//using (new PIXEvent(m_postCommandList, "Draw texture to screen."))
+			PIXEvent.PIXBeginEvent(m_postCommandList, 0, "Draw texture to screen.");
+			m_postCommandList.DrawInstanced(4, 1, 0, 0);
+			PIXEvent.PIXEndEvent(m_postCommandList);
+
+			// Revert resource states back to original values.
+			barriers[0].Transition.StateBefore = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET;
+			barriers[0].Transition.StateAfter = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT;
+			barriers[1].Transition.StateBefore = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+			barriers[1].Transition.StateAfter = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET;
+
+			m_postCommandList.ResourceBarrier(barriers.Length, barriers);
+		}
+
+		HRESULT.ThrowIfFailed(m_postCommandList.Close());
 	}
 
 	// Release sample's D3D objects.
@@ -938,12 +922,11 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 		public uint Width = w;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[StructLayout(LayoutKind.Sequential, Size = 256)]
 	private struct SceneConstantBuffer
 	{
 		public XMMATRIX transform;
 		public XMVECTOR offset;
-		public unsafe fixed uint padding[44];
 	}
 
 	private struct SceneVertex(float r, float g, float b, float a, float x, float y, float z)
@@ -957,14 +940,5 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	{
 		public D3DCOLORVALUE color = new(r, b, g, a);
 		public D2D_VECTOR_3F position = new(x, y, z);
-	}
-}
-
-internal static class Ext
-{
-	public static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandleForHeapStart(this ID3D12DescriptorHeap heap)
-	{
-		heap.GetCPUDescriptorHandleForHeapStart(out var handle);
-		return handle;
 	}
 }

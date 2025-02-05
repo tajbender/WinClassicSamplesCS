@@ -449,6 +449,8 @@ internal class D3D12HelloGenericPrograms : DXSample
 
 	private void WaitForPreviousFrame()
 	{
+		if (m_fence is null) return;
+
 		// WAITING FOR THE FRAME TO COMPLETE BEFORE CONTINUING IS NOT BEST PRACTICE. This is code implemented as such for simplicity. The
 		// D3D12HelloFrameBuffering sample illustrates how to use fences for efficient resource usage and to maximize GPU utilization.
 
