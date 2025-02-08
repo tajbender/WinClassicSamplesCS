@@ -527,6 +527,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D3D12HelloTriangle", "Direc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D3D12HelloTexture", "DirectX-Graphics-Samples\D3D12HelloWorld\HelloTexture\D3D12HelloTexture.csproj", "{5BE808D4-E01B-4EAE-9F15-C7FB51028F76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D3D12HelloConstBuffers", "DirectX-Graphics-Samples\D3D12HelloWorld\HelloConstBuffers\D3D12HelloConstBuffers.csproj", "{97C701AC-BB51-47ED-A78E-ADE412204FED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -2960,6 +2962,18 @@ Global
 		{5BE808D4-E01B-4EAE-9F15-C7FB51028F76}.Release|x64.Build.0 = Release|Any CPU
 		{5BE808D4-E01B-4EAE-9F15-C7FB51028F76}.Release|x86.ActiveCfg = Release|Any CPU
 		{5BE808D4-E01B-4EAE-9F15-C7FB51028F76}.Release|x86.Build.0 = Release|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Debug|x64.Build.0 = Debug|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Debug|x86.Build.0 = Debug|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Release|x64.ActiveCfg = Release|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Release|x64.Build.0 = Release|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Release|x86.ActiveCfg = Release|Any CPU
+		{97C701AC-BB51-47ED-A78E-ADE412204FED}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -3170,6 +3184,7 @@ Global
 		{9471EEC8-4D6D-4771-99C6-7AA43AFD68B7} = {45ACE6FB-5432-4940-9E19-A76A725E29DE}
 		{61136A6F-CEB0-46E9-8E88-79B49246A2C8} = {B101716B-F4B2-46E5-9EDE-185DBEF96458}
 		{5BE808D4-E01B-4EAE-9F15-C7FB51028F76} = {B101716B-F4B2-46E5-9EDE-185DBEF96458}
+		{97C701AC-BB51-47ED-A78E-ADE412204FED} = {B101716B-F4B2-46E5-9EDE-185DBEF96458}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82D57A23-9C32-4014-9AFB-25B38D08E1D1}
