@@ -4,7 +4,7 @@ string adsPath = $"LDAP://DC=mydomain2,DC=mydomain1,DC=microsoft,DC=com";
 
 using (IADsObject pObj = ADsObject.GetObject(adsPath))
 {
-	var pCont = (IADsContainerObject<IADsObject>)pObj;
+	var pCont = (IADsContainerObject)pObj;
 
 	/////////////////////////////////////////////////////////////
 	// Get the child from the container 

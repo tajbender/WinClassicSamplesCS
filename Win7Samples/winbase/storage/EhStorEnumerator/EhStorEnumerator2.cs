@@ -51,7 +51,7 @@ public partial class EhStorEnumerator2 : Form
 			return;
 		}
 
-		ListViewItem item = IDC_DEVLIST.GetItemAt(e.X, e.Y);
+		ListViewItem? item = IDC_DEVLIST.GetItemAt(e.X, e.Y);
 		if (item is null)
 		{
 			return;

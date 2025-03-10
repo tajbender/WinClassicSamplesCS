@@ -26,8 +26,8 @@ internal static class ExecInExplorer
 	private static T GetShellViewForDesktop<T>() where T : class
 	{
 		var psw = new IShellWindows();
-		var pdisp = psw.FindWindowSW(0 /* CSIDL_Desktop */, default, ShellWindowTypeConstants.SWC_DESKTOP, out _, ShellWindowFindWindowOptions.SWFO_NEEDDISPATCH);
-		var psb = ShlwApi.IUnknown_QueryService<IShellBrowser>(pdisp, SID_STopLevelBrowser) ?? throw new InvalidOperationException();
+		var pdisp = psw.FindWindowSW<IDispatch>(CSIDL.CSIDL_DESKTOP, ShellWindowTypeConstants.SWC_DESKTOP);
+		var psb = ShlwApi.IUnknown_QueryService<IShellBrowser>(pdisp!, SID_STopLevelBrowser) ?? throw new InvalidOperationException();
 		psb.QueryActiveShellView(out var iShView).ThrowIfFailed();
 		return (T)iShView!;
 	}

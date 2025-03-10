@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="DirectNCore" Version="1.16.1.2" />
-    <PackageReference Include="Vanara.PInvoke.UIAnimation" Version="4.0.5" />
-    <PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.0.5" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.0.5" />
+    <PackageReference Include="Vanara.PInvoke.UIAnimation" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.2" />
   </ItemGroup>
 
   <ItemGroup>

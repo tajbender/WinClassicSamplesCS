@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Management" Version="8.0.0" />
-    <PackageReference Include="Vanara.VirtualDisk" Version="4.0.4" />
+    <PackageReference Include="System.Management" Version="9.0.2" />
+    <PackageReference Include="Vanara.VirtualDisk" Version="4.1.2" />
   </ItemGroup>
 
 </Project>

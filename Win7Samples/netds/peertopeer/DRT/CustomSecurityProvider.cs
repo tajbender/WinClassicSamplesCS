@@ -558,10 +558,10 @@ internal unsafe class CCustomNullSecurityProvider
 		if (ppAddressList != null)
 		{
 			sap.GetAddresses(out var addr);
-			*ppAddressList = (void*)addr?.TakeOwnership();
+			*ppAddressList = (void*)(addr?.TakeOwnership() ?? 0);
 		}
 		sap.GetPublicKey(out var pk);
-		*ppPublicKey = (CERT_PUBLIC_KEY_INFO*)pk?.TakeOwnership();
+		*ppPublicKey = (CERT_PUBLIC_KEY_INFO*)(pk?.TakeOwnership() ?? 0);
 		sap.GetKey(out pKey);
 		sap.GetProtocolVersion(out *pbProtocolMajor, out *pbProtocolMinor);
 

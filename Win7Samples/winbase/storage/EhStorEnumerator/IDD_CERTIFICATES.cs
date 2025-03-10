@@ -27,7 +27,7 @@ public partial class IDD_CERTIFICATES : Form
 	}
 
 	public CCertificate? SelectedCertificate =>
-		IDC_CERT_LIST.SelectedItems.Count != 1 ? null : (CCertificate)IDC_CERT_LIST.SelectedItems[0].Tag;
+		IDC_CERT_LIST.SelectedItems.Count != 1 ? null : (CCertificate)IDC_CERT_LIST.SelectedItems[0].Tag!;
 
 	public uint SelectedCertIndex => IDC_CERT_LIST.SelectedItems.Count != 1 ? uint.MaxValue : (uint)IDC_CERT_LIST.SelectedIndices[0];
 
@@ -68,7 +68,7 @@ public partial class IDD_CERTIFICATES : Form
 
 		CLocalCertStoreImp localStore = new(store);
 		IDC_CERT_LIST.Items.AddRange(localStore.GetCertificatesList().
-			Select(c => new ListViewItem(new string?[] { c.Subject, $"{c.Version}", c.Issuer }) { Tag = c }).ToArray());
+			Select(c => new ListViewItem([c.Subject ?? "", $"{c.Version}", c.Issuer ?? ""]) { Tag = c }).ToArray());
 
 		IDC_CERT_LIST.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 	}

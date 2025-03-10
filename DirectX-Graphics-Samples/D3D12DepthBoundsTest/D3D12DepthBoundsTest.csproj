@@ -14,8 +14,8 @@
     <!--<PackageReference Include="Microsoft.Direct3D.D3D12" Version="1.614.1" GeneratePathProperty="true" IncludeAssets="all" />
     <None Include="$(PkgMicrosoft_Direct3D_D3D12)\build\native\bin\x64\*.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgMicrosoft_Direct3D_D3D12)\build\native\bin\x64\*.exe" CopyToOutputDirectory="PreserveNewest" />-->
-    <PackageReference Include="Vanara.PInvoke.DirectX" Version="4.0.5" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.0.5" />
+    <PackageReference Include="Vanara.PInvoke.DirectX" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.2" />
   </ItemGroup>
 
   <ItemGroup>

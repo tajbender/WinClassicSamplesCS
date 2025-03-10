@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vanara.DirectoryServices" Version="4.0.4" />
+    <PackageReference Include="Vanara.DirectoryServices" Version="4.1.2" />
   </ItemGroup>
 
 </Project>
