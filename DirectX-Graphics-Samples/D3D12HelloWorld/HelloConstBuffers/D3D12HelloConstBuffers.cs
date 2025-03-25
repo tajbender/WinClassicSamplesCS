@@ -61,9 +61,9 @@ internal class D3D12HelloConstBuffers(int width, int height, string name) : DXSa
 
 		if (m_useWarpDevice)
 		{
-			factory.EnumWarpAdapter(typeof(IDXGIAdapter).GUID, out var warpAdapter).ThrowIfFailed();
+			factory.EnumWarpAdapter(out IDXGIAdapter? warpAdapter).ThrowIfFailed();
 
-			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter, out m_device).ThrowIfFailed();
+			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter!, out m_device).ThrowIfFailed();
 		}
 		else
 		{

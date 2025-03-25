@@ -105,11 +105,7 @@ public abstract class CDragDropHelper : IDropTarget
 	private IDataObject? pdtobj = null;
 	private string? pszDropTipTemplate = null;
 
-	public CDragDropHelper()
-	{
-		if (CoCreateInstance(CLSID_DragDropHelper, default, CLSCTX.CLSCTX_INPROC, typeof(IDropTargetHelper).GUID, out var ppv).Succeeded)
-			pdth = (IDropTargetHelper)ppv;
-	}
+	public CDragDropHelper() => CoCreateInstance(CLSID_DragDropHelper, default, CLSCTX.CLSCTX_INPROC, out pdth);
 
 	~CDragDropHelper()
 	{

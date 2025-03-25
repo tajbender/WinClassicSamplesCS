@@ -1,20 +1,21 @@
-﻿using DirectN;
-using System.Runtime.Versioning;
+﻿using System.Runtime.Versioning;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
-using static DirectN.D2D1Functions;
-using static DirectN.D3D11Functions;
-using static DirectN.Functions;
+using static Vanara.PInvoke.D2d1;
+using static Vanara.PInvoke.D3D11;
+using static Vanara.PInvoke.Dcomp;
+using static Vanara.PInvoke.DXGI;
 using static Vanara.PInvoke.Gdi32;
 using static Vanara.PInvoke.UIAnimation;
 using static Vanara.PInvoke.User32;
+using static Vanara.PInvoke.WindowsCodecs;
 using HRESULT = Vanara.PInvoke.HRESULT;
 
 namespace DirectComposition_WAM;
 
+[SupportedOSPlatform("windows8.0")]
 internal class Program
 {
-	[SupportedOSPlatform("windows8.0")]
 	public static void Main() => VisibleWindow.Run<CApplication>("Hello");
 }
 
@@ -27,13 +28,13 @@ public class CApplication : VisibleWindow
 	private IUIAnimationManager2 _manager;
 	private IUIAnimationTransitionLibrary2 _transitionLibrary;
 	private IUIAnimationVariable2 _animationVariable;
-	private IComObject<ID3D11Device> _d3d11Device;
-	private IComObject<ID3D11DeviceContext> _d3d11DeviceContext;
+	private ID3D11Device _d3d11Device;
+	private ID3D11DeviceContext _d3d11DeviceContext;
 	private string _fontTypeface;
 	private int _fontHeightLogo;
 	private int _fontHeightTitle;
 	private int _fontHeightDescription;
-	private IComObject<ID2D1Factory1> _d2d1Factory;
+	private ID2D1Factory1 _d2d1Factory;
 	private ID2D1Device _d2d1Device;
 	private ID2D1DeviceContext _d2d1DeviceContext;
 	private IDCompositionDevice _device;
@@ -97,33 +98,21 @@ public class CApplication : VisibleWindow
 		D3D_DRIVER_TYPE[] driverTypes = [D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_HARDWARE, D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_WARP];
 		for (int i = 0; i < driverTypes.Length; ++i)
 		{
-			try
-			{
-				_d3d11Device = D3D11CreateDevice(null, driverTypes[i], D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT, out _d3d11DeviceContext);
+			if (D3D11CreateDevice(null, driverTypes[i], default, D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT, default, 0, D3D11_SDK_VERSION, out _d3d11Device, out _, out _d3d11DeviceContext).Succeeded)
 				return HRESULT.S_OK;
-			}
-			catch { }
 		}
 		return HRESULT.E_FAIL;
 	}
 
-	private HRESULT CreateD2D1Device()
+	private HRESULT CreateD2D1Device() => WrapHR(() =>
 	{
-		HRESULT hr = (_d3d11Device == null || _d2d1Factory == null) ? HRESULT.E_UNEXPECTED : HRESULT.S_OK;
+		if (_d3d11Device == null || _d2d1Factory == null)
+			throw new InvalidOperationException();
 
-		IDXGIDevice? _dxgiDevice = _d3d11Device!.As<IDXGIDevice>(true);
-		if (hr.Succeeded)
-		{
-			hr = (int)_d2d1Factory!.Object.CreateDevice(_dxgiDevice, out _d2d1Device);
-		}
-
-		if (hr.Succeeded)
-		{
-			hr = (int)_d2d1Device.CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS.D2D1_DEVICE_CONTEXT_OPTIONS_NONE, out _d2d1DeviceContext);
-		}
-
-		return hr;
-	}
+		IDXGIDevice _dxgiDevice = (IDXGIDevice)_d3d11Device!;
+		_d2d1Factory!.CreateDevice(_dxgiDevice!, out _d2d1Device);
+		_d2d1DeviceContext = _d2d1Device.CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS.D2D1_DEVICE_CONTEXT_OPTIONS_NONE);
+	});
 
 	//-----------------------------------------------------------
 	// Creates a DirectComposition device
@@ -132,10 +121,8 @@ public class CApplication : VisibleWindow
 	{
 		if (_d3d11Device == null) return HRESULT.E_UNEXPECTED;
 
-		IDXGIDevice dxgiDevice = _d3d11Device!.As<IDXGIDevice>(true);
-		HRESULT hr = (int)DCompositionCreateDevice(dxgiDevice, typeof(IDCompositionDevice).GUID, out var ptr);
-		if (hr.Succeeded)
-			_device = (IDCompositionDevice)Marshal.GetObjectForIUnknown(ptr);
+		IDXGIDevice? dxgiDevice = _d3d11Device! as IDXGIDevice;
+		HRESULT hr = (int)DCompositionCreateDevice(dxgiDevice, out IDCompositionDevice? _device);
 
 		return hr;
 	}
@@ -148,7 +135,7 @@ public class CApplication : VisibleWindow
 	{
 		if (_device == null || Handle.IsNull) return HRESULT.E_UNEXPECTED;
 
-		return (int)_device!.CreateTargetForHwnd((IntPtr)Handle, true, out _target);
+		return _device!.CreateTargetForHwnd(Handle, true, out _target);
 	}
 
 	//---------------------------------------------------------------------
@@ -172,7 +159,7 @@ public class CApplication : VisibleWindow
 			_bitmapWidth = bitmapWidth;
 			_bitmapHeight = bitmapHeight;
 
-			hr = (int)_device.CreateVisual(out _visual);
+			_visual = _device.CreateVisual();
 		}
 
 		// Set the content of each visual to be the surface that was created from the bitmap
@@ -180,16 +167,16 @@ public class CApplication : VisibleWindow
 		{
 			for (int i = 0; hr.Succeeded && i < visualChildCount; ++i)
 			{
-				hr = (int)_device.CreateVisual(out _visualChild[i]);
+				_visualChild[i] = _device.CreateVisual();
 
 				if (hr.Succeeded)
 				{
-					hr = (int)_visual.AddVisual(_visualChild[i], false, null);
+					_visual.AddVisual(_visualChild[i], false, null);
 				}
 
 				if (hr.Succeeded)
 				{
-					hr = (int)_visualChild[i].SetContent(surface);
+					_visualChild[i].SetContent(surface);
 				}
 			}
 		}
@@ -205,21 +192,21 @@ public class CApplication : VisibleWindow
 
 				if (hr.Succeeded)
 				{
-					hr = (int)_device.CreateScaleTransform(out scaleTransform);
+					scaleTransform = _device.CreateScaleTransform();
 				}
 
 				float sx = tileSize / bitmapWidth;
 
 				if (hr.Succeeded && scaleTransform is not null)
 				{
-					hr = (int)scaleTransform.SetScaleX(sx);
+					scaleTransform.SetScaleX(sx);
 				}
 
 				float sy = tileSize / bitmapHeight;
 
 				if (hr.Succeeded && scaleTransform is not null)
 				{
-					hr = (int)scaleTransform.SetScaleY(sy);
+					scaleTransform.SetScaleY(sy);
 				}
 
 				//Setting up a translate transform on each visual
@@ -227,7 +214,7 @@ public class CApplication : VisibleWindow
 
 				if (hr.Succeeded)
 				{
-					hr = (int)_device.CreateTranslateTransform(out translateTransform);
+					translateTransform = _device.CreateTranslateTransform();
 				}
 
 				float x = (visualChildCount - 1 - i) * TILE_SPACING;
@@ -235,12 +222,12 @@ public class CApplication : VisibleWindow
 
 				if (hr.Succeeded && translateTransform is not null)
 				{
-					hr = (int)translateTransform.SetOffsetX(x);
+					translateTransform.SetOffsetX(x);
 				}
 
 				if (hr.Succeeded && translateTransform is not null)
 				{
-					hr = (int)translateTransform.SetOffsetY(y);
+					translateTransform.SetOffsetY(y);
 				}
 
 				// Creating a transform group to group the two transforms together such that
@@ -250,7 +237,7 @@ public class CApplication : VisibleWindow
 				IDCompositionTransform? transformGroup = null;
 				if (hr.Succeeded)
 				{
-					_device.CreateTransformGroup(transforms, transforms.Length, out transformGroup);
+					transformGroup = _device.CreateTransformGroup(transforms, (uint)transforms.Length);
 				}
 				if (hr.Succeeded && transformGroup is not null)
 				{
@@ -266,7 +253,7 @@ public class CApplication : VisibleWindow
 	// Use WAM to generate and propagate the appropriate animation curves to DirectComposition when
 	// keypress is detected
 	//-------------------------------------------------------------------------------
-	private HRESULT CreateSlideAnimation(DIRECTION dir, out DirectN.IDCompositionAnimation? slideAnimation)
+	private HRESULT CreateSlideAnimation(DIRECTION dir, out IDCompositionAnimation? slideAnimation)
 	{
 		float rightMargin = 27 * TILE_SPACING * -1; //where the tiles end. Note forward direction is represented by a negative value.
 		float leftMargin = 0; // where the tiles begin
@@ -274,107 +261,103 @@ public class CApplication : VisibleWindow
 		slideAnimation = null;
 		if (_device == null || _animationVariable == null) return HRESULT.E_UNEXPECTED;
 
-		//WAM propagates curves to DirectComposition using the IDCompositionAnimation object
-		HRESULT hr = (int)_device.CreateAnimation(out var animation);
-
 		//Create a storyboard for the slide animation
-		if (hr.Succeeded)
-			try
+		try
+		{
+			//WAM propagates curves to DirectComposition using the IDCompositionAnimation object
+			var animation = _device.CreateAnimation();
+
+			var storyboard = _manager.CreateStoryboard();
+
+			// Synchronizing WAM and DirectComposition time such that when WAM Update is called,
+			// the value reflects the DirectComposition value at the given time.
+			var frameStatistics = _device.GetFrameStatistics();
+
+			double nextEstimatedFrameTime = 0.0;
+
+			nextEstimatedFrameTime = frameStatistics.nextEstimatedFrameTime / frameStatistics.timeFrequency;
+
+			//Upating the WAM time
+			_manager.Update(nextEstimatedFrameTime, out _);
+
+			int velocity = 500; //arbitrary fix velocity for the slide animation
+
+			var curValue = _animationVariable.GetValue();
+
+			IUIAnimationTransition2? transition = null;
+			switch (dir)
 			{
-				var storyboard = _manager.CreateStoryboard();
+				case DIRECTION.stopForward:
+				case DIRECTION.stopBackward:
+					// Stopping the animation smoothly when key is let go
+					if (curValue != leftMargin && curValue != rightMargin)
+						transition = _transitionLibrary.CreateSmoothStopTransition(0.5, curValue + (int)dir * 50.0);
+					break;
 
-				// Synchronizing WAM and DirectComposition time such that when WAM Update is called,
-				// the value reflects the DirectComposition value at the given time.
-				hr = (int)_device.GetFrameStatistics(out var frameStatistics);
+				case DIRECTION.forward:
+					// slide the tiles forward using a linear curve upon left button press
+					transition = _transitionLibrary.CreateLinearTransition(-1 * (rightMargin - curValue) / velocity, rightMargin);
+					break;
 
-				double nextEstimatedFrameTime = 0.0;
-
-				if (hr.Succeeded)
-				{
-					nextEstimatedFrameTime = frameStatistics.nextEstimatedFrameTime / frameStatistics.timeFrequency;
-
-					//Upating the WAM time
-					_manager.Update(nextEstimatedFrameTime, out _);
-
-					int velocity = 500; //arbitrary fix velocity for the slide animation
-
-					var curValue = _animationVariable.GetValue();
-
-					IUIAnimationTransition2? transition = null;
-					switch (dir)
-					{
-						case DIRECTION.stopForward:
-						case DIRECTION.stopBackward:
-							// Stopping the animation smoothly when key is let go
-							if (curValue != leftMargin && curValue != rightMargin)
-								transition = _transitionLibrary.CreateSmoothStopTransition(0.5, curValue + (int)dir * 50.0);
-							break;
-
-						case DIRECTION.forward:
-							// slide the tiles forward using a linear curve upon left button press
-							transition = _transitionLibrary.CreateLinearTransition(-1 * (rightMargin - curValue) / velocity, rightMargin);
-							break;
-
-						case DIRECTION.backward:
-							// slide the tiles backward using a linear cruve upon right button press
-							transition = _transitionLibrary.CreateLinearTransition(-1 * curValue / velocity, leftMargin);
-							break;
-					}
-
-					//Add above transition to storyboard
-					if (hr.Succeeded && transition is not null)
-					{
-						storyboard.AddTransition(_animationVariable, transition);
-
-						//schedule the storyboard for play at the next estimate vblank
-						storyboard.Schedule(nextEstimatedFrameTime, out _);
-
-						//Giving WAM varialbe the IDCompositionAnimation object to recieve the animation curves
-						_animationVariable.GetCurve((UIAnimation.IDCompositionAnimation)animation);
-
-						slideAnimation = animation;
-					}
-				}
+				case DIRECTION.backward:
+					// slide the tiles backward using a linear cruve upon right button press
+					transition = _transitionLibrary.CreateLinearTransition(-1 * curValue / velocity, leftMargin);
+					break;
 			}
-			catch (Exception ex)
+
+			//Add above transition to storyboard
+			if (transition is not null)
 			{
-				hr = ex.HResult;
+				storyboard.AddTransition(_animationVariable, transition);
+
+				//schedule the storyboard for play at the next estimate vblank
+				storyboard.Schedule(nextEstimatedFrameTime, out _);
+
+				//Giving WAM varialbe the IDCompositionAnimation object to recieve the animation curves
+				_animationVariable.GetCurve(animation);
+
+				slideAnimation = animation;
 			}
-		return hr;
+
+			return HRESULT.S_OK;
+		}
+		catch (Exception ex)
+		{
+			return ex.HResult;
+		}
 	}
 
-	private HRESULT AttachDCompositionVisualTreeToRenderTarget() => _target == null || _visual == null ? (HRESULT)HRESULT.E_UNEXPECTED : (HRESULT)(int)_target.SetRoot(_visual);
+	private HRESULT WrapHR(Action action) { try { action(); return HRESULT.S_OK; } catch (Exception ex) { return ex.HResult; } }
 
-	private HRESULT DetachDCompositionVisualTreeToRenderTarget() => _target == null ? (HRESULT)HRESULT.E_UNEXPECTED : (HRESULT)(int)_target.SetRoot(null);
+	private HRESULT AttachDCompositionVisualTreeToRenderTarget() => _target == null || _visual == null ? (HRESULT)HRESULT.E_UNEXPECTED : WrapHR(() => _target.SetRoot(_visual));
+
+	private HRESULT DetachDCompositionVisualTreeToRenderTarget() => _target == null ? (HRESULT)HRESULT.E_UNEXPECTED : WrapHR(() => _target.SetRoot(null));
 
 	private IntPtr Move(DIRECTION dir)
 	{
-		if (_device == null || Handle.IsNull) return (IntPtr)HRESULT.E_UNEXPECTED;
+		if (_device == null || Handle.IsNull) return HRESULT.E_UNEXPECTED;
 
-		// Create the animation curves using WAM
-		HRESULT hr = CreateSlideAnimation(dir, out var slideAnimation);
-		if (hr.Succeeded)
+		try
 		{
-			hr = (int)_device.CreateTranslateTransform(out var translateTransform);
+			// Create the animation curves using WAM
+			CreateSlideAnimation(dir, out var slideAnimation).ThrowIfFailed();
+
+			var translateTransform = _device.CreateTranslateTransform();
 
 			//Set DirectComposition translation animation using the curves propagated by WAM
-			if (hr.Succeeded)
-			{
-				hr = (int)translateTransform.SetOffsetX(slideAnimation);
+			translateTransform.SetOffsetX(slideAnimation ?? throw new InvalidOperationException());
 
-				if (hr.Succeeded)
-				{
-					_visual.SetTransform(translateTransform);
+			_visual.SetTransform(translateTransform);
 
-					// Committing all changes to DirectComposition visuals in order for them to take effect visually
-					_device.Commit();
+			// Committing all changes to DirectComposition visuals in order for them to take effect visually
+			_device.Commit();
 
-					return IntPtr.Zero;
-				}
-			}
+			return IntPtr.Zero;
 		}
-
-		return (IntPtr)(int)hr;
+		catch (Exception ex)
+		{
+			return ex.HResult;
+		}
 	}
 
 	private IntPtr OnPaint(HWND hwnd)
@@ -436,24 +419,19 @@ public class CApplication : VisibleWindow
 	private class PaintContext : IDisposable
 	{
 		private readonly HWND hwnd;
-		private User32.PAINTSTRUCT ps;
+		private PAINTSTRUCT ps;
 
 		public PaintContext(HWND hwnd) => hdc = new((IntPtr)BeginPaint(this.hwnd = hwnd, out ps), false);
 
 		public SafeHDC hdc { get; }
 
-		//     Indicates whether the background must be erased. This value is nonzero if the
-		//     application should erase the background. The application is responsible for erasing
-		//     the background if a window class is created without a background brush. For more
-		//     information, see the description of the hbrBackground member of the WNDCLASS
-		//     structure.
+		// Indicates whether the background must be erased. This value is nonzero if the application should erase the background. The
+		// application is responsible for erasing the background if a window class is created without a background brush. For more
+		// information, see the description of the hbrBackground member of the WNDCLASS structure.
 		public bool fErase => ps.fErase;
 
-		//
-		// Summary:
-		//     A RECT structure that specifies the upper left and lower right corners of the
-		//     rectangle in which the painting is requested, in device units relative to the
-		//     upper-left corner of the client area.
+		// Summary: A RECT structure that specifies the upper left and lower right corners of the rectangle in which the painting is
+		// requested, in device units relative to the upper-left corner of the client area.
 		public RECT rcPaint => ps.rcPaint;
 
 		void IDisposable.Dispose() => EndPaint(hwnd, ps);
@@ -465,7 +443,7 @@ public class CApplication : VisibleWindow
 		try
 		{
 			CreateD3D11Device().ThrowIfFailed();
-			_d2d1Factory = D2D1CreateFactory(D2D1_FACTORY_TYPE.D2D1_FACTORY_TYPE_SINGLE_THREADED).AsComObject<ID2D1Factory1>();
+			_d2d1Factory = D2D1CreateFactory<ID2D1Factory1>(D2D1_FACTORY_TYPE.D2D1_FACTORY_TYPE_SINGLE_THREADED);
 			CreateD2D1Device().ThrowIfFailed();
 			_fontTypeface = Properties.Resources.IDS_FONT_TYPEFACE;
 			_fontHeightLogo = int.Parse(Properties.Resources.IDS_FONT_HEIGHT_LOGO);
@@ -478,7 +456,7 @@ public class CApplication : VisibleWindow
 			CreateDCompositionRenderTarget().ThrowIfFailed();
 			CreateDCompositionVisualTree().ThrowIfFailed();
 			AttachDCompositionVisualTreeToRenderTarget().ThrowIfFailed();
-			_device!.Commit().ThrowOnError();
+			_device!.Commit();
 		}
 		catch (Exception ex)
 		{
@@ -494,63 +472,59 @@ public class CApplication : VisibleWindow
 
 		if (filename == null) return HRESULT.E_INVALIDARG;
 
-		CreateD2D1BitmapFromFile(filename, out var d2d1Bitmap);
-
-		var bitmapSize = d2d1Bitmap.GetSize();
-
-		HRESULT hr = (int)_device.CreateSurface((uint)bitmapSize.width, (uint)bitmapSize.height, DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ALPHA_MODE.DXGI_ALPHA_MODE_IGNORE, out var surfaceTile);
-
-		if (hr.Succeeded)
+		try
 		{
+			CreateD2D1BitmapFromFile(filename, out var d2d1Bitmap).ThrowIfFailed();
+
+			var bitmapSize = d2d1Bitmap!.GetSize();
+
+			var surfaceTile = _device.CreateSurface((uint)bitmapSize.width, (uint)bitmapSize.height, DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ALPHA_MODE.DXGI_ALPHA_MODE_IGNORE);
+
 			RECT rect = new(0, 0, (int)bitmapSize.width, (int)bitmapSize.height);
-			hr = (int)surfaceTile.BeginDraw(new PinnedObject(rect), typeof(IDXGISurface).GUID, out IntPtr pdxgiSurface, out var offset);
-			if (hr.Succeeded)
+			surfaceTile.BeginDraw(rect, out IDXGISurface? dxgiSurface, out var offset).ThrowIfFailed();
+
+			bitmapWidth = (int)bitmapSize.width;
+			bitmapHeight = (int)bitmapSize.height;
+			surface = surfaceTile;
+
+#pragma warning disable CS0618 // Type or member is obsolete
+			_d2d1Factory.GetDesktopDpi(out var dpiX, out var dpiY);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+			using SafeCoTaskMemStruct<D2D1_BITMAP_PROPERTIES1> bitmapProperties = new D2D1_BITMAP_PROPERTIES1()
 			{
-				bitmapWidth = (int)bitmapSize.width;
-				bitmapHeight = (int)bitmapSize.height;
-				surface = surfaceTile;
-
-				IDXGISurface dxgiSurface = (IDXGISurface)Marshal.GetObjectForIUnknown(pdxgiSurface);
-
-				if (hr.Succeeded)
+				bitmapOptions = D2D1_BITMAP_OPTIONS.D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS.D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
+				pixelFormat = new D2D1_PIXEL_FORMAT()
 				{
-					_d2d1Factory.Object.GetDesktopDpi(out var dpiX, out var dpiY);
+					format = DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM,
+					alphaMode = D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_IGNORE,
+				},
+				dpiX = dpiX,
+				dpiY = dpiY
+			};
 
-					using SafeCoTaskMemStruct<D2D1_BITMAP_PROPERTIES1> bitmapProperties = new D2D1_BITMAP_PROPERTIES1()
-					{
-						bitmapOptions = D2D1_BITMAP_OPTIONS.D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS.D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
-						pixelFormat = new D2D1_PIXEL_FORMAT()
-						{
-							format = DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM,
-							alphaMode = D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_IGNORE,
-						},
-						dpiX = dpiX,
-						dpiY = dpiY
-					};
+			var d2d1Target = _d2d1DeviceContext.CreateBitmapFromDxgiSurface(dxgiSurface!, bitmapProperties);
 
-					hr = (int)_d2d1DeviceContext.CreateBitmapFromDxgiSurface(dxgiSurface, bitmapProperties, out var d2d1Target);
+			_d2d1DeviceContext.SetTarget(d2d1Target);
 
-					if (hr.Succeeded)
-					{
-						_d2d1DeviceContext.SetTarget(d2d1Target);
+			_d2d1DeviceContext.BeginDraw();
 
-						_d2d1DeviceContext.BeginDraw();
+			D2D_RECT_F prect = new(offset.x + 0.0f,
+				offset.y + 0.0f,
+				offset.x + bitmapSize.width,
+				offset.y + bitmapSize.height);
+			_d2d1DeviceContext.DrawBitmap(d2d1Bitmap, destinationRectangle: prect);
 
-						D2D_RECT_F prect = new(offset.x + 0.0f,
-							offset.y + 0.0f,
-							offset.x + bitmapSize.width,
-							offset.y + bitmapSize.height);
-						_d2d1DeviceContext.DrawBitmap(d2d1Bitmap, destinationRectangle: prect);
+			_d2d1DeviceContext.EndDraw(out _, out _);
 
-						_d2d1DeviceContext.EndDraw();
-					}
+			surfaceTile.EndDraw();
 
-					surfaceTile.EndDraw();
-				}
-			}
+			return HRESULT.S_OK;
 		}
-
-		return hr;
+		catch (Exception ex)
+		{
+			return ex.HResult;
+		}
 	}
 
 	private HRESULT CreateD2D1BitmapFromFile(string filename, out ID2D1Bitmap? bitmap)
@@ -559,29 +533,23 @@ public class CApplication : VisibleWindow
 
 		try
 		{
-			var _wicFactory = (IWICImagingFactory)new WicImagingFactory();
+			var _wicFactory = new IWICImagingFactory();
 
-			var wicBitmapDecoder = _wicFactory.CreateDecoderFromFilename(filename,
-				null,
-				System.IO.FileAccess.Read,
+			var wicBitmapDecoder = _wicFactory.CreateDecoderFromFilename(filename, SafeGuidPtr.Null, ACCESS_MASK.GENERIC_READ,
 				WICDecodeOptions.WICDecodeMetadataCacheOnLoad);
 
 			var wicBitmapFrame = wicBitmapDecoder.GetFrame(0);
 
-			_wicFactory.CreateFormatConverter(out IWICFormatConverter wicFormatConverter).ThrowOnError();
+			IWICFormatConverter wicFormatConverter = _wicFactory.CreateFormatConverter();
 
-			Guid temp = WICConstants.GUID_WICPixelFormat32bppPBGRA;
-			wicFormatConverter.Initialize(wicBitmapFrame.Object,
-				ref temp, WICBitmapDitherType.WICBitmapDitherTypeNone,
-				null,
-				0.0f,
-				WICBitmapPaletteType.WICBitmapPaletteTypeMedianCut).ThrowOnError();
+			Guid temp = WICGuids.GUID_WICPixelFormat32bppPBGRA;
+			wicFormatConverter.Initialize(wicBitmapFrame, temp, WICBitmapDitherType.WICBitmapDitherTypeNone, null, 0.0, WICBitmapPaletteType.WICBitmapPaletteTypeMedianCut);
 
 			var wicBitmap = _wicFactory.CreateBitmapFromSource(wicFormatConverter, WICBitmapCreateCacheOption.WICBitmapCacheOnLoad);
 
-			_d2d1DeviceContext.CreateBitmapFromWicBitmap(wicBitmap.Object, default, out bitmap).ThrowOnError();
+			bitmap = _d2d1DeviceContext.CreateBitmapFromWicBitmap(wicBitmap, default);
 
-			return 0;
+			return HRESULT.S_OK;
 		}
 		catch (Exception ex)
 		{

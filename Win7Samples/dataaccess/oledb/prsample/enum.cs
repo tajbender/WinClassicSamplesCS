@@ -23,7 +23,7 @@ public static partial class Program
 		// IDBInitialize or not (we don't want to ask for IDBInitialize, since enumerators that don't require initialization will cause the
 		// CoCreateInstance to fail)
 		//var pIUnkEnumerator = Activator.CreateInstance(Type.GetTypeFromCLSID(clsidEnumerator) ?? throw new TypeLoadException());
-		object pIUnkEnumerator;
+		object? pIUnkEnumerator;
 		if (clsidEnumerator == CLSID_OLEDB_ENUMERATOR)
 			pIUnkEnumerator = new OleDbRootEnumerator();
 		else
@@ -44,12 +44,11 @@ public static partial class Program
 		myAddRowsetProperties(out var rgPropSets);
 
 		// Obtain a sources rowset from the enumerator. This rowset contains all of the OLE DB providers that this enumerator is able to list
-		ISourcesRowset pISourcesRowset = (ISourcesRowset)pIUnkEnumerator;
+		ISourcesRowset pISourcesRowset = (ISourcesRowset)pIUnkEnumerator!;
 		pISourcesRowset.GetSourcesRowset(default, //pUnkOuter
-			typeof(IRowset).GUID, //riid
 			1, //cPropSets
 			rgPropSets, //rgPropSets
-			out var pIRowset //ppRowset
+			out IRowset? pIRowset //ppRowset
 		).ThrowIfFailed();
 
 		// Display the rowset to the user; this will allow the user to perform basic navigation of the rowset and will allow the user to

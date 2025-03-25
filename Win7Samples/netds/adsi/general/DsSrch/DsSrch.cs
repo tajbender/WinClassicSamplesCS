@@ -49,7 +49,7 @@ internal class Program
 
 		IDirectorySearch? pDSSearch;
 		if (dwAuthFlags != 0)
-			ADsOpenObject(pszSearchBase!, out pDSSearch, dwAuthFlags, pszUserName, pszPassword).ThrowIfFailed();
+			ADsOpenObject(pszSearchBase!, pszUserName, pszPassword, dwAuthFlags, out pDSSearch).ThrowIfFailed();
 		else
 			ADsGetObject(pszSearchBase!, out pDSSearch).ThrowIfFailed();
 
