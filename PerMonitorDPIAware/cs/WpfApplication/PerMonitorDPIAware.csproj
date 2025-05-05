@@ -156,12 +156,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.SHCore">
-      <Version>4.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="Vanara.PInvoke.User32">
-      <Version>4.1.2</Version>
-    </PackageReference>
+    <PackageReference Include="Vanara.PInvoke.SHCore" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

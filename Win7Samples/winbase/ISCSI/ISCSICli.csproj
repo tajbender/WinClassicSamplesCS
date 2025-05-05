@@ -1,14 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.IScsiDsc" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.SetupAPI" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Ws2_32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.IScsiDsc" />
+    <PackageReference Include="Vanara.PInvoke.Kernel32" />
+    <PackageReference Include="Vanara.PInvoke.SetupAPI" />
+    <PackageReference Include="Vanara.PInvoke.Ws2_32" />
   </ItemGroup>
-
 </Project>

@@ -1,18 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Pdh" Version="4.1.2" />
-    <PackageReference Include="Vanara.Windows.Forms" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.Pdh" />
+    <PackageReference Include="Vanara.Windows.Forms" />
     <Using Include="System" />
     <Using Include="System.IO" />
     <Using Include="System.Linq" />
     <Using Include="System.Windows.Forms" />
   </ItemGroup>
-
 </Project>

@@ -1,25 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\HelloGenericPrograms\DXSample.cs" Link="DXSample.cs" />
     <Compile Include="..\HelloGenericPrograms\PIXEvent.cs" Link="PIXEvent.cs" />
     <Compile Include="..\HelloGenericPrograms\Win32Application.cs" Link="Win32Application.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.D3DCompiler" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Direct3D12" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.D3DCompiler" />
+    <PackageReference Include="Vanara.PInvoke.Direct3D12" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="shaders.hlsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

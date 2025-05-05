@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.WinTrust" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.Kernel32" />
+    <PackageReference Include="Vanara.PInvoke.WinTrust" />
   </ItemGroup>
-
 </Project>

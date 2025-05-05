@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-	<OutputType>Exe</OutputType>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-	<PackageReference Include="Vanara.PInvoke.Drt" Version="4.1.2" />
-	<PackageReference Include="Vanara.PInvoke.FirewallApi" Version="4.1.2" />
-	<PackageReference Include="Vanara.PInvoke.Security" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.Drt" />
+    <PackageReference Include="Vanara.PInvoke.FirewallApi" />
+    <PackageReference Include="Vanara.PInvoke.Security" />
   </ItemGroup>
-
 </Project>

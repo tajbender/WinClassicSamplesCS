@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <Platform>windows</Platform>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Management" Version="9.0.2" />
-    <PackageReference Include="Vanara.VirtualDisk" Version="4.1.2" />
+    <PackageReference Include="System.Management" />
+    <PackageReference Include="Vanara.VirtualDisk" />
   </ItemGroup>
-
 </Project>

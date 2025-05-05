@@ -1,15 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\FCopy\ULARGE_INTEGER.cs" Link="ULARGE_INTEGER.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
   </ItemGroup>
-
 </Project>

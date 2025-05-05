@@ -1,19 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\..\appplatform\ExplorerBrowserSearch\ShellHelpers.cs" Link="ShellHelpers.cs" />
     <Compile Include="..\DropTargetVerb\RegisterExtension.cs" Link="RegisterExtension.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Mpr" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Shell32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.Mpr" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
   </ItemGroup>
-
 </Project>

@@ -1,30 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.P2P" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.P2P" />
     <Using Include="System" />
     <Using Include="System.IO" />
     <Using Include="System.Linq" />
     <Using Include="System.Windows.Forms" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="IDD_OPENGROUP.cs" />
     <Compile Update="IDD_DELETEGROUP - Copy.Designer.cs">
       <DependentUpon>IDD_DELETEGROUP.Designer.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="IDD_DELETEGROUP - Copy.resx">
       <DependentUpon>IDD_DELETEGROUP.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>

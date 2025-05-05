@@ -1,19 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.NetApi32" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.NTDSApi" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Rpc" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.NetApi32" />
+    <PackageReference Include="Vanara.PInvoke.NTDSApi" />
+    <PackageReference Include="Vanara.PInvoke.Rpc" />
   </ItemGroup>
-
 </Project>

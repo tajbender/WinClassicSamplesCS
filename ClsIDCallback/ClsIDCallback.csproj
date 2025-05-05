@@ -1,13 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.BITS" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Ole" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.BITS" />
+    <PackageReference Include="Vanara.PInvoke.Ole" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
   </ItemGroup>
-
 </Project>

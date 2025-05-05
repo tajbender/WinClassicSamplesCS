@@ -1,12 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="Vanara.PInvoke.Shell32" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.1.2" />
+    <PackageReference Include="Microsoft.Win32.Registry" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
+    <PackageReference Include="Vanara.PInvoke.UxTheme" />
   </ItemGroup>
-
 </Project>

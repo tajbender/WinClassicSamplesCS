@@ -1,17 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\ExplorerBrowserSearch\ShellHelpers.cs" Link="ShellHelpers.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
-    <PackageReference Include="Vanara.Library" Version="4.1.2" />
+    <PackageReference Include="System.Drawing.Common" />
+    <PackageReference Include="Vanara.Library" />
   </ItemGroup>
-
 </Project>

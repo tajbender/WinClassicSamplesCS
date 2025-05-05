@@ -1,12 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    </PropertyGroup>
-
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Magnification" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.Magnification" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
   </ItemGroup>
-
 </Project>

@@ -1,17 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.IpHlpApi" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.NetListMgr" Version="4.1.2" />
-    <PackageReference Include="Vanara.PInvoke.Ws2_32" Version="4.1.2" />
+    <PackageReference Include="Vanara.PInvoke.IpHlpApi" />
+    <PackageReference Include="Vanara.PInvoke.NetListMgr" />
+    <PackageReference Include="Vanara.PInvoke.Ws2_32" />
   </ItemGroup>
-
 </Project>
