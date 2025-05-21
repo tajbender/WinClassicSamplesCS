@@ -31,6 +31,8 @@ public class CRegisterExtension
 		}
 	}
 
+	public static CRegisterExtension Create<T>(HKEY hkeyRoot = default) where T : class => new(typeof(T).GUID, hkeyRoot);
+
 	public HRESULT MapNotFoundToSuccess(HRESULT hr) => HRESULT_FROM_WIN32(Win32Error.ERROR_FILE_NOT_FOUND) == hr ? HRESULT.S_OK : hr;
 
 	public HRESULT RegDeleteKeyPrintf(HKEY hkey, string pszKeyFormatString, params object[] argList)
@@ -54,17 +56,9 @@ public class CRegisterExtension
 		var hr = _EnsureModule();
 		if (hr.Succeeded && _szCLSID is not null)
 		{
-			var szCmdLine = new StringBuilder(MAX_PATH + 20);
-			if (pszCmdLine != null)
-			{
-				szCmdLine.AppendFormat("{0} {1}", _szModule, pszCmdLine);
-			}
-			else
-			{
-				szCmdLine.Append(_szModule);
-			}
+			var szCmdLine = pszCmdLine is null ? _szModule : $"{_szModule} {pszCmdLine}";
 
-			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\CLSID\\{0}\\LocalServer32", "", szCmdLine.ToString(), _szCLSID);
+			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\CLSID\\{0}\\LocalServer32", "", szCmdLine, _szCLSID);
 			if (hr.Succeeded)
 			{
 				hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\CLSID\\{0}", "AppId", _szCLSID, _szCLSID);

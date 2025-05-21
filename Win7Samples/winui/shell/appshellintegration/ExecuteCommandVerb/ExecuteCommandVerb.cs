@@ -7,44 +7,39 @@ using static Vanara.PInvoke.ShlwApi;
 using static Vanara.PInvoke.User32;
 
 const string c_szVerbDisplayName = "ExecuteCommand Verb Sample";
+const string c_szProgID = "txtfile";
+const string c_szVerbName = "ExecuteCommandVerb";
 
-HRESULT hr = CoInitializeEx(default, COINIT.COINIT_APARTMENTTHREADED | COINIT.COINIT_DISABLE_OLE1DDE);
-if (hr.Succeeded)
+if (Environment.CommandLine.Contains("-embedding", StringComparison.CurrentCultureIgnoreCase))
 {
-	if (Environment.CommandLine.ToLower().Contains("-embedding"))
-	{
-		using CExecuteCommandVerb pAppDrop = new();
-		pAppDrop.Run();
-	}
-	else
-	{
-		CRegisterExtension re = new(typeof(CExecuteCommandVerb).GUID);
+	new CExecuteCommandVerb().Run();
+}
+else if (Environment.CommandLine.Contains("-unreg", StringComparison.CurrentCultureIgnoreCase))
+{
+	CRegisterExtension.Create<CExecuteCommandVerb>().UnRegisterObject();
+}
+else
+{
+	var re = CRegisterExtension.Create<CExecuteCommandVerb>();
 
-		hr = re.RegisterAppAsLocalServer(c_szVerbDisplayName);
+	var hr = re.RegisterAppAsLocalServer(c_szVerbDisplayName);
+	if (hr.Succeeded)
+	{
+
+		// register this verb on .txt files ProgID
+		hr = re.RegisterExecuteCommandVerb(c_szProgID, c_szVerbName, c_szVerbDisplayName);
 		if (hr.Succeeded)
 		{
-			const string c_szProgID = "txtfile";
-			const string c_szVerbName = "ExecuteCommandVerb";
-
-			// register this verb on .txt files ProgID
-			hr = re.RegisterExecuteCommandVerb(c_szProgID, c_szVerbName, c_szVerbDisplayName);
+			hr = re.RegisterVerbAttribute(c_szProgID, c_szVerbName, "NeverDefault");
 			if (hr.Succeeded)
 			{
-				hr = re.RegisterVerbAttribute(c_szProgID, c_szVerbName, "NeverDefault");
-				if (hr.Succeeded)
-				{
-					MessageBox(default, "Installed ExecuteCommand Verb Sample for .txt files\n\n" +
-						"right click on a .txt file and choose 'ExecuteCommand Verb Sample' to see this in action",
-						c_szVerbDisplayName, MB_FLAGS.MB_OK);
-				}
+				MessageBox(default, "Installed ExecuteCommand Verb Sample for .txt files\n\n" +
+					"right click on a .txt file and choose 'ExecuteCommand Verb Sample' to see this in action",
+					c_szVerbDisplayName, MB_FLAGS.MB_OK);
 			}
 		}
 	}
-
-	CoUninitialize();
 }
-
-return 0;
 
 internal class CExecuteCommandVerb : DropTargetVerb.CAppMessageLoop, IExecuteCommand, IObjectWithSelection, IInitializeCommand, IObjectWithSite, IDisposable
 {
