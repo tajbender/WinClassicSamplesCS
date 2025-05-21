@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.WscApi" Version="4.1.4" />
+    <PackageReference Include="Vanara.PInvoke.WscApi" />
   </ItemGroup>
 
 </Project>

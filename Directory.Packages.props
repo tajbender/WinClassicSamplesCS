@@ -33,6 +33,8 @@
     <PackageVersion Include="Vanara.PInvoke.ComCtl32" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.ComDlg32" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.CoreAudio" Version="4.1.4" />
+    <PackageVersion Include="Vanara.PInvoke.CredUI" Version="4.1.4" />
+    <PackageVersion Include="Vanara.PInvoke.Cryptography" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.D3DCompiler" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.Dcomp" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.Dhcp" Version="4.1.4" />
@@ -68,6 +70,7 @@
     <PackageVersion Include="Vanara.PInvoke.Pdh" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.PortableDeviceApi" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.PowrProf" Version="4.1.4" />
+    <PackageVersion Include="Vanara.PInvoke.Printing" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.ProjectedFSLib" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.QoS" Version="4.1.4" />
     <PackageVersion Include="Vanara.PInvoke.Rpc" Version="4.1.4" />
