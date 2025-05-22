@@ -101,6 +101,7 @@
     <PackageVersion Include="Vanara.VirtualDisk" Version="4.1.4" />
     <PackageVersion Include="Vanara.Windows.Extensions" Version="4.1.4" />
     <PackageVersion Include="Vanara.Windows.Forms" Version="4.1.4" />
+    <PackageVersion Include="Vanara.Windows.Shell" Version="4.1.4" />
     <PackageVersion Include="Vanara.Windows.Shell.Common" Version="4.1.4" />
   </ItemGroup>
 </Project>
