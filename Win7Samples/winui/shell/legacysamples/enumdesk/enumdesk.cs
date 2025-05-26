@@ -60,12 +60,10 @@ public partial class EnumDesk : Form
 		hwndTreeView.ImageList = himlSmall;
 		hwndTreeView.AfterExpand += (s, e) =>
 		{
-			if (e.Node?.Nodes.Count == 0)
-				return;
-			if (e.Node?.Nodes.Count == 1 && e.Node.Nodes[0].Tag == dummy)
+			if ((e.Node?.Nodes.Count) != 0)
 				Tree_GetChildItems(e.Node!);
 		};
-		hwndTreeView.AfterCollapse += (s, e) => e.Node?.Nodes.Clear();
+		//hwndTreeView.AfterCollapse += (s, e) => e.Node?.Nodes.Clear();
 		hwndTreeView.AfterSelect += (s, e) => List_DisplayFolder((PIDL?)e.Node?.Tag);
 		hwndTreeView.NodeMouseClick += (s, e) => { if (e.Button == MouseButtons.Right) Tree_DoItemMenu(e.Node, hwndTreeView.PointToScreen(e.Location)); };
 
@@ -191,7 +189,10 @@ public partial class EnumDesk : Form
 			ShellFolder pParentFolder = new(pItem);
 
 			//enumerate and sort the item's PIDLs
-			hParentItem.Nodes.AddRange(pParentFolder.EnumerateChildIds(FolderItemFilter.Folders, hwndTreeView.Handle).Order(Comparer<PIDL>.Create(comp)).Select(p => MakeItem(new ShellFolder(p))).ToArray());
+			foreach (var pidl in pParentFolder.EnumerateChildIds(FolderItemFilter.Folders, hwndTreeView.Handle).Order(Comparer<PIDL>.Create(comp)))
+			{
+				try { hParentItem.Nodes.Add(MakeItem(new ShellFolder(pidl))); } catch { }
+			}
 
 			int comp(PIDL x, PIDL y) { var hr = pParentFolder.IShellFolder.CompareIDs(0, x, y); return hr.Succeeded ? (short)hr.Code : 0; }
 		}
