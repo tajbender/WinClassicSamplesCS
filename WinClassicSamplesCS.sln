@@ -99,15 +99,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinsockBluetoothConnection"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BacgroundIntelligenceTransferServicePolicy", "BacgroundIntelligenceTransferServicePolicy\BacgroundIntelligenceTransferServicePolicy.csproj", "{302CEFC1-3011-4B2A-B443-EA6FA0C0B4FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundCopyFileProperties", "BackgroundCopyFileProperties\BackgroundCopyFileProperties.csproj", "{313955BB-513D-43BD-9367-938635B9AC9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransferPolicy", "BackgroundCopyFileProperties\TransferPolicy.csproj", "{313955BB-513D-43BD-9367-938635B9AC9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionManagerCost", "ConnectionManagerCost\ConnectionManagerCost.csproj", "{17A3F4FC-4BE8-4865-BBD3-50116CE7599B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionManager", "ConnectionManagerCost\ConnectionManager.csproj", "{17A3F4FC-4BE8-4865-BBD3-50116CE7599B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNSAsyncNetworkNameResolution", "DNSAsyncNetworkNameResolution\DNSAsyncNetworkNameResolution.csproj", "{782CFC81-0B0E-4722-B685-52B3CC137060}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResolveName", "DNSAsyncNetworkNameResolution\ResolveName.csproj", "{782CFC81-0B0E-4722-B685-52B3CC137060}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopToasts", "DesktopToasts\DesktopToasts.csproj", "{331269B7-C7F6-453F-98FB-D59516C6044E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopToastsSample", "DesktopToasts\DesktopToastsSample.csproj", "{331269B7-C7F6-453F-98FB-D59516C6044E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNSAsyncQuery", "DNSAsyncQuery\DNSAsyncQuery.csproj", "{678455CA-F4F2-4285-B414-E220026C4AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsQueryEx", "DNSAsyncQuery\DnsQueryEx.csproj", "{678455CA-F4F2-4285-B414-E220026C4AA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkCost", "NetworkCost\NetworkCost.csproj", "{45B91ECD-3F16-401F-BA6F-DE4E42661EAC}"
 EndProject
@@ -117,9 +117,9 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "CloudMirrorPackage", "Cloud
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectedFileSystem", "ProjectedFileSystem\ProjectedFileSystem.csproj", "{EB4659EE-9D90-4413-A9E2-301715CAF4EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppVisibility", "AppVisibility\AppVisibility.csproj", "{E5A7F376-432F-44DB-94A7-A14A2D4E5C4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppVisibilitySample", "AppVisibility\AppVisibilitySample.csproj", "{E5A7F376-432F-44DB-94A7-A14A2D4E5C4B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopAutomationDismiss", "DesktopAutomationDismiss\DesktopAutomationDismiss.csproj", "{8CE621E6-B633-4957-8D64-508F54461DF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopAutomation", "DesktopAutomationDismiss\DesktopAutomation.csproj", "{8CE621E6-B633-4957-8D64-508F54461DF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnificationWindowed", "MagnificationWindowed\MagnificationWindowed.csproj", "{4451ED6E-508F-4627-987A-699C19A48DE5}"
 EndProject
@@ -345,7 +345,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "legacysamples", "legacysamp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fakemenu", "Win7Samples\winui\shell\legacysamples\fakemenu\fakemenu.csproj", "{287DC56C-725C-4FCE-9AFB-D4F9F3E7481C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventTracingEnumerateProviders", "EventTracingEnumerateProviders\EventTracingEnumerateProviders.csproj", "{BDA5D50F-3ADA-41F5-8DE8-1C9E6CB64118}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnumerateProviders", "EventTracingEnumerateProviders\EnumerateProviders.csproj", "{BDA5D50F-3ADA-41F5-8DE8-1C9E6CB64118}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WASAPIRendering", "WASAPIRendering\WASAPIRendering.csproj", "{850D52F8-D99D-468D-8A0D-8C42D3D16318}"
 EndProject
@@ -516,7 +516,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectX-Graphics-Samples", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "D3D12HelloWorld", "D3D12HelloWorld", "{B101716B-F4B2-46E5-9EDE-185DBEF96458}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloGenericPrograms", "DirectX-Graphics-Samples\D3D12HelloWorld\HelloGenericPrograms\HelloGenericPrograms.csproj", "{F1228ED9-82BC-47A5-9D55-13CE7E25E55D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "D3D12HelloGenericPrograms", "DirectX-Graphics-Samples\D3D12HelloWorld\HelloGenericPrograms\D3D12HelloGenericPrograms.csproj", "{F1228ED9-82BC-47A5-9D55-13CE7E25E55D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "D3D1211On12", "DirectX-Graphics-Samples\D3D1211On12\D3D1211On12.csproj", "{1FAE098C-1687-48C0-959C-E9AB469ADEC4}"
 EndProject
