@@ -190,7 +190,7 @@ static class CertSign
 	//
 	// The caller must call LocalFree to release (*ppbSignature)
 	//------------------------------------------------------------------------------------------------------------------
-	static HRESULT HrSignCNGHash(NCRYPT_KEY_HANDLE hKey, IntPtr pPaddingInfo, EncryptFlags dwFlag, IntPtr pbHash, uint cbHash, out SafeLocalHandle ppbSignature)
+	static HRESULT HrSignCNGHash(NCRYPT_KEY_HANDLE hKey, IntPtr pPaddingInfo, NCryptDecryptFlag dwFlag, IntPtr pbHash, uint cbHash, out SafeLocalHandle ppbSignature)
 	{
 		//initialize [Out]"), parameters
 		ppbSignature = SafeLocalHandle.Null;
@@ -562,7 +562,7 @@ static class CertSign
 							}
 						}
 
-						hr = HrSignCNGHash(hCryptProvOrNCryptKey, pPKCS1PaddingInfo, dwCngFlags, pbHash, pbHash.Size, out pbSignature);
+						hr = HrSignCNGHash(hCryptProvOrNCryptKey, pPKCS1PaddingInfo, (NCryptDecryptFlag)dwCngFlags, pbHash, pbHash.Size, out pbSignature);
 						if (hr.Failed)
 						{
 							goto CleanUp;
