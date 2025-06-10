@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ApplicationManifest>DeclareDPIAware.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.Direct2D" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="sampleImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="sampleImage.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

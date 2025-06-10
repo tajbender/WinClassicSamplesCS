@@ -122,7 +122,7 @@ internal class Scene : GraphicsScene
 		{
 			var bp = BrushProperties();
 			m_pFill = m_pRenderTarget!.CreateSolidColorBrush(new D3DCOLORVALUE(1.0f, 1.0f, 0), bp);
-			m_pStroke = m_pRenderTarget!.CreateSolidColorBrush(new(Color.Black), bp);
+			m_pStroke = m_pRenderTarget!.CreateSolidColorBrush(Color.Black, bp);
 			return HRESULT.S_OK;
 		}
 		catch (Exception ex)

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ApplicationManifest>DeclareDPIAware.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\TextAnimationSample\RingBuffer.cs" Link="RingBuffer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.Direct2D" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
+  </ItemGroup>
+</Project>
