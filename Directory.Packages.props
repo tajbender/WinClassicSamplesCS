@@ -84,6 +84,7 @@
     <PackageVersion Include="Vanara.PInvoke.SHCore" Version="4.1.5" />
     <PackageVersion Include="Vanara.PInvoke.Shell32" Version="4.1.5" />
     <PackageVersion Include="Vanara.PInvoke.Shlwapi" Version="4.1.5" />
+    <PackageVersion Include="Vanara.PInvoke.SpeechApi" Version="4.1.5" />
     <PackageVersion Include="Vanara.PInvoke.SpellCheckingApi" Version="4.1.5" />
     <PackageVersion Include="Vanara.PInvoke.TextServicesFramework" Version="4.1.5" />
     <PackageVersion Include="Vanara.PInvoke.UIAnimation" Version="4.1.5" />
