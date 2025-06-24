@@ -435,7 +435,7 @@ internal class D3D12HelloGenericPrograms : DXSample
 			{
 				Type = D3D12_PROGRAM_TYPE.D3D12_PROGRAM_TYPE_GENERIC_PIPELINE
 			};
-			SP.__union_1.GenericPipeline.ProgramIdentifier = m_genericProgram[i];
+			SP.GenericPipeline = new() { ProgramIdentifier = m_genericProgram[i] };
 			m_commandList.SetProgram(SP);
 			m_commandList.RSSetViewports(1, [m_viewport[i]]);
 			m_commandList.DrawInstanced(3, 1, 0, 0);
