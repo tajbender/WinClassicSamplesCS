@@ -87,6 +87,7 @@
     <PackageVersion Include="Vanara.PInvoke.Shlwapi" Version="4.1.6" />
     <PackageVersion Include="Vanara.PInvoke.SpeechApi" Version="4.1.6" />
     <PackageVersion Include="Vanara.PInvoke.SpellCheckingApi" Version="4.1.6" />
+    <PackageVersion Include="Vanara.PInvoke.TelephonyApi" Version="4.1.6" />
     <PackageVersion Include="Vanara.PInvoke.TextServicesFramework" Version="4.1.6" />
     <PackageVersion Include="Vanara.PInvoke.UIAnimation" Version="4.1.6" />
     <PackageVersion Include="Vanara.PInvoke.UrlMon" Version="4.1.6" />

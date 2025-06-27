@@ -1,6 +1,4 @@
-﻿using Vanara;
-using Vanara.InteropServices;
-using Vanara.PInvoke;
+﻿using Vanara.PInvoke;
 using static Vanara.PInvoke.User32;
 using static Vanara.PInvoke.SpeechApi;
 
@@ -126,9 +124,7 @@ internal class CSimpleDict : ModalDialog
 						{
 							// The sound has started and ended, 
 							// but the engine has not succeeded in recognizing anything
-							SafeLPTSTR szNoise = new("<noise>");
-
-							SendDlgItemMessage(Handle, IDC_EDIT_DICT, (uint)EditMessage.EM_REPLACESEL, (BOOL)true, (IntPtr)szNoise);
+							SendDlgItemMessage(Handle, IDC_EDIT_DICT, EditMessage.EM_REPLACESEL, true, "<noise>");
 						}
 						m_bGotReco = false;
 					}
@@ -147,7 +143,7 @@ internal class CSimpleDict : ModalDialog
 						// Concatenate a space onto the end of the recognized word
 						dstrText += " ";
 
-						SendDlgItemMessage(Handle, IDC_EDIT_DICT, (uint)EditMessage.EM_REPLACESEL, (BOOL)true, new SafeLPTSTR(dstrText));
+						SendDlgItemMessage(Handle, IDC_EDIT_DICT, EditMessage.EM_REPLACESEL, true, dstrText);
 					}
 					break;
 

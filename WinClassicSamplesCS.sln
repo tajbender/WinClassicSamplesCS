@@ -598,6 +598,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDictation", "Win7Samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalkBack", "Win7Samples\winui\speech\talkback\TalkBack.csproj", "{891C1278-A9A8-2B01-00EC-714C2F36BD56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTelephony", "Win7Samples\winui\speech\SimpleTelephony\SimpleTelephony.csproj", "{47774209-19D0-73F1-7729-6316703480A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -3385,6 +3387,18 @@ Global
 		{891C1278-A9A8-2B01-00EC-714C2F36BD56}.Release|x64.Build.0 = Release|Any CPU
 		{891C1278-A9A8-2B01-00EC-714C2F36BD56}.Release|x86.ActiveCfg = Release|Any CPU
 		{891C1278-A9A8-2B01-00EC-714C2F36BD56}.Release|x86.Build.0 = Release|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Debug|x64.Build.0 = Debug|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Debug|x86.Build.0 = Debug|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Release|x64.ActiveCfg = Release|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Release|x64.Build.0 = Release|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Release|x86.ActiveCfg = Release|Any CPU
+		{47774209-19D0-73F1-7729-6316703480A4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -3627,6 +3641,7 @@ Global
 		{340A2CAA-E0C0-41DC-8945-A651674E0C18} = {A74C6952-488E-4926-BE04-E17684FDAA0C}
 		{8EBC9313-ACB4-4D85-8328-25346FF73E62} = {340A2CAA-E0C0-41DC-8945-A651674E0C18}
 		{891C1278-A9A8-2B01-00EC-714C2F36BD56} = {340A2CAA-E0C0-41DC-8945-A651674E0C18}
+		{47774209-19D0-73F1-7729-6316703480A4} = {340A2CAA-E0C0-41DC-8945-A651674E0C18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82D57A23-9C32-4014-9AFB-25B38D08E1D1}
