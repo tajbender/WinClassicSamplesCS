@@ -77,7 +77,6 @@ class COperator : ModalDialog
 	ITBasicCallControl? m_pCall;
 	ITTAPIEventNotification? m_pTAPIEventNotification;
 	ComConnectionPoint? cp;
-	int m_ulAdvise;
 
 	// SAPI data
 
@@ -381,7 +380,7 @@ class COperator : ModalDialog
 	***********************************************************/
 	HRESULT RegisterTapiEventInterface()
 	{
-		cp = new(m_pTapi!, m_pTAPIEventNotification);
+		cp = new(m_pTapi!, m_pTAPIEventNotification, typeof(ITTAPIEventNotification));
 		return HRESULT.S_OK;
 	}
 
@@ -453,7 +452,10 @@ class COperator : ModalDialog
 		// RegisterCallNotifications takes a media type set of flags indicating
 		// the set of media types we are interested in. We know the
 		// address supports audio (see ListenOnAddress())
-		try { m_pTapi!.RegisterCallNotifications(pAddress, true, true, TAPIMEDIATYPE.TAPIMEDIATYPE_AUDIO, m_ulAdvise); return HRESULT.S_OK; }
+		try {
+			var cookie = cp!.TryGetValue(typeof(ITTAPIEventNotification).GUID, out var v) ? v.cookie : 0;
+			m_pTapi!.RegisterCallNotifications(pAddress, true, true, TAPIMEDIATYPE.TAPIMEDIATYPE_AUDIO, cookie); return HRESULT.S_OK;
+		}
 		catch (Exception ex) { return ex.HResult; }
 	}
 
