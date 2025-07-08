@@ -602,6 +602,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTelephony", "Win7Samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TtsApplication", "Win7Samples\winui\speech\TtsApplication\TtsApplication.csproj", "{19609BF1-6F7C-3D25-E909-763E86722EA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netinfo", "Win7Samples\netds\iphelp\Netinfo\netinfo.csproj", "{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -3413,6 +3415,18 @@ Global
 		{19609BF1-6F7C-3D25-E909-763E86722EA4}.Release|x64.Build.0 = Release|Any CPU
 		{19609BF1-6F7C-3D25-E909-763E86722EA4}.Release|x86.ActiveCfg = Release|Any CPU
 		{19609BF1-6F7C-3D25-E909-763E86722EA4}.Release|x86.Build.0 = Release|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Debug|x64.Build.0 = Debug|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Debug|x86.Build.0 = Debug|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Release|x64.ActiveCfg = Release|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Release|x64.Build.0 = Release|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Release|x86.ActiveCfg = Release|Any CPU
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -3657,6 +3671,7 @@ Global
 		{891C1278-A9A8-2B01-00EC-714C2F36BD56} = {340A2CAA-E0C0-41DC-8945-A651674E0C18}
 		{47774209-19D0-73F1-7729-6316703480A4} = {340A2CAA-E0C0-41DC-8945-A651674E0C18}
 		{19609BF1-6F7C-3D25-E909-763E86722EA4} = {340A2CAA-E0C0-41DC-8945-A651674E0C18}
+		{C32A6CF8-9CEF-7A5F-56F5-8688A325F779} = {231BEB1C-7F5A-4401-B2DE-1D21A7562924}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82D57A23-9C32-4014-9AFB-25B38D08E1D1}
