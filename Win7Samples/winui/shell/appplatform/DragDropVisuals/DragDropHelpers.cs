@@ -73,7 +73,7 @@ public static class DragDropHelpers
 
 		// The STGMEDIUM structure is used to define how to handle a global memory transfer. This structure includes a flag, tymed, which
 		// indicates the medium to be used, and a union comprising pointers and a handle for getting whichever medium is specified in tymed.
-		STGMEDIUM medium = new() { tymed = TYMED.TYMED_HGLOBAL, unionmember = pv.TakeOwnership() };
+		STGMEDIUM medium = new() { tymed = TYMED.TYMED_HGLOBAL, unionmember = pv.ReleaseOwnership() };
 
 		try { pdtobj.SetData(ref fmte, ref medium, true); return HRESULT.S_OK; }
 		catch (Exception ex) { return ex.HResult; }

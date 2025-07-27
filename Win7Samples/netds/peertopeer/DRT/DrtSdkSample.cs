@@ -614,8 +614,8 @@ internal static partial class Program
 			Drt.registrations.Add(reg);
 
 			// newKeyData and newPayloadData will be freed on unregister
-			newKey.TakeOwnership();
-			newPayload.TakeOwnership();
+			newKey.ReleaseOwnership();
+			newPayload.ReleaseOwnership();
 
 			Console.WriteLine("Successfully Registered: ");
 			Console.Write(((byte[]?)reg.regInfo.key)?.ToHexDumpString());

@@ -76,7 +76,7 @@ internal class CDataObject : IDataObjectV
 			if ((pformatetcIn.tymed & TYMED.TYMED_HGLOBAL) != 0)
 			{
 				SafeHGlobalHandle h = new(c_szText);
-				pmedium.unionmember = h.TakeOwnership();
+				pmedium.unionmember = h.ReleaseOwnership();
 				pmedium.tymed = TYMED.TYMED_HGLOBAL;
 			}
 		}

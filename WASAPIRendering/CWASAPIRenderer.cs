@@ -57,7 +57,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 		// Load the MixFormat. This may differ depending on the shared mode used
 		audioClient.GetMixFormat(out SafeCoTaskMemHandle? mem).ThrowIfFailed();
 		SizeT sz = mem.Size;
-		mixFormat = new(mem.TakeOwnership(), true, sz);
+		mixFormat = new(mem.ReleaseOwnership(), true, sz);
 
 		FrameSize = mixFormat.Value.nBlockAlign;
 		CalculateMixFormatType().ThrowIfFailed();

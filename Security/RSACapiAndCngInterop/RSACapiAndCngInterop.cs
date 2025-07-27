@@ -226,7 +226,7 @@ void EncryptWithCapiDecryptWithCng()
 
 	uint MsgLength = (uint)Data.Size;
 
-	Win32Error.ThrowLastErrorIfFalse(CryptEncrypt(CapiKeyHandle, 0, true, 0, default, ref MsgLength, Data.Size));
+	Win32Error.ThrowLastErrorIfFalse(CryptEncrypt(CapiKeyHandle, 0, true, 0, IntPtr.Zero, ref MsgLength, Data.Size));
 
 	uint EncryptDecryptDataLength = MsgLength;
 

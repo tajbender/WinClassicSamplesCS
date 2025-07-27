@@ -314,7 +314,7 @@ static class cms_encrypt
 			//-------------------------------------------------------------------
 			// Allocate memory for the returned BLOB.
 			pbOutput = new SafeLocalHandle(cbOutput);
-			if (default == pbOutput)
+			if (pbOutput is null)
 			{
 				hr = (HRESULT)(Win32Error)Win32Error.ERROR_OUTOFMEMORY;
 				goto CleanUp;

@@ -268,7 +268,7 @@ internal unsafe class CCustomNullSecuredAddressPayload : IDisposable
 		}
 
 		// pass the data back to the caller
-		pData = new DRT_DATA { cb = (uint)ddDataPtr.Length, pb = mem.TakeOwnership() };
+		pData = new DRT_DATA { cb = (uint)ddDataPtr.Length, pb = mem.ReleaseOwnership() };
 
 		return HRESULT.S_OK;
 	}
@@ -558,10 +558,10 @@ internal unsafe class CCustomNullSecurityProvider
 		if (ppAddressList != null)
 		{
 			sap.GetAddresses(out var addr);
-			*ppAddressList = (void*)(addr?.TakeOwnership() ?? 0);
+			*ppAddressList = (void*)(addr?.ReleaseOwnership() ?? 0);
 		}
 		sap.GetPublicKey(out var pk);
-		*ppPublicKey = (CERT_PUBLIC_KEY_INFO*)(pk?.TakeOwnership() ?? 0);
+		*ppPublicKey = (CERT_PUBLIC_KEY_INFO*)(pk?.ReleaseOwnership() ?? 0);
 		sap.GetKey(out pKey);
 		sap.GetProtocolVersion(out *pbProtocolMajor, out *pbProtocolMinor);
 
