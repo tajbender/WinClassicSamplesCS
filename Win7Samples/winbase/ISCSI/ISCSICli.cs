@@ -1121,7 +1121,7 @@ internal static class ISCSICli
 				// Since we are on XP or W2003 then we can use the
 				// advanced API so load it up from kernel32.dll
 				//
-				var b = GetVolumePathNamesForVolumeName(VolumeName, null, 0, out var CharNeeded);
+				var b = GetVolumePathNamesForVolumeName(VolumeName, default, 0, out var CharNeeded);
 
 				Status = b ? Win32Error.ERROR_SUCCESS : GetLastError();
 

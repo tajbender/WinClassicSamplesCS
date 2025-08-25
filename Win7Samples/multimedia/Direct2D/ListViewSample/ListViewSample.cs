@@ -273,12 +273,11 @@ internal class ListViewApp : VisibleWindow
 			//
 			uint requiredLength = GetFullPathName(findFileData.cFileName, 0, default, out _);
 			_ = Win32Error.ThrowLastErrorIf(requiredLength, v => v == 0);
-			StringBuilder wszAbsolutePath = new((int)requiredLength + 1);
-			_ = Win32Error.ThrowLastErrorIf(GetFullPathName(findFileData.cFileName, requiredLength, wszAbsolutePath, out _), v => v == 0);
+			string wszAbsolutePath = GetFullPathName(findFileData.cFileName, out _)!;
 
 			// Create an IShellItemImageFactory for the current directory item
 			// so that we can get a icon/thumbnail for it.
-			IShellItemImageFactory pShellItemImageFactory = SHCreateItemFromParsingName<IShellItemImageFactory>(wszAbsolutePath.ToString(), m_pBindContext)!;
+			IShellItemImageFactory pShellItemImageFactory = SHCreateItemFromParsingName<IShellItemImageFactory>(wszAbsolutePath, m_pBindContext)!;
 
 			SIZE iconSize = new((int)msc_iconSize, (int)msc_iconSize);
 

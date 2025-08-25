@@ -83,7 +83,7 @@ foreach (string localeName in locales)
 	}
 
 	// Get today's date
-	iResult = GetDateFormatEx(localeName, DATE_FORMAT.DATE_LONGDATE, IntPtr.Zero, default, wcBuffer, BUFFER_SIZE, default);
+	iResult = GetDateFormatEx(localeName, DATE_FORMAT.DATE_LONGDATE, default, default, wcBuffer, BUFFER_SIZE, default);
 
 	if (iResult > 0)
 	{
