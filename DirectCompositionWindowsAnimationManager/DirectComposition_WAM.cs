@@ -513,7 +513,7 @@ public class CApplication : VisibleWindow
 				offset.y + 0.0f,
 				offset.x + bitmapSize.width,
 				offset.y + bitmapSize.height);
-			_d2d1DeviceContext.DrawBitmap(d2d1Bitmap, destinationRectangle: prect);
+			_d2d1DeviceContext.DrawBitmap(d2d1Bitmap!, destinationRectangle: prect);
 
 			_d2d1DeviceContext.EndDraw(out _, out _);
 

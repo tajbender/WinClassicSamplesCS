@@ -27,8 +27,8 @@ internal class Program
 	private static void GetPropertyDescription(string pszCanonicalName)
 	{
 		// Get the property description for the given property. Property description contains meta information on the property itself.
-		PSGetPropertyDescriptionByName(pszCanonicalName, typeof(IPropertyDescription).GUID, out var ppd).ThrowIfFailed();
-		((IPropertyDescription)ppd).GetDisplayName(out var pszPropertyLabel).ThrowIfFailed();
+		PSGetPropertyDescriptionByName(pszCanonicalName, out IPropertyDescription? ppd).ThrowIfFailed();
+		ppd!.GetDisplayName(out var pszPropertyLabel).ThrowIfFailed();
 		Console.Write("Property {0} has label : {1}\n", pszCanonicalName, pszPropertyLabel);
 	}
 
