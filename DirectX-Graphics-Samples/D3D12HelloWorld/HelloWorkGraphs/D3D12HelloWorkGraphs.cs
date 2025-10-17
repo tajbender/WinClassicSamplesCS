@@ -154,7 +154,7 @@ internal class Program
 			Ptr = source.GetBufferPointer(),
 			Size = source.GetBufferSize()
 		};
-		compiler!.Compile<IDxcResult>(in dxcBuffer, pArguments, (uint)(pArguments?.Length ?? 0), includeHandler, out var operationResult).
+		compiler!.Compile(dxcBuffer, pArguments, includeHandler, out IDxcResult? operationResult).
 			ThrowIfFailed("Failed to compile.");
 
 		operationResult!.GetStatus(out var hr);
