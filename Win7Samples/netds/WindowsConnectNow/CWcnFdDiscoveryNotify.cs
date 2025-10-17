@@ -324,7 +324,7 @@ class CWcnFdDiscoveryNotify : IFunctionDiscoveryNotification
 		//Acts as the factory method for any services exposed through an implementation of 
 		//IFunctionInstance. QueryService creates and initializes instances of a requested interface 
 		//if the service from which the interface was requested supports the interface.
-		var hr = m_pFunctionInstance.QueryService(SID_WcnProvider, typeof(IWCNDevice).GUID, out var pDev);
+		var hr = m_pFunctionInstance.QueryService(SID_WcnProvider, out IWCNDevice? pDev);
 		if (hr != HRESULT.S_OK)
 		{
 			Console.Write("\nERROR: Failed to get IWCNDevice from the Function Instance hr={0}.", hr);

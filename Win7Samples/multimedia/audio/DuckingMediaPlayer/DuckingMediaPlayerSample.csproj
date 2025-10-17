@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>true</ImplicitUsings>
   </PropertyGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
     <Compile Include="..\..\..\..\..\Vanara\PInvoke\CoreAudio\AudioClient.cs" Link="AudioClient.cs" />
     <Compile Include="..\..\..\..\..\Vanara\PInvoke\CoreAudio\AudioPolicy.cs" Link="AudioPolicy.cs" />
     <Compile Include="..\..\..\..\..\Vanara\PInvoke\CoreAudio\AudioSessionTypes.cs" Link="AudioSessionTypes.cs" />
     <Compile Include="..\..\..\..\..\Vanara\PInvoke\CoreAudio\MMDevApi.cs" Link="MMDevApi.cs" />
-  </ItemGroup>
+  </ItemGroup>-->
   <ItemGroup>
     <PackageReference Include="DirectShowLib.Standard" />
+    <PackageReference Include="Vanara.PInvoke.CoreAudio" />
     <PackageReference Include="Vanara.PInvoke.Multimedia" />
     <PackageReference Include="Vanara.PInvoke.Ole" />
   </ItemGroup>
