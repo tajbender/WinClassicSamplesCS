@@ -52,7 +52,6 @@ try
 	NCryptSetProperty(KdfKeyHandle, // Handle of the key storage object
 		NCrypt.PropertyName.NCRYPT_KDF_SECRET_VALUE, // Property name (default terminated unicode string)
 		Secret, // Address of the buffer that contains the property value
-		(uint)Secret.Length, // Size of the buffer in bytes
 		0).ThrowIfFailed(); // Flags
 
 	// Finalize the key generation process The key is usable here onwards

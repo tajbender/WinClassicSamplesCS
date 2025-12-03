@@ -316,12 +316,12 @@ internal partial class CTTSApp
 					{
 						var szConfString = LoadString(LibHandle, IDS_SAVE_NOTIFY);
 						var szTitle = LoadString(LibHandle, IDS_NOTIFY_TITLE);
-						MessageBox(Handle, szConfString, szTitle, MB_FLAGS.MB_OK | MB_FLAGS.MB_ICONINFORMATION);
+						MessageBox(Handle, szConfString!, szTitle, MB_FLAGS.MB_OK | MB_FLAGS.MB_ICONINFORMATION);
 					}
 					else
 					{
 						var szConfString = LoadString(LibHandle, IDS_SAVE_ERROR);
-						MessageBox(Handle, szConfString, default, MB_FLAGS.MB_ICONEXCLAMATION);
+						MessageBox(Handle, szConfString!, default, MB_FLAGS.MB_ICONEXCLAMATION);
 					}
 				}
 				break;

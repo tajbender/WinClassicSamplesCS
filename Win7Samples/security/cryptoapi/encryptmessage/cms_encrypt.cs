@@ -26,7 +26,7 @@ static class cms_encrypt
 	Load file into allocated (*ppbData). 
 	The caller must free the memory by LocalFree().
 	*****************************************************************************/
-	static HRESULT HrLoadFile(string wszFileName, out SafeLocalHandle? ppbData)
+	static HRESULT HrLoadFile(string wszFileName, out byte[]? ppbData)
 	{
 		HRESULT hr = HRESULT.S_OK;
 
@@ -48,13 +48,7 @@ static class cms_encrypt
 			goto CleanUp;
 		}
 
-		ppbData = new SafeLocalHandle((int)pcbData);
-		if (ppbData.IsInvalid)
-		{
-			hr = (HRESULT)Win32Error.GetLastError();
-
-			goto CleanUp;
-		}
+		ppbData = new byte[(int)pcbData];
 
 		if (!ReadFile(hFile, ppbData, pcbData, out var cbRead, default))
 		{
@@ -67,7 +61,6 @@ static class cms_encrypt
 
 		if (hr.Failed)
 		{
-			ppbData?.Dispose();
 			ppbData = default;
 		}
 
@@ -78,14 +71,14 @@ static class cms_encrypt
 	HrSaveFile
 
 	*****************************************************************************/
-	static HRESULT HrSaveFile(string wszFileName, IntPtr pbData, uint cbData)
+	static HRESULT HrSaveFile(string wszFileName, byte[] pbData)
 	{
 		using var hFile = CreateFile(wszFileName, Kernel32.FileAccess.GENERIC_WRITE, 0, default, FileMode.Create, 0, default);
 
 		if (hFile.IsInvalid)
 			return (HRESULT)Win32Error.GetLastError();
 
-		if (!WriteFile(hFile, pbData, cbData, out _))
+		if (!WriteFile(hFile, pbData, (uint)pbData.Length, out _))
 			return (HRESULT)Win32Error.GetLastError();
 
 		return HRESULT.S_OK;
@@ -97,17 +90,17 @@ static class cms_encrypt
 	*****************************************************************************/
 	static void Usage(string wsName)
 	{
-		Console.Write("{0} [Options] {COMMAND}\n", wsName);
+		Console.Write("{0} [Options] {{COMMAND}}\n", wsName);
 		Console.Write(" Options:\n");
-		Console.Write(" -s {STORENAME} : store name, (by default MY)\n");
-		Console.Write(" -n {SubjectName} : Recepient certificate's CN to search for.\n");
+		Console.Write(" -s {{STORENAME}} : store name, (by default MY)\n");
+		Console.Write(" -n {{SubjectName}} : Recepient certificate's CN to search for.\n");
 		Console.Write(" (by default \"Test\")\n");
-		Console.Write(" -a {CNGAlgName} : Encryption algorithm, (by default AES128)\n");
-		Console.Write(" -k {KeySize} : Encryption key size in bits, (by default 128)\n");
+		Console.Write(" -a {{CNGAlgName}} : Encryption algorithm, (by default AES128)\n");
+		Console.Write(" -k {{KeySize}} : Encryption key size in bits, (by default 128)\n");
 		Console.Write(" COMMANDS:\n");
-		Console.Write(" ENCRYPT {inputfile} {outputfile}\n");
+		Console.Write(" ENCRYPT {{inputfile}} {{outputfile}}\n");
 		Console.Write(" | Encrypt message\n");
-		Console.Write(" DECRYPT {inputfile} {outputfile}\n");
+		Console.Write(" DECRYPT {{inputfile}} {{outputfile}}\n");
 		Console.Write(" | Decrypt message\n");
 	}
 
@@ -126,10 +119,11 @@ static class cms_encrypt
 
 		SafePCCERT_CONTEXT? pRecipientCert = default;
 		SafeHCERTSTORE? hStoreHandle = default;
-		SafeLocalHandle? pbOutput = default;
 
 		string pwszStoreName = "MY"; // by default
 		string pwszCName = "Test"; // by default
+
+		byte[]? pbOutput;
 
 		string pwszAlgName = "AES128";
 		uint cKeySize = 128;
@@ -256,7 +250,7 @@ static class cms_encrypt
 		hr = HrLoadFile(pwszInputFile, out var pbInput);
 		if (hr.Failed)
 		{
-			Console.Write("Unable to read file: %s\n", pwszInputFile);
+			Console.Write("Unable to read file: {0}\n", pwszInputFile);
 			goto CleanUp;
 		}
 
@@ -293,7 +287,7 @@ static class cms_encrypt
 			if (pOidInfo.IsNull)
 			{
 				hr = HRESULT.CRYPT_E_UNKNOWN_ALGO;
-				Console.Write("FAILED: Unknown algorithm: '%s'.\n", pwszAlgName);
+				Console.Write("FAILED: Unknown algorithm: '{0}'.\n", pwszAlgName);
 				goto CleanUp;
 			}
 
@@ -302,28 +296,8 @@ static class cms_encrypt
 			//-------------------------------------------------------------------
 			// Call CryptEncryptMessage.
 
-			uint cbOutput = 0;
-			var ppRecipientCert = new PCCERT_CONTEXT[] { pRecipientCert };
-			if (!CryptEncryptMessage(EncryptParams, 1, ppRecipientCert, pbInput!, pbInput!.Size, default, ref cbOutput))
-			{
-				hr = (HRESULT)Win32Error.GetLastError();
-				Console.Write("FAILED: CryptEncryptMessage\n");
-				goto CleanUp;
-			}
-
-			//-------------------------------------------------------------------
-			// Allocate memory for the returned BLOB.
-			pbOutput = new SafeLocalHandle(cbOutput);
-			if (pbOutput is null)
-			{
-				hr = (HRESULT)(Win32Error)Win32Error.ERROR_OUTOFMEMORY;
-				goto CleanUp;
-			}
-
-			//-------------------------------------------------------------------
-			// Call CryptEncryptMessage again to encrypt the content.
-
-			if (!CryptEncryptMessage(EncryptParams, 1, ppRecipientCert, pbInput, pbInput.Size, pbOutput, ref cbOutput))
+			PCCERT_CONTEXT[] ppRecipientCert = [pRecipientCert];
+			if (!CryptEncryptMessage(EncryptParams, ppRecipientCert, pbInput!, out pbOutput))
 			{
 				hr = (HRESULT)Win32Error.GetLastError();
 				goto CleanUp;
@@ -347,31 +321,9 @@ static class cms_encrypt
 				};
 
 				//-------------------------------------------------------------------
-				// Decrypt the message data.
-				// Call CryptDecryptMessage to get the returned data size.
-
-				uint cbOutput = 0;
-				if (!CryptDecryptMessage(DecryptParams, pbInput!, pbInput!.Size, default, ref cbOutput))
-				{
-					hr = (HRESULT)Win32Error.GetLastError();
-					Console.Write("FAILED: CryptDecryptMessage\n");
-					goto CleanUp;
-				}
-
-				//-------------------------------------------------------------------
-				// Allocate memory for the returned decrypted data.
-
-				pbOutput = new SafeLocalHandle(cbOutput);
-				if (pbOutput.IsInvalid)
-				{
-					hr = (HRESULT)(Win32Error)Win32Error.ERROR_OUTOFMEMORY;
-					goto CleanUp;
-				}
-
-				//-------------------------------------------------------------------
 				// Call CryptDecryptMessage to decrypt the data.
 
-				if (!CryptDecryptMessage(DecryptParams, pbInput, pbInput.Size, pbOutput, ref cbOutput))
+				if (!CryptDecryptMessage(DecryptParams, pbInput!, out pbOutput))
 				{
 					hr = (HRESULT)Win32Error.GetLastError();
 					goto CleanUp;
@@ -381,10 +333,10 @@ static class cms_encrypt
 			Console.Write("Successfully decrypted message using CryptDecryptMessage.\n");
 		}
 
-		hr = HrSaveFile(pwszOutputFile, pbOutput, pbOutput.Size);
+		hr = HrSaveFile(pwszOutputFile, pbOutput);
 		if (hr.Failed)
 		{
-			Console.Write("Unable to save file: %s\n", pwszOutputFile);
+			Console.Write("Unable to save file: {0}\n", pwszOutputFile);
 
 			goto CleanUp;
 		}
@@ -396,7 +348,6 @@ static class cms_encrypt
 
 		CleanUp:
 
-		pbOutput?.Dispose();
 		pRecipientCert?.Dispose();
 		hStoreHandle?.Dispose();
 
