@@ -39,7 +39,7 @@ internal static class Program
 				// Also for this sample we are using one item that is almost always in a DHCP configuration.
 				//
 				// the DHCP Client Options API array for watching the options
-				SafeNativeArray<DHCPAPI_PARAMS> watch = new(new[] { new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_ROUTER_ADDRESS } }); // gateway address
+				SafeNativeArray<DHCPAPI_PARAMS> watch = new([new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_ROUTER_ADDRESS }]); // gateway address
 
 				// set-up the actual array
 				DHCPCAPI_PARAMS_ARRAY watcharray = new() { nParams = (uint)watch.Count, Params = watch }; // we are watching 1 item
@@ -50,7 +50,7 @@ internal static class Program
 				DhcpRegisterParamChange(DHCPCAPI_REGISTER_HANDLE_EVENT, default, wszAdapter, default, watcharray, out HEVENT hEvent).ThrowIfFailed();
 
 				// wait for the events to become signaled
-				HEVENT[] lpHandles = { g_hExitEvent, hEvent };
+				HEVENT[] lpHandles = [g_hExitEvent, hEvent];
 				WAIT_STATUS rc;
 
 				while ((rc = WaitForMultipleObjects(lpHandles, false, INFINITE)) != 0)

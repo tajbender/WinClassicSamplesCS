@@ -129,7 +129,7 @@ public partial class CChangeNotifyApp : Form
 
 	private void LogMessage(GROUPID groupid, string pszName, string pszBuf)
 	{
-		var lvi = new ListViewItem(new[] { pszName, pszBuf });
+		var lvi = new ListViewItem([pszName, pszBuf]);
 		if (groupid != GROUPID.DEFAULT)
 			lvi.Group = IDC_LISTVIEW.Groups[0];
 		IDC_LISTVIEW.Items.Add(lvi);
@@ -273,7 +273,7 @@ internal class CShellItemChangeWatcher : IDisposable
 		using (pidlWatch)
 			if (hr.Succeeded)
 			{
-				SHChangeNotifyEntry[] entries = { new SHChangeNotifyEntry { pidl = (IntPtr)pidlWatch, fRecursive = fRecursive } };
+				SHChangeNotifyEntry[] entries = [new SHChangeNotifyEntry { pidl = (IntPtr)pidlWatch, fRecursive = fRecursive }];
 				_ulRegister = SHChangeNotifyRegister(hwnd, SHCNRF.SHCNRF_ShellLevel | SHCNRF.SHCNRF_InterruptLevel | SHCNRF.SHCNRF_NewDelivery, lEvents, uMsg, entries.Length, entries);
 				hr = _ulRegister != 0 ? HRESULT.S_OK : HRESULT.E_FAIL;
 			}

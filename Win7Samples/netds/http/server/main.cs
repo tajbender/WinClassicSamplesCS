@@ -280,7 +280,7 @@ CleanUp:
 							pRequest.RequestId,
 							0, // This is the last send.
 							1, // Entity Chunk Count.
-							new[] { dataChunk },
+							[dataChunk],
 							out _,
 							default,
 							0,

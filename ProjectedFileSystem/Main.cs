@@ -21,10 +21,10 @@ class Program
 		// Specify the notifications that we want ProjFS to send to us.  Everywhere under the virtualization
 		// root we want ProjFS to tell us when files have been opened, when they're about to be renamed,
 		// and when they're about to be deleted.
-		PRJ_NOTIFICATION_MAPPING[] notificationMappings = new[] { new PRJ_NOTIFICATION_MAPPING {
+		PRJ_NOTIFICATION_MAPPING[] notificationMappings = [ new PRJ_NOTIFICATION_MAPPING {
 			NotificationRoot = "",
 			NotificationBitMask = PRJ_NOTIFY_TYPES.PRJ_NOTIFY_FILE_OPENED | PRJ_NOTIFY_TYPES.PRJ_NOTIFY_PRE_RENAME | PRJ_NOTIFY_TYPES.PRJ_NOTIFY_PRE_DELETE
-		} };
+		} ];
 
 		// Store the notification mapping we set up into a start options structure.  We leave all the
 		// other options at their defaults.

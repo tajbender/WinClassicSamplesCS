@@ -13,7 +13,7 @@ namespace EhStorEnumerator;
 
 public class CCertProperties
 {
-	public byte[] CertificateData = Array.Empty<byte>();
+	public byte[] CertificateData = [];
 
 	public CERT_TYPE nCertType = CERT_TYPE.CERT_TYPE_EMPTY;
 
@@ -64,7 +64,7 @@ public static class CPortableDeviceImp
 		results.GetBufferValue(ENHANCED_STORAGE_PROPERTY_CERTIFICATE, out var mem, out var nCertDataLen);
 		return new CCertProperties()
 		{
-			CertificateData = mem.DangerousGetHandle().ToArray<byte>(nCertDataLen) ?? Array.Empty<byte>(),
+			CertificateData = mem.DangerousGetHandle().ToArray<byte>(nCertDataLen) ?? [],
 			nCertType = (CERT_TYPE)results.GetUnsignedIntegerValue(ENHANCED_STORAGE_PROPERTY_CERTIFICATE_TYPE),
 			nValidationPolicy = (CERT_VALIDATION_POLICY)results.GetUnsignedIntegerValue(ENHANCED_STORAGE_PROPERTY_VALIDATION_POLICY),
 			nSignerCertIndex = results.GetUnsignedIntegerValue(ENHANCED_STORAGE_PROPERTY_SIGNER_CERTIFICATE_INDEX),

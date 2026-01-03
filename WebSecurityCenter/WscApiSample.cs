@@ -6,7 +6,7 @@ Dictionary<string, WSC_SECURITY_PROVIDER> match = new() {
 	{ "-as", WSC_SECURITY_PROVIDER.WSC_SECURITY_PROVIDER_ANTISPYWARE },
 	{ "-fw", WSC_SECURITY_PROVIDER.WSC_SECURITY_PROVIDER_FIREWALL },
 };
-List<WSC_SECURITY_PROVIDER> providers = new();
+List<WSC_SECURITY_PROVIDER> providers = [];
 
 foreach (var arg in args)
 {

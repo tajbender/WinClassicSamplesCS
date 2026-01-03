@@ -35,7 +35,7 @@ internal static class OptionsStore
 	public static HRESULT GetOptionIdsForLanguage(string languageTag, out string[] optionIds)
 	{
 		LanguageOptions? optionsList = GetLanguageOptionsList(languageTag);
-		optionIds = optionsList is null ? [] : optionsList.declarations.Select(d => d.optionId).ToArray();
+		optionIds = optionsList is null ? [] : [.. optionsList.declarations.Select(d => d.optionId)];
 		return optionsList is null ? HRESULT.E_INVALIDARG : HRESULT.S_OK;
 	}
 

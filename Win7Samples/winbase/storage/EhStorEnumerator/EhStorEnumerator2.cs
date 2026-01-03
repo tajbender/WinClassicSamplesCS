@@ -72,7 +72,7 @@ public partial class EhStorEnumerator2 : Form
 		IDC_DEVLIST.Items.Clear();
 		foreach (string device in g_DevManager!.GetDevices(true))
 		{
-			IDC_DEVLIST.Items.Add(new ListViewItem(new[] { g_DevManager!.GetDeviceDescription(device), g_DevManager!.GetDeviceManufacturer(device), device }));
+			IDC_DEVLIST.Items.Add(new ListViewItem([g_DevManager!.GetDeviceDescription(device), g_DevManager!.GetDeviceManufacturer(device), device]));
 		}
 		IDC_DEVLIST.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 	}

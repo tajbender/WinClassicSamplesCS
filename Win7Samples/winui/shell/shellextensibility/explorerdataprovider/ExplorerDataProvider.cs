@@ -122,17 +122,14 @@ public class CFolderViewImplEnumIDList : IEnumIDList
 	}
 }
 
-public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
+public class CFolderViewImplFolder(uint nLevel) : IShellFolder2, IPersistFolder2
 {
 	public const int g_nMaxLevel = 5;
 
 	internal const ushort MYOBJID = 0x1234;
-	private readonly uint m_nLevel;
 	private PIDL? m_pidl; // where this folder is in the name space
 	private string[]? m_rgNames = null;
 	private readonly string m_szModuleName = string.Empty;
-
-	public CFolderViewImplFolder(uint nLevel) => m_nLevel = nLevel;
 
 	public HRESULT BindToObject(PIDL pidl, IBindCtx? pbc, in Guid riid, out object? ppv)
 	{
@@ -147,7 +144,7 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 				var pidlBind = PIDL.Combine(m_pidl, pidlFirst);
 				if (pidlBind is not null)
 				{
-					CFolderViewImplFolder pCFolderViewImplFolder = new(m_nLevel + 1);
+					CFolderViewImplFolder pCFolderViewImplFolder = new(nLevel + 1);
 					PIDL pidlNext = ILNext((IntPtr)pidl);
 
 					if (pidlNext.IsEmpty)
@@ -324,7 +321,7 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 
 	public HRESULT EnumObjects(HWND hwnd, SHCONTF grfFlags, out IEnumIDList? ppenumIDList)
 	{
-		ppenumIDList = m_nLevel >= g_nMaxLevel ? default : new CFolderViewImplEnumIDList(grfFlags, (int)m_nLevel + 1, this);
+		ppenumIDList = nLevel >= g_nMaxLevel ? default : new CFolderViewImplEnumIDList(grfFlags, (int)nLevel + 1, this);
 		return ppenumIDList is null ? HRESULT.S_FALSE : HRESULT.S_OK;
 	}
 
@@ -545,19 +542,19 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 				// a context menu registered for it.
 				if (fIsFolder)
 				{
-					ASSOCIATIONELEMENT[] rgAssocFolder = new ASSOCIATIONELEMENT[]
-					{
+					ASSOCIATIONELEMENT[] rgAssocFolder =
+					[
 						new() { ac = ASSOCCLASS.ASSOCCLASS_PROGID_STR, pszClass = "FolderViewSampleType"},
 						new() { ac = ASSOCCLASS.ASSOCCLASS_FOLDER },
-					};
+					];
 					hr = AssocCreateForClasses(rgAssocFolder, (uint)rgAssocFolder.Length, riid, out ppv);
 				}
 				else
 				{
-					ASSOCIATIONELEMENT[] rgAssocItem = new ASSOCIATIONELEMENT[]
-					{
+					ASSOCIATIONELEMENT[] rgAssocItem =
+					[
 						new() { ac = ASSOCCLASS.ASSOCCLASS_PROGID_STR, pszClass = "FolderViewSampleType"},
-					};
+					];
 					hr = AssocCreateForClasses(rgAssocItem, (uint)rgAssocItem.Length, riid, out ppv);
 				}
 			}
@@ -601,7 +598,8 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 		return hr;
 	}
 
-	public HRESULT ParseDisplayName(HWND hwnd, IBindCtx? pbc, string pszName, out uint pchEaten, out PIDL ppidl, ref SFGAO pdwAttributes)
+
+	public HRESULT ParseDisplayName(HWND hwnd, IBindCtx? pbc, string pszName, out uint pchEaten, out PIDL ppidl, StructPointer<SFGAO> pdwAttributes)
 	{
 		HRESULT hr = HRESULT.E_INVALIDARG;
 		pchEaten = 0;
@@ -630,7 +628,7 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 				if (hr.Succeeded)
 				{
 					var fIsFolder = ISFOLDERFROMINDEX((int)uIndex);
-					hr = CreateChildID(szNameComponent.ToString(), (int)m_nLevel + 1, (int)uIndex, 3, fIsFolder, out var pidlCurrent);
+					hr = CreateChildID(szNameComponent.ToString(), (int)nLevel + 1, (int)uIndex, 3, fIsFolder, out var pidlCurrent);
 					if (hr.Succeeded)
 					{
 						// If there are more components to parse, delegate to the child folder to handle the rest.
@@ -640,7 +638,7 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 							hr = BindToObject(pidlCurrent, pbc, typeof(IShellFolder).GUID, out var psf);
 							if (hr.Succeeded)
 							{
-								hr = ((IShellFolder)psf!).ParseDisplayName(hwnd, pbc, pszNext!, out pchEaten, out var pidlNext, ref pdwAttributes);
+								hr = ((IShellFolder)psf!).ParseDisplayName(hwnd, pbc, pszNext!, out pchEaten, out var pidlNext, pdwAttributes);
 								if (hr.Succeeded)
 								{
 									ppidl = ILCombine((IntPtr)pidlCurrent, (IntPtr)pidlNext);
@@ -822,10 +820,7 @@ public class CFolderViewImplFolder : IShellFolder2, IPersistFolder2
 			}
 			else
 			{
-				if (pszRet is not null)
-				{
-					pszRet.Clear();
-				}
+				pszRet?.Clear();
 			}
 		}
 		return hr;

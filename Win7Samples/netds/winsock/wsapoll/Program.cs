@@ -39,7 +39,7 @@ static class Program
 			listen(lsock, 1).ThrowIfFailed();
 
 			//Call WSAPoll for readability of listener (accepted)
-			WSAPOLLFD[] fdarray = { new() { fd = lsock, events = PollFlags.POLLRDNORM } };
+			WSAPOLLFD[] fdarray = [new() { fd = lsock, events = PollFlags.POLLRDNORM }];
 
 			SafeSOCKET? asock = default;
 			var ret = WSRESULT.ThrowLastErrorIf(WSAPoll(fdarray, 1, DEFAULT_WAIT), e => e == SOCKET_ERROR);
@@ -96,7 +96,7 @@ static class Program
 			connect(csock, (SOCKADDR)addrLoopback, Marshal.SizeOf(typeof(SOCKADDR_IN6))).ThrowIfFailed();
 
 			// Call WSAPoll for writeability on connecting socket
-			WSAPOLLFD[] fdarray = { new() { fd = csock, events = PollFlags.POLLWRNORM } };
+			WSAPOLLFD[] fdarray = [new() { fd = csock, events = PollFlags.POLLWRNORM }];
 
 			int ret = WSRESULT.ThrowLastErrorIf(WSAPoll(fdarray, (uint)fdarray.Length, DEFAULT_WAIT), e => e == SOCKET_ERROR);
 			if (ret > 0 && fdarray[0].revents.IsFlagSet(PollFlags.POLLWRNORM))

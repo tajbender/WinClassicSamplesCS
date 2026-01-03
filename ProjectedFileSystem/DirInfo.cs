@@ -22,19 +22,13 @@ internal struct DirEntry
 //
 // Refer to RegfsProvider::StartDirEnum, RegfsProvider::GetDirEnum, and RegfsProvider::EndDirEnum
 // to see how this class is used.
-internal class DirInfo
+internal class DirInfo(string FilePathName)
 {
 	// The index of the item in _entries that CurrentBasicInfo() and CurrentFileName() will return.
 	private int _currIndex;
 
 	// The list of entries in the directory this DirInfo represents.
-	private List<DirEntry> _entries = new();
-
-	// Stores the name of the directory this DirInfo represents.
-	private string _filePathName;
-
-	// Constructs a new empty DirInfo, initializing it with the name of the directory it represents.
-	public DirInfo(string FilePathName) { _filePathName = FilePathName; }
+	private List<DirEntry> _entries = [];
 
 	// Returns a PRJ_FILE_BASIC_INFO populated with the information for the current item.
 	public PRJ_FILE_BASIC_INFO CurrentBasicInfo => new() { IsDirectory = _entries[_currIndex].IsDirectory, FileSize = _entries[_currIndex].FileSize };

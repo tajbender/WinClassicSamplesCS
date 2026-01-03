@@ -41,7 +41,7 @@ static class SearchFolder
 		var pConditionKind = (ICondition)pConditionFactory.CreateStringLeaf(PROPERTYKEY.System.Kind, CONDITION_OPERATION.COP_EQUAL, "Document", null, CONDITION_CREATION_OPTIONS.CONDITION_CREATION_DEFAULT, typeof(ICondition).GUID)!;
 		var pConditionSize = (ICondition)pConditionFactory.CreateIntegerLeaf(PROPERTYKEY.System.Size, CONDITION_OPERATION.COP_GREATERTHAN, 102400, CONDITION_CREATION_OPTIONS.CONDITION_CREATION_DEFAULT, typeof(ICondition).GUID)!;
 		// Once all of the leaf conditions are created successfully, "AND" them together
-		ICondition[] rgConditions = { pConditionKind, pConditionSize };
+		ICondition[] rgConditions = [pConditionKind, pConditionSize];
 		return (ICondition)pConditionFactory.CreateCompoundFromArray(CONDITION_TYPE.CT_AND_CONDITION, rgConditions, (uint)rgConditions.Length, CONDITION_CREATION_OPTIONS.CONDITION_CREATION_DEFAULT, typeof(ICondition).GUID)!;
 	}
 

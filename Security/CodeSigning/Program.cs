@@ -8,7 +8,7 @@ namespace CodeSigning;
 
 internal class Program
 {
-	private static readonly SafeMemoryPool<CoTaskMemoryMethods> mem = new();
+	private static readonly SafeMemoryPool<CoTaskMemoryMethods> mem = [];
 
 	public static int Main(string[] args)
 	{

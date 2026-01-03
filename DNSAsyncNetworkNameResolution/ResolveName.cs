@@ -68,7 +68,7 @@ internal static unsafe class ResolveName
 
 		if (Error != Win32Error.ERROR_IO_PENDING)
 		{
-			QueryResults = queryResults.ToArray();
+			QueryResults = [.. queryResults];
 			QueryCompleteCallback((uint)Error, 0, &QueryOverlapped);
 			goto exit;
 		}

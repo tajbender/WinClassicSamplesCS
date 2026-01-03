@@ -50,11 +50,8 @@ internal class WcnConnectNotification : IWCNConnectNotify, IDisposable
 
 	public void Dispose()
 	{
-		if (connectEndEvent is not null)
-		{
-			connectEndEvent.Dispose();
-			connectEndEvent = null;
-		}
+		connectEndEvent?.Dispose();
+		connectEndEvent = null;
 	}
 
 	public HRESULT Init()

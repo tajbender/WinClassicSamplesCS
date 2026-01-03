@@ -127,8 +127,8 @@ internal static class LsaPrivs
 		// grant or revoke the privilege, accordingly
 		//
 		return bEnable
-			? LsaAddAccountRights(PolicyHandle, AccountSid, new[] { PrivilegeName }, 1)
-			: LsaRemoveAccountRights(PolicyHandle, AccountSid, false, new[] { PrivilegeName }, 1);
+			? LsaAddAccountRights(PolicyHandle, AccountSid, [PrivilegeName], 1)
+			: LsaRemoveAccountRights(PolicyHandle, AccountSid, false, [PrivilegeName], 1);
 	}
 
 	private static NTStatus OpenPolicy(string ServerName, LsaPolicyRights DesiredAccess, out SafeLSA_HANDLE PolicyHandle) =>

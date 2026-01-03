@@ -6,11 +6,11 @@ static class FakeCloudProvider
 {
 	static CF_CONNECTION_KEY s_transferCallbackConnectionKey;
 	static CF_CALLBACK_REGISTRATION[] s_MirrorCallbackTable =
-	{
+	[
 		new CF_CALLBACK_REGISTRATION { Type = CF_CALLBACK_TYPE.CF_CALLBACK_TYPE_FETCH_DATA, Callback = new CF_CALLBACK(OnFetchData) },
 		new CF_CALLBACK_REGISTRATION { Type = CF_CALLBACK_TYPE.CF_CALLBACK_TYPE_CANCEL_FETCH_DATA, Callback = new CF_CALLBACK(OnCancelFetchData) },
 		CF_CALLBACK_REGISTRATION.CF_CALLBACK_REGISTRATION_END
-	};
+	];
 
 	public static bool Start(string? serverFolder = "", string? clientFolder = "")
 	{

@@ -3,15 +3,12 @@ using static Vanara.PInvoke.MSCTF;
 
 namespace tsfcase;
 
-internal class CSnoopWnd
+internal class CSnoopWnd(CCaseTextService pCase)
 {
 	private static readonly ushort atomWndClass;
 	private readonly string achText;
 	private readonly uint cchText;
 	private readonly HWND hWnd;
-	private readonly CCaseTextService pCase;
-
-	public CSnoopWnd(CCaseTextService pCase) => this.pCase = pCase;
 
 	public static bool InitClass() => throw new NotImplementedException();
 

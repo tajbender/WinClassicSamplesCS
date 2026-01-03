@@ -194,12 +194,12 @@ static class Wcmcostsample
 	// ********************************************************************************************
 	static int GetUserChoice()
 	{
-		string[] choices = {
+		string[] choices = [
 			"Get Cost",
 			"Get Profile Data ",
 			"Set Cost",
 			"Set Profile Data",
-			"Exit" };
+			"Exit" ];
 		int numchoices = choices.Length;
 		Console.Write("---------------------------------------------------------\n");
 

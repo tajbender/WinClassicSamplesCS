@@ -8,7 +8,7 @@ internal partial class CTTSApp
     static SafeHIMAGELIST g_hListBmp = SafeHIMAGELIST.Null;
 
     // Output formats
-    static readonly int[] g_aMapVisemeToImage = {
+    static readonly int[] g_aMapVisemeToImage = [
         0,  // SP_VISEME_0 = 0,    // Silence
         11, // SP_VISEME_1,        // AE, AX, AH
         11, // SP_VISEME_2,        // AA
@@ -30,10 +30,10 @@ internal partial class CTTSApp
         4,  // SP_VISEME_18,       // f, v
         7,  // SP_VISEME_19,       // d, t, n
         9,  // SP_VISEME_20,       // k, g, NG
-        1 };// SP_VISEME_21,       // p, b, m
+        1 ];// SP_VISEME_21,       // p, b, m
 
     // Output formats
-    static readonly SPSTREAMFORMAT[] g_aOutputFormat = {
+    static readonly SPSTREAMFORMAT[] g_aOutputFormat = [
         SPSTREAMFORMAT.SPSF_8kHz8BitMono,
         SPSTREAMFORMAT.SPSF_8kHz8BitStereo,
         SPSTREAMFORMAT.SPSF_8kHz16BitMono,
@@ -69,9 +69,9 @@ internal partial class CTTSApp
         SPSTREAMFORMAT.SPSF_48kHz8BitMono,
         SPSTREAMFORMAT.SPSF_48kHz8BitStereo,
         SPSTREAMFORMAT.SPSF_48kHz16BitMono,
-        SPSTREAMFORMAT.SPSF_48kHz16BitStereo };
+        SPSTREAMFORMAT.SPSF_48kHz16BitStereo ];
 
-    static readonly string[] g_aszOutputFormat = {
+    static readonly string[] g_aszOutputFormat = [
         "8kHz 8 Bit Mono",
         "8kHz 8 Bit Stereo",
         "8kHz 16 Bit Mono",
@@ -107,7 +107,7 @@ internal partial class CTTSApp
         "48kHz 8 Bit Mono",
         "48kHz 8 Bit Stereo",
         "48kHz 16 Bit Mono",
-        "48kHz 16 Bit Stereo"};
+        "48kHz 16 Bit Stereo"];
 
     // ITextServices interface guid
     static readonly Guid IID_ITextServices = new(0X8D33F740, 0XCF58, 0x11ce, 0XA8, 0X9D, 0X00, 0XAA, 0X00, 0X6C, 0XAD, 0XC5);

@@ -36,16 +36,11 @@ internal class CWasapiChat : CChatTransport, IDisposable
 			ChatThread.Dispose();
 			ChatThread = default;
 		}
-		if (ShutdownEvent is not null)
-		{
-			ShutdownEvent.Dispose();
-			ShutdownEvent = null;
-		}
-		if (AudioSamplesReadyEvent is not null)
-		{
-			AudioSamplesReadyEvent.Dispose();
-			AudioSamplesReadyEvent = null;
-		}
+
+		ShutdownEvent?.Dispose();
+		ShutdownEvent = null;
+		AudioSamplesReadyEvent?.Dispose();
+		AudioSamplesReadyEvent = null;
 	}
 
 	public override bool Initialize(bool UseInputDevice)
@@ -168,10 +163,7 @@ internal class CWasapiChat : CChatTransport, IDisposable
 	public override void StopChat()
 	{
 		// Tell the chat thread to shut down, wait for the thread to complete then clean up all the stuff we allocated in StartChat().
-		if (ShutdownEvent is not null)
-		{
-			ShutdownEvent.Set();
-		}
+		ShutdownEvent?.Set();
 		if (ChatThread is not null)
 		{
 			WaitForSingleObject(ChatThread, INFINITE);
@@ -189,7 +181,7 @@ internal class CWasapiChat : CChatTransport, IDisposable
 	{
 		var stillPlaying = true;
 		CWasapiChat chat = GCHandleProvider.GetTarget<CWasapiChat>(Context);
-		ISyncHandle[] waitArray = { chat.ShutdownEvent, chat.AudioSamplesReadyEvent };
+		ISyncHandle[] waitArray = [chat.ShutdownEvent, chat.AudioSamplesReadyEvent];
 
 		while (stillPlaying)
 		{

@@ -111,7 +111,7 @@ internal class Program
 				SFGAO attr = 0;
 				psfSampleSrc.ParseDisplayName(default, null, szSampleFileName, out _, out rgpidlChildren[i], ref attr);
 			}
-			SHCreateShellItemArray(IntPtr.Zero, psfSampleSrc, c_cMaxFilesToCreate, rgpidlChildren.Select(p => p.DangerousGetHandle()).ToArray(), out var psia).ThrowIfFailed();
+			SHCreateShellItemArray(IntPtr.Zero, psfSampleSrc, c_cMaxFilesToCreate, [.. rgpidlChildren.Select(p => p.DangerousGetHandle())], out var psia).ThrowIfFailed();
 			return psia;
 		}
 		finally

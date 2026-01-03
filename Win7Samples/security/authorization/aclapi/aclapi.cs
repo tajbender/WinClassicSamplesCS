@@ -49,7 +49,7 @@ internal static class AclApi
 		BuildExplicitAccessWithName(out var explicitaccess, TrusteeName, AccessMask, option, InheritFlag);
 
 		// add specified access to the object
-		SetEntriesInAcl(1, new[] { explicitaccess }, ExistingDacl, out var NewAcl).ThrowIfFailed();
+		SetEntriesInAcl(1, [explicitaccess], ExistingDacl, out var NewAcl).ThrowIfFailed();
 
 		// apply new security to file
 		SetNamedSecurityInfo(FileName, SE_OBJECT_TYPE.SE_FILE_OBJECT, SECURITY_INFORMATION.DACL_SECURITY_INFORMATION, default, default, NewAcl, default).ThrowIfFailed();

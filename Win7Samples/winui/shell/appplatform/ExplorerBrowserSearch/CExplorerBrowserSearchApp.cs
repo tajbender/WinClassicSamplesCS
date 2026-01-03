@@ -9,9 +9,9 @@ namespace ExplorerBrowserSearch;
 
 public partial class CExplorerBrowserSearchApp : Form, IServiceProvider, ICommDlgBrowser3, IExplorerBrowserEvents
 {
-	private static string[] g_rgGenericProperties = { "System.Generic.String", "System.StructuredQueryType.String", "System.Generic.Integer",
+	private static string[] g_rgGenericProperties = [ "System.Generic.String", "System.StructuredQueryType.String", "System.Generic.Integer",
 		"System.StructuredQueryType.Integer", "System.Generic.DateTime", "System.StructuredQueryType.DateTime", "System.Generic.Boolean",
-		"System.StructuredQueryType.Boolean", "System.Generic.FloatingPoint", "System.StructuredQueryType.FloatingPoint" };
+		"System.StructuredQueryType.Boolean", "System.Generic.FloatingPoint", "System.StructuredQueryType.FloatingPoint" ];
 	private static readonly Guid IID_ICommDlgBrowser = new("000214F1-0000-0000-C000-000000000046");
 
 	private uint _dwCookie;

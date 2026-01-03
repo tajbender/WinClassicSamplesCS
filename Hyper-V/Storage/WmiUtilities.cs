@@ -158,7 +158,7 @@ public static class Wmi
 	{
 		const ushort SASDResourceTypeLogicalDisk = 31;
 
-		List<ManagementObject> sasdList = new();
+		List<ManagementObject> sasdList = [];
 
 		// Get all the SASDs (Msvm_StorageAllocationSettingData) and look for VHDs.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -188,7 +188,7 @@ public static class Wmi
 		}
 		else
 		{
-			return sasdList.ToArray();
+			return [.. sasdList];
 		}
 	}
 

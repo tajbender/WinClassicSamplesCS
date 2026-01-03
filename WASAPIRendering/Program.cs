@@ -6,8 +6,8 @@ using System.CommandLine;
 
 PROPERTYKEY PKEY_Device_FriendlyName = new(new(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 14);
 
-RootCommand rootCmd = new()
-{
+RootCommand rootCmd =
+[
 	new Option<uint>("-f", () => 440, "Sine wave frequency (Hz)") { IsRequired = true },
 	new Option<uint>("-l", () => 30, "Audio Render Latency (ms)") { IsRequired = true },
 	new Option<uint>("-d", () => 10, "Sine Wave Duration (s)") { IsRequired = true },
@@ -16,7 +16,7 @@ RootCommand rootCmd = new()
 	new Option<bool>("-multimedia", "Use the default multimedia device"),
 	new Option<string>("-endpoint", "Use the specified endpoint ID"),
 	new Option<bool>("-w", "Enable call to AudioViewManagerService"),
-};
+];
 rootCmd.SetHandler(Main);
 await rootCmd.InvokeAsync(args);
 

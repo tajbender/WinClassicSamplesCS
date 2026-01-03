@@ -77,21 +77,21 @@ internal class THREADMANAGER : IDisposable
 
 		// Driver types supported
 		D3D_DRIVER_TYPE[] DriverTypes =
-		{
+		[
 		D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_HARDWARE,
 		D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_WARP,
 		D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_REFERENCE,
-		};
+		];
 		uint NumDriverTypes = (uint)DriverTypes.Length;
 
 		// Feature levels supported
 		D3D_FEATURE_LEVEL[] FeatureLevels =
-		{
+		[
 		D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0,
 		D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_10_1,
 		D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_10_0,
 		D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
-		};
+		];
 		uint NumFeatureLevels = (uint)FeatureLevels.Length;
 
 		// Create device

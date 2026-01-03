@@ -4,8 +4,8 @@ namespace DNSAsyncQuery;
 
 static partial class DnsQueryEx
 {
-	private static readonly PRINT_DNS_RECORD_DATA_FUNCTION?[] PrintDataTable = new PRINT_DNS_RECORD_DATA_FUNCTION?[]
-	{
+	private static readonly PRINT_DNS_RECORD_DATA_FUNCTION?[] PrintDataTable =
+	[
 		null, // ZERO
 		ARecordPrint, // A
 		PtrRecordPrint, // NS
@@ -58,7 +58,7 @@ static partial class DnsQueryEx
 		null, // DHCID
 		Nsec3RecordPrint, // NSEC3
 		Nsec3ParamRecordPrint // NSEC3PARAM
-	};
+	];
 
 	private delegate void PRINT_DNS_RECORD_DATA_FUNCTION(in DNS_RECORD DnsRecord);
 

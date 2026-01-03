@@ -12,11 +12,11 @@ internal class Program
 
 		// NOTE:We register two calc executable files. The second one is for the redirection of 32 bit calc on 64 bit machines. Even if
 		// you are using a 32 bit machine, you don't need to comment out the second line.
-		string[] rgsFiles = { "C:\\Windows\\System32\\calc.exe", "C:\\Windows\\SysWow64\\calc.exe" };
+		string[] rgsFiles = ["C:\\Windows\\System32\\calc.exe", "C:\\Windows\\SysWow64\\calc.exe"];
 
 		uint nRetry = 0;
 		uint nAffectedApps = 0;
-		RM_PROCESS_INFO[] rgAffectedApps = Array.Empty<RM_PROCESS_INFO>();
+		RM_PROCESS_INFO[] rgAffectedApps = [];
 		RM_REBOOT_REASON dwRebootReasons;
 
 		// Start a Restart Manager Session

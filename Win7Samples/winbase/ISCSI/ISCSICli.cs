@@ -501,7 +501,7 @@ internal static class ISCSICli
 			Mapping.OSBusNumber,
 			Mapping.OSTargetNumber);
 
-		SCSI_LUN_LIST[] LUNList = Mapping.LUNList.ToArray<SCSI_LUN_LIST>((int)Mapping.LUNCount) ?? Array.Empty<SCSI_LUN_LIST>();
+		SCSI_LUN_LIST[] LUNList = Mapping.LUNList.ToArray<SCSI_LUN_LIST>((int)Mapping.LUNCount) ?? [];
 		for (var j = 0; j < Mapping.LUNCount; j++)
 		{
 			Console.Write(" Target LUN: 0x{0:X} <-. OS Lun: 0x{1:X}\n", LUNList[j].TargetLUN, LUNList[j].OSLUN);
@@ -1055,7 +1055,7 @@ internal static class ISCSICli
 		//
 		// Initialize output volume path list to double nul
 		//
-		VolumePath = new List<string>();
+		VolumePath = [];
 
 		//
 		// Loop through all drive letters looking for mount points that
@@ -1103,7 +1103,7 @@ internal static class ISCSICli
 	{
 		Win32Error Status;
 
-		VolumePath = new List<string>();
+		VolumePath = [];
 		var VersionInfo = new OSVERSIONINFOEX { dwOSVersionInfoSize = (uint)Marshal.SizeOf<OSVERSIONINFOEX>() };
 		if (GetVersionEx(ref VersionInfo))
 		{
@@ -1133,7 +1133,7 @@ internal static class ISCSICli
 					Status = b ? Win32Error.ERROR_SUCCESS : GetLastError();
 					if (Status == Win32Error.ERROR_SUCCESS)
 					{
-						VolumePath = p.ToStringEnum().ToList();
+						VolumePath = [.. p.ToStringEnum()];
 					}
 				}
 				else
@@ -1156,7 +1156,7 @@ internal static class ISCSICli
 		out List<DEVICEINTERFACEENTRY> List)
 	{
 		Win32Error Status = Win32Error.ERROR_SUCCESS;
-		List = new List<DEVICEINTERFACEENTRY>();
+		List = [];
 
 		//
 		// get info on all exsiting disk devices
@@ -1251,7 +1251,7 @@ internal static class ISCSICli
 					if (b)
 					{
 						// And if all goes well, get the volume path names for the volume
-						VolumeMoreInfo.VolumePathNames = VolumePath.ToArray();
+						VolumeMoreInfo.VolumePathNames = [.. VolumePath];
 						Status = Win32Error.ERROR_SUCCESS;
 						DevEntry.MoreInfo = VolumeMoreInfo;
 					}
@@ -2471,7 +2471,7 @@ internal static class ISCSICli
 	private static Win32Error DoReportInitiatorList(string[] ArgV)
 	{
 		Win32Error Status;
-		IEnumerable<string> b = Enumerable.Empty<string>();
+		IEnumerable<string> b = [];
 
 		if (ArgV.Length != 1)
 		{
@@ -2866,7 +2866,7 @@ internal static class ISCSICli
 				var TargetPortalSocket = ArgV[4];
 
 				PortalGroup.Count = 1;
-				PortalGroup.Portals = new[] { new ISCSI_TARGET_PORTAL { Address = TargetPortalAddress, Socket = ushort.Parse(TargetPortalSocket) } };
+				PortalGroup.Portals = [new ISCSI_TARGET_PORTAL { Address = TargetPortalAddress, Socket = ushort.Parse(TargetPortalSocket) }];
 			}
 			else
 			{
@@ -3156,12 +3156,12 @@ internal static class ISCSICli
 			}
 
 			PortalGroup.Count = 1;
-			PortalGroup.Portals = new ISCSI_TARGET_PORTAL[] { new ISCSI_TARGET_PORTAL { Address = TargetPortalAddress, Socket = 3260 } };
+			PortalGroup.Portals = [new ISCSI_TARGET_PORTAL { Address = TargetPortalAddress, Socket = 3260 }];
 		}
 		else
 		{
 			PortalGroup.Count = 0;
-			PortalGroup.Portals = new ISCSI_TARGET_PORTAL[] { default };
+			PortalGroup.Portals = [default];
 		}
 
 		Status = AddIScsiStaticTarget(TargetName,

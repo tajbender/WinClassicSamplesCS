@@ -103,7 +103,7 @@ internal class CBootStrapResolveContext : IDisposable
 
 		if (m_dwMaxResults > 0)
 		{
-			var addresses = address.Split(new[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+			var addresses = address.Split([';', ' '], StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
 			foreach (var CurrentAddress in addresses)
 			{
 				if (m_fEndResolve)
@@ -125,11 +125,11 @@ internal class CBootStrapResolveContext : IDisposable
 					using (results)
 					{
 						var cbSA6 = Marshal.SizeOf<SOCKADDR_IN6>();
-						using var psockAddrs = new SafeNativeArray<SOCKADDR_IN6>(results.Select(a => { using var ar = a.addr; return (SOCKADDR_IN6)ar; }).ToArray());
+						using var psockAddrs = new SafeNativeArray<SOCKADDR_IN6>([.. results.Select(a => { using var ar = a.addr; return (SOCKADDR_IN6)ar; })]);
 						var Addresses = new SOCKET_ADDRESS_LIST
 						{
 							iAddressCount = psockAddrs.Count,
-							Address = psockAddrs.Select((a, i) => new SOCKET_ADDRESS { iSockaddrLength = cbSA6, lpSockaddr = ((IntPtr)psockAddrs).Offset(cbSA6) }).ToArray()
+							Address = [.. psockAddrs.Select((a, i) => new SOCKET_ADDRESS { iSockaddrLength = cbSA6, lpSockaddr = ((IntPtr)psockAddrs).Offset(cbSA6) })]
 						};
 
 						// Call the callback to signal completion

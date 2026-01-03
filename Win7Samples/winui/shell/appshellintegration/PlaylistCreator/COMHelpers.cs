@@ -52,7 +52,7 @@ public static class COMHelpers
 				hr = IStream_Read(pstm, (IntPtr)pdata, uliLowPart);
 				if (hr.Succeeded)
 				{
-					ppBytes = pdata.ToArray();
+					ppBytes = [.. pdata];
 				}
 			}
 		}

@@ -17,12 +17,12 @@ class BackgroundCopyFileProperties
 	* that will be added to the download job.
 	*/
 	static readonly (string RemoteFile, string LocalFile)[] FileList =
-	{
+	[
 	("https://download.microsoft.com/download/2/9/4/29413F94-2ACF-496A-AD9C-8F43598510B7/EIE11_EN-US_MCM_WIN764.EXE",
 	"c:\\temp\\data\\EIE11_EN-US_MCM_WIN764.EXE"),
 	("https://www.microsoft.com/en-us/download/confirmation.aspx?id=51188&6B49FDFB-8E5B-4B07-BC31-15695C5A2143=1",
 	"c:\\temp\\data\\visioviewer_4339-1001_x86_en-us.exe")
-	};
+	];
 
 	/*
 	* Main program entry point

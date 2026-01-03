@@ -21,7 +21,7 @@ static class Program
 
 		try
 		{
-			TogglePrivileges(new[] { "SeSecurityPrivilege", "SeBackupPrivilege" }, true);
+			TogglePrivileges(["SeSecurityPrivilege", "SeBackupPrivilege"], true);
 
 			// Create a new image and add a file
 			AddFileToNewCim(cimPath, imageName, filePath, imageRelativePath);
@@ -175,7 +175,7 @@ static class Program
 		fileData.Sd = sd;
 
 		// Retrieve Alternate streams info
-		fileData.StreamData = GetAlternateDataStreams(filePath).Where(d => d.cStreamName != "::$DATA").ToList();
+		fileData.StreamData = [.. GetAlternateDataStreams(filePath).Where(d => d.cStreamName != "::$DATA")];
 
 		// Finally keep the handle used to retrieve the information
 		fileData.FileHandle = file;

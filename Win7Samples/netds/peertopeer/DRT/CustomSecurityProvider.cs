@@ -312,8 +312,8 @@ internal unsafe class CCustomNullSecuredAddressPayload : IDisposable
 			var cUnusedBits = (byte)deserializer.ReadByte();
 
 			var szAlgId = cbAlgorithmId == 0 ? null : deserializer.Read<string>(CharSet.Ansi);
-			var pParamData = cbParameters == 0 ? new byte[0] : deserializer.ReadArray<byte>(cbParameters, false).ToArray();
-			var pKeyData = cbPublicKey == 0 ? new byte[0] : deserializer.ReadArray<byte>(cbPublicKey, false).ToArray();
+			var pParamData = cbParameters == 0 ? [] : deserializer.ReadArray<byte>(cbParameters, false).ToArray();
+			var pKeyData = cbPublicKey == 0 ? [] : deserializer.ReadArray<byte>(cbPublicKey, false).ToArray();
 
 			var cbTotal = sizeof(CERT_PUBLIC_KEY_INFO) + Macros.ALIGN_TO_MULTIPLE(cbAlgorithmId + 1, IntPtr.Size) +
 				Macros.ALIGN_TO_MULTIPLE(cbParameters, IntPtr.Size) + Macros.ALIGN_TO_MULTIPLE(cbPublicKey, IntPtr.Size);

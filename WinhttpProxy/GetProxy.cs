@@ -285,7 +285,7 @@ quit:
 			// valid.
 			//
 
-			var proxyArray = m_wpiProxyInfo.lpszProxy?.Split(new[] { ' ', ';', '\t', '\n', '\v', '\f', '\r' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+			var proxyArray = m_wpiProxyInfo.lpszProxy?.Split([' ', ';', '\t', '\n', '\v', '\f', '\r'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 			m_pwszProxyList = (proxyArray?.Length ?? 0) > 0 ? new Queue<string>(proxyArray!) : new Queue<string>();
 			m_fReturnedFirstProxy = true;
 			goto commit;

@@ -9,7 +9,7 @@ namespace WinhttpAsyncSample;
 
 internal class Program
 {
-	private static readonly List<MYCONTEXT?> contexts = new();
+	private static readonly List<MYCONTEXT?> contexts = [];
 	private static SafeHINTERNET? g_hConnect = default;
 	private static SafeHINTERNET? g_hSession = default;
 
@@ -205,7 +205,7 @@ Exit:
 	{
 		Win32Error dwError = Win32Error.ERROR_SUCCESS;
 		var fLocked = false;
-		string?[] pwszAcceptTypes = new[] { "*/*", default };
+		string?[] pwszAcceptTypes = ["*/*", default];
 		MYCONTEXT? pContext = default;
 
 		ppContext = default;

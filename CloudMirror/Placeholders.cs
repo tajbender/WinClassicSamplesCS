@@ -59,7 +59,7 @@ static class Placeholders
 					try
 					{
 						Console.Write("Creating placeholder for {0}\n", relativeName);
-						CfCreatePlaceholders(destPath, new[] { cloudEntry }, 1, CF_CREATE_FLAGS.CF_CREATE_FLAG_NONE, out _).ThrowIfFailed();
+						CfCreatePlaceholders(destPath, [cloudEntry], 1, CF_CREATE_FLAGS.CF_CREATE_FLAG_NONE, out _).ThrowIfFailed();
 					}
 					catch (Exception ex)
 					{

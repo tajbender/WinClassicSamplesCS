@@ -141,7 +141,7 @@ Win32 Error codes.
 --*/
 void SendRequestToHost([In] HINTERNET hSession, ProxyResolver pProxyResolver, string pwszHost, string? pwszPath, out HTTP_STATUS pdwStatusCode)
 {
-	string?[] pcwszAcceptTypes = { "*/*", default };
+	string?[] pcwszAcceptTypes = ["*/*", default];
 
 	pdwStatusCode = 0;
 

@@ -36,7 +36,7 @@ public abstract class CPlaylistCreator : INamespaceWalkCB2
 
 	// the properties we will be asking for (optimzation for the property store)
 	protected static readonly PROPERTYKEY[] c_rgProps =
-	{
+	[
 		PROPERTYKEY.System.ParsingPath,   // use instead of ItemUrl
 		PROPERTYKEY.System.PerceivedType,
 		PROPERTYKEY.System.Media.Duration,
@@ -44,7 +44,7 @@ public abstract class CPlaylistCreator : INamespaceWalkCB2
 		PROPERTYKEY.System.Music.TrackNumber,
 		PROPERTYKEY.System.Music.AlbumArtist,
 		PROPERTYKEY.System.Music.AlbumTitle
-	};
+	];
 
 	protected IProgressDialog _ppd;      // held so the callbacks can use this
 	protected IStream? _pstm;
@@ -310,12 +310,12 @@ public class CPlaylistCreatorApp
 static class Program
 {
 	static readonly string[] rgAssociationElementsMusic =
-	{
+	[
 		"SystemFileAssociations\\Directory.Audio", // music folders
 		"Stack.System.Music",                      // music stacks anywhere
 		"Stack.Audio",                             // stacks in music library
 		"SystemFileAssociations\\Audio",           // music items
-	};
+	];
 	const string c_szCreateWPLPlaylistVerb = "CreateWPLPlaylist";
 	const string c_szCreateM3UPlaylistVerb = "CreateM3UPlaylist";
 

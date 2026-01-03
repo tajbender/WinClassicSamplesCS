@@ -24,7 +24,7 @@ internal static class Program
 
 	// List of alternative options corresponding to CSM operations.
 	private static readonly CParamBase[] ExclusiveParams =
-	{
+	[
 		g_EnumRootsParam,
 		g_EnumRulesParam,
 		g_AddRootParam,
@@ -36,11 +36,11 @@ internal static class Program
 		g_Reindex,
 		g_HelpParam,
 		g_AltHelpParam,
-	};
+	];
 
 	// List of all supported command line options.
 	private static readonly CParamBase[] Params =
-	{
+	[
 		g_IncludeParam,
 		g_DefaultParam,
 		g_EnumRootsParam,
@@ -54,11 +54,11 @@ internal static class Program
 		g_Reindex,
 		g_HelpParam,
 		g_AltHelpParam
-	};
+	];
 
 	// Command line options help text
 	private static readonly string[] rgParamsHelp =
-	{
+	[
 		"/enumerate_roots",
 		"/enumerate_rules",
 		"/add_root <new root path>",
@@ -69,7 +69,7 @@ internal static class Program
 		"/reset",
 		"/reindex",
 		"/help or /? "
-	};
+	];
 
 	public static int Main(string[] args)
 	{

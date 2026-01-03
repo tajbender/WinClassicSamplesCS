@@ -39,21 +39,21 @@ internal class OUTPUTMANAGER : IDisposable
 
 		// Driver types supported
 		D3D_DRIVER_TYPE[] DriverTypes =
-		{
+		[
 D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_HARDWARE,
 D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_WARP,
 D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_REFERENCE,
-};
+];
 		int NumDriverTypes = DriverTypes.Length;
 
 		// Feature levels supported
 		D3D_FEATURE_LEVEL[] FeatureLevels =
-		{
+		[
 D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0,
 D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_10_1,
 D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_10_0,
 D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
-};
+];
 		uint NumFeatureLevels = (uint)FeatureLevels.Length;
 		// Create device
 		HRESULT hr = 0;
@@ -439,7 +439,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 		// Set resources
 		uint Stride = (uint)Marshal.SizeOf(typeof(VERTEX));
 		uint Offset = 0;
-		float[] blendFactor = { 0.0f, 0.0f, 0.0f, 0.0f };
+		float[] blendFactor = [0.0f, 0.0f, 0.0f, 0.0f];
 		m_DeviceContext!.OMSetBlendState(default, blendFactor, 0xffffffff);
 		m_DeviceContext.OMSetRenderTargets(1, [m_RTV!], default);
 		m_DeviceContext.VSSetShader(m_VertexShader, default, 0);

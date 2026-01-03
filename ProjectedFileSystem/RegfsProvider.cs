@@ -9,7 +9,7 @@ internal class RegfsProvider : VirtualizationInstance
 {
 	// An enumeration session starts when StartDirEnum is invoked and ends when EndDirEnum is invoked. This tracks the active
 	// enumeration sessions.
-	private Dictionary<Guid, DirInfo> _activeEnumSessions = new();
+	private Dictionary<Guid, DirInfo> _activeEnumSessions = [];
 
 	// If this flag is set to true, RegFS will block file content modifications for placeholder files.
 	//private bool _readOnlyFileContent = true;

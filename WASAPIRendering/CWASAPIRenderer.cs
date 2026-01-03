@@ -4,11 +4,9 @@ using Vanara.InteropServices;
 using static Vanara.PInvoke.Kernel32;
 using static Vanara.PInvoke.WinMm;
 
-internal readonly struct RenderBuffer
+internal readonly struct RenderBuffer(uint length)
 {
-	public readonly byte[] buffer;
-
-	public RenderBuffer(uint length) => buffer = new byte[length];
+	public readonly byte[] buffer = new byte[length];
 }
 
 internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
@@ -305,7 +303,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 			Console.Write("Unable to initialize COM in render thread\n");
 		}
 
-		SafeEventHandle[] waitArray = new[] { shutdownEvent, streamSwitchEvent, audioSamplesReadyEvent };
+		SafeEventHandle[] waitArray = [shutdownEvent, streamSwitchEvent, audioSamplesReadyEvent];
 		bool stillPlaying = true;
 		while (stillPlaying)
 		{

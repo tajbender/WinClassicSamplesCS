@@ -17,7 +17,7 @@ pADs!.Put("givenName", "Janet");
 pADs!.Put("sn", "Johns");
 
 // Other Telephones
-string[] pszPhones = { "425 844 1234", "425 924 4321" };
+string[] pszPhones = ["425 844 1234", "425 924 4321"];
 pADs.Put("otherTelephone", pszPhones);
 
 pADs.SetInfo();
