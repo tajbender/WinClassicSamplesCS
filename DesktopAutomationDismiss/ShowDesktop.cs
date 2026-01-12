@@ -188,7 +188,7 @@ internal static class Program
 	// Callback for EnumWindows in IsAppVisible
 	//
 	//**********************************************************************
-	private static bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdc, PRECT pRect, IntPtr dwData)
+	private static bool MonitorEnumProc(HMONITOR hMonitor, HDC hdc, PRECT? pRect, IntPtr dwData)
 	{
 		try
 		{

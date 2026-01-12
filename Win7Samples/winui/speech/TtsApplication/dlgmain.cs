@@ -1027,7 +1027,7 @@ internal partial class CTTSApp
 	//
 	{
 		StringBuilder szDebugText = new(4096);
-		GetDlgItemText(hWnd, IDC_DEBUG, szDebugText, szDebugText.Capacity);
+		GetDlgItemText(hWnd, IDC_DEBUG, szDebugText, (uint)szDebugText.Capacity);
 
 		// Clear out the buffer after 100 lines of text have been written
 		// to the debug window since it can only hold 4096 characters.

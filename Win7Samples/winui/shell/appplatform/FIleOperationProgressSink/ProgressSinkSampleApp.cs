@@ -148,7 +148,7 @@ internal static class Program
 				uint dwCookie = pfo.Advise((IFileOperationProgressSink)pfops);
 				// Get the source and destination paths of the copy operation
 				StringBuilder szSrcPath = new(MAX_PATH);
-				hr = (GetDlgItemText(hwnd, IDC_SRC, szSrcPath, szSrcPath.Capacity) > 0) ? HRESULT.S_OK : HRESULT.E_FAIL;
+				hr = (GetDlgItemText(hwnd, IDC_SRC, szSrcPath, (uint)szSrcPath.Capacity) > 0) ? HRESULT.S_OK : HRESULT.E_FAIL;
 				if (hr.Succeeded)
 				{
 					// Create an IShellItem from the supplied source path
@@ -156,7 +156,7 @@ internal static class Program
 					if (psiFrom is not null)
 					{
 						StringBuilder szDestPath = new(MAX_PATH);
-						hr = (GetDlgItemText(hwnd, IDC_DEST, szDestPath, szDestPath.Capacity) > 0) ? HRESULT.S_OK : HRESULT.E_FAIL;
+						hr = (GetDlgItemText(hwnd, IDC_DEST, szDestPath, (uint)szDestPath.Capacity) > 0) ? HRESULT.S_OK : HRESULT.E_FAIL;
 						if (hr.Succeeded)
 						{
 							// Create an IShellItem from the supplied path
