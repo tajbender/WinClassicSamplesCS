@@ -96,7 +96,7 @@ internal static class MagnifierSample
 		xSpan += 2 * xBorder;
 		ySpan += 2 * yBorder + yCaption;
 
-		SetWindowPos(hwndHost, SpecialWindowHandles.HWND_TOPMOST, xOrigin, yOrigin, xSpan, ySpan,
+		SetWindowPos(hwndHost, HWND.HWND_TOPMOST, xOrigin, yOrigin, xSpan, ySpan,
 			SetWindowPosFlags.SWP_SHOWWINDOW | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE);
 	}
 
@@ -109,7 +109,7 @@ internal static class MagnifierSample
 
 		SetWindowLong(hwndHost, WindowLongFlags.GWL_EXSTYLE, (int)(WindowStylesEx.WS_EX_TOPMOST | WindowStylesEx.WS_EX_LAYERED));
 		SetWindowLong(hwndHost, WindowLongFlags.GWL_STYLE, (int)RESTOREDWINDOWSTYLES);
-		SetWindowPos(hwndHost, SpecialWindowHandles.HWND_TOPMOST, hostWindowRect.left, hostWindowRect.top, hostWindowRect.right, hostWindowRect.bottom,
+		SetWindowPos(hwndHost, HWND.HWND_TOPMOST, hostWindowRect.left, hostWindowRect.top, hostWindowRect.right, hostWindowRect.bottom,
 			SetWindowPosFlags.SWP_SHOWWINDOW | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE);
 	}
 
@@ -270,7 +270,7 @@ internal static class MagnifierSample
 		MagSetWindowSource(hwndMag, sourceRect);
 
 		// Reclaim topmost status, to prevent unmagnified menus from remaining in view.
-		SetWindowPos(hwndHost, SpecialWindowHandles.HWND_TOPMOST, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
+		SetWindowPos(hwndHost, HWND.HWND_TOPMOST, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE);
 
 		// Force redraw.
 		InvalidateRect(hwndMag, default, true);
