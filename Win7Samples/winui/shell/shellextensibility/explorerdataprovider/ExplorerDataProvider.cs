@@ -599,7 +599,7 @@ public class CFolderViewImplFolder(uint nLevel) : IShellFolder2, IPersistFolder2
 	}
 
 
-	public HRESULT ParseDisplayName(HWND hwnd, IBindCtx? pbc, string pszName, out uint pchEaten, out PIDL ppidl, StructPointer<SFGAO> pdwAttributes)
+	public HRESULT ParseDisplayName(HWND hwnd, IBindCtx? pbc, string pszName, out uint pchEaten, out PIDL ppidl, IntPtr pdwAttributes)
 	{
 		HRESULT hr = HRESULT.E_INVALIDARG;
 		pchEaten = 0;
@@ -610,7 +610,7 @@ public class CFolderViewImplFolder(uint nLevel) : IShellFolder2, IPersistFolder2
 			var szNameComponent = new StringBuilder(Kernel32.MAX_PATH);
 
 			// extract first component of the display name
-			StrPtrAuto pszNext = PathFindNextComponent(pszName);
+			var pszNext = PathFindNextComponent(pszName);
 			if (!pszNext.IsNullOrEmpty)
 			{
 				hr = StringCchCopy(szNameComponent, pszName.Length - pszNext.ToString().Length, pszName);

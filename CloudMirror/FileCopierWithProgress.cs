@@ -14,13 +14,10 @@ internal static class FileCopierWithProgress
 	// the overlapped approach. I pulled this number out of a hat.
 	private const int CHUNKSIZE = 4096;
 
-	public static void CancelCopyFromServerToClient(in CF_CALLBACK_INFO lpCallbackInfo, in CF_CALLBACK_PARAMETERS lpCallbackParameters)
-	{
-		CancelCopyFromServerToClientWorker(lpCallbackInfo,
+	public static void CancelCopyFromServerToClient(in CF_CALLBACK_INFO lpCallbackInfo, in CF_CALLBACK_PARAMETERS lpCallbackParameters) => CancelCopyFromServerToClientWorker(lpCallbackInfo,
 			lpCallbackParameters.Cancel.FetchData.FileOffset,
 			lpCallbackParameters.Cancel.FetchData.Length,
 			lpCallbackParameters.Cancel.Flags);
-	}
 
 	public static void CopyFromServerToClient(in CF_CALLBACK_INFO lpCallbackInfo, in CF_CALLBACK_PARAMETERS lpCallbackParameters, string serverFolder)
 	{
@@ -54,14 +51,14 @@ internal static class FileCopierWithProgress
 			GetCurrentProcessId(), GetCurrentThreadId(), callbackInfo.VolumeDosName, callbackInfo.NormalizedPath, cancelFileOffset, cancelLength);
 	}
 
-	private static unsafe void CopyFromServerToClientWorker(in CF_CALLBACK_INFO callbackInfo, IntPtr pProcessInfo, long requiredFileOffset, long requiredLength,
+	private static unsafe void CopyFromServerToClientWorker(in CF_CALLBACK_INFO callbackInfo, ManagedStructPointer<CF_PROCESS_INFO> pProcessInfo, long requiredFileOffset, long requiredLength,
 		long optionalFileOffset, long optionalLength, CF_CALLBACK_FETCH_DATA_FLAGS fetchFlags, byte priorityHint, string serverFolder)
 	{
 		var fullServerPath = Path.Combine(serverFolder, StringHelper.GetString(callbackInfo.FileIdentity, CharSet.Unicode)!);
 
 		var fullClientPath = callbackInfo.VolumeDosName + callbackInfo.NormalizedPath;
 
-		var processInfo = pProcessInfo.ToNullableStructure<CF_PROCESS_INFO>();
+		var processInfo = pProcessInfo.Value;
 		Console.Write("[{0:X4}:{1:X4}] - Received data request from {2} for {3}{4}, priority {5}, offset {6:X16} length {7:X16}\n",
 			GetCurrentProcessId(),
 			GetCurrentThreadId(),

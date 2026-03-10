@@ -343,7 +343,7 @@ internal class ListViewApp : VisibleWindow
 				pBits, bi, DIBColorMode.DIB_RGB_COLORS), v => v == 0);
 
 			// Now we copy the buffer into video memory.
-			try { m_pBitmapAtlas!.CopyFromMemory(new(m_pFiles[i].placement, out _), pBits, bih.biSizeImage / (uint)Math.Abs(bih.biHeight)); }
+			try { m_pBitmapAtlas!.CopyFromMemory(m_pFiles[i].placement, pBits, bih.biSizeImage / (uint)Math.Abs(bih.biHeight)); }
 			catch { break; }
 
 			m_pFiles[i].szFilename = findFileData.cFileName;

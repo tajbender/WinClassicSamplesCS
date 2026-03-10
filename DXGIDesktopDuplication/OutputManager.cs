@@ -789,7 +789,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 		unsafe
 		{
 			D3D11_SUBRESOURCE_DATA InitData2 = new() { pSysMem = Vertices };
-			hr = m_Device.CreateBuffer(BDesc, &InitData2, out VertexBufferMouse);
+			hr = m_Device.CreateBuffer(BDesc, InitData2, out VertexBufferMouse);
 		}
 		if (hr.Failed)
 		{

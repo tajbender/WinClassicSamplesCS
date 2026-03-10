@@ -53,7 +53,7 @@ static class Program
 	*****************************************************************************/
 	static PIDL? PidlFromPath(HWND hwnd, string pszPath)
 	{
-		SFGAO dwAttributes = 0;
+		SFGAO? dwAttributes = 0;
 		return g_psfDesktop!.ParseDisplayName(hwnd, default, pszPath, out _, out var pidl, ref dwAttributes).Failed ? null : pidl;
 	}
 

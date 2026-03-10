@@ -155,7 +155,7 @@ internal class DemoApp : VisibleWindow
 			m_pRT = m_pD2DFactory.CreateHwndRenderTarget(RenderTargetProperties(), HwndRenderTargetProperties(Handle, size));
 
 			// Create brushes.
-			m_pSolidColorBrush = m_pRT.CreateSolidColorBrush(Color.White);
+			m_pSolidColorBrush = m_pRT.CreateSolidColorBrush((D3DCOLORVALUE)Color.White);
 
 			IGeometryRealizationFactory pRealizationFactory = new GeometryRealizationFactory(m_pRT, sc_maxRealizationDimension);
 			m_pRealization = pRealizationFactory.CreateGeometryRealization();

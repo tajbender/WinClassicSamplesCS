@@ -521,7 +521,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 				for (uint n = 0; n < FrameCount; n++)
 				{
-					m_device!.CreateConstantBufferView(&cbvDesc, cpuHandle);
+					m_device!.CreateConstantBufferView(cbvDesc, cpuHandle);
 
 					cbvDesc.BufferLocation += constantBufferByteSize;
 					cpuHandle.Offset((int)m_cbvSrvDescriptorSize);

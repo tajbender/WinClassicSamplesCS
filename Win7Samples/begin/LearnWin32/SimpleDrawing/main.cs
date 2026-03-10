@@ -393,7 +393,7 @@ internal static class Ext
 		unsafe
 		{
 			D3DCOLORVALUE cv = new(c);
-			t.Clear(&cv);
+			t.Clear(cv);
 		}
 	}
 }

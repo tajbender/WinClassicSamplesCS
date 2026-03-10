@@ -144,7 +144,7 @@ internal class DemoApp : VisibleWindow
 			m_pRenderTarget = m_pD2DFactory.CreateHwndRenderTarget(RenderTargetProperties(), HwndRenderTargetProperties(Handle, size));
 
 			// Create a black brush.
-			m_pBlackBrush = m_pRenderTarget.CreateSolidColorBrush(Color.Black);
+			m_pBlackBrush = m_pRenderTarget.CreateSolidColorBrush((D3DCOLORVALUE)Color.Black);
 
 			// Create a linear gradient.
 			D2D1_GRADIENT_STOP[] stops = [
@@ -181,7 +181,7 @@ internal class DemoApp : VisibleWindow
 	ID2D1BitmapBrush CreateGridPatternBrush(ID2D1RenderTarget pRenderTarget)
 	{
 		// Create a compatible render target.
-		var pCompatibleRenderTarget = pRenderTarget.CreateCompatibleRenderTarget(SizeF(10.0f, 10.0f));
+		var pCompatibleRenderTarget = pRenderTarget.CreateCompatibleRenderTarget(SizeF(10.0f, 10.0f), null, null);
 
 		// Draw a pattern.
 		ID2D1SolidColorBrush pGridBrush = pCompatibleRenderTarget.CreateSolidColorBrush(new(0.93f, 0.94f, 0.96f, 1.0f));
@@ -198,7 +198,7 @@ internal class DemoApp : VisibleWindow
 		D2D1_BITMAP_BRUSH_PROPERTIES brushProperties = BitmapBrushProperties(D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP, D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP);
 
 		// Create the bitmap brush.
-		return m_pRenderTarget!.CreateBitmapBrush(pGridBitmap, brushProperties);
+		return m_pRenderTarget!.CreateBitmapBrush(pGridBitmap, brushProperties, null);
 	}
 
 	//

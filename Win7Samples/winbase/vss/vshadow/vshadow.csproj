@@ -6,6 +6,5 @@
   <ItemGroup>
     <PackageReference Include="Vanara.PInvoke.VssApi" />
     <PackageReference Include="Vanara.PInvoke.Ole" />
-    <PackageReference Include="Vanara.PInvoke.Shared" />
   </ItemGroup>
 </Project>

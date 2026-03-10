@@ -35,7 +35,7 @@ internal class Program
 			D3DContext D3D = new();
 
 			D3D12_FEATURE_DATA_D3D12_OPTIONS21 Options = new();
-			D3D.spDevice.CheckFeatureSupport(ref Options, D3D12_FEATURE.D3D12_FEATURE_D3D12_OPTIONS21).ThrowIfFailed();
+			D3D.spDevice!.CheckFeatureSupport(ref Options, D3D12_FEATURE.D3D12_FEATURE_D3D12_OPTIONS21).ThrowIfFailed();
 			if (Options.WorkGraphsTier == D3D12_WORK_GRAPHS_TIER.D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED)
 			{
 				PRINT("Device does not report support for work graphs.");
@@ -54,13 +54,13 @@ internal class Program
 			D3D12_STATE_OBJECT_DESC_MGD SO = new(D3D12_STATE_OBJECT_TYPE.D3D12_STATE_OBJECT_TYPE_EXECUTABLE);
 			D3D12_SHADER_BYTECODE libCode = new(library!);
 			SO.Add(new D3D12_DXIL_LIBRARY_DESC { DXILLibrary = libCode });
-			D3D.spDevice.CreateRootSignatureFromSubobjectInLibrary(0, libCode.pShaderBytecode, libCode.BytecodeLength, "globalRS", out ID3D12RootSignature? spRS).ThrowIfFailed();
+			D3D.spDevice!.CreateRootSignatureFromSubobjectInLibrary(0, libCode.pShaderBytecode, libCode.BytecodeLength, "globalRS", out ID3D12RootSignature? spRS).ThrowIfFailed();
 
 			const string workGraphName = "HelloWorkGraphs";
 			D3D12_WORK_GRAPH_DESC pWG = new() { Flags = D3D12_WORK_GRAPH_FLAGS.D3D12_WORK_GRAPH_FLAG_INCLUDE_ALL_AVAILABLE_NODES, ProgramName = workGraphName };
 			SO.Add(pWG);
 
-			D3D.spDevice.CreateStateObject(SO, out ID3D12StateObject? spSO).ThrowIfFailed();
+			D3D.spDevice!.CreateStateObject(SO, out ID3D12StateObject? spSO).ThrowIfFailed();
 			WorkGraphContext WG = new(D3D, spSO, "HelloWorkGraphs");
 
 			// Setup program
@@ -188,7 +188,7 @@ internal class Program
 			PRINT("Flush and finish wait failed");
 			throw new COMException();
 		}
-		D3D.spDevice.GetDeviceRemovedReason().ThrowIfFailed();
+		D3D.spDevice!.GetDeviceRemovedReason().ThrowIfFailed();
 
 		D3D.spCA.Reset().ThrowIfFailed();
 		D3D.spCL.Reset(D3D.spCA, default).ThrowIfFailed();
@@ -209,7 +209,7 @@ internal class Program
 		rd.Flags = ResourceMiscFlags;
 		D3D12_HEAP_PROPERTIES hp = new(HeapType);
 
-		D3D.spDevice.CreateCommittedResource(hp, D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE, rd, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COMMON,
+		D3D.spDevice!.CreateCommittedResource(hp, D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE, rd, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COMMON,
 			null, out ppResource).ThrowIfFailed();
 	}
 
@@ -225,7 +225,7 @@ internal class Program
 			throw new COMException();
 		}
 		D3D12_RESOURCE_DESC BufferDesc = D3D12_RESOURCE_DESC.Buffer(IntermediateSize);
-		D3D.spDevice.CreateCommittedResource(HeapProps, D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE, BufferDesc,
+		D3D.spDevice!.CreateCommittedResource(HeapProps, D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE, BufferDesc,
 			D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_GENERIC_READ, default, out ppStagingResource).ThrowIfFailed();
 
 		bool NeedTransition = (CurrentState & D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST) == 0;
@@ -274,7 +274,7 @@ internal class Program
 	//=================================================================================================================================
 	class D3DContext
 	{
-		public ID3D12Device14 spDevice;
+		public ID3D12Device14? spDevice;
 		public ID3D12GraphicsCommandList10 spCL;
 		public ID3D12CommandQueue spCQ;
 		public ID3D12CommandAllocator spCA;
@@ -297,11 +297,11 @@ internal class Program
 				var factory = CreateDXGIFactory2<IDXGIFactory4>();
 
 				factory.EnumWarpAdapter(out IDXGIAdapter? warpAdapter).ThrowIfFailed();
-				D3D12CreateDevice(warpAdapter, FL, out spDevice!).ThrowIfFailed();
+				D3D12CreateDevice(FL, warpAdapter, out spDevice!).ThrowIfFailed();
 			}
 			else
 			{
-				D3D12CreateDevice(null, FL, out spDevice!).ThrowIfFailed();
+				D3D12CreateDevice(FL, null, out spDevice!).ThrowIfFailed();
 			}
 
 			spDevice.CreateFence(0, D3D12_FENCE_FLAGS.D3D12_FENCE_FLAG_NONE, out spFence!).ThrowIfFailed();

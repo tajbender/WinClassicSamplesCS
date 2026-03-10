@@ -163,7 +163,7 @@ internal class DISPLAYMANAGER : IDisposable
 				Box.right = (uint)(SrcRect.right + DeskDesc.DesktopCoordinates.left - OffsetX);
 				Box.bottom = (uint)(SrcRect.bottom + DeskDesc.DesktopCoordinates.top - OffsetY);
 				Box.back = 1;
-				m_DeviceContext!.CopySubresourceRegion(m_MoveSurf!, 0, (uint)SrcRect.left, (uint)SrcRect.top, 0, SharedSurf, 0, &Box);
+				m_DeviceContext!.CopySubresourceRegion(m_MoveSurf!, 0, (uint)SrcRect.left, (uint)SrcRect.top, 0, SharedSurf, 0, Box);
 
 				// Copy back to shared surface
 				Box.left = (uint)SrcRect.left;
@@ -172,8 +172,8 @@ internal class DISPLAYMANAGER : IDisposable
 				Box.right = (uint)SrcRect.right;
 				Box.bottom = (uint)SrcRect.bottom;
 				Box.back = 1;
-				m_DeviceContext.CopySubresourceRegion(SharedSurf, 0, (uint)(DestRect.left + DeskDesc.DesktopCoordinates.left - OffsetX),
-					(uint)(DestRect.top + DeskDesc.DesktopCoordinates.top - OffsetY), 0, m_MoveSurf!, 0, &Box);
+				m_DeviceContext!.CopySubresourceRegion(SharedSurf, 0, (uint)(DestRect.left + DeskDesc.DesktopCoordinates.left - OffsetX),
+					(uint)(DestRect.top + DeskDesc.DesktopCoordinates.top - OffsetY), 0, m_MoveSurf!, 0, Box);
 			}
 		}
 

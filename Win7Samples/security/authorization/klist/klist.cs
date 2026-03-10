@@ -50,18 +50,18 @@ internal static class KList
 
 	public static IEnumerable<string> GetNames(this KERB_EXTERNAL_NAME Name)
 	{
-		if (Name.NameCount == 0)
+		if (Name.Names.Length == 0)
 			yield break;
 		using var pin = new PinnedObject(Name);
-		foreach (var us in ((IntPtr)pin).ToIEnum<LSA_UNICODE_STRING>(Name.NameCount, 8))
+		foreach (var us in ((IntPtr)pin).ToIEnum<LSA_UNICODE_STRING>(Name.Names.Length, 8))
 			yield return us.ToString();
 	}
 
-	static void PrintKerbName(IntPtr Name) => PrintKerbName(Name.ToStructure<KERB_EXTERNAL_NAME>());
+	static void PrintKerbName(IntPtr Name) => PrintKerbName((ManagedStructPointer<KERB_EXTERNAL_NAME>)Name);
 
-	static void PrintKerbName(in KERB_EXTERNAL_NAME Name)
+	static void PrintKerbName(in ManagedStructPointer<KERB_EXTERNAL_NAME> Name)
 	{
-		Console.WriteLine(string.Join("/", Name.GetNames()));
+		Console.WriteLine(string.Join("/", Name.Value.GetValueOrDefault().Names));
 	}
 
 	static void PrintTime(string Comment, in FILETIME ConvertTime)
@@ -195,7 +195,7 @@ internal static class KList
 
 		var pin = new PinnedObject(CacheRequest);
 		var Status = LsaCallAuthenticationPackage(LogonHandle, PackageId, pin, (uint)Marshal.SizeOf<KERB_QUERY_TKT_CACHE_REQUEST>(), out var mem, out _, out var SubStatus);
-		var TicketEntry = mem.ToStructure<KERB_RETRIEVE_TKT_RESPONSE>();
+		ref var TicketEntry = ref mem.DangerousGetHandle().AsRef<KERB_RETRIEVE_TKT_RESPONSE>();
 
 		if (Status.Failed || SubStatus.Failed)
 		{

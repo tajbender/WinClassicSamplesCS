@@ -240,7 +240,7 @@ internal partial class CTTSApp
 					Fmt.AssignFormat(eFmt);
 					if (m_cpOutAudio is not null)
 					{
-						unsafe { hr = GetHR(() => m_cpOutAudio.SetFormat(Fmt.FormatId(), Fmt.WaveFormatExPtr())); }
+						unsafe { hr = GetHR(() => m_cpOutAudio.SetFormat(Fmt.FormatId(), (IntPtr)Fmt.WaveFormatExPtr())); }
 					}
 					else
 					{

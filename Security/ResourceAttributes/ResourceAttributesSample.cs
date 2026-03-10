@@ -538,7 +538,7 @@ true/false - If the function succeeds, true is returned, otherwise false.
 		for (uint i = 0; i < ResourceAttributes.Count; ++i)
 		{
 			ClaimInfo.Attribute.pAttributeV1 = pResourceAttributes[i];
-			Win32Error.ThrowLastErrorIfFalse(AddResourceAttributeAce(Sacl, ACL_REVISION, 0, 0, EveryoneSID, ClaimInfo, ref Bytes));
+			Win32Error.ThrowLastErrorIfFalse(AddResourceAttributeAce(Sacl, ACL_REVISION, 0, 0, EveryoneSID, ClaimInfo, out Bytes));
 		}
 
 		// Now add the SACL to the security descriptor.
