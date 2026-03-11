@@ -4,6 +4,6 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Vanara.Library" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
   </ItemGroup>
 </Project>

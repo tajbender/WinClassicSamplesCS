@@ -3,7 +3,8 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Vanara.Library" />
+    <PackageReference Include="Vanara.PInvoke.SensorsApi" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
   </ItemGroup>
   <ItemGroup>
     <None Update="AmbientLightAware.ico">

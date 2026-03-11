@@ -8,6 +8,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" />
-    <PackageReference Include="Vanara.Library" />
+    <PackageReference Include="Vanara.PInvoke.ComCtl32" />
+    <PackageReference Include="Vanara.PInvoke.ShlwApi" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
   </ItemGroup>
 </Project>

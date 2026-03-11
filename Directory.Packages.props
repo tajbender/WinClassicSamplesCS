@@ -27,6 +27,7 @@
     <PackageVersion Include="Vanara.Core" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.DirectoryServices" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.Library" Version="$(VanaraVer)" />
+    <PackageVersion Include="Vanara.PInvoke.AclUI" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.PInvoke.ActiveDS" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.PInvoke.AMSI" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.PInvoke.Avrt" Version="$(VanaraVer)" />

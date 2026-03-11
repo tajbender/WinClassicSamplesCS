@@ -23,7 +23,8 @@ internal class Program
 			if (psi is not null)
 			{
 				IThumbnailProvider pThumbProvider = psi.BindToHandler<IThumbnailProvider>(default, BHID.BHID_ThumbnailHandler);
-				pThumbProvider.GetThumbnail(nSize, out g_hThumbnail, out _).ThrowIfFailed();
+				pThumbProvider.GetThumbnail(nSize, out var hThumbnail, out _).ThrowIfFailed();
+				g_hThumbnail = new(hThumbnail, true);
 
 				using var g_hInstance = GetModuleHandle();
 				WindowClass wc = new("ThumbnailAppClass", g_hInstance, WndProc, hCursor: LoadCursor(default, IDC_ARROW), hbrBkgd: GetSysColorBrush(SystemColorIndex.COLOR_WINDOW + 1));

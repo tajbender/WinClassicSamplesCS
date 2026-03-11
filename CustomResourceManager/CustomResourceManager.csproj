@@ -3,6 +3,6 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Vanara.Library" />
+    <PackageReference Include="Vanara.PInvoke.AclUI" />
   </ItemGroup>
 </Project>

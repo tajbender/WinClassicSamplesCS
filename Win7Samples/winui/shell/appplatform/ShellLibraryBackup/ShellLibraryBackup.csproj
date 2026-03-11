@@ -6,7 +6,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" />
-    <PackageReference Include="Vanara.Library" />
+    <PackageReference Include="Vanara.PInvoke.Security" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ShellLibraryBackupRes.dll">
