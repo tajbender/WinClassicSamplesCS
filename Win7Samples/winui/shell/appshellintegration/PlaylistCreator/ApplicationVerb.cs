@@ -7,10 +7,9 @@ using static Vanara.PInvoke.ShlwApi;
 
 namespace Vanara.PInvoke;
 
-// CApplicationVerb is a template class that is used to implement shell verbs that integrate with an application using the
-// DelegateExecute verb invoke method. the DelegateExecute method has a number of advantages over CommandLine and ContextMenuHandler
-// methods discussed in the shell verb implementers guide. this could be adapted to use the DropTarget method to enable operation on
-// Windows XP
+// CApplicationVerb is a template class that is used to implement shell verbs that integrate with an application using the DelegateExecute
+// verb invoke method. the DelegateExecute method has a number of advantages over CommandLine and ContextMenuHandler methods discussed in the
+// shell verb implementers guide. this could be adapted to use the DropTarget method to enable operation on Windows XP
 //
 // this design assumes that the application is expressed as a C++ class with methods that the verb implementation can call to do its work
 //
@@ -20,31 +19,12 @@ namespace Vanara.PInvoke;
 // 2) for each verb define a class using CApplicationVerb<>, provide the CLSID of the verb using __declspec(uuid()), declare the DoVerb()
 // method this can be a nested class in the application class.
 //
-// class __declspec(uuid("4a4f70f8-0f4d-46dc-a4ee-3611308d885f")) CPlayVerb : 
-//     public CApplicationVerb<CPlayerApplication, CPlayVerb>
-// {
-//     CPlayVerb() : CApplicationVerb(AVF_DEFAULT) {}
-//     void StartVerb() const;
-//     void OnItem(IShellItem psi) const;
-// };
+// [ComVisible(true), Guid("B011CE4C-1C1B-4A68-9240-D1D8866537E9")]
+// public class CPlayerApplication : CApplicationVerb<CPlaylistCreatorApp, CCreateM3UPlaylistVerb> {
+//    protected override void DoVerb(IShellItemArray psia) => Application?.CreatePlaylistAsync(WM_APP_CREATE_M3U, psia);
+// }
 //
 // 3) provide the implementation of the verb by implementing DoVerb(), this can be inline in the class declaration
-//
-// class __declspec(uuid("4a4f70f8-0f4d-46dc-a4ee-3611308d885f")) CPlayVerb :
-//     public CApplicationVerb<CPlayerApplication, CPlayVerb>
-// {
-//     CPlayVerb() : CApplicationVerb(AVF_DEFAULT) {}
-//     void StartVerb() const
-//     {
-//         CPlayerApplication *pApp = GetApp();
-//         if (pApp) { // per verb invocation setup step }
-//     }
-//     void OnItem(IShellItem psi) const
-//     {
-//         CPlayerApplication *pApp = GetApp();
-//         if (pApp) { // process item }
-//     }
-// };
 //
 // 4) delcare an instance of each verb in your application class
 //
@@ -71,28 +51,40 @@ namespace Vanara.PInvoke;
 //
 // TVerb - the verb class itself, used to determine the CLSID value of the COM object that implements the verb
 //
-// this class combines the drop target and the class factory into a single object and it expects to be declared as a member variable of
-// the application calls giving it a lifetime that matches the application
+// this class combines the drop target and the class factory into a single object and it expects to be declared as a member variable of the
+// application calls giving it a lifetime that matches the application
 /// <summary>Initializes a new instance of the <see cref="CApplicationVerb{TApplication, TVerb}"/> class.</summary>
 /// <param name="flags">The flags.</param>
 [ClassInterface(ClassInterfaceType.None)]
-public class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication, TVerb>.APPLICATION_VERB_FLAGS flags = CApplicationVerb<TApplication, TVerb>.APPLICATION_VERB_FLAGS.AVF_DEFAULT) : IExecuteCommand, IInitializeCommand, IObjectWithSelection, IObjectWithSite, IClassFactory, INamespaceWalkCB2, IDisposable where TApplication : class
+public abstract class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication, TVerb>.APPLICATION_VERB_FLAGS flags = CApplicationVerb<TApplication, TVerb>.APPLICATION_VERB_FLAGS.AVF_DEFAULT)
+	: IExecuteCommand, IInitializeCommand, IObjectWithSelection, IObjectWithSite, IClassFactory, INamespaceWalkCB2, IDisposable where TApplication : class
 {
-	public enum APPLICATION_VERB_FLAGS
-	{
-		AVF_DEFAULT = 0x0000,
-		AVF_ASYNC = 0x0001,   // invoke the verb using the async methods provided by the app
-		AVF_ONE_IMPLIES_ALL = 0x0002,   // implement one implies all behavior
-	}
-
 	private uint _dwRegisterClass;
 	private IShellItemArray? _psia;
 	private object? _punkSite;
 
-	void IDisposable.Dispose()
+	/// <summary>Specifies flags that control the behavior of application verbs.</summary>
+	/// <remarks>
+	/// Use these flags to modify how an application verb is invoked or interpreted. Multiple flags can be combined using a bitwise OR
+	/// operation to specify multiple behaviors.
+	/// </remarks>
+	public enum APPLICATION_VERB_FLAGS
 	{
-		_psia = null;
-		_punkSite = null;
+		/// <summary>Default behavior. No special flags are set.</summary>
+		AVF_DEFAULT = 0x0000,
+
+		/// <summary>
+		/// Invoke the verb using the asynchronous methods provided by the application. This allows for better performance and responsiveness
+		/// when processing large numbers of items.
+		/// </summary>
+		AVF_ASYNC = 0x0001,
+
+		/// <summary>
+		/// When combined with <see cref="AVF_ASYNC"/>, this flag indicates that if the verb is invoked on multiple items and the
+		/// implementation returns S_OK for one item, it implies that the verb should be invoked on all items. This can be used to optimize
+		/// performance by reducing the number of calls to the verb implementation.
+		/// </summary>
+		AVF_ONE_IMPLIES_ALL = 0x0002,
 	}
 
 	/// <summary>Gets or sets the application the verb implementations call methods on. Set this value when constructing inherited classes.</summary>
@@ -118,7 +110,7 @@ public class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication
 
 	/// <summary>Called when a verb is being invoked synchronously with the items implement this for sync verbs.</summary>
 	/// <param name="psia">The <see cref="IShellItemArray"/> value passed to the verb.</param>
-	protected virtual void DoVerb(IShellItemArray psia) { }
+	protected abstract void DoVerb(IShellItemArray psia);
 
 	/// <summary>On an async verb call, this method is called when the discovery of items is complete.</summary>
 	protected virtual void EndVerb() { }
@@ -134,24 +126,35 @@ public class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication
 	/// <summary>On an async verb call, this method is called when the discovery of items starts.</summary>
 	protected virtual void StartVerb() { }
 
-	// IClassFactory
+	/// <inheritdoc/>
 	HRESULT IClassFactory.CreateInstance(object? punkOuter, in Guid riid, out object? ppv)
 	{
 		System.Diagnostics.Debugger.Break();
 		ppv = null;
-		if (punkOuter is not null) return HRESULT.CLASS_E_NOAGGREGATION;
-		return ShellHelpers.QueryInterface(this, riid, out ppv);
+		return punkOuter is not null ? (HRESULT)HRESULT.CLASS_E_NOAGGREGATION : ShellHelpers.QueryInterface(this, riid, out ppv);
 	}
 
-	HRESULT IClassFactory.LockServer(bool _) => HRESULT.S_OK;
+	/// <inheritdoc/>
+	void IDisposable.Dispose()
+	{
+		_psia = null;
+		_punkSite = null;
+		GC.SuppressFinalize(this);
+	}
 
-	// IExecuteCommand
+	/// <inheritdoc/>
+	HRESULT INamespaceWalkCB.EnterFolder(IShellFolder psf, [In] IntPtr pidl) => ShouldContinue() ? HRESULT.S_OK : ShellHelpers.HRESULT_FROM_WIN32(Win32Error.ERROR_CANCELLED);
+
+	/// <inheritdoc/>
+	HRESULT INamespaceWalkCB2.EnterFolder(IShellFolder psf, IntPtr pidl) => ((INamespaceWalkCB)this).EnterFolder(psf, pidl);
+
+	/// <inheritdoc/>
 	HRESULT IExecuteCommand.Execute()
 	{
 		HRESULT hr;
 		if (flags.IsFlagSet(APPLICATION_VERB_FLAGS.AVF_ASYNC))
 		{
-			var pnsw = new INamespaceWalk();
+			INamespaceWalk pnsw = new();
 			StartVerb();
 
 			// try to get the items from the view if they are available
@@ -171,55 +174,7 @@ public class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication
 		return HRESULT.S_OK;
 	}
 
-	HRESULT IExecuteCommand.SetDirectory([In, MarshalAs(UnmanagedType.LPWStr)] string? _) => HRESULT.S_OK;
-
-	HRESULT IExecuteCommand.SetKeyState(MouseButtonState grfKeyState)
-	{
-		KeyState = grfKeyState;
-		return HRESULT.S_OK;
-	}
-
-	HRESULT IExecuteCommand.SetNoShowUI([MarshalAs(UnmanagedType.Bool)] bool _) => HRESULT.S_OK;
-
-	HRESULT IExecuteCommand.SetParameters([In, MarshalAs(UnmanagedType.LPWStr)] string _) => HRESULT.S_OK;
-
-	HRESULT IExecuteCommand.SetPosition(POINT _) => HRESULT.S_OK;
-
-	HRESULT IExecuteCommand.SetShowWindow(ShowWindowCommand nShow) => HRESULT.S_OK;
-
-	// IInitializeCommand
-	HRESULT IInitializeCommand.Initialize(string pszCommandName, IPropertyBag ppb) => HRESULT.S_OK;
-
-	// IObjectWithSelection
-	HRESULT IObjectWithSelection.GetSelection(in Guid riid, out object? ppv)
-	{
-		ppv = null;
-		return _psia != null ? ShellHelpers.QueryInterface(_psia, riid, out ppv) : HRESULT.E_FAIL;
-	}
-
-	HRESULT IObjectWithSelection.SetSelection(IShellItemArray psia)
-	{
-		_psia = psia;
-		return HRESULT.S_OK;
-	}
-
-	// IObjectWithSite
-	HRESULT IObjectWithSite.GetSite(in Guid riid, out object? ppv)
-	{
-		ppv = null;
-		return _psia != null ? ShellHelpers.QueryInterface(_punkSite!, riid, out ppv) : HRESULT.E_FAIL;
-	}
-
-	HRESULT IObjectWithSite.SetSite(object? punkSite)
-	{
-		_punkSite = punkSite;
-		try { Application.InvokeMethod("SetSite", punkSite); } catch { }
-		return HRESULT.S_OK;
-	}
-
-	// INamespaceWalkCB
-	HRESULT INamespaceWalkCB.EnterFolder(IShellFolder psf, [In] IntPtr pidl) => ShouldContinue() ? HRESULT.S_OK : ShellHelpers.HRESULT_FROM_WIN32(Win32Error.ERROR_CANCELLED);
-
+	/// <inheritdoc/>
 	HRESULT INamespaceWalkCB.FoundItem(IShellFolder psf, IntPtr pidl)
 	{
 		var hr = SHCreateItemWithParent(PIDL.Null, psf, pidl, typeof(IShellItem2).GUID, out var ppvItem);
@@ -230,23 +185,83 @@ public class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication
 		return ShouldContinue() ? hr : ShellHelpers.HRESULT_FROM_WIN32(Win32Error.ERROR_CANCELLED);
 	}
 
+	/// <inheritdoc/>
+	HRESULT INamespaceWalkCB2.FoundItem(IShellFolder psf, IntPtr pidl) => ((INamespaceWalkCB)this).FoundItem(psf, pidl);
+
+	/// <inheritdoc/>
+	HRESULT IObjectWithSelection.GetSelection(in Guid riid, out object? ppv)
+	{
+		ppv = null;
+		return _psia != null ? ShellHelpers.QueryInterface(_psia, riid, out ppv) : HRESULT.E_FAIL;
+	}
+
+	/// <inheritdoc/>
+	HRESULT IObjectWithSite.GetSite(in Guid riid, out object? ppv)
+	{
+		ppv = null;
+		return _psia != null ? ShellHelpers.QueryInterface(_punkSite!, riid, out ppv) : HRESULT.E_FAIL;
+	}
+
+	/// <inheritdoc/>
+	HRESULT IInitializeCommand.Initialize(string pszCommandName, IPropertyBag ppb) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
 	HRESULT INamespaceWalkCB.InitializeProgressDialog(out string? ppszTitle, out string? ppszCancel)
 	{
 		ppszTitle = ppszCancel = null;
 		return HRESULT.E_NOTIMPL;
 	}
 
-	HRESULT INamespaceWalkCB.LeaveFolder(IShellFolder psf, [In] IntPtr pidl) => ShouldContinue() ? HRESULT.S_OK : ShellHelpers.HRESULT_FROM_WIN32(Win32Error.ERROR_CANCELLED);
-
-	// INamespaceWalkCB2
-	HRESULT INamespaceWalkCB2.FoundItem(IShellFolder psf, IntPtr pidl) => ((INamespaceWalkCB)this).FoundItem(psf, pidl);
-
-	HRESULT INamespaceWalkCB2.EnterFolder(IShellFolder psf, IntPtr pidl) => ((INamespaceWalkCB)this).EnterFolder(psf, pidl);
-
-	HRESULT INamespaceWalkCB2.LeaveFolder(IShellFolder psf, IntPtr pidl) => ((INamespaceWalkCB)this).LeaveFolder(psf, pidl);
-
+	/// <inheritdoc/>
 	HRESULT INamespaceWalkCB2.InitializeProgressDialog(out string? ppszTitle, out string? ppszCancel) => ((INamespaceWalkCB)this).InitializeProgressDialog(out ppszTitle, out ppszCancel);
 
+	/// <inheritdoc/>
+	HRESULT INamespaceWalkCB.LeaveFolder(IShellFolder psf, [In] IntPtr pidl) => ShouldContinue() ? HRESULT.S_OK : ShellHelpers.HRESULT_FROM_WIN32(Win32Error.ERROR_CANCELLED);
+
+	/// <inheritdoc/>
+	HRESULT INamespaceWalkCB2.LeaveFolder(IShellFolder psf, IntPtr pidl) => ((INamespaceWalkCB)this).LeaveFolder(psf, pidl);
+
+	/// <inheritdoc/>
+	HRESULT IClassFactory.LockServer(bool _) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
+	HRESULT IExecuteCommand.SetDirectory([In, MarshalAs(UnmanagedType.LPWStr)] string? _) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
+	HRESULT IExecuteCommand.SetKeyState(MouseButtonState grfKeyState)
+	{
+		KeyState = grfKeyState;
+		return HRESULT.S_OK;
+	}
+
+	/// <inheritdoc/>
+	HRESULT IExecuteCommand.SetNoShowUI([MarshalAs(UnmanagedType.Bool)] bool _) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
+	HRESULT IExecuteCommand.SetParameters([In, MarshalAs(UnmanagedType.LPWStr)] string _) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
+	HRESULT IExecuteCommand.SetPosition(POINT _) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
+	HRESULT IObjectWithSelection.SetSelection(IShellItemArray psia)
+	{
+		_psia = psia;
+		return HRESULT.S_OK;
+	}
+
+	/// <inheritdoc/>
+	HRESULT IExecuteCommand.SetShowWindow(ShowWindowCommand nShow) => HRESULT.S_OK;
+
+	/// <inheritdoc/>
+	HRESULT IObjectWithSite.SetSite(object? punkSite)
+	{
+		_punkSite = punkSite;
+		try { Application.InvokeMethod("SetSite", punkSite); } catch { }
+		return HRESULT.S_OK;
+	}
+
+	/// <inheritdoc/>
 	HRESULT INamespaceWalkCB2.WalkComplete(HRESULT hr)
 	{
 		EndVerb();

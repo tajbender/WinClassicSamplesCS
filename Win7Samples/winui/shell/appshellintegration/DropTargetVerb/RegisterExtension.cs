@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.ComTypes;
+using Vanara.Extensions;
 using static Vanara.PInvoke.AdvApi32;
 using static Vanara.PInvoke.Kernel32;
 using static Vanara.PInvoke.Shell32;
@@ -33,13 +34,13 @@ public class CRegisterExtension
 
 	public static CRegisterExtension Create<T>(HKEY hkeyRoot = default) where T : class => new(typeof(T).GUID, hkeyRoot);
 
-	public HRESULT MapNotFoundToSuccess(HRESULT hr) => HRESULT_FROM_WIN32(Win32Error.ERROR_FILE_NOT_FOUND) == hr ? HRESULT.S_OK : hr;
+	public static HRESULT MapNotFoundToSuccess(HRESULT hr) => HRESULT_FROM_WIN32(Win32Error.ERROR_FILE_NOT_FOUND) == hr ? HRESULT.S_OK : hr;
 
 	public HRESULT RegDeleteKeyPrintf(HKEY hkey, string pszKeyFormatString, params object[] argList)
 	{
 		var szKeyName = string.Format(pszKeyFormatString, argList);
 		var hr = HRESULT_FROM_WIN32(RegDeleteTree(hkey, szKeyName));
-		_UpdateAssocChanged(hr, pszKeyFormatString);
+		UpdateAssocChanged(hr, pszKeyFormatString);
 		return MapNotFoundToSuccess(hr);
 	}
 
@@ -47,13 +48,13 @@ public class CRegisterExtension
 	{
 		var szKeyName = string.Format(pszKeyFormatString, argList);
 		var hr = HRESULT_FROM_WIN32(RegDeleteKeyValue(hkey, szKeyName, pszValue));
-		_UpdateAssocChanged(hr, pszKeyFormatString);
+		UpdateAssocChanged(hr, pszKeyFormatString);
 		return MapNotFoundToSuccess(hr);
 	}
 
 	public HRESULT RegisterAppAsLocalServer(string pszFriendlyName, string? pszCmdLine = null)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded && _szCLSID is not null)
 		{
 			var szCmdLine = pszCmdLine is null ? _szModule : $"{_szModule} {pszCmdLine}";
@@ -77,7 +78,7 @@ public class CRegisterExtension
 
 	public HRESULT RegisterAppDropTarget()
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded && _szCLSID is not null)
 		{
 			hr = RegisterAppPath(new Dictionary<string, object> { { "DropTarget", _szCLSID } });
@@ -90,16 +91,16 @@ public class CRegisterExtension
 	/// <returns>S_OK on success; otherwise HRESULT failure.</returns>
 	public HRESULT RegisterAppPath(IDictionary<string, object> valueNameValuePairs)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded)
 		{
 			var regPath = @"Software\Microsoft\Windows\CurrentVersion\App Paths\" + System.IO.Path.GetFileName(_szModule);
-			hr = _RegSetKeyValue(_hkeyRoot, regPath, "", _szModule);
+			hr = RegSetKeyValue(_hkeyRoot, regPath, "", _szModule);
 			if (hr.Succeeded && (valueNameValuePairs?.Count ?? 0) > 0)
 			{
 				foreach (var p in valueNameValuePairs!)
 				{
-					hr = _RegSetKeyValue(_hkeyRoot, regPath, p.Key, p.Value);
+					hr = RegSetKeyValue(_hkeyRoot, regPath, p.Key, p.Value);
 					if (hr.Failed) break;
 				}
 			}
@@ -148,7 +149,7 @@ public class CRegisterExtension
 	/// <returns>S_OK on success; otherwise HRESULT failure.</returns>
 	public HRESULT RegisterAppPath(Guid? dropTargetClsid = null, bool dontUseDesktopChangeRouter = false, string? path = null, string? supportedProtocols = null, bool useUrl = false)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded)
 		{
 			var values = new Dictionary<string, object>();
@@ -178,11 +179,11 @@ public class CRegisterExtension
 	public HRESULT RegisterApplication(string? friendlyName = null, bool noOpenWith = false, Tuple<string, string>? verbCommand = null, Tuple<string, Guid>? verbDropTarget = null, string? defaultIcon = null,
 		bool isHostApp = false, bool useExecutableForTaskbarGroupIcon = false, string? taskbarGroupIcon = null, bool noStartPage = false, string[]? supportedTypes = null)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded)
 		{
 			var regPath = $"Software\\Classes\\Applications\\" + System.IO.Path.GetFileName(_szModule);
-			hr = _RegSetKeyValue(_hkeyRoot, regPath, "", null);
+			hr = RegSetKeyValue(_hkeyRoot, regPath, "", null);
 			if (hr.Failed) return hr;
 			hr = SetOrDelete(friendlyName != null, regPath, "FriendlyAppName", friendlyName);
 			if (hr.Failed) return hr;
@@ -192,7 +193,7 @@ public class CRegisterExtension
 			if (hr.Failed) return hr;
 			hr = SetOrDelete(verbDropTarget != null, $"{regPath}\\shell\\{verbDropTarget!.Item1}\\DropTarget", "Clsid", verbDropTarget.Item2);
 			if (hr.Failed) return hr;
-			hr = defaultIcon != null ? _RegSetKeyValue(_hkeyRoot, $"{regPath}\\DefaultIcon", "", defaultIcon) : RegDeleteTree(_hkeyRoot, $"{regPath}\\DefaultIcon").ToHRESULT();
+			hr = defaultIcon != null ? RegSetKeyValue(_hkeyRoot, $"{regPath}\\DefaultIcon", "", defaultIcon) : RegDeleteTree(_hkeyRoot, $"{regPath}\\DefaultIcon").ToHRESULT();
 			if (hr.Failed) return hr;
 			hr = SetOrDelete(isHostApp, regPath, "IsHostApp", null);
 			if (hr.Failed) return hr;
@@ -211,14 +212,14 @@ public class CRegisterExtension
 			var ahr = RegDeleteTree(_hkeyRoot, regPath).ToHRESULT();
 			for (var i = 0; valueNames != null && ahr.Succeeded && i < valueNames.Length; i++)
 			{
-				ahr = _RegSetKeyValue(_hkeyRoot, regPath, valueNames[i], null);
+				ahr = RegSetKeyValue(_hkeyRoot, regPath, valueNames[i], null);
 			}
 			return ahr;
 		}
-		HRESULT SetOrDelete(bool condition, string regPath, string valueName, object? value) => condition ? _RegSetKeyValue(_hkeyRoot, regPath, valueName, value) : RegDeleteKeyValue(_hkeyRoot, regPath, valueName).ToHRESULT();
+		HRESULT SetOrDelete(bool condition, string regPath, string valueName, object? value) => condition ? RegSetKeyValue(_hkeyRoot, regPath, valueName, value) : RegDeleteKeyValue(_hkeyRoot, regPath, valueName).ToHRESULT();
 	}
 
-	public HRESULT RegisterAppShortcutInSendTo()
+	public static HRESULT RegisterAppShortcutInSendTo()
 	{
 		var szPath = new StringBuilder(MAX_PATH);
 		var hr = GetModuleFileName(default, szPath, (uint)szPath.Length) > 0 ? HRESULT.S_OK : Win32Error.GetLastError().ToHRESULT();
@@ -260,7 +261,7 @@ public class CRegisterExtension
 		var hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\shell\\{1}\\command", "", pszCmdLine, pszProgID, pszVerb);
 		if (hr.Succeeded)
 		{
-			hr = _EnsureBaseProgIDVerbIsNone(pszProgID);
+			_ = EnsureBaseProgIDVerbIsNone(pszProgID);
 
 			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\shell\\{1}", "", pszVerbDisplayName, pszProgID, pszVerb);
 		}
@@ -277,7 +278,7 @@ public class CRegisterExtension
 			"CLSID", _szCLSID, pszProgID, pszVerb);
 		if (hr.Succeeded)
 		{
-			hr = _EnsureBaseProgIDVerbIsNone(pszProgID);
+			_ = EnsureBaseProgIDVerbIsNone(pszProgID);
 
 			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\Shell\\{1}",
 				"", pszVerbDisplayName, pszProgID, pszVerb);
@@ -287,7 +288,7 @@ public class CRegisterExtension
 
 	public HRESULT RegisterElevatableInProcServer(string pszFriendlyName, uint idLocalizeString, uint idIconRef)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded && _szCLSID is not null)
 		{
 			hr = RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\AppId\\{0}", "", pszFriendlyName, _szCLSID);
@@ -303,7 +304,7 @@ public class CRegisterExtension
 			 0x00,0x05,0x20,0x00,0x00,0x00,0x20,0x02,0x00,0x00,0x01,0x02,0x00,0x00,0x00,0x00,0x00,
 			 0x05,0x20,0x00,0x00,0x00,0x20,0x02,0x00,0x00];
 				// shell32\shell32.man uses this for InProcServer32 cases 010004805800000068000000000000001400000002004400030000000000140003000000010100000000000504000000000014000700000001010000000000050a00000000001400030000000101000000000005120000000102000000000005200000002002000001020000000000052000000020020000
-				hr = RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\AppId\\{0}", "AccessPermission", c_rgAccessPermission, (uint)c_rgAccessPermission.Length, _szCLSID);
+				RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\AppId\\{0}", "AccessPermission", c_rgAccessPermission, _szCLSID);
 
 				byte[] c_rgLaunchPermission =
 					[0x01,0x00,0x04,0x80,0x78,0x00,0x00,0x00,0x88,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x14,
@@ -315,7 +316,7 @@ public class CRegisterExtension
 			 0x00,0x00,0x00,0x00,0x00,0x05,0x12,0x00,0x00,0x00,0xcd,0xcd,0xcd,0xcd,0xcd,0xcd,0xcd,
 			 0xcd,0x01,0x02,0x00,0x00,0x00,0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x20,0x02,0x00,0x00,
 			 0x01,0x02,0x00,0x00,0x00,0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x20,0x02,0x00,0x00];
-				hr = RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\AppId\\{0}", "LaunchPermission", c_rgLaunchPermission, (uint)c_rgLaunchPermission.Length, _szCLSID);
+				RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\AppId\\{0}", "LaunchPermission", c_rgLaunchPermission, _szCLSID);
 
 				hr = RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\CLSID\\{0}", "", pszFriendlyName, _szCLSID);
 				if (hr.Succeeded)
@@ -347,7 +348,7 @@ public class CRegisterExtension
 
 	public HRESULT RegisterElevatableLocalServer(string pszFriendlyName, uint idLocalizeString, uint idIconRef)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded && _szCLSID is not null)
 		{
 			hr = RegSetKeyValuePrintf(HKEY.HKEY_LOCAL_MACHINE, "Software\\Classes\\CLSID\\{0}", "", pszFriendlyName, _szCLSID);
@@ -384,7 +385,7 @@ public class CRegisterExtension
 			"DelegateExecute", _szCLSID, pszProgID, pszVerb);
 		if (hr.Succeeded)
 		{
-			hr = _EnsureBaseProgIDVerbIsNone(pszProgID);
+			EnsureBaseProgIDVerbIsNone(pszProgID);
 
 			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\Shell\\{1}",
 				"", pszVerbDisplayName, pszProgID, pszVerb);
@@ -408,7 +409,7 @@ public class CRegisterExtension
 			"ExplorerCommandHandler", _szCLSID, pszProgID, pszVerb);
 		if (hr.Succeeded)
 		{
-			hr = _EnsureBaseProgIDVerbIsNone(pszProgID);
+			EnsureBaseProgIDVerbIsNone(pszProgID);
 
 			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\Shell\\{1}",
 				"", pszVerbDisplayName, pszProgID, pszVerb);
@@ -416,15 +417,13 @@ public class CRegisterExtension
 		return hr;
 	}
 
-	public HRESULT RegisterExtensionWithProgID(string pszFileExtension, string pszProgID)
-	{
+	public HRESULT RegisterExtensionWithProgID(string pszFileExtension, string pszProgID) =>
 		// HKCR\<.ext>=<ProgID> "Content Type" "PerceivedType"
 
 		// TODO: to be polite if there is an existing mapping of extension to ProgID make sure it is added to the OpenWith list so that
 		// users can get back to the old app using OpenWith
 		// TODO: verify that HKLM/HKCU settings do not already exist as if they do they will get in the way of the setting being made here
-		return RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}", "", pszProgID, pszFileExtension);
-	}
+		RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}", "", pszProgID, pszFileExtension);
 
 	public HRESULT RegisterHandlerSupportedProtocols(string[] pszProtocol)
 	{
@@ -433,17 +432,17 @@ public class CRegisterExtension
 		var hr = RegDeleteTree(_hkeyRoot, szKey).ToHRESULT();
 		if ((hr.Failed && hr != HRESULT_FROM_WIN32(Win32Error.ERROR_FILE_NOT_FOUND)) || pszProtocol == null) return hr;
 		if (pszProtocol.Length == 1 && pszProtocol[0] == "*")
-			return _RegSetKeyValue(_hkeyRoot, szKey, "", "*");
+			return RegSetKeyValue(_hkeyRoot, szKey, "", "*");
 		for (var i = 0; hr.Succeeded && i < pszProtocol.Length; i++)
 		{
-			hr = _RegSetKeyValue(_hkeyRoot, szKey, pszProtocol[i], null);
+			hr = RegSetKeyValue(_hkeyRoot, szKey, pszProtocol[i], null);
 		}
 		return hr;
 	}
 
 	public HRESULT RegisterInProcServer(string pszFriendlyName, string pszThreadingModel)
 	{
-		var hr = _EnsureModule();
+		var hr = EnsureModule();
 		if (hr.Succeeded && _szCLSID is not null)
 		{
 			hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\CLSID\\{0}", "", pszFriendlyName, _szCLSID);
@@ -541,7 +540,7 @@ public class CRegisterExtension
 		{
 			if (idIcon != 0)
 			{
-				var szIconRef = string.Format("\"{0}\",-%d", _szModule, idIcon);
+				var szIconRef = $"\"{_szModule}\",{idIcon}";
 				// HKCR\<ProgID>\DefaultIcon
 				hr = RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\DefaultIcon", "", szIconRef, pszProgID);
 			}
@@ -613,39 +612,39 @@ public class CRegisterExtension
 	{
 		var szKeyName = string.Format(pszKeyFormatString, argList);
 		var pbDecodedImage = Convert.FromBase64String(pszBase64);
-		var hr = HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, pszValueName, REG_VALUE_TYPE.REG_BINARY, pbDecodedImage, (uint)pbDecodedImage.Length));
-		_UpdateAssocChanged(hr, pszKeyFormatString);
+		var hr = HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, pszValueName, REG_VALUE_TYPE.REG_BINARY, pbDecodedImage, (uint)pbDecodedImage.Length));
+		UpdateAssocChanged(hr, pszKeyFormatString);
 		return hr;
 	}
 
 	public HRESULT RegSetKeyValuePrintf(HKEY hkey, string pszKeyFormatString, string pszValueName, string pszValue, params object[] argList)
 	{
 		var szKeyName = string.Format(pszKeyFormatString, argList);
-		var hr = _RegSetKeyValue(hkey, szKeyName, pszValueName, pszValue);
-		_UpdateAssocChanged(hr, pszKeyFormatString);
+		var hr = RegSetKeyValue(hkey, szKeyName, pszValueName, pszValue);
+		UpdateAssocChanged(hr, pszKeyFormatString);
 		return hr;
 	}
 
-	private HRESULT _RegSetKeyValue(HKEY hkey, string szKeyName, string szValueName, object? szValue)
+	private static HRESULT RegSetKeyValue(HKEY hkey, string szKeyName, string szValueName, object? szValue)
 	{
 		switch (szValue)
 		{
 			case null:
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_SZ, IntPtr.Zero, 0));
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_SZ, nint.Zero, 0));
 			case string s:
-				var valType = s.Contains("%") ? REG_VALUE_TYPE.REG_EXPAND_SZ : REG_VALUE_TYPE.REG_SZ;
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, valType, s, s.ChLen()));
+				var valType = s.Contains('%') ? REG_VALUE_TYPE.REG_EXPAND_SZ : REG_VALUE_TYPE.REG_SZ;
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, valType, s, s.ChLen()));
 			case uint ui:
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_DWORD, BitConverter.GetBytes(ui), sizeof(uint)));
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_DWORD, BitConverter.GetBytes(ui), sizeof(uint)));
 			case bool b:
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_DWORD, BitConverter.GetBytes(b ? 1U : 0U), sizeof(uint)));
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_DWORD, BitConverter.GetBytes(b ? 1U : 0U), sizeof(uint)));
 			case int i:
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_DWORD, BitConverter.GetBytes(unchecked((uint)i)), sizeof(uint)));
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_DWORD, BitConverter.GetBytes(unchecked((uint)i)), sizeof(uint)));
 			case byte[] p:
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_BINARY, p, (uint)p.Length));
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_BINARY, p, (uint)p.Length));
 			case Guid g:
 				var gs = g.ToString("B").ToUpperInvariant();
-				return HRESULT_FROM_WIN32(RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_SZ, gs, gs.ChLen()));
+				return HRESULT_FROM_WIN32(AdvApi32.RegSetKeyValue(hkey, szKeyName, szValueName, REG_VALUE_TYPE.REG_SZ, gs, gs.ChLen()));
 			default:
 				return HRESULT.E_FAIL;
 		}
@@ -654,16 +653,16 @@ public class CRegisterExtension
 	public HRESULT RegSetKeyValuePrintf(HKEY hkey, string pszKeyFormatString, string pszValueName, uint dwValue, params object[] argList)
 	{
 		var szKeyName = string.Format(pszKeyFormatString, argList);
-		var hr = _RegSetKeyValue(hkey, szKeyName, pszValueName, dwValue);
-		_UpdateAssocChanged(hr, pszKeyFormatString);
+		var hr = RegSetKeyValue(hkey, szKeyName, pszValueName, dwValue);
+		UpdateAssocChanged(hr, pszKeyFormatString);
 		return hr;
 	}
 
-	public HRESULT RegSetKeyValuePrintf(HKEY hkey, string pszKeyFormatString, string pszValueName, byte[] pc, uint dwSize, params object[] argList)
+	public HRESULT RegSetKeyValuePrintf(HKEY hkey, string pszKeyFormatString, string pszValueName, byte[] pc, params object[] argList)
 	{
 		var szKeyName = string.Format(pszKeyFormatString, argList);
-		var hr = _RegSetKeyValue(hkey, szKeyName, pszValueName, pc);
-		_UpdateAssocChanged(hr, pszKeyFormatString);
+		var hr = RegSetKeyValue(hkey, szKeyName, pszValueName, pc);
+		UpdateAssocChanged(hr, pszKeyFormatString);
 		return hr;
 	}
 
@@ -677,11 +676,9 @@ public class CRegisterExtension
 		}
 	}
 
-	public void SetInstallScope(HKEY hkeyRoot)
-	{
+	public void SetInstallScope(HKEY hkeyRoot) =>
 		// must be HKEY_CURRENT_USER or HKEY.HKEY_LOCAL_MACHINE
 		_hkeyRoot = hkeyRoot;
-	}
 
 	[MemberNotNull(nameof(_szModule))]
 	public void SetModule(string pszModule) => _szModule = pszModule;
@@ -741,26 +738,21 @@ public class CRegisterExtension
 	// register the COM local server for the current running module this is for self registering applications
 	private static HRESULT HRESULT_FROM_WIN32(Win32Error err) => err.ToHRESULT();
 
-	private HRESULT _EnsureBaseProgIDVerbIsNone(string pszProgID)
-	{
+	private HRESULT EnsureBaseProgIDVerbIsNone(string pszProgID) =>
 		// putting the value of "none" that does not match any of the verbs under this key avoids those verbs from becoming the default.
-		return _IsBaseClassProgID(pszProgID) ?
+		IsBaseClassProgID(pszProgID) ?
 			RegSetKeyValuePrintf(_hkeyRoot, "Software\\Classes\\{0}\\Shell", "", "none", pszProgID) :
 			HRESULT.S_OK;
-	}
 
-	private HRESULT _EnsureModule() => _szModule.Length > 0 ? HRESULT.S_OK : HRESULT.E_FAIL;
+	private HRESULT EnsureModule() => _szModule.Length > 0 ? HRESULT.S_OK : HRESULT.E_FAIL;
 
-	private bool _IsBaseClassProgID(string pszProgID)
-	{
-		return !string.Equals(pszProgID, "AllFileSystemObjects", StringComparison.OrdinalIgnoreCase) ||
+	private static bool IsBaseClassProgID(string pszProgID) => !string.Equals(pszProgID, "AllFileSystemObjects", StringComparison.OrdinalIgnoreCase) ||
 			   !string.Equals(pszProgID, "Directory", StringComparison.OrdinalIgnoreCase) ||
 			   !string.Equals(pszProgID, "*", StringComparison.OrdinalIgnoreCase) ||
 			   string.Equals(pszProgID, "SystemFileAssociations\\Directory.", StringComparison.OrdinalIgnoreCase);   // SystemFileAssociations\Directory.* values
-	}
 
 	// this sample registers its objects in the per user registry to avoid having to elevate
-	private void _UpdateAssocChanged(HRESULT hr, string pszKeyFormatString)
+	private void UpdateAssocChanged(HRESULT hr, string pszKeyFormatString)
 	{
 		const string c_szProgIDPrefix = "Software\\Classes\\";
 		if (hr.Succeeded && !_fAssocChanged &&
@@ -771,20 +763,9 @@ public class CRegisterExtension
 			_fAssocChanged = true;
 		}
 	}
-
-	// pszProtocol values: "*" - all "http" "ftp" "shellstream" - NYI in Win7 this enables drag drop directly onto the .exe, useful if
-	// you have a shortcut to the exe somewhere (or the .exe is accessable via the send to menu) work around the missing "NeverDefault"
-	// feature for verbs on downlevel platforms these ProgID values should need special treatment to keep the verbs registered there from
-	// becoming default when indexing it is possible to override some of the file system property values, that includes the following use
-	// this registration helper to set the override flag for each
-	//
-	// System.ItemNameDisplay System.SFGAOFlags System.Kind System.FileName System.ItemPathDisplay System.ItemPathDisplayNarrow
-	// System.ItemFolderNameDisplay System.ItemFolderPathDisplay System.ItemFolderPathDisplayNarrow
 }
 
 internal static class StrExt
 {
-	private static uint charSize = Environment.Is64BitProcess ? 2u : 1u;
-
-	public static uint ChLen(this string s) => charSize * (1 + (uint)(s?.Length ?? 0));
+	public static uint ChLen(this string s) => (uint)StringHelper.GetByteCount(s, true, CharSet.Auto);
 }

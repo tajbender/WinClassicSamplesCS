@@ -280,7 +280,7 @@ internal static class IMAPIv2Extensions
 
 	public static IMAPI_MEDIA_PHYSICAL_TYPE GetCurrentPhysicalMediaType(this IDiscRecorder2Ex recorder)
 	{
-		if (recorder is null) throw new ArgumentNullException(nameof(recorder));
+		ArgumentNullException.ThrowIfNull(recorder);
 
 		bool supportsGetConfiguration = true; // avoid legacy checks by default
 		bool readDvdStructureCurrent = false;
@@ -324,8 +324,8 @@ internal static class IMAPIv2Extensions
 			recorder.GetFeaturePage(IMAPI_FEATURE_PAGE_TYPE.IMAPI_FEATURE_PAGE_TYPE_DVD_PLUS_RW, true, out var pfeature, out var featureSize);
 			return IMAPI_MEDIA_PHYSICAL_TYPE.IMAPI_MEDIA_TYPE_DVDPLUSRW;
 		}
-		catch (COMException tmpHr) when (tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_GET_CONFIGURATION_NOT_SUPPORTED ||
-			tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT || tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
+		catch (COMException tmpHr) when (tmpHr.HResult is HRESULT.E_IMAPI_RECORDER_GET_CONFIGURATION_NOT_SUPPORTED or
+			HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT or HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
 		{
 		}
 		catch
@@ -339,8 +339,8 @@ internal static class IMAPIv2Extensions
 			recorder.GetFeaturePage(IMAPI_FEATURE_PAGE_TYPE.IMAPI_FEATURE_PAGE_TYPE_DVD_PLUS_R_DUAL_LAYER, true, out var pfeature, out var featureSize);
 			return IMAPI_MEDIA_PHYSICAL_TYPE.IMAPI_MEDIA_TYPE_DVDPLUSR_DUALLAYER;
 		}
-		catch (COMException tmpHr) when (tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_GET_CONFIGURATION_NOT_SUPPORTED ||
-			tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT || tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
+		catch (COMException tmpHr) when (tmpHr.HResult is HRESULT.E_IMAPI_RECORDER_GET_CONFIGURATION_NOT_SUPPORTED or
+			HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT or HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
 		{
 		}
 		catch
@@ -354,8 +354,8 @@ internal static class IMAPIv2Extensions
 			recorder.GetFeaturePage(IMAPI_FEATURE_PAGE_TYPE.IMAPI_FEATURE_PAGE_TYPE_DVD_PLUS_R, true, out var pfeature, out var featureSize);
 			return IMAPI_MEDIA_PHYSICAL_TYPE.IMAPI_MEDIA_TYPE_DVDPLUSR;
 		}
-		catch (COMException tmpHr) when (tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_GET_CONFIGURATION_NOT_SUPPORTED ||
-			tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT || tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
+		catch (COMException tmpHr) when (tmpHr.HResult is HRESULT.E_IMAPI_RECORDER_GET_CONFIGURATION_NOT_SUPPORTED or
+			HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT or HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
 		{
 		}
 		catch
@@ -452,7 +452,7 @@ internal static class IMAPIv2Extensions
 		{
 			supportsGetConfiguration = false;
 		}
-		catch (COMException tmpHr) when (tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT || tmpHr.HResult == HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
+		catch (COMException tmpHr) when (tmpHr.HResult is HRESULT.E_IMAPI_RECORDER_FEATURE_IS_NOT_CURRENT or HRESULT.E_IMAPI_RECORDER_NO_SUCH_FEATURE)
 		{
 		}
 		catch

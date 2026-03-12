@@ -18,7 +18,7 @@ internal static class ShellHelpers
 
 		if (data is System.Runtime.InteropServices.ComTypes.IDataObject pdo)
 		{
-			hr = SHCreateShellItemArrayFromDataObject(pdo, typeof(IShellItem2).GUID, out var ppv);
+			hr = SHCreateShellItemArrayFromDataObject(pdo, out var ppv);
 			if (hr.Succeeded && ppv.GetCount() > 0)
 				return ppv.GetItemAt(0);
 
