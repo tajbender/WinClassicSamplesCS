@@ -7,3 +7,7 @@ A duplication in C# of the [Windows-classic-samples](https://github.com/Microsof
 * Exposed gaps in the Vanara libraries for future development.
 
 ## [Work in Progress]: Add WinUI 3 based Samples.
+
+13/03/2016
+
+- https://github.com/electrifier/vamara-demo-browser/tree/e523ad3aa18bc96e4df368058f9145a0802a8e5f
