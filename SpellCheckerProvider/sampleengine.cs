@@ -8,7 +8,7 @@ class SampleEngine
 	public const int MAX_WORD_SIZE = 128;
 	public const int MAX_WORDLIST_SIZE = 10;
 	public const int NUM_WORDLIST_TYPES = 4;
-	static readonly char[] okletterset = { 'a', 'b', 'f' };
+	static readonly char[] okletterset = ['a', 'b', 'f'];
 	private string languageTag;
 	private byte[] optionValues = new byte[OptionsStore.MAX_LANGUAGE_OPTIONS];
 	private readonly Dictionary<WORDLIST_TYPE, List<string>> wordlists = [];

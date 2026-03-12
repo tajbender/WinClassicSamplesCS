@@ -174,12 +174,9 @@ public partial class CExplorerBrowserHostDialog : Form, IServiceProvider, ICommD
 
 	private void IDC_CANCEL_Click(object sender, EventArgs e) => Close();
 
-	private class CFillResultsOnBackgroundThread
+	private class CFillResultsOnBackgroundThread(CExplorerBrowserHostDialog pebhd)
 	{
-		private CExplorerBrowserHostDialog _pebhd;
 		private IStream? _pStream;
-
-		public CFillResultsOnBackgroundThread(CExplorerBrowserHostDialog pebhd) => _pebhd = pebhd;
 
 		public void StartThread(IResultsFolder? prf)
 		{
@@ -190,7 +187,7 @@ public partial class CExplorerBrowserHostDialog : Form, IServiceProvider, ICommD
 				var hr = CoGetInterfaceAndReleaseStream(_pStream, typeof(IResultsFolder).GUID, out var ppv);
 				if (hr.Succeeded && ppv is IResultsFolder lprf && sc is not null)
 				{
-					sc.Post(delegate { _pebhd.FillResultsOnBackgroundThread(lprf); }, null);
+					sc.Post(delegate { pebhd.FillResultsOnBackgroundThread(lprf); }, null);
 				}
 			});
 		}

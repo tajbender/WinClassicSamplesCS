@@ -40,9 +40,9 @@ public partial class IDD_SET_CERTIFICATE : Form
 
 	private void IDOK_Click(object sender, EventArgs e)
 	{
-		g_newCertProps.nCertType = ((CBItem<CERT_TYPE>)IDC_CERT_TYPE.SelectedItem).Value;
-		g_newCertProps.nValidationPolicy = ((CBItem<CERT_VALIDATION_POLICY>)IDC_VALIDATION_POLICY.SelectedItem).Value;
-		g_newCertProps.nSignerCertIndex = ((CBItem<uint>)IDC_CERT_SIGNER_INDEX.SelectedItem).Value;
+		g_newCertProps.nCertType = ((CBItem<CERT_TYPE>)IDC_CERT_TYPE.SelectedItem!).Value;
+		g_newCertProps.nValidationPolicy = ((CBItem<CERT_VALIDATION_POLICY>)IDC_VALIDATION_POLICY.SelectedItem!).Value;
+		g_newCertProps.nSignerCertIndex = ((CBItem<uint>)IDC_CERT_SIGNER_INDEX.SelectedItem!).Value;
 		g_newCertProps.nIndex = 0;
 	}
 }

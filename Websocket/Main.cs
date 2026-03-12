@@ -100,7 +100,7 @@ internal class Program
 		Console.Write("\n-- Queueing a send with a buffer --\n");
 		DumpData(buffer.Data.pbBuffer, buffer.Data.ulBufferLength);
 
-		HRESULT hr = WebSocketSend(clientHandle, WEB_SOCKET_BUFFER_TYPE.WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE, new[] { buffer }, default);
+		HRESULT hr = WebSocketSend(clientHandle, WEB_SOCKET_BUFFER_TYPE.WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE, [buffer], default);
 		if (hr.Failed)
 		{
 			goto quit;

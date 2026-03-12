@@ -128,7 +128,7 @@ public partial class FullscreenMagnifierSample : Form
 
 				// The user clicked one of the radio button to apply some fullscreen magnification. (We know the control ids are
 				// sequential here.)
-				SetZoom((float)((Control)sender).Tag);
+				SetZoom((float)((Control)sender).Tag!);
 
 				break;
 

@@ -83,15 +83,11 @@ class Program
 		// Derive AES key from the password
 		//
 		const ulong IterationCount = 1024;
-		NCryptBufferDesc PBKDF2Parameters = new()
-		{
-			cBuffers = 3,
-			pBuffers = [
+		NCryptBufferDesc PBKDF2Parameters = new([
 				new(KeyDerivationBufferType.KDF_HASH_ALGORITHM, StandardAlgorithmId.BCRYPT_SHA256_ALGORITHM),
 				new(KeyDerivationBufferType.KDF_SALT, Salt),
 				new(KeyDerivationBufferType.KDF_ITERATION_COUNT, BitConverter.GetBytes(IterationCount))
-			]
-		};
+			]);
 
 		Status = BCryptKeyDerivation(Aes128PasswordKeyHandle, // Handle to the password key
 			PBKDF2Parameters, // Parameters to the KDF algorithm

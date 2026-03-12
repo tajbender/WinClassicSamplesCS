@@ -116,7 +116,7 @@ static class CreateCertificate
 		uint dwBits = 0;
 
 		string wszKeyAlgName = "RSA"; //
-		string[] rgwszCNGAlgs = new string[] { "SHA1", "RSA" };
+		string[] rgwszCNGAlgs = ["SHA1", "RSA"];
 
 		SafeNCRYPT_KEY_HANDLE? hCNGKey = default;
 		SafePCCERT_CONTEXT? pCertContext = default;

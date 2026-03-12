@@ -73,8 +73,10 @@ namespace Vanara.PInvoke;
 //
 // this class combines the drop target and the class factory into a single object and it expects to be declared as a member variable of
 // the application calls giving it a lifetime that matches the application
+/// <summary>Initializes a new instance of the <see cref="CApplicationVerb{TApplication, TVerb}"/> class.</summary>
+/// <param name="flags">The flags.</param>
 [ClassInterface(ClassInterfaceType.None)]
-public class CApplicationVerb<TApplication, TVerb> : IExecuteCommand, IInitializeCommand, IObjectWithSelection, IObjectWithSite, IClassFactory, INamespaceWalkCB2, IDisposable where TApplication : class
+public class CApplicationVerb<TApplication, TVerb>(CApplicationVerb<TApplication, TVerb>.APPLICATION_VERB_FLAGS flags = CApplicationVerb<TApplication, TVerb>.APPLICATION_VERB_FLAGS.AVF_DEFAULT) : IExecuteCommand, IInitializeCommand, IObjectWithSelection, IObjectWithSite, IClassFactory, INamespaceWalkCB2, IDisposable where TApplication : class
 {
 	public enum APPLICATION_VERB_FLAGS
 	{
@@ -84,13 +86,8 @@ public class CApplicationVerb<TApplication, TVerb> : IExecuteCommand, IInitializ
 	}
 
 	private uint _dwRegisterClass;
-	private readonly APPLICATION_VERB_FLAGS _flags; // controls behavior of verb
 	private IShellItemArray? _psia;
 	private object? _punkSite;
-
-	/// <summary>Initializes a new instance of the <see cref="CApplicationVerb{TApplication, TVerb}"/> class.</summary>
-	/// <param name="flags">The flags.</param>
-	public CApplicationVerb(APPLICATION_VERB_FLAGS flags = APPLICATION_VERB_FLAGS.AVF_DEFAULT) => _flags = flags;
 
 	void IDisposable.Dispose()
 	{
@@ -152,7 +149,7 @@ public class CApplicationVerb<TApplication, TVerb> : IExecuteCommand, IInitializ
 	HRESULT IExecuteCommand.Execute()
 	{
 		HRESULT hr;
-		if (_flags.IsFlagSet(APPLICATION_VERB_FLAGS.AVF_ASYNC))
+		if (flags.IsFlagSet(APPLICATION_VERB_FLAGS.AVF_ASYNC))
 		{
 			var pnsw = new INamespaceWalk();
 			StartVerb();
@@ -162,7 +159,7 @@ public class CApplicationVerb<TApplication, TVerb> : IExecuteCommand, IInitializ
 				return hr;
 
 			var walkFlags = NAMESPACEWALKFLAG.NSWF_DONT_ACCUMULATE_RESULT | NAMESPACEWALKFLAG.NSWF_ASYNC | NAMESPACEWALKFLAG.NSWF_FLAG_VIEWORDER;
-			if (_flags.IsFlagSet(APPLICATION_VERB_FLAGS.AVF_ONE_IMPLIES_ALL)) walkFlags |= NAMESPACEWALKFLAG.NSWF_ONE_IMPLIES_ALL;
+			if (flags.IsFlagSet(APPLICATION_VERB_FLAGS.AVF_ONE_IMPLIES_ALL)) walkFlags |= NAMESPACEWALKFLAG.NSWF_ONE_IMPLIES_ALL;
 			const int walkDepth = 8;
 			if ((hr = pnsw.Walk(psv ?? _psia!, walkFlags, walkDepth, this)).Failed)
 				return hr;

@@ -29,17 +29,13 @@ static unsafe void CreateUserIDirectoryObject()
 	var hr = ADsGetObject("LDAP://OU=MyOU,DC=fabrikam,DC=com", out IDirectoryObject? pDirObject);
 	if (hr.Succeeded)
 	{
-		ADSVALUE sAMValue = new() { dwType = ADSTYPE.ADSTYPE_CASE_IGNORE_STRING, CaseIgnoreString = new SafeLPWSTR("user") };
-		ADSVALUE uPNValue = new() { dwType = ADSTYPE.ADSTYPE_CASE_IGNORE_STRING, CaseIgnoreString = new SafeLPWSTR("mikes") };
-		ADSVALUE classValue = new() { dwType = ADSTYPE.ADSTYPE_CASE_IGNORE_STRING, CaseIgnoreString = new SafeLPWSTR("mikes@fabrikam.com") };
-
 		ADS_ATTR_INFO[] attrInfo = [
-			new() { pszAttrName = "objectClass", dwControlCode = ADS_ATTR.ADS_ATTR_UPDATE, dwADsType = ADSTYPE.ADSTYPE_CASE_IGNORE_STRING, pADsValues = &classValue, dwNumValues = 1 },
-			new() { pszAttrName = "sAMAccountName", dwControlCode = ADS_ATTR.ADS_ATTR_UPDATE, dwADsType = ADSTYPE.ADSTYPE_CASE_IGNORE_STRING, pADsValues = &sAMValue, dwNumValues = 1 },
-			new() { pszAttrName = "userPrincipalName", dwControlCode = ADS_ATTR.ADS_ATTR_UPDATE, dwADsType = ADSTYPE.ADSTYPE_CASE_IGNORE_STRING, pADsValues = &uPNValue, dwNumValues = 1 },
+			new("objectClass", "user"),
+			new("sAMAccountName", "mikes"),
+			new("userPrincipalName", "mikes@fabrikam.com"),
 		];
 
-		pDirObject!.CreateDSObject("CN=Mike Smith", attrInfo, (uint)attrInfo.Length, out var pDisp);
+		_ = pDirObject!.CreateDSObject("CN=Mike Smith", attrInfo);
 	}
 }
 #pragma warning restore CS8321 // Local function is declared but never used

@@ -8,7 +8,7 @@ namespace FMAPI;
 internal static class Program
 {
 	// Define program specific values
-	private const string VOLUME = @"\\.\D:";
+	private const string VOLUME = @"\\.\C:";
 
 	//
 	//Program entry point
@@ -38,7 +38,7 @@ internal static class Program
 		}
 		else
 		{
-			Console.Write("Boot sector not recognized.");
+			Console.Write($"Boot sector not recognized. Error: {GetLastError()}");
 		}
 	}
 
@@ -51,8 +51,8 @@ internal static class Program
 		buffer = new byte[BOOT_SECTOR_SIZE];
 
 		//Open the volume
-		using SafeHFILE fileHandle = CreateFile(vol, FileAccess.GENERIC_READ, FILE_SHARE.FILE_SHARE_READ, default,
-			CreationOption.OPEN_EXISTING, FileFlagsAndAttributes.FILE_ATTRIBUTE_NORMAL, default);
+		using SafeHFILE fileHandle = CreateFile(vol, FileAccess.GENERIC_READ, FILE_SHARE.FILE_SHARE_READ | FILE_SHARE.FILE_SHARE_DELETE | FILE_SHARE.FILE_SHARE_WRITE, default,
+			CreationOption.OPEN_EXISTING, FileFlagsAndAttributes.FILE_FLAG_BACKUP_SEMANTICS, default);
 		if (!fileHandle)
 			return false;
 

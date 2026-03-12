@@ -1280,7 +1280,7 @@ internal partial class CTSFEditWnd : TextBox, ITextStoreACP, ITfContextOwnerComp
 			style = new TS_SELECTIONSTYLE { ase = TsActiveSelEnd.TS_AE_START, fInterimChar = false }
 		};
 
-		hr = ((ITextStoreACP)this).SetSelection(1, new[] { tsa });
+		hr = ((ITextStoreACP)this).SetSelection(1, [tsa]);
 
 		if (hr.Succeeded)
 		{

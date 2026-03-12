@@ -521,7 +521,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 				for (uint n = 0; n < FrameCount; n++)
 				{
-					m_device!.CreateConstantBufferView(&cbvDesc, cpuHandle);
+					m_device!.CreateConstantBufferView(cbvDesc, cpuHandle);
 
 					cbvDesc.BufferLocation += constantBufferByteSize;
 					cpuHandle.Offset((int)m_cbvSrvDescriptorSize);
@@ -578,9 +578,9 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 		if (m_useWarpDevice)
 		{
-			factory.EnumWarpAdapter(typeof(IDXGIAdapter).GUID, out var warpAdapter).ThrowIfFailed();
+			factory.EnumWarpAdapter(out IDXGIAdapter? warpAdapter).ThrowIfFailed();
 
-			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter, out m_device).ThrowIfFailed();
+			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter!, out m_device).ThrowIfFailed();
 		}
 		else
 		{

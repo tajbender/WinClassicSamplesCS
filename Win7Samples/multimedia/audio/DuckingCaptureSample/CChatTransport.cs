@@ -49,13 +49,9 @@ enum ChatTransportType
 	ChatTransportWasapi
 }
 
-abstract class CChatTransport
+abstract class CChatTransport(HWND appWin)
 {
-	public HWND AppWindow { get; }
-	protected CChatTransport(HWND appWin)
-	{
-		AppWindow = appWin;
-	}
+	public HWND AppWindow { get; } = appWin;
 
 	public virtual bool HandlesMessage(uint msg) => false;
 	public virtual bool MessageHandler(HWND hwnd, uint msg, IntPtr wParam, IntPtr lParam) => false;

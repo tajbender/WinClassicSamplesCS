@@ -13,7 +13,7 @@ internal class CPropertyStoreReader
 
 	public CPropertyStoreReader(IPropertyStore? pps = null) => _pps = pps;
 
-	public CPropertyStoreReader(IShellItem psi, GETPROPERTYSTOREFLAGS flags, PROPERTYKEY[]? rgKeys = null, uint cKeys = 0) => _pps = (psi as IShellItem2)?.GetPropertyStoreForKeys(rgKeys ?? new PROPERTYKEY[0], cKeys, flags, typeof(IPropertyStore).GUID);
+	public CPropertyStoreReader(IShellItem psi, GETPROPERTYSTOREFLAGS flags, PROPERTYKEY[]? rgKeys = null, uint cKeys = 0) => _pps = (psi as IShellItem2)?.GetPropertyStoreForKeys(rgKeys ?? [], cKeys, flags, typeof(IPropertyStore).GUID);
 
 	~CPropertyStoreReader()
 	{
@@ -22,7 +22,7 @@ internal class CPropertyStoreReader
 
 	public bool GetBool(in PROPERTYKEY key) => GetValue(key).boolVal;
 
-	public byte[] GetBytes(in PROPERTYKEY key) => GetValue(key).caub.ToArray();
+	public byte[] GetBytes(in PROPERTYKEY key) => [.. GetValue(key).caub];
 
 	public int GetInt32(in PROPERTYKEY key) => GetValue(key).lVal;
 

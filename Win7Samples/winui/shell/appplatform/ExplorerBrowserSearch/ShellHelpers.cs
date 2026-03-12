@@ -1,4 +1,5 @@
-﻿using static Vanara.PInvoke.Ole32;
+﻿using static Vanara.PInvoke.Kernel32;
+using static Vanara.PInvoke.Ole32;
 using static Vanara.PInvoke.Shell32;
 
 namespace Vanara.PInvoke;
@@ -23,8 +24,21 @@ internal static class ShellHelpers
 
 			//pdo.GetData(ref fmt, out var medium);
 		}
-
 		return null;
+	}
+
+	public static HRESULT GetItemAt<T>(IShellItemArray psia, uint i, out T? ppv) where T : class
+	{
+		try
+		{
+			ppv = (T?)(psia?.GetItemAt(i));
+			return HRESULT.S_OK;
+		}
+		catch (Exception ex)
+		{
+			ppv = default;
+			return ex.HResult;
+		}
 	}
 
 	public static IShellItem? GetShellItem(this IFolderView2 pfv, int iItem = -1)

@@ -1,15 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>EhStorEnumerator</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.EnhancedStorage" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.EnhancedStorage" />
     <Using Include="System.IO" />
     <Using Include="System.Windows.Forms" />
   </ItemGroup>
-
 </Project>

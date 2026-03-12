@@ -72,7 +72,7 @@ static partial class NetCostSample
 			return dwErr;
 		}
 
-		var pBestAddress = new IPAddress(pSocketAddrList.Address[0].lpSockaddr.ToArray<byte>(pSocketAddrList.Address[0].iSockaddrLength) ?? Array.Empty<byte>());
+		var pBestAddress = new IPAddress(pSocketAddrList.Address[0].lpSockaddr.ToArray<byte>(pSocketAddrList.Address[0].iSockaddrLength) ?? []);
 		pPreferredAddr = (SOCKADDR_STORAGE)(pBestAddress.IsIPv4MappedToIPv6 ? pBestAddress.MapToIPv4() : pBestAddress);
 
 		if (socketIoctl != SOCKET.INVALID_SOCKET)
@@ -128,7 +128,7 @@ static partial class NetCostSample
 				}
 
 				// determine the preferred IP address
-				var err = GetPreferredAddress(destAddrList.ToArray(), out socketAddress);
+				var err = GetPreferredAddress([.. destAddrList], out socketAddress);
 				if (err != NO_ERROR)
 				{
 					Console.Write("WSAIoctl failed, (err = {0}).", err);

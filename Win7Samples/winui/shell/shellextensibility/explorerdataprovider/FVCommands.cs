@@ -11,20 +11,20 @@ internal delegate HRESULT PFN_ExplorerCommandExecute(IShellItemArray psiItemArra
 [ComVisible(true)]
 public class CFolderViewCommandProvider : IExplorerCommandProvider
 {
-	private static readonly FVCOMMANDITEM[] c_FVTasks = new FVCOMMANDITEM[]
-	{
+	private static readonly FVCOMMANDITEM[] c_FVTasks =
+	[
 		// Icon reference should be replaced by absolute reference to own icon resource.
 		new(GUID_Display,  Properties.Resources.IDS_DISPLAY,  Properties.Resources.IDS_DISPLAY_TT,  "shell32.dll,-42",    0,                  s_OnDisplay ),
 		new(GUID_Settings, Properties.Resources.IDS_SETTINGS, Properties.Resources.IDS_SETTINGS_TT, "shell32.dll,-16710", EXPCMDFLAGS.ECF_HASSUBCOMMANDS, null, c_FVTaskSettings )
-	};
+	];
 
-	private static readonly FVCOMMANDITEM[] c_FVTaskSettings = new FVCOMMANDITEM[]
-	{
+	private static readonly FVCOMMANDITEM[] c_FVTaskSettings =
+	[
 		// Icon reference should be replaced by absolute reference to own icon resource.
 		new(GUID_Setting1, Properties.Resources.IDS_SETTING1, Properties.Resources.IDS_SETTING1_TT, "shell32.dll,-16710", 0, s_OnSetting1),
 		new(GUID_Setting2, Properties.Resources.IDS_SETTING2, Properties.Resources.IDS_SETTING2_TT, "shell32.dll,-16710", 0, s_OnSetting2),
 		new(GUID_Setting3, Properties.Resources.IDS_SETTING3, Properties.Resources.IDS_SETTING3_TT, "shell32.dll,-16710", 0, s_OnSetting3)
-	};
+	];
 
 	public HRESULT GetCommand(in Guid rguidCommandId, in Guid riid, out object? ppv)
 	{
@@ -58,12 +58,8 @@ public class CFolderViewCommandProvider : IExplorerCommandProvider
 	}
 }
 
-internal class CFolderViewCommand : IExplorerCommand
+internal class CFolderViewCommand(FVCOMMANDITEM pfvci) : IExplorerCommand
 {
-	private readonly FVCOMMANDITEM pfvci;
-
-	public CFolderViewCommand(FVCOMMANDITEM pfvci) => this.pfvci = pfvci;
-
 	public HRESULT EnumSubCommands(out IEnumExplorerCommand ppEnum)
 	{
 		ppEnum = new CFolderViewCommandEnumerator(pfvci.pFVCIChildren); return HRESULT.S_OK;
@@ -103,12 +99,10 @@ internal class CFolderViewCommand : IExplorerCommand
 	public HRESULT Invoke(IShellItemArray psiItemArray, IBindCtx? pbc) => pfvci.pfnInvoke?.Invoke(psiItemArray, pbc) ?? HRESULT.S_OK;
 }
 
-internal class CFolderViewCommandEnumerator : IEnumExplorerCommand
+internal class CFolderViewCommandEnumerator(FVCOMMANDITEM[]? c_FVTasks) : IEnumExplorerCommand
 {
-	private readonly FVCOMMANDITEM[] apfvci;
+	private readonly FVCOMMANDITEM[] apfvci = c_FVTasks ?? [];
 	private uint uCurrent = 0;
-
-	public CFolderViewCommandEnumerator(FVCOMMANDITEM[]? c_FVTasks) => apfvci = c_FVTasks ?? Array.Empty<FVCOMMANDITEM>();
 
 	public IEnumExplorerCommand Clone() => throw new NotImplementedException();
 
@@ -153,23 +147,13 @@ internal class CFolderViewCommandEnumerator : IEnumExplorerCommand
 	}
 }
 
-internal class FVCOMMANDITEM
+internal class FVCOMMANDITEM(Guid guid, string title, string tooltip, string icon, Shell32.EXPCMDFLAGS flags, PFN_ExplorerCommandExecute? invoke, FVCOMMANDITEM[]? children = null)
 {
-	public string dwTitleID;
-	public string dwToolTipID;
-	public EXPCMDFLAGS ecFlags;
-	public PFN_ExplorerCommandExecute? pfnInvoke;
-	public FVCOMMANDITEM[]? pFVCIChildren;
-	public Guid pguidCanonicalName;
-	public string pszIcon;
-
-	public FVCOMMANDITEM(Guid guid, string title, string tooltip, string icon, EXPCMDFLAGS flags, PFN_ExplorerCommandExecute? invoke, FVCOMMANDITEM[]? children = null)
-	{
-		pguidCanonicalName = guid;
-		dwTitleID = title;
-		dwToolTipID = tooltip;
-		pszIcon = icon;
-		pfnInvoke = invoke;
-		pFVCIChildren = children;
-	}
+	public string dwTitleID = title;
+	public string dwToolTipID = tooltip;
+	public EXPCMDFLAGS ecFlags = flags;
+	public PFN_ExplorerCommandExecute? pfnInvoke = invoke;
+	public FVCOMMANDITEM[]? pFVCIChildren = children;
+	public Guid pguidCanonicalName = guid;
+	public string pszIcon = icon;
 }

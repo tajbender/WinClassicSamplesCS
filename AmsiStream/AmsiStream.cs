@@ -38,7 +38,7 @@ internal class CStreamScanner
 	public HRESULT ScanStream([In] IAmsiStream stream)
 	{
 		Console.Write("Calling antimalware.Scan() ...\n");
-		HRESULT hr = m_antimalware.Scan(stream, out var r, out var provider);
+		HRESULT hr = m_antimalware.Scan(stream, out AMSI_RESULT r, out IAntimalwareProvider? provider);
 		if (hr.Failed)
 		{
 			return hr;

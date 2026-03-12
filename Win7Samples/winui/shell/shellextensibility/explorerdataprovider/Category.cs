@@ -6,12 +6,8 @@ using static Vanara.PInvoke.Shell32;
 namespace explorerdataprovider;
 
 [ComVisible(true)]
-public class CFolderViewImplCategoryProvider : ICategoryProvider
+public class CFolderViewImplCategoryProvider(Shell32.IShellFolder2 psf) : ICategoryProvider
 {
-	private readonly IShellFolder2 m_psf;
-
-	public CFolderViewImplCategoryProvider(IShellFolder2 psf) => m_psf = psf;
-
 	public HRESULT CanCategorizeOnSCID(in PROPERTYKEY pscid) => pscid == PROPERTYKEY.System.ItemNameDisplay ||
 		pscid == PKEY_Microsoft_SDKSample_AreaSize || pscid == PKEY_Microsoft_SDKSample_DirectoryLevel || pscid == PKEY_Microsoft_SDKSample_NumberOfSides ?
 		HRESULT.S_OK : HRESULT.S_FALSE;
@@ -21,23 +17,23 @@ public class CFolderViewImplCategoryProvider : ICategoryProvider
 		switch (pguid)
 		{
 			case var p when p == CAT_GUID_NAME:
-				ppv = new CFolderViewImplCategorizer_Name(m_psf);
+				ppv = new CFolderViewImplCategorizer_Name(psf);
 				break;
 
 			case var p when p == CAT_GUID_SIZE:
-				ppv = new CFolderViewImplCategorizer_Size(m_psf);
+				ppv = new CFolderViewImplCategorizer_Size(psf);
 				break;
 
 			case var p when p == CAT_GUID_LEVEL:
-				ppv = new CFolderViewImplCategorizer_Level(m_psf);
+				ppv = new CFolderViewImplCategorizer_Level(psf);
 				break;
 
 			case var p when p == CAT_GUID_SIDES:
-				ppv = new CFolderViewImplCategorizer_Sides(m_psf);
+				ppv = new CFolderViewImplCategorizer_Sides(psf);
 				break;
 
 			case var p when p == CAT_GUID_VALUE:
-				ppv = new CFolderViewImplCategorizer_Value(m_psf);
+				ppv = new CFolderViewImplCategorizer_Value(psf);
 				break;
 
 			default:
@@ -100,7 +96,7 @@ public class CFolderViewImplCategoryProvider : ICategoryProvider
 	}
 }
 
-internal abstract class CFolderViewImplCategorizerBase : ICategorizer
+internal abstract class CFolderViewImplCategorizerBase(Shell32.IShellFolder2 psf) : ICategorizer
 {
 	private static readonly Dictionary<uint, string> strLookup = new()
 	{
@@ -148,9 +144,7 @@ internal abstract class CFolderViewImplCategorizerBase : ICategorizer
 		{ 143, "IDS_SETTING3_TT" },
 	};
 
-	protected IShellFolder2 m_psf;
-
-	protected CFolderViewImplCategorizerBase(IShellFolder2 psf) => m_psf = psf;
+	protected IShellFolder2 m_psf = psf;
 
 	protected abstract string Description { get; }
 
@@ -174,10 +168,8 @@ internal abstract class CFolderViewImplCategorizerBase : ICategorizer
 }
 
 [ComVisible(true)]
-internal class CFolderViewImplCategorizer_Level : CFolderViewImplCategorizerBase
+internal class CFolderViewImplCategorizer_Level(Shell32.IShellFolder2 psf) : CFolderViewImplCategorizerBase(psf)
 {
-	public CFolderViewImplCategorizer_Level(IShellFolder2 psf) : base(psf) { }
-
 	protected override string Description => Properties.Resources.IDS_GROUPBYLEVEL;
 
 	public override HRESULT GetCategory(uint cidl, IntPtr[] apidl, uint[] rgCategoryIds)
@@ -202,10 +194,8 @@ internal class CFolderViewImplCategorizer_Level : CFolderViewImplCategorizerBase
 }
 
 [ComVisible(true)]
-internal class CFolderViewImplCategorizer_Name : CFolderViewImplCategorizerBase
+internal class CFolderViewImplCategorizer_Name(Shell32.IShellFolder2 psf) : CFolderViewImplCategorizerBase(psf)
 {
-	public CFolderViewImplCategorizer_Name(IShellFolder2 psf) : base(psf) { }
-
 	protected override string Description => Properties.Resources.IDS_GROUPBYALPHA;
 
 	public override HRESULT GetCategory(uint cidl, IntPtr[] apidl, uint[] rgCategoryIds)
@@ -226,14 +216,12 @@ internal class CFolderViewImplCategorizer_Name : CFolderViewImplCategorizerBase
 		return hr;
 	}
 
-	protected override string GetCategoryInfo(uint dwCategoryId) => new(new[] { Convert.ToChar(dwCategoryId) });
+	protected override string GetCategoryInfo(uint dwCategoryId) => new([Convert.ToChar(dwCategoryId)]);
 }
 
 [ComVisible(true)]
-internal class CFolderViewImplCategorizer_Sides : CFolderViewImplCategorizerBase
+internal class CFolderViewImplCategorizer_Sides(Shell32.IShellFolder2 psf) : CFolderViewImplCategorizerBase(psf)
 {
-	public CFolderViewImplCategorizer_Sides(IShellFolder2 psf) : base(psf) { }
-
 	protected override string Description => Properties.Resources.IDS_GROUPBYSIDES;
 
 	public override HRESULT GetCategory(uint cidl, IntPtr[] apidl, uint[] rgCategoryIds)
@@ -280,10 +268,8 @@ internal class CFolderViewImplCategorizer_Sides : CFolderViewImplCategorizerBase
 }
 
 [ComVisible(true)]
-internal class CFolderViewImplCategorizer_Size : CFolderViewImplCategorizerBase
+internal class CFolderViewImplCategorizer_Size(Shell32.IShellFolder2 psf) : CFolderViewImplCategorizerBase(psf)
 {
-	public CFolderViewImplCategorizer_Size(IShellFolder2 psf) : base(psf) { }
-
 	protected override string Description => Properties.Resources.IDS_GROUPBYSIZE;
 
 	public override HRESULT GetCategory(uint cidl, IntPtr[] apidl, uint[] rgCategoryIds)
@@ -323,10 +309,8 @@ internal class CFolderViewImplCategorizer_Size : CFolderViewImplCategorizerBase
 }
 
 [ComVisible(true)]
-internal class CFolderViewImplCategorizer_Value : CFolderViewImplCategorizerBase
+internal class CFolderViewImplCategorizer_Value(Shell32.IShellFolder2 psf) : CFolderViewImplCategorizerBase(psf)
 {
-	public CFolderViewImplCategorizer_Value(IShellFolder2 psf) : base(psf) { }
-
 	protected override string Description => Properties.Resources.IDS_GROUPBYVALUE;
 
 	public override HRESULT GetCategory(uint cidl, IntPtr[] apidl, uint[] rgCategoryIds)
@@ -374,7 +358,7 @@ internal class CFolderViewImplEnumGUID : IEnumGUID
 				switch (m_ulCurrentIndex++)
 				{
 					case 0:
-						rgelt = new[] { CAT_GUID_VALUE };
+						rgelt = [CAT_GUID_VALUE];
 						break;
 				}
 			}

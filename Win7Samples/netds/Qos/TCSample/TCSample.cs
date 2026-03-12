@@ -230,7 +230,7 @@ bool ClearIfcList(List<IFC_INFO> pIfcList)
 //******************************************************************************
 bool MakeIfcList(HCLIENT hClient, out List<IFC_INFO> pIfcList)
 {
-	pIfcList = new List<IFC_INFO>();
+	pIfcList = [];
 
 	//
 	// Enumerate the TC enabled interfaces

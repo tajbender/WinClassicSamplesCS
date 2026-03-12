@@ -9,7 +9,7 @@ namespace fdsample;
 
 public class CMyFDHelper : IFunctionDiscoveryNotification
 {
-	private static readonly PROPERTYKEY[] g_Keys = {
+	private static readonly PROPERTYKEY[] g_Keys = [
 		PROPERTYKEY.System.ComputerName,
 		PKEY_FD_Visibility,
 		PKEY_Device_InstanceId,
@@ -76,7 +76,7 @@ public class CMyFDHelper : IFunctionDiscoveryNotification
 		PKEY_WNET_Comment,
 		PKEY_WNET_Provider,
 		PKEY_DrvPkg_VendorWebSite
-	};
+	];
 
 	private readonly AutoResetEvent m_hAdd, m_hRemove, m_hChange;
 	private readonly IFunctionDiscovery m_pFunDisc;

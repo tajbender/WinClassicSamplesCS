@@ -46,7 +46,7 @@ internal class DirectoryWatcher
 				while (true)
 				{
 					uint returned = 0;
-					if (!ReadDirectoryChanges(_dir!, _notify, c_bufferSize, true, FILE_NOTIFY_CHANGE.FILE_NOTIFY_CHANGE_ATTRIBUTES, &returned, &_overlapped, null))
+					if (!ReadDirectoryChanges(_dir!, (byte*)_notify, c_bufferSize, true, FILE_NOTIFY_CHANGE.FILE_NOTIFY_CHANGE_ATTRIBUTES, &returned, &_overlapped, null))
 						Win32Error.ThrowLastError();
 
 					if (GetOverlappedResultEx(_dir!, &_overlapped, out var transferred, 1000, false))

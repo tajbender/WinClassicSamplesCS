@@ -268,7 +268,7 @@ internal unsafe class CCustomNullSecuredAddressPayload : IDisposable
 		}
 
 		// pass the data back to the caller
-		pData = new DRT_DATA { cb = (uint)ddDataPtr.Length, pb = mem.TakeOwnership() };
+		pData = new DRT_DATA { cb = (uint)ddDataPtr.Length, pb = mem.ReleaseOwnership() };
 
 		return HRESULT.S_OK;
 	}
@@ -312,8 +312,8 @@ internal unsafe class CCustomNullSecuredAddressPayload : IDisposable
 			var cUnusedBits = (byte)deserializer.ReadByte();
 
 			var szAlgId = cbAlgorithmId == 0 ? null : deserializer.Read<string>(CharSet.Ansi);
-			var pParamData = cbParameters == 0 ? new byte[0] : deserializer.ReadArray<byte>(cbParameters, false).ToArray();
-			var pKeyData = cbPublicKey == 0 ? new byte[0] : deserializer.ReadArray<byte>(cbPublicKey, false).ToArray();
+			var pParamData = cbParameters == 0 ? [] : deserializer.ReadArray<byte>(cbParameters, false).ToArray();
+			var pKeyData = cbPublicKey == 0 ? [] : deserializer.ReadArray<byte>(cbPublicKey, false).ToArray();
 
 			var cbTotal = sizeof(CERT_PUBLIC_KEY_INFO) + Macros.ALIGN_TO_MULTIPLE(cbAlgorithmId + 1, IntPtr.Size) +
 				Macros.ALIGN_TO_MULTIPLE(cbParameters, IntPtr.Size) + Macros.ALIGN_TO_MULTIPLE(cbPublicKey, IntPtr.Size);
@@ -558,10 +558,10 @@ internal unsafe class CCustomNullSecurityProvider
 		if (ppAddressList != null)
 		{
 			sap.GetAddresses(out var addr);
-			*ppAddressList = (void*)addr?.TakeOwnership();
+			*ppAddressList = (void*)(addr?.ReleaseOwnership() ?? 0);
 		}
 		sap.GetPublicKey(out var pk);
-		*ppPublicKey = (CERT_PUBLIC_KEY_INFO*)pk?.TakeOwnership();
+		*ppPublicKey = (CERT_PUBLIC_KEY_INFO*)(pk?.ReleaseOwnership() ?? 0);
 		sap.GetKey(out pKey);
 		sap.GetProtocolVersion(out *pbProtocolMajor, out *pbProtocolMinor);
 

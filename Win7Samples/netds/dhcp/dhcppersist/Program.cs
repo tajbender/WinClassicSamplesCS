@@ -54,7 +54,7 @@ try
 		// building the request array in a more 'dynamic' way
 		//
 		// the DHCP Client Options API arrays for getting the options 
-		SafeNativeArray<DHCPAPI_PARAMS> requests = new(new[] { new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_TIME_SERVERS } }); // gateway address
+		SafeNativeArray<DHCPAPI_PARAMS> requests = new([new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_TIME_SERVERS }]); // gateway address
 
 		// set-up the actual arrays
 		DHCPCAPI_PARAMS_ARRAY sendarray = new(); // we aren't sending anything

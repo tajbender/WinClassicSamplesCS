@@ -16,12 +16,12 @@ public partial class AutomaticJumpListSample : Form
 	private const string REGVAL_RECENTCATEGORY = "RecentCategorySelected";
 
 	private static readonly string[] c_rgpszFiles =
-	{
+	[
 		"Microsoft_Sample_1.txt",
 		"Microsoft_Sample_2.txt",
 		"Microsoft_Sample_3.doc",
 		"Microsoft_Sample_4.doc"
-	};
+	];
 
 	public AutomaticJumpListSample()
 	{
@@ -147,7 +147,7 @@ public partial class AutomaticJumpListSample : Form
 	private static void OpenItem(HWND hwnd)
 	{
 		var pdlg = new IFileOpenDialog();
-		COMDLG_FILTERSPEC[] c_rgTypes = { new COMDLG_FILTERSPEC { pszName = "Sample File Types (*.txt;*.doc)", pszSpec = "*.txt;*.doc" } };
+		COMDLG_FILTERSPEC[] c_rgTypes = [new COMDLG_FILTERSPEC { pszName = "Sample File Types (*.txt;*.doc)", pszSpec = "*.txt;*.doc" }];
 		pdlg.SetFileTypes((uint)c_rgTypes.Length, c_rgTypes);
 		pdlg.SetFileTypeIndex(1);
 		// Start in the Documents folder, where the sample files were created

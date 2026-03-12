@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Shell32" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
   </ItemGroup>
-
 </Project>

@@ -5,20 +5,20 @@ namespace EhStorEnumerator;
 
 public partial class IDD_CERTIFICATES : Form
 {
-	private readonly ColumnHeader[] deviceHeaders = new[]
-	{
+	private readonly ColumnHeader[] deviceHeaders =
+	[
 		new ColumnHeader() { Text = "Index" },
 		new ColumnHeader() { Text = "Type" },
 		new ColumnHeader() { Text = "V. Policy" },
 		new ColumnHeader() { Text = "Signer" },
-	};
+	];
 
-	private readonly ColumnHeader[] storeHeaders = new[]
-	{
+	private readonly ColumnHeader[] storeHeaders =
+	[
 		new ColumnHeader() { Text = "Subject" },
 		new ColumnHeader() { Text = "Version" },
 		new ColumnHeader() { Text = "Issuer" },
-	};
+	];
 
 	public IDD_CERTIFICATES()
 	{
@@ -27,7 +27,7 @@ public partial class IDD_CERTIFICATES : Form
 	}
 
 	public CCertificate? SelectedCertificate =>
-		IDC_CERT_LIST.SelectedItems.Count != 1 ? null : (CCertificate)IDC_CERT_LIST.SelectedItems[0].Tag;
+		IDC_CERT_LIST.SelectedItems.Count != 1 ? null : (CCertificate)IDC_CERT_LIST.SelectedItems[0].Tag!;
 
 	public uint SelectedCertIndex => IDC_CERT_LIST.SelectedItems.Count != 1 ? uint.MaxValue : (uint)IDC_CERT_LIST.SelectedIndices[0];
 
@@ -42,7 +42,7 @@ public partial class IDD_CERTIFICATES : Form
 		IDC_CERT_LIST.Clear();
 		IDC_CERT_LIST.Columns.AddRange(deviceHeaders);
 
-		g_DeviceCertData.m_parCertificates = new();
+		g_DeviceCertData.m_parCertificates = [];
 		(uint nStoredCertCount, uint nMaxCertCount) = g_DeviceCertData.m_iDevice!.CertGetCertificatesCount();
 		if (nStoredCertCount == 0)
 		{
@@ -55,7 +55,7 @@ public partial class IDD_CERTIFICATES : Form
 			CCertProperties certProperties = g_DeviceCertData.m_iDevice!.CertGetCertificate(nNextCertIndex);
 			g_DeviceCertData.m_parCertificates.Add(certProperties);
 			nNextCertIndex = certProperties.nNextCertIndex;
-			IDC_CERT_LIST.Items.Add(new ListViewItem(new string[] { $"{certProperties.nIndex}", certProperties.CertType, certProperties.ValidationPolicy, $"{certProperties.nSignerCertIndex}" }));
+			IDC_CERT_LIST.Items.Add(new ListViewItem([$"{certProperties.nIndex}", certProperties.CertType, certProperties.ValidationPolicy, $"{certProperties.nSignerCertIndex}"]));
 		} while (nNextCertIndex > 0);
 
 		IDC_CERT_LIST.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -67,8 +67,7 @@ public partial class IDD_CERTIFICATES : Form
 		IDC_CERT_LIST.Columns.AddRange(storeHeaders);
 
 		CLocalCertStoreImp localStore = new(store);
-		IDC_CERT_LIST.Items.AddRange(localStore.GetCertificatesList().
-			Select(c => new ListViewItem(new string?[] { c.Subject, $"{c.Version}", c.Issuer }) { Tag = c }).ToArray());
+		IDC_CERT_LIST.Items.AddRange([.. localStore.GetCertificatesList().Select(c => new ListViewItem([c.Subject ?? "", $"{c.Version}", c.Issuer ?? ""]) { Tag = c })]);
 
 		IDC_CERT_LIST.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 	}

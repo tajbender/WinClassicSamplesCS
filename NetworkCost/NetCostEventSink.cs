@@ -54,7 +54,7 @@ static partial class NetCostSample
 			//If register for destination cost notifications, call SetDestinationAddresses to register the requested Destination IP addresses
 			if (riid == typeof(INetworkCostManagerEvents).GUID && pDestAddress?.addrString?.Length > 0)
 			{
-				m_pCostManager.SetDestinationAddresses(1, new[] { pDestAddress.ipAddr! }, true);
+				m_pCostManager.SetDestinationAddresses(1, [pDestAddress.ipAddr!], true);
 			}
 
 			var pCpc = (IConnectionPointContainer)m_pCostManager;

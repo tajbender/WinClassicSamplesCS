@@ -4,7 +4,7 @@ using static Vanara.PInvoke.Kernel32;
 
 // All of the LCTYPES new to Windows Vista
 LCTYPE[] NewTypes =
-{
+[
 	LCTYPE.LOCALE_SNAME,
 	LCTYPE.LOCALE_SDURATION,
 	LCTYPE.LOCALE_SKEYBOARDSTOINSTALL,
@@ -21,7 +21,7 @@ LCTYPE[] NewTypes =
 	LCTYPE.LOCALE_SPOSINFINITY,
 	LCTYPE.LOCALE_SNEGINFINITY,
 	LCTYPE.LOCALE_SSCRIPTS
-};
+];
 
 const int BUFFER_SIZE = 255;
 StringBuilder wcBuffer = new(BUFFER_SIZE);
@@ -30,7 +30,7 @@ StringBuilder wcBuffer = new(BUFFER_SIZE);
 string? sysLocale = GetSystemDefaultLocaleName(wcBuffer, BUFFER_SIZE) > 0 ? wcBuffer.ToString() : null;
 
 // See which of the input locales are valid (if any)
-List<string> userLocales = new();
+List<string> userLocales = [];
 foreach (string lname in args)
 {
 	if (!IsValidLocaleName(lname))
@@ -44,10 +44,10 @@ foreach (string lname in args)
 }
 
 // Enumerate all the locales and report on them
-List<string> locales = EnumSystemLocalesEx(LOCALE_FLAGS.LOCALE_ALL).Select(p => p.lpLocaleString).ToList();
+List<string> locales = [.. EnumSystemLocalesEx(LOCALE_FLAGS.LOCALE_ALL).Select(p => p.lpLocaleString)];
 if (userLocales.Count > 0)
 {
-	locales = locales.Intersect(userLocales, LComp.Instance).ToList();
+	locales = [.. locales.Intersect(userLocales, LComp.Instance)];
 }
 
 foreach (string localeName in locales)
@@ -83,7 +83,7 @@ foreach (string localeName in locales)
 	}
 
 	// Get today's date
-	iResult = GetDateFormatEx(localeName, DATE_FORMAT.DATE_LONGDATE, IntPtr.Zero, default, wcBuffer, BUFFER_SIZE, default);
+	iResult = GetDateFormatEx(localeName, DATE_FORMAT.DATE_LONGDATE, default, default, wcBuffer, BUFFER_SIZE, default);
 
 	if (iResult > 0)
 	{

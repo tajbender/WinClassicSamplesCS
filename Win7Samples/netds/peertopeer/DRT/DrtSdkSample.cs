@@ -11,7 +11,7 @@ namespace DrtSdkSample;
 internal static partial class Program
 {
 	private const int KEYSIZE = 32;
-	private static readonly Dictionary<int, DRT_CONTEXT> contexts = new();
+	private static readonly Dictionary<int, DRT_CONTEXT> contexts = [];
 
 	private static IntPtr AddCtx(DRT_CONTEXT ctx)
 	{
@@ -48,7 +48,7 @@ internal static partial class Program
 		public DRT_SETTINGS settings;
 		public SafePCCERT_CONTEXT? pRoot;
 		public SafePCCERT_CONTEXT? pLocal;
-		public List<REG_CONTEXT> registrations = new();
+		public List<REG_CONTEXT> registrations = [];
 	}
 
 	//********************************************************************************************
@@ -275,7 +275,7 @@ internal static partial class Program
 
 			Console.Write("Enter 'hostname port' for DNS Bootstrap Provider (currently {0} {1}):\n", pwszCompName, Drt.port);
 			var rl = Console.ReadLine();
-			var parts = rl?.Split(' ') ?? Array.Empty<string>();
+			var parts = rl?.Split(' ') ?? [];
 			if (parts.Length != 2 || !ushort.TryParse(parts[1], out var usBootstrapPort))
 			{
 				hr = HRESULT.E_INVALIDARG;
@@ -305,7 +305,7 @@ internal static partial class Program
 
 			Console.Write("Enter 'hostname port' for Custom Bootstrap Provider (currently {0} {1}\n", pwszCompName, Drt.port);
 			var rl = Console.ReadLine();
-			var parts = rl?.Split(' ') ?? Array.Empty<string>();
+			var parts = rl?.Split(' ') ?? [];
 			if (parts.Length != 2 || !ushort.TryParse(parts[1], out var usBootstrapPort))
 			{
 				hr = HRESULT.E_INVALIDARG;
@@ -504,13 +504,13 @@ internal static partial class Program
 				{
 					fKeyFound = true;
 					Console.WriteLine("*Found Key*: ");
-					Console.Write(((byte[]?)pSearchResult.AsRef().registration.key ?? Array.Empty<byte>()).ToHexDumpString());
+					Console.Write(((byte[]?)pSearchResult.AsRef().registration.key ?? []).ToHexDumpString());
 					PrintSearchPath(SearchContext);
 				}
 				else if (pSearchResult.AsRef().type == DRT_MATCH_TYPE.DRT_MATCH_NEAR)
 				{
 					Console.WriteLine("*Found Near Match*: ");
-					Console.Write(((byte[]?)pSearchResult.AsRef().registration.key ?? Array.Empty<byte>()).ToHexDumpString());
+					Console.Write(((byte[]?)pSearchResult.AsRef().registration.key ?? []).ToHexDumpString());
 					if (SearchType == 3)
 						fKeyFound = true;
 					PrintSearchPath(SearchContext);
@@ -518,7 +518,7 @@ internal static partial class Program
 				else if (pSearchResult.AsRef().type == DRT_MATCH_TYPE.DRT_MATCH_INTERMEDIATE)
 				{
 					Console.WriteLine("Intermediate Match: ");
-					Console.Write(((byte[]?)pSearchResult.AsRef().registration.key ?? Array.Empty<byte>()).ToHexDumpString());
+					Console.Write(((byte[]?)pSearchResult.AsRef().registration.key ?? []).ToHexDumpString());
 					DrtContinueSearch(SearchContext);
 				}
 			}
@@ -614,8 +614,8 @@ internal static partial class Program
 			Drt.registrations.Add(reg);
 
 			// newKeyData and newPayloadData will be freed on unregister
-			newKey.TakeOwnership();
-			newPayload.TakeOwnership();
+			newKey.ReleaseOwnership();
+			newPayload.ReleaseOwnership();
 
 			Console.WriteLine("Successfully Registered: ");
 			Console.Write(((byte[]?)reg.regInfo.key)?.ToHexDumpString());
@@ -636,7 +636,7 @@ internal static partial class Program
 	private static bool UnRegisterKey(in DRT_CONTEXT Drt)
 	{
 		Console.Write("Current Registrations:\n");
-		var choice = GetUserChoice(Drt.registrations.Select(r => ((byte[]?)r.regInfo.key)?.ToHexDumpString(KEYSIZE, KEYSIZE, 0) ?? "").Append("Cancel").ToArray()) - 1;
+		var choice = GetUserChoice([.. Drt.registrations.Select(r => ((byte[]?)r.regInfo.key)?.ToHexDumpString(KEYSIZE, KEYSIZE, 0) ?? ""), "Cancel"]) - 1;
 		if (choice < 0 || choice == Drt.registrations.Count)
 			goto Cleanup;
 
@@ -727,19 +727,19 @@ internal static partial class Program
 
 		DRT_CONTEXT LocalDrt = new();
 
-		string[] ppcwzSecurityProviderChoices = {
+		string[] ppcwzSecurityProviderChoices = [
 			"Initialize DRT with Null Security Provider",
 			"Initialize DRT with Derived Key Security Provider",
 			"Initialize DRT with Custom Security Provider",
-			"Exit" };
+			"Exit" ];
 
-		string[] ppcwzBootStrapProviderChoices = {
+		string[] ppcwzBootStrapProviderChoices = [
 			"Bootstrap with Builtin DNS Bootstrap Provider",
 			"Bootstrap with Builtin PNRP Bootstrap Provider",
 			"Bootstrap with Custom Bootstrap Provider",
-			"Exit" };
+			"Exit" ];
 
-		string[] ppcwzSearchChoices = {
+		string[] ppcwzSearchChoices = [
 			"Register a new key",
 			"Unregister a key",
 			"Simple DRT Search",
@@ -748,7 +748,7 @@ internal static partial class Program
 			"Range Search",
 			"Hide DRT Events",
 			"Display DRT Events",
-			"Exit" };
+			"Exit" ];
 
 		SetConsoleTitle("DrtSdkSample Current Drt Status: Initializing");
 

@@ -310,7 +310,7 @@ public static partial class FMApi
 	// https://learn.microsoft.com/en-us/previous-versions/windows/desktop/fmapi/detectbootsector BOOL WINAPI DetectBootSector( _In_ CONST
 	// UCHAR* BootSector, _Out_ PBOOT_SECTOR_INFO BootSectorParams );
 	[PInvokeData("")]
-	[DllImport("fmapi.dll", SetLastError = false, ExactSpelling = true)]
+	[DllImport("fmapi.dll", SetLastError = true, ExactSpelling = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
 	public static extern bool DetectBootSector([In, MarshalAs(UnmanagedType.LPArray, SizeConst = BOOT_SECTOR_SIZE)] byte[] BootSector, out BOOT_SECTOR_INFO BootSectorParams);
 
@@ -743,6 +743,9 @@ public static partial class FMApi
 
 		/// <summary>Returns an invalid handle by instantiating a <see cref="PFILE_RESTORE_CONTEXT"/> object with <see cref="IntPtr.Zero"/>.</summary>
 		public static PFILE_RESTORE_CONTEXT NULL => new(IntPtr.Zero);
+
+		/// <inheritdoc/>
+		public readonly bool IsInvalid => IsNull;
 
 		/// <summary>Gets a value indicating whether this instance is a null handle.</summary>
 		public readonly bool IsNull => handle == IntPtr.Zero;

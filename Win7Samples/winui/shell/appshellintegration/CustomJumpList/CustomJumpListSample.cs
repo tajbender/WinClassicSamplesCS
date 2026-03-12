@@ -19,12 +19,12 @@ public partial class CustomJumpListSample : Form
 	private const string REGVAL_RECENTCATEGORY = "RecentCategorySelected";
 
 	private static readonly string[] c_rgpszFiles =
-	{
+	[
 		"Microsoft_Sample_1.txt",
 		"Microsoft_Sample_2.txt",
 		"Microsoft_Sample_3.doc",
 		"Microsoft_Sample_4.doc"
-	};
+	];
 
 	public CustomJumpListSample() => InitializeComponent();
 

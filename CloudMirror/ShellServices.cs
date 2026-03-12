@@ -25,7 +25,7 @@ internal static class ShellServices
 			CoRegisterClassObject(typeof(UriSource).GUID, uriSourceFactory, CLSCTX.CLSCTX_LOCAL_SERVER, REGCLS.REGCLS_MULTIPLEUSE, out var uriSourceFactoryCookie).ThrowIfFailed();
 
 			var stopEvent = cancellationToken.WaitHandle.SafeWaitHandle.DangerousGetHandle();
-			CoWaitForMultipleHandles(COWAIT_FLAGS.COWAIT_DISPATCH_CALLS, INFINITE, 1, new[] { stopEvent }, out _);
+			CoWaitForMultipleHandles(COWAIT_FLAGS.COWAIT_DISPATCH_CALLS, INFINITE, 1, [stopEvent], out _);
 
 			CoRevokeClassObject(uriSourceFactoryCookie);
 			CoRevokeClassObject(customStateProviderFactoryCookie);
@@ -38,14 +38,8 @@ internal static class ShellServices
 		thread.Start();
 	}
 
-	private class Factory : IClassFactory
+	private class Factory(Func<object> generator) : IClassFactory
 	{
-		public Factory(Func<object> generator)
-		{
-			_generator = generator;
-		}
-
-		private readonly Func<object> _generator;
 		private static readonly Guid IID_IUnknown = new("{00000000-0000-0000-c000-000000000046}");
 
 		HRESULT IClassFactory.CreateInstance(object? pUnkOuter, in Guid riid, out object? ppvObject)
@@ -63,7 +57,7 @@ internal static class ShellServices
 			}
 			else
 			{
-				var obj = _generator();
+				var obj = generator();
 				ppvObject = obj;
 				return HRESULT.S_OK;
 			}

@@ -219,9 +219,9 @@ internal partial class D3D1211on12(int width, int height, string name) : DXSampl
 
 		if (m_useWarpDevice)
 		{
-			factory.EnumWarpAdapter(typeof(IDXGIAdapter).GUID, out var warpAdapter).ThrowIfFailed();
+			factory.EnumWarpAdapter(out IDXGIAdapter? warpAdapter).ThrowIfFailed();
 
-			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter, out m_d3d12Device).ThrowIfFailed();
+			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter!, out m_d3d12Device).ThrowIfFailed();
 		}
 		else
 		{
@@ -238,24 +238,21 @@ internal partial class D3D1211on12(int width, int height, string name) : DXSampl
 			//D3D12_MESSAGE_CATEGORY[] categories = default;
 
 			// Suppress messages based on their severity level.
-			using SafeNativeArray<D3D12_MESSAGE_SEVERITY> severities = [D3D12_MESSAGE_SEVERITY.D3D12_MESSAGE_SEVERITY_INFO];
+			D3D12_MESSAGE_SEVERITY[] severities = [D3D12_MESSAGE_SEVERITY.D3D12_MESSAGE_SEVERITY_INFO];
 
 			// Suppress individual messages by their ID.
-			using SafeNativeArray<int> denyIds = [
+			D3D12_MESSAGE_ID[] denyIds = [
 				// This occurs when there are uninitialized descriptors in a descriptor table, even when a shader does not access the
 				// missing descriptors.
-				(int)D3D12_MESSAGE_ID.D3D12_MESSAGE_ID_INVALID_DESCRIPTOR_HANDLE,
+				D3D12_MESSAGE_ID.D3D12_MESSAGE_ID_INVALID_DESCRIPTOR_HANDLE
 			];
 
 			D3D12_INFO_QUEUE_FILTER filter = new()
 			{
 				DenyList = new()
 				{
-					//NumCategories = countof(categories),
 					//pCategoryList = categories,
-					NumSeverities = 1,
 					pSeverityList = severities,
-					NumIDs = (uint)denyIds.Count,
 					pIDList = denyIds,
 				}
 			};

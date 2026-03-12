@@ -324,9 +324,9 @@ internal class D3D12HelloGenericPrograms : DXSample
 
 		if (m_useWarpDevice)
 		{
-			factory.EnumWarpAdapter(typeof(IDXGIAdapter).GUID, out var warpAdapter).ThrowIfFailed();
+			factory.EnumWarpAdapter(out IDXGIAdapter? warpAdapter).ThrowIfFailed();
 
-			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter, out m_device).ThrowIfFailed();
+			D3D12CreateDevice(D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_11_0, (IDXGIAdapter)warpAdapter!, out m_device).ThrowIfFailed();
 		}
 		else
 		{
@@ -435,7 +435,7 @@ internal class D3D12HelloGenericPrograms : DXSample
 			{
 				Type = D3D12_PROGRAM_TYPE.D3D12_PROGRAM_TYPE_GENERIC_PIPELINE
 			};
-			SP.__union_1.GenericPipeline.ProgramIdentifier = m_genericProgram[i];
+			SP.GenericPipeline = new() { ProgramIdentifier = m_genericProgram[i] };
 			m_commandList.SetProgram(SP);
 			m_commandList.RSSetViewports(1, [m_viewport[i]]);
 			m_commandList.DrawInstanced(3, 1, 0, 0);

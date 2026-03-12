@@ -38,8 +38,8 @@ static class Program
 		if (SHGetFolderLocation(hwnd, idFolder, ppidl: out var pidl).Succeeded)
 		{
 			using (pidl)
-				if (g_psfDesktop!.BindToObject(pidl, default, typeof(IShellFolder).GUID, out var ppv).Succeeded)
-					return (IShellFolder?)ppv;
+				if (g_psfDesktop!.BindToObject(pidl, default, out IShellFolder? ppv).Succeeded)
+					return ppv;
 		}
 		return null;
 	}
@@ -53,7 +53,7 @@ static class Program
 	*****************************************************************************/
 	static PIDL? PidlFromPath(HWND hwnd, string pszPath)
 	{
-		SFGAO dwAttributes = 0;
+		SFGAO? dwAttributes = 0;
 		return g_psfDesktop!.ParseDisplayName(hwnd, default, pszPath, out _, out var pidl, ref dwAttributes).Failed ? null : pidl;
 	}
 
@@ -80,7 +80,7 @@ static class Program
 		/*
 		* Bind to the parent folder of the item we are interested in.
 		*/
-		var hres = SHBindToParent(pidl, typeof(IShellFolder).GUID, out var psf, out var pidlLast);
+		var hres = SHBindToParent(pidl, out IShellFolder? psf, out var pidlLast);
 		if (hres.Failed)
 		{
 			/*

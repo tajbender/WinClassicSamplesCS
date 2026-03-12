@@ -49,12 +49,12 @@ internal class Program
 
 		IDirectorySearch? pDSSearch;
 		if (dwAuthFlags != 0)
-			ADsOpenObject(pszSearchBase!, out pDSSearch, dwAuthFlags, pszUserName, pszPassword).ThrowIfFailed();
+			ADsOpenObject(pszSearchBase!, pszUserName, pszPassword, dwAuthFlags, out pDSSearch).ThrowIfFailed();
 		else
 			ADsGetObject(pszSearchBase!, out pDSSearch).ThrowIfFailed();
 
 		uint cErr = 0;
-		if (pSearchPref.Count > 0 && pDSSearch!.SetSearchPreference(pSearchPref.ToArray()) != HRESULT.S_OK)
+		if (pSearchPref.Count > 0 && pDSSearch!.SetSearchPreference([.. pSearchPref]) != HRESULT.S_OK)
 		{
 			foreach (var p in pSearchPref.Where(sp => sp.dwStatus != ADS_STATUS.ADS_STATUS_S_OK))
 			{
@@ -63,7 +63,7 @@ internal class Program
 			}
 		}
 
-		SafeADS_SEARCH_HANDLE hSearchHandle = pDSSearch!.ExecuteSearch(pszSearchFilter!, pszAttrNames.ToArray());
+		SafeADS_SEARCH_HANDLE hSearchHandle = pDSSearch!.ExecuteSearch(pszSearchFilter!, [.. pszAttrNames]);
 
 		uint nRows = 0;
 		foreach (var row in pDSSearch!.GetRowData(hSearchHandle).Take(dwMaxRows))

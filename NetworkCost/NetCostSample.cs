@@ -441,7 +441,7 @@ static partial class NetCostSample
 	// ********************************************************************************************
 	static int GetUserChoice()
 	{
-		string[] choices = {
+		string[] choices = [
 			"Register for machine Internet cost notifications",
 			"Register for destination cost notifications",
 			"Register for connection cost notifications",
@@ -451,7 +451,7 @@ static partial class NetCostSample
 			"Unregister for machine cost notifications",
 			"Unregister for destination cost notifications",
 			"Unregister for connection cost notifications",
-			"Exit" };
+			"Exit" ];
 		int numchoices = choices.Length;
 		Console.Write("---------------------------------------------------------\n");
 		for (int i = 0; i < numchoices; i++)

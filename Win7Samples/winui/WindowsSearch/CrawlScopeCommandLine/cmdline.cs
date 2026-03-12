@@ -43,17 +43,11 @@ public abstract class CParamBase
 }
 
 // Parameter with two alternative values, one value is associated with true, another one is false correspondingly.
-public class CExclFlagParam : CParamBase
+public class CExclFlagParam(string szTrueParamName, string szFalseParamName) : CParamBase
 {
 	protected bool m_fFlag = false;
-	protected string m_szFalseParamName;
-	protected string m_szTrueParamName;
-
-	public CExclFlagParam(string szTrueParamName, string szFalseParamName)
-	{
-		m_szTrueParamName = szTrueParamName;
-		m_szFalseParamName = szFalseParamName;
-	}
+	protected string m_szFalseParamName = szFalseParamName;
+	protected string m_szTrueParamName = szTrueParamName;
 
 	public bool Get() => m_fFlag;
 
@@ -101,11 +95,9 @@ public class CExclFlagParam : CParamBase
 }
 
 // Simple flag-type parameter, no value, just checking if it's present in command line or not.
-public class CFlagParam : CParamBase
+public class CFlagParam(string szParamName) : CParamBase
 {
-	protected string m_szParamName;
-
-	public CFlagParam(string szParamName) => m_szParamName = szParamName;
+	protected string m_szParamName = szParamName;
 
 	public override Win32Error Init(string[] args, ref int rParamsProcessed)
 	{
@@ -121,16 +113,10 @@ public class CFlagParam : CParamBase
 }
 
 // Parameter followed by some value
-public class CSetValueParam : CParamBase
+public class CSetValueParam(string szName) : CParamBase
 {
-	protected string m_szParamName;
-	protected string? m_szValue;
-
-	public CSetValueParam(string szName)
-	{
-		m_szParamName = szName;
-		m_szValue = null;
-	}
+	protected string m_szParamName = szName;
+	protected string? m_szValue = null;
 
 	public string? Get() => m_szValue;
 

@@ -7,7 +7,7 @@ namespace AppVisibility;
 
 internal class AppVisibilitySample
 {
-	private static bool DisplayMonitorEnumProc(IntPtr hMonitor, IntPtr hdcMonitor, PRECT lprcMonitor, IntPtr dwData)
+	private static bool DisplayMonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, PRECT? lprcMonitor, IntPtr dwData)
 	{
 		try
 		{

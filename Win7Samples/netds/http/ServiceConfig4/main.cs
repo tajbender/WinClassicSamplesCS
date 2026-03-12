@@ -80,15 +80,15 @@ internal partial class Program
 		Win32Error Status;
 		if (wcsicmp(args[i], "ssl") == 0)
 		{
-			Status = DoSsl(args.Skip(++i).ToArray(), Type);
+			Status = DoSsl([.. args.Skip(++i)], Type);
 		}
 		else if (wcsicmp(args[i], "urlacl") == 0)
 		{
-			Status = DoUrlAcl(args.Skip(++i).ToArray(), Type);
+			Status = DoUrlAcl([.. args.Skip(++i)], Type);
 		}
 		else if (wcsicmp(args[i], "iplisten") == 0)
 		{
-			Status = DoIpListen(args.Skip(++i).ToArray(), Type);
+			Status = DoIpListen([.. args.Skip(++i)], Type);
 		}
 		else
 		{

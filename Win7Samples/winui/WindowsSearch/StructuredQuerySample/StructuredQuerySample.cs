@@ -104,11 +104,10 @@ class Program
 				{
 					var propvar = new PROPVARIANT();
 					pc.GetLeafConditionInfo(out var propkey, out var op, propvar);
-					var hr = PSGetPropertyDescription(propkey, typeof(IPropertyDescription).GUID, out var ppv);
+					var hr = PSGetPropertyDescription(propkey, out IPropertyDescription? ppd);
 					if (hr.Succeeded)
 					{
-						var ppd = (IPropertyDescription)ppv;
-						string pszPropertyName = ppd.GetCanonicalName();
+						string pszPropertyName = ppd!.GetCanonicalName();
 						var propvarString = new PROPVARIANT();
 						hr = PropVariantChangeType(propvarString, propvar, PROPVAR_CHANGE_FLAGS.PVCHF_ALPHABOOL, VARTYPE.VT_LPWSTR); // Real applications should prefer PSFormatForDisplay but we want more "raw" values.
 						if (hr.Succeeded)

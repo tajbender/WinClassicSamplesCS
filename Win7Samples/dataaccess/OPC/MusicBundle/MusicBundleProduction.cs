@@ -22,20 +22,20 @@ internal static partial class Program
 	private const string g_trackList = "\\TrackList.wpl";
 
 	// Lyric file names. One-to-one mapping with track names.
-	private static readonly string[] g_lyricsNames = {
+	private static readonly string[] g_lyricsNames = [
 		"\\Lyrics\\CrystalFree.txt",
 		"\\Lyrics\\Sire.txt",
 		"\\Lyrics\\SmallPines.txt",
 		"\\Lyrics\\Valparaiso.txt"
-	};
+	];
 
 	// Track names.
-	private static readonly string[] g_trackNames = {
+	private static readonly string[] g_trackNames = [
 		"\\Tracks\\CrystalFree.wma",
 		"\\Tracks\\Sire.wma",
 		"\\Tracks\\SmallPines.wma",
 		"\\Tracks\\Valparaiso.wma"
-	};
+	];
 
 	//-------------------------------------
 	// Production helper methods.

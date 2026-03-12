@@ -103,30 +103,24 @@ public static class OpticalStorageManager
 /// Receives progress notification of the current write operation. The notifications are sent when copying the content of a file or
 /// while adding directories or files to the file system image.
 /// </summary>
-public class FileSystemImageUpdateEventArgs : EventArgs
+/// <remarks>Initializes a new instance of the <see cref="FileSystemImageUpdateEventArgs"/> class.</remarks>
+/// <param name="currentFile">String that contains the full path of the file being written.</param>
+/// <param name="copiedSectors">Number of sectors copied.</param>
+/// <param name="totalSectors">Total number of sectors in the file.</param>
+public class FileSystemImageUpdateEventArgs(string currentFile, long copiedSectors, long totalSectors) : EventArgs
 {
-	/// <summary>Initializes a new instance of the <see cref="FileSystemImageUpdateEventArgs"/> class.</summary>
-	/// <param name="currentFile">String that contains the full path of the file being written.</param>
-	/// <param name="copiedSectors">Number of sectors copied.</param>
-	/// <param name="totalSectors">Total number of sectors in the file.</param>
-	public FileSystemImageUpdateEventArgs(string currentFile, long copiedSectors, long totalSectors)
-	{
-		CurrentFile = currentFile;
-		CopiedSectors = copiedSectors;
-		TotalSectors = totalSectors;
-	}
 
 	/// <summary>Gets the number of sectors copied.</summary>
 	/// <value>The copied sectors.</value>
-	public long CopiedSectors { get; }
+	public long CopiedSectors { get; } = copiedSectors;
 
 	/// <summary>Gets a string that contains the full path of the file being written.</summary>
 	/// <value>The current file.</value>
-	public string CurrentFile { get; }
+	public string CurrentFile { get; } = currentFile;
 
 	/// <summary>Gets the total number of sectors in the file.</summary>
 	/// <value>The total sectors.</value>
-	public long TotalSectors { get; }
+	public long TotalSectors { get; } = totalSectors;
 }
 
 /// <summary>
@@ -816,7 +810,7 @@ public class OpticalStorageFileSystemImage : IOpticalStorageImage
 	/// A boot option array that contains a list of IBootOptions interfaces of boot images used to generate the file system image.
 	/// </value>
 	/// <remarks>If a boot image is not specified, a zero-sized array will be returned.</remarks>
-	internal IBootOptions[] BootImageOptionsArray => fsi is IFileSystemImage2 i ? i.BootImageOptionsArray.Cast<IBootOptions>().ToArray() : Array.Empty<IBootOptions>();
+	internal IBootOptions[] BootImageOptionsArray => fsi is IFileSystemImage2 i ? i.BootImageOptionsArray.Cast<IBootOptions>().ToArray() : [];
 
 	/// <summary>Gets the change point identifier.</summary>
 	/// <value>Change point identifier. The identifier is a count of the changes to the file system image since its inception.</value>
@@ -912,7 +906,7 @@ public class OpticalStorageFileSystemImage : IOpticalStorageImage
 	/// <remarks>
 	/// Query the IMultisession interface for a derived <c>IMultisession</c> interface, for example, the IMultisessionSequential interface.
 	/// </remarks>
-	internal IMultisession[] MultisessionInterfaces { get => fsi.MultisessionInterfaces.Cast<IMultisession>().ToArray(); set => fsi.MultisessionInterfaces = value; }
+	internal IMultisession[] MultisessionInterfaces { get => [.. fsi.MultisessionInterfaces.Cast<IMultisession>()]; set => fsi.MultisessionInterfaces = value; }
 
 	/// <summary>Sets the default file system types and the image size based on the specified media type.</summary>
 	/// <param name="value">
@@ -1183,11 +1177,11 @@ public class OpticalStorageFileSystemImage : IOpticalStorageImage
 //	}
 //}
 
+/// <summary>Initializes a new instance of the <see cref="OpticalStorageMediaOperation{T}"/> class.</summary>
 public abstract class OpticalStorageMediaOperation<T> : IOpticalStorageMediaOperation where T : IDiscFormat2
 {
 	internal readonly T op;
 
-	/// <summary>Initializes a new instance of the <see cref="OpticalStorageMediaOperation{T}"/> class.</summary>
 	/// <param name="clientName">The name is used when the write operation requests exclusive access to the device.</param>
 	protected OpticalStorageMediaOperation(T opInst, string? clientName)
 	{
@@ -1702,24 +1696,21 @@ public class OpticalStorageRawImageTrackList : IReadOnlyCollection<OpticalStorag
 }
 
 /// <summary>Represents an operation to write audio to blank CD-R or CD-RW media on an optical storage device.</summary>
-public class OpticalStorageWriteAudioOperation : OpticalStorageMediaOperation<IDiscFormat2TrackAtOnce>
+/// <remarks>Initializes a new instance of the <see cref="OpticalStorageWriteAudioOperation"/> class.</remarks>
+/// <param name="clientName">
+/// The name is used when the write operation requests exclusive access to the device. The <see
+/// cref="OpticalStorageDevice.ExclusiveAccessOwner"/> property contains the name of the client that has the lock. If <see
+/// langword="null"/>, the name is pulled from the app domain.
+/// </param>
+public class OpticalStorageWriteAudioOperation(string? clientName = null) : OpticalStorageMediaOperation<IDiscFormat2TrackAtOnce>(new(), clientName)
 {
-	/// <summary>Initializes a new instance of the <see cref="OpticalStorageWriteAudioOperation"/> class.</summary>
-	/// <param name="clientName">
-	/// The name is used when the write operation requests exclusive access to the device. The <see
-	/// cref="OpticalStorageDevice.ExclusiveAccessOwner"/> property contains the name of the client that has the lock. If <see
-	/// langword="null"/>, the name is pulled from the app domain.
-	/// </param>
-	public OpticalStorageWriteAudioOperation(string? clientName = null) : base(new(), clientName)
-	{
-	}
 
 	/// <summary>Occurs during <see cref="WriteAudioTracksToMedia"/> to indicate the progress.</summary>
 	public event EventHandler<OpticalStorageWriteAudioTrackEventArgs>? WriteAudioTrackProgress;
 
 	/// <summary>Gets the list of audio track paths.</summary>
 	/// <value>The audio track paths.</value>
-	public List<string> AudioTrackPaths { get; } = new List<string>();
+	public List<string> AudioTrackPaths { get; } = [];
 
 	/// <summary>Determines if Buffer Underrun Free Recording is enabled.</summary>
 	/// <value>
@@ -1957,11 +1948,8 @@ public class OpticalStorageWriteAudioOperation : OpticalStorageMediaOperation<ID
 	}
 }
 
-public class OpticalStorageWriteAudioTrackEventArgs : EventArgs
+public class OpticalStorageWriteAudioTrackEventArgs(IMAPI.IDiscFormat2TrackAtOnceEventArgs progress) : EventArgs
 {
-	private readonly IDiscFormat2TrackAtOnceEventArgs progress;
-
-	public OpticalStorageWriteAudioTrackEventArgs(IDiscFormat2TrackAtOnceEventArgs progress) => this.progress = progress;
 
 	/// <summary>Retrieves the current write action being performed.</summary>
 	/// <value>
@@ -2019,11 +2007,8 @@ public class OpticalStorageWriteAudioTrackEventArgs : EventArgs
 }
 
 /// <summary>Use retrieve information about the current write operation.</summary>
-public class OpticalStorageWriteEventArgs : EventArgs
+public class OpticalStorageWriteEventArgs(IMAPI.IDiscFormat2DataEventArgs progress) : EventArgs
 {
-	private readonly IDiscFormat2DataEventArgs progress;
-
-	public OpticalStorageWriteEventArgs(IDiscFormat2DataEventArgs progress) => this.progress = progress;
 
 	/// <summary>Retrieves the current write action being performed.</summary>
 	/// <value>
@@ -2085,17 +2070,14 @@ public class OpticalStorageWriteEventArgs : EventArgs
 }
 
 /// <summary>Represents an erase operation on an optical storage device.</summary>
-public class OpticalStorageWriteOperation : OpticalStorageMediaOperation<IDiscFormat2Data>
+/// <remarks>Initializes a new instance of the <see cref="OpticalStorageEraseMediaOperation"/> class.</remarks>
+/// <param name="clientName">
+/// The name is used when the write operation requests exclusive access to the device. The <see
+/// cref="OpticalStorageDevice.ExclusiveAccessOwner"/> property contains the name of the client that has the lock. If <see
+/// langword="null"/>, the name is pulled from the app domain.
+/// </param>
+public class OpticalStorageWriteOperation(string? clientName = null) : OpticalStorageMediaOperation<IDiscFormat2Data>(new(), clientName)
 {
-	/// <summary>Initializes a new instance of the <see cref="OpticalStorageEraseMediaOperation"/> class.</summary>
-	/// <param name="clientName">
-	/// The name is used when the write operation requests exclusive access to the device. The <see
-	/// cref="OpticalStorageDevice.ExclusiveAccessOwner"/> property contains the name of the client that has the lock. If <see
-	/// langword="null"/>, the name is pulled from the app domain.
-	/// </param>
-	public OpticalStorageWriteOperation(string? clientName = null) : base(new(), clientName)
-	{
-	}
 
 	/// <summary>Occurs during erase operations to indicate the progress.</summary>
 	public event EventHandler<OpticalStorageWriteEventArgs>? WriteProgress;
@@ -2326,7 +2308,7 @@ public class OpticalStorageWriteOperation : OpticalStorageMediaOperation<IDiscFo
 	/// <c>pdispVal</c> member of the variant for any interface that inherits from IMultisession interface, for example, IMultisessionSequential.
 	/// </value>
 	/// <remarks>The array will always contain at least one element.</remarks>
-	internal IMultisession[] MultisessionInterfaces => op.MultisessionInterfaces.Cast<IMultisession>().ToArray();
+	internal IMultisession[] MultisessionInterfaces => [.. op.MultisessionInterfaces.Cast<IMultisession>()];
 
 	/// <summary>Retrieves the location for the next write operation.</summary>
 	/// <value>Address where the next write operation begins.</value>
@@ -2424,11 +2406,8 @@ public class OpticalStorageWriteOperation : OpticalStorageMediaOperation<IDiscFo
 }
 
 /// <summary>Use retrieve information about the current write operation.</summary>
-public class OpticalStorageWriteRawEventArgs : EventArgs
+public class OpticalStorageWriteRawEventArgs(IMAPI.IDiscFormat2RawCDEventArgs progress) : EventArgs
 {
-	private readonly IDiscFormat2RawCDEventArgs progress;
-
-	public OpticalStorageWriteRawEventArgs(IDiscFormat2RawCDEventArgs progress) => this.progress = progress;
 
 	/// <summary>Retrieves the current write action being performed.</summary>
 	/// <value>
@@ -2485,17 +2464,14 @@ public class OpticalStorageWriteRawEventArgs : EventArgs
 /// Represents an operation on an optical storage device to write raw images to a disc device using Disc At Once (DAO) mode (also known
 /// as uninterrupted recording). For information on DAO mode, see the latest revision of the MMC specification at ftp://ftp.t10.org/t10/drafts/mmc5.
 /// </summary>
-public class OpticalStorageWriteRawOperation : OpticalStorageMediaOperation<IDiscFormat2RawCD>
+/// <remarks>Initializes a new instance of the <see cref="OpticalStorageWriteRawOperation"/> class.</remarks>
+/// <param name="clientName">
+/// The name is used when the write operation requests exclusive access to the device. The <see
+/// cref="OpticalStorageDevice.ExclusiveAccessOwner"/> property contains the name of the client that has the lock. If <see
+/// langword="null"/>, the name is pulled from the app domain.
+/// </param>
+public class OpticalStorageWriteRawOperation(string? clientName = null) : OpticalStorageMediaOperation<IDiscFormat2RawCD>(new(), clientName)
 {
-	/// <summary>Initializes a new instance of the <see cref="OpticalStorageWriteRawOperation"/> class.</summary>
-	/// <param name="clientName">
-	/// The name is used when the write operation requests exclusive access to the device. The <see
-	/// cref="OpticalStorageDevice.ExclusiveAccessOwner"/> property contains the name of the client that has the lock. If <see
-	/// langword="null"/>, the name is pulled from the app domain.
-	/// </param>
-	public OpticalStorageWriteRawOperation(string? clientName = null) : base(new(), clientName)
-	{
-	}
 
 	/// <summary>Occurs during write operations to indicate the progress.</summary>
 	public event EventHandler<OpticalStorageWriteRawEventArgs>? WriteProgress;

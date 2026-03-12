@@ -29,10 +29,10 @@ public class CCaseTextService : ITfTextInputProcessor, ITfThreadMgrEventSink, IT
 
 	private static readonly Guid c_guidCaseProfile = new(0x4d5459db, 0x7543, 0x42c0, 0x92, 0x04, 0x91, 0x95, 0xb9, 0x1f, 0x6f, 0xb8);
 
-	private static readonly (Guid pguidCategory, Guid pguid)[] c_rgCategories = new (Guid pguidCategory, Guid pguid)[]
-	{
+	private static readonly (Guid pguidCategory, Guid pguid)[] c_rgCategories =
+	[
 		(GUID_TFCAT_TIP_KEYBOARD, typeof(CCaseTextService).GUID)
-	};
+	];
 
 	private static readonly LANGID CASE_LANGID = new(LANGID.LANG.LANG_ENGLISH, LANGID.SUBLANG.SUBLANG_ENGLISH_US);
 	private static readonly Guid GUID_PRESERVEDKEY_FLIPCASE = new(0x5d6d1b1e, 0x64f2, 0x47cd, 0x9f, 0xe1, 0x4e, 0x03, 0x2c, 0x2d, 0xae, 0x77);
@@ -430,12 +430,8 @@ public class CCaseTextService : ITfTextInputProcessor, ITfThreadMgrEventSink, IT
 	}
 }
 
-internal class CFlipDocEditSession : CEditSessionBase
+internal class CFlipDocEditSession(MSCTF.ITfContext pContext) : CEditSessionBase(pContext)
 {
-	public CFlipDocEditSession(ITfContext pContext) : base(pContext)
-	{
-	}
-
 	public override HRESULT DoEditSession([In] uint ec)
 	{
 		// get the head of the doc
@@ -448,12 +444,8 @@ internal class CFlipDocEditSession : CEditSessionBase
 	}
 }
 
-internal class CFlipEditSession : CEditSessionBase
+internal class CFlipEditSession(MSCTF.ITfContext pContext) : CEditSessionBase(pContext)
 {
-	public CFlipEditSession(ITfContext pContext) : base(pContext)
-	{
-	}
-
 	public override HRESULT DoEditSession([In] uint ec)
 	{
 		// get the head of the doc
@@ -476,13 +468,9 @@ internal class CFlipEditSession : CEditSessionBase
 	}
 }
 
-internal class CHelloEditSession : CEditSessionBase
+internal class CHelloEditSession(MSCTF.ITfContext pContext) : CEditSessionBase(pContext)
 {
 	private const string text = "Hello world!";
-
-	public CHelloEditSession(ITfContext pContext) : base(pContext)
-	{
-	}
 
 	public override HRESULT DoEditSession([In] uint ec)
 	{
@@ -508,12 +496,8 @@ internal class CHelloEditSession : CEditSessionBase
 	}
 }
 
-internal class CKeystrokeEditSession : CEditSessionBase
+internal class CKeystrokeEditSession(MSCTF.ITfContext pContext) : CEditSessionBase(pContext)
 {
-	public CKeystrokeEditSession(ITfContext pContext) : base(pContext)
-	{
-	}
-
 	public override HRESULT DoEditSession([In] uint ec)
 	{
 		if (User32.GetKeyState(VK_SHIFT) & 0x8000)

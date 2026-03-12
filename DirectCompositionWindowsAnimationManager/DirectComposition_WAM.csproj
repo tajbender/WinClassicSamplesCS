@@ -1,16 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="DirectNCore" Version="1.16.1.2" />
-    <PackageReference Include="Vanara.PInvoke.UIAnimation" Version="4.0.5" />
-    <PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.0.5" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.0.5" />
+    <!--<PackageReference Include="DirectNCore" Version="1.16.1.2" />-->
+    <PackageReference Include="Vanara.PInvoke.Direct3D11" />
+    <PackageReference Include="Vanara.PInvoke.UIAnimation" />
+    <PackageReference Include="Vanara.PInvoke.Gdi32" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
+    <PackageReference Include="Vanara.PInvoke.Dcomp" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -18,18 +17,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="220Strawberry.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

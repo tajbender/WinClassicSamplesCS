@@ -817,7 +817,7 @@ void server()
 		HEVENT[] waitEvents = new HEVENT[2];
 
 		// Used for WSARecv
-		WSABUF[] buf = new WSABUF[] { new() { len = dataBuffer.Size, buf = dataBuffer } };
+		WSABUF[] buf = [new() { len = dataBuffer.Size, buf = dataBuffer }];
 
 		// No flags.
 		MsgFlags dwFlags = 0;

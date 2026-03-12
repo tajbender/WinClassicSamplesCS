@@ -53,7 +53,7 @@ namespace Vanara.PInvoke
 			/// <summary>RFCOMM channel associated with the socket. See Remarks.</summary>
 			public uint port;
 
-			public byte[] GetAddressBytes() => ((IntPtr)new PinnedObject(this)).ToArray<byte>(Marshal.SizeOf(typeof(SOCKADDR_BTH))) ?? Array.Empty<byte>();
+			public byte[] GetAddressBytes() => ((IntPtr)new PinnedObject(this)).ToArray<byte>(Marshal.SizeOf(typeof(SOCKADDR_BTH))) ?? [];
 
 			public static explicit operator SOCKADDR(SOCKADDR_BTH sblth) => SOCKADDR.CreateFromStructure(sblth);
 		}
@@ -64,11 +64,9 @@ namespace WinsockBluetoothConnection
 {
 	using static Vanara.PInvoke.Bthprops;
 
-	public class ScopedAction : IDisposable
+	public class ScopedAction(Action onClose) : IDisposable
 	{
-		private Action OnClose;
-		public ScopedAction(Action onClose) => OnClose = onClose;
-		void IDisposable.Dispose() => OnClose?.Invoke();
+		void IDisposable.Dispose() => onClose?.Invoke();
 	}
 
 	static class BthCxn

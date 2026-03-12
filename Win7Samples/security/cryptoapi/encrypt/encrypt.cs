@@ -79,7 +79,7 @@ class encrypt
 					// Determine size of the key blob and allocate memory.
 					if (!CryptExportKey(hKey, hXchgKey, BlobType.SIMPLEBLOB, 0, null, ref dwKeyBlobLen))
 						Win32Error.ThrowLastError();
-					if ((pbKeyBlob = Marshal.AllocHGlobal((int)dwKeyBlobLen)) == default)
+					if ((pbKeyBlob = Marshal.AllocHGlobal((int)dwKeyBlobLen)) is null)
 						Win32Error.ThrowLastError();
 
 					// Export session key into a simple key blob.

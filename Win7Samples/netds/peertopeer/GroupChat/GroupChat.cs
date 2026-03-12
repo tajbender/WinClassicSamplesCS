@@ -288,23 +288,12 @@ public partial class GroupChat : Form
 	//
 	internal void CleanupGroup()
 	{
-		if (g_hPeerEvent is not null)
-		{
-			g_hPeerEvent.Dispose();
-			g_hPeerEvent = null;
-		}
-
-		if (g_hEvent is not null)
-		{
-			g_hEvent.Dispose();
-			g_hEvent = null;
-		}
-
-		if (g_hWait is not null)
-		{
-			g_hWait.Dispose();
-			g_hWait = null;
-		}
+		g_hPeerEvent?.Dispose();
+		g_hPeerEvent = null;
+		g_hEvent?.Dispose();
+		g_hEvent = null;
+		g_hWait?.Dispose();
+		g_hWait = null;
 
 		if (!g_hGroup.IsNull)
 		{
@@ -594,13 +583,13 @@ public partial class GroupChat : Form
 	internal HRESULT RegisterForEvents()
 	{
 		HRESULT hr = HRESULT.S_OK;
-		PEER_GROUP_EVENT_REGISTRATION[] regs = new[] {
+		PEER_GROUP_EVENT_REGISTRATION[] regs = [
 			new PEER_GROUP_EVENT_REGISTRATION { eventType = PEER_GROUP_EVENT_TYPE.PEER_GROUP_EVENT_RECORD_CHANGED, pType = RECORD_TYPE_CHAT_MESSAGE },
 			new PEER_GROUP_EVENT_REGISTRATION { eventType = PEER_GROUP_EVENT_TYPE.PEER_GROUP_EVENT_MEMBER_CHANGED },
 			new PEER_GROUP_EVENT_REGISTRATION { eventType = PEER_GROUP_EVENT_TYPE.PEER_GROUP_EVENT_STATUS_CHANGED },
 			new PEER_GROUP_EVENT_REGISTRATION { eventType = PEER_GROUP_EVENT_TYPE.PEER_GROUP_EVENT_DIRECT_CONNECTION, pType = DATA_TYPE_WHISPER_MESSAGE },
 			new PEER_GROUP_EVENT_REGISTRATION { eventType = PEER_GROUP_EVENT_TYPE.PEER_GROUP_EVENT_INCOMING_DATA },
-		};
+		];
 
 		g_hEvent = CreateEvent(null, false, false);
 		if (g_hEvent.IsNull)

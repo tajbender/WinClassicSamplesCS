@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.IpHlpApi" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.IpHlpApi" />
   </ItemGroup>
-
 </Project>

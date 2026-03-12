@@ -13,7 +13,7 @@ public partial class MainWnd : Form
 {
 	private const int COUNTER_STRING_SIZE = 1024;
 	private const int NUM_STAT_SAMPLES = 100;
-	private static readonly int[] nTabStops = { 300, 400, 500, 600, 700 };
+	private static readonly int[] nTabStops = [300, 400, 500, 600, 700];
 	private static readonly string szHelpFileName = Path.GetFileNameWithoutExtension(Application.ExecutablePath) + ".hlp";
 
 	// font for text in window
@@ -23,7 +23,7 @@ public partial class MainWnd : Form
 	private SafePDH_HQUERY? hQuery = default;
 
 	// pointer to first item in counter list
-	private readonly List<CIB> pFirstCib = new();
+	private readonly List<CIB> pFirstCib = [];
 
 	public MainWnd() => InitializeComponent();
 

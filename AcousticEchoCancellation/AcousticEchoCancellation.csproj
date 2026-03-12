@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Avrt" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.CoreAudio" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.FunDisc" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.Avrt" />
+    <PackageReference Include="Vanara.PInvoke.CoreAudio" />
+    <PackageReference Include="Vanara.PInvoke.FunDisc" />
   </ItemGroup>
-
 </Project>

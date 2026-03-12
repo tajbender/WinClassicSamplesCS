@@ -12,7 +12,7 @@ public class ThumbnailProvider : IInitializeWithItem, IThumbnailProvider
 {
 	private IShellItem2? _itemDest, _itemSrc;
 
-	public HRESULT GetThumbnail(uint cx, out SafeHBITMAP phbmp, out WTS_ALPHATYPE pdwAlpha)
+	public HRESULT GetThumbnail(uint cx, out HBITMAP phbmp, out WTS_ALPHATYPE pdwAlpha)
 	{
 		// Retrieve thumbnails of the placeholders on demand by delegating to the thumbnail of the source items.
 		try
@@ -22,7 +22,7 @@ public class ThumbnailProvider : IInitializeWithItem, IThumbnailProvider
 		}
 		catch (Exception ex)
 		{
-			phbmp = new SafeHBITMAP(IntPtr.Zero, false);
+			phbmp = default;
 			pdwAlpha = WTS_ALPHATYPE.WTSAT_UNKNOWN;
 			return ex.HResult;
 		}

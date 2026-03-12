@@ -125,7 +125,7 @@ internal static class Program
 		*/
 		try
 		{
-			string szDriveName = new string(new[] { pszDriveToMount[0], pszDriveToMount[1], '\\' });
+			string szDriveName = new string([pszDriveToMount[0], pszDriveToMount[1], '\\']);
 
 			// now the directory name
 			string pszDirName = pszDirToMount[^1] == '\\' ? pszDirToMount : pszDirToMount + '\\';

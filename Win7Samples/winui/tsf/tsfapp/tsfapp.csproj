@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="mainicon.ico" />
     <Using Include="System" />
@@ -14,15 +12,12 @@
     <Using Include="System.Linq" />
     <Using Include="System.Windows.Forms" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="mainicon.ico" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Ole" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.User32" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.TextServicesFramework" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.Ole" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
+    <PackageReference Include="Vanara.PInvoke.TextServicesFramework" />
   </ItemGroup>
-
 </Project>

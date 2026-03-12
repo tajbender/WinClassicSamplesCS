@@ -42,8 +42,8 @@ using static Vanara.PInvoke.UxTheme;
 internal class Program
 {
 	// This is the array of predefined colors we put into the color picker.
-	static readonly COLORREF[] c_rgclrPredef = new COLORREF[]
-	{
+	static readonly COLORREF[] c_rgclrPredef =
+	[
 		new(0x00, 0x00, 0x00), // 0 = black
 		new(0x80, 0x00, 0x00), // 1 = maroon
 		new(0x00, 0x80, 0x00), // 2 = green
@@ -60,7 +60,7 @@ internal class Program
 		new(0xFF, 0x00, 0xFF), // D = fuchsia
 		new(0x00, 0xFF, 0xFF), // E = cyan
 		new(0xFF, 0xFF, 0xFF), // F = white
-	};
+	];
 
 	static COLORREF g_clrBackground = new(0xFF, 0xFF, 0xFF);
 	static SafeHINSTANCE? g_hInstance;

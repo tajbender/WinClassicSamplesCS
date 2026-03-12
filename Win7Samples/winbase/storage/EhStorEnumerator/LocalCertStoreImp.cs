@@ -38,7 +38,7 @@ public class CCertificate
 		}
 	}
 
-	public byte[] GetEncodedData() => EncodedData.ToArray<byte>((int)nEncodedLength) ?? Array.Empty<byte>();
+	public byte[] GetEncodedData() => EncodedData.ToArray<byte>((int)nEncodedLength) ?? [];
 
 	private static string GetDecodedCertName(in CRYPTOAPI_BLOB pCertName, CertNameStringFormat dwStrType)
 	{
@@ -76,7 +76,7 @@ public class CLocalCertStoreImp
 
 	public List<CCertificate> GetCertificatesList()
 	{
-		List<CCertificate> parCertificates = new();
+		List<CCertificate> parCertificates = [];
 		PCCERT_CONTEXT pCertContext = default;
 		while (!(pCertContext = CertEnumCertificatesInStore(m_hCertStoreHandle, pCertContext)).IsNull)
 		{

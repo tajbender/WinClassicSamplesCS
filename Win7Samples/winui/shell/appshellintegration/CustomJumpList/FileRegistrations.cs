@@ -10,7 +10,7 @@ namespace CustomJumpList;
 public static class FileRegistrations
 {
 	private const string c_szProgID = "Microsoft.Samples.CustomJumpListProgID";
-	private static readonly string[] c_rgszExtsToRegister = { ".txt", ".doc" };
+	private static readonly string[] c_rgszExtsToRegister = [".txt", ".doc"];
 
 	// Creates a basic ProgID to use for file type registrations. For a document to appear in Jump Lists, the associated application must
 	// be registered to handle the document's file type (extension).

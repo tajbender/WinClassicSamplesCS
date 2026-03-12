@@ -75,7 +75,7 @@ internal static class RegOps
 
 		if (PathUtils.IsVirtualizationRoot(path))
 		{
-			entries = new RegEntries { SubKeys = _regRootKeyMap.Keys.ToArray(), Values = new string[0] };
+			entries = new RegEntries { SubKeys = [.. _regRootKeyMap.Keys], Values = [] };
 		}
 		else
 		{
@@ -128,7 +128,7 @@ internal static class RegOps
 	// Returns a RegEntries struct populated with the subkeys and values in the specified registry key.
 	private static HRESULT EnumerateKey(RegistryKey hKey, out RegEntries entries)
 	{
-		entries = new RegEntries { SubKeys = hKey.GetSubKeyNames().ToArray(), Values = hKey.GetValueNames().ToArray() };
+		entries = new RegEntries { SubKeys = [.. hKey.GetSubKeyNames()], Values = [.. hKey.GetValueNames()] };
 		return HRESULT.S_OK;
 	}
 

@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.FunDisc" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.Ole" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.FunDisc" />
+    <PackageReference Include="Vanara.PInvoke.Ole" />
   </ItemGroup>
-
 </Project>

@@ -190,7 +190,7 @@ static class CertSign
 	//
 	// The caller must call LocalFree to release (*ppbSignature)
 	//------------------------------------------------------------------------------------------------------------------
-	static HRESULT HrSignCNGHash(NCRYPT_KEY_HANDLE hKey, IntPtr pPaddingInfo, EncryptFlags dwFlag, IntPtr pbHash, uint cbHash, out SafeLocalHandle ppbSignature)
+	static HRESULT HrSignCNGHash(NCRYPT_KEY_HANDLE hKey, IntPtr pPaddingInfo, NCryptDecryptFlag dwFlag, IntPtr pbHash, uint cbHash, out SafeLocalHandle ppbSignature)
 	{
 		//initialize [Out]"), parameters
 		ppbSignature = SafeLocalHandle.Null;
@@ -376,11 +376,11 @@ static class CertSign
 	*****************************************************************************/
 	static void Usage(string wsName)
 	{
-		Console.Write("{0} [Options] {SIGN|VERIFY} InputFile SignatureFile\n", wsName);
+		Console.Write("{0} [Options] {{SIGN|VERIFY}} InputFile SignatureFile\n", wsName);
 		Console.Write("\tOptions:\n");
-		Console.Write("\t -s {STORENAME} : store name, (by default \"MY\")\n");
-		Console.Write("\t -n {SubjectName} : Certificate CN to search for, (by default \"Test\")\n");
-		Console.Write("\t -h {HashAlgName} : hash algorithm name, (by default \"SHA1\")\n");
+		Console.Write("\t -s {{STORENAME}} : store name, (by default \"MY\")\n");
+		Console.Write("\t -n {{SubjectName}} : Certificate CN to search for, (by default \"Test\")\n");
+		Console.Write("\t -h {{HashAlgName}} : hash algorithm name, (by default \"SHA1\")\n");
 	}
 
 	/*****************************************************************************
@@ -412,7 +412,7 @@ static class CertSign
 		string pwszHashAlgName = "SHA1";
 
 		//variable that receives the handle of either the CryptoAPI provider or the CNG key
-		IntPtr hCryptProvOrNCryptKey = default;
+		HCRYPTPROV_OR_NCRYPT_KEY_HANDLE hCryptProvOrNCryptKey = default;
 
 		EncryptFlags dwCngFlags = 0;
 
@@ -562,7 +562,7 @@ static class CertSign
 							}
 						}
 
-						hr = HrSignCNGHash(hCryptProvOrNCryptKey, pPKCS1PaddingInfo, dwCngFlags, pbHash, pbHash.Size, out pbSignature);
+						hr = HrSignCNGHash(hCryptProvOrNCryptKey, pPKCS1PaddingInfo, (NCryptDecryptFlag)dwCngFlags, pbHash, pbHash.Size, out pbSignature);
 						if (hr.Failed)
 						{
 							goto CleanUp;
@@ -636,7 +636,7 @@ static class CertSign
 			switch (dwKeySpec)
 			{
 				case CertKeySpec.CERT_NCRYPT_KEY_SPEC: //CNG key
-					NCryptFreeObject(hCryptProvOrNCryptKey);
+					NCryptFreeObject((IntPtr)hCryptProvOrNCryptKey);
 					break;
 
 				case CertKeySpec.AT_SIGNATURE: //CAPI key 

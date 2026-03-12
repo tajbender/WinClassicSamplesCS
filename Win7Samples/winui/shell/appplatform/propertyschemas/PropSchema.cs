@@ -135,21 +135,20 @@ internal class Program
 
 	static void DumpPropertyDescription(string pszPropertyName)
 	{
-		HRESULT hr = PSGetPropertyDescriptionByName(pszPropertyName, typeof(IPropertyDescription).GUID, out var ppv);
+		HRESULT hr = PSGetPropertyDescriptionByName(pszPropertyName, out IPropertyDescription? ppdDump);
 		if (hr.Succeeded)
 		{
-			IPropertyDescription ppdDump = (IPropertyDescription)ppv;
 			Console.Write("{0}\n", pszPropertyName);
 			Console.Write("----------------------------\n");
 
-			DumpPropertyKey(ppdDump);
-			DumpCanonicalName(ppdDump);
-			DumpDisplayName(ppdDump);
-			DumpEditInvitation(ppdDump);
-			DumpDefaultColumnWidth(ppdDump);
-			DumpSortDescriptionLabel(ppdDump);
+			DumpPropertyKey(ppdDump!);
+			DumpCanonicalName(ppdDump!);
+			DumpDisplayName(ppdDump!);
+			DumpEditInvitation(ppdDump!);
+			DumpDefaultColumnWidth(ppdDump!);
+			DumpSortDescriptionLabel(ppdDump!);
 
-			Marshal.ReleaseComObject(ppv);
+			Marshal.ReleaseComObject(ppdDump!);
 		}
 		else
 		{

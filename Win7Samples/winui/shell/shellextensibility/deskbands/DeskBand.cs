@@ -165,10 +165,7 @@ public class DeskBand : IDeskBand2, IPersistStream, IObjectWithSite, IInputObjec
 	{
 		m_fHasFocus = fFocus;
 
-		if (m_pInputObjectSite is not null)
-		{
-			m_pInputObjectSite.OnFocusChangeIS(this, m_fHasFocus);
-		}
+		m_pInputObjectSite?.OnFocusChangeIS(this, m_fHasFocus);
 	}
 
 	public void OnPaint(HDC hdcIn)
@@ -366,14 +363,14 @@ public class DeskBand : IDeskBand2, IPersistStream, IObjectWithSite, IInputObjec
 			rkClass.SetValue(null, t.Name);
 
 		var pcr = new ICatRegister();
-		pcr.RegisterClassImplCategories(CLSID_DeskBandSample, 1, new[] { CATID_DeskBand });
+		pcr.RegisterClassImplCategories(CLSID_DeskBandSample, 1, [CATID_DeskBand]);
 	}
 
 	[ComUnregisterFunction]
 	public static void Unregister(Type t)
 	{
 		var pcr = new ICatRegister();
-		pcr.UnRegisterClassImplCategories(CLSID_DeskBandSample, 1, new[] { CATID_DeskBand });
+		pcr.UnRegisterClassImplCategories(CLSID_DeskBandSample, 1, [CATID_DeskBand]);
 
 		Registry.ClassesRoot.DeleteSubKeyTree($@"CLSID\{t.GUID:B}");
 	}

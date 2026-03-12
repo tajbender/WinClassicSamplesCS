@@ -1,19 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <!--<Compile Include="..\..\..\..\..\Vanara\PInvoke\IMAPI\IMAPIv2.cs" Link="IMAPIv2.cs" />
-    <Compile Include="..\..\..\..\..\Vanara\PInvoke\IMAPI\IMAPIv2.Enums.cs" Link="IMAPIv2.Enums.cs" />
-    <Compile Include="..\..\..\..\..\Vanara\PInvoke\IMAPI\IMAPIv2FS.cs" Link="IMAPIv2FS.cs" />-->
+    <PackageReference Include="Vanara.PInvoke.IMAPI" />
+    <PackageReference Include="Vanara.PInvoke.Ole" />
+    <PackageReference Include="Vanara.PInvoke.Shlwapi" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.IMAPI" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.Ole" Version="4.0.4" />
-    <PackageReference Include="Vanara.PInvoke.Shlwapi" Version="4.0.4" />
-  </ItemGroup>
-
 </Project>

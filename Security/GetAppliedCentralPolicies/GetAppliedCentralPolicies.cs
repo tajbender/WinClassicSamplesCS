@@ -46,7 +46,7 @@ Cleanup:
 		// Get the applied CAP IDs on the machine
 		try
 		{
-			CapIDs = LsaGetAppliedCAPIDs().ToArray();
+			CapIDs = [.. LsaGetAppliedCAPIDs()];
 			return true;
 		}
 		catch (Exception ex)

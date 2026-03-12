@@ -122,13 +122,9 @@ internal static class SearchFolder
 	}
 
 	[ComVisible(true)]
-	private class CDummyUnknown : IPersist
+	private class CDummyUnknown(Guid clsid) : IPersist
 	{
-		private Guid _clsid;
-
-		public CDummyUnknown(in Guid clsid) => _clsid = clsid;
-
-		public Guid GetClassID() => _clsid;
+		public Guid GetClassID() => clsid;
 	};
 
 	[ComVisible(true)]

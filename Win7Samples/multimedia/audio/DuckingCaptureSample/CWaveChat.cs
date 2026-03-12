@@ -5,16 +5,12 @@ using static Vanara.PInvoke.WinMm;
 
 namespace DuckingCaptureSample;
 
-internal class CWaveChat : CChatTransport
+internal class CWaveChat(HWND appWin) : CChatTransport(appWin)
 {
 	public const uint WAVE_MAPPER = unchecked((uint)-1);
 	private IntPtr waveBuffer1, waveBuffer2;
 	private SafeHWAVEIN waveHandle;
 	private WAVEHDR waveHeader1, waveHeader2;
-
-	public CWaveChat(HWND appWin) : base(appWin)
-	{
-	}
 
 	public override ChatTransportType TransportType => ChatTransportType.ChatTransportWave;
 

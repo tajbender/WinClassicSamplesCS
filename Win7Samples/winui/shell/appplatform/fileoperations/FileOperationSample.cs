@@ -108,10 +108,10 @@ internal class Program
 			for (var i = 0; i < rgpidlChildren.Length; i++)
 			{
 				var szSampleFileName = string.Format("{0}{1}.{2}", c_szSampleFileName, i, c_szSampleFileExt);
-				SFGAO attr = 0;
+				SFGAO? attr = 0;
 				psfSampleSrc.ParseDisplayName(default, null, szSampleFileName, out _, out rgpidlChildren[i], ref attr);
 			}
-			SHCreateShellItemArray(IntPtr.Zero, psfSampleSrc, c_cMaxFilesToCreate, rgpidlChildren.Select(p => p.DangerousGetHandle()).ToArray(), out var psia).ThrowIfFailed();
+			SHCreateShellItemArray(IntPtr.Zero, psfSampleSrc, c_cMaxFilesToCreate, [.. rgpidlChildren.Select(p => p.DangerousGetHandle())], out var psia).ThrowIfFailed();
 			return psia;
 		}
 		finally

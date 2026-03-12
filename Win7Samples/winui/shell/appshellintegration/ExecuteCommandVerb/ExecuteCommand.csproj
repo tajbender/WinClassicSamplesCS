@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\appplatform\ExplorerBrowserSearch\ShellHelpers.cs" Link="ShellHelpers.cs" />
+    <Compile Include="..\DropTargetVerb\RegisterExtension.cs" Link="RegisterExtension.cs" />
+    <Compile Include="..\DropTargetVerb\CAppMessageLoop.cs" Link="CAppMessageLoop.cs" />
+    <Compile Include="..\DropTargetVerb\CStaticClassFactory.cs" Link="CStaticClassFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
+  </ItemGroup>
+</Project>

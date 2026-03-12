@@ -207,7 +207,7 @@ internal class Program
 			if (hr.Succeeded)
 			{
 				// Allow derived command to process any remaining arguments.
-				hr = v_ProcessLibArguments(ppszArgs.Skip(1).ToArray());
+				hr = v_ProcessLibArguments([.. ppszArgs.Skip(1)]);
 			}
 			return hr;
 		}
@@ -346,14 +346,10 @@ internal class Program
 	//
 	// This class handles interpreting the second argument as the path to a folder to operate on with respect to the library.
 	// The specified folder is provided to derived commands via the protected member variables _psiFolder and/or _pszFolderPath.
-	private class CFolderCommandBase : CShlibCommandBase
+	private class CFolderCommandBase(string pszName, string pszDescription) : CShlibCommandBase(pszName, pszDescription, false)
 	{
 		protected IShellItem? psiFolder;
 		protected string? pszFolderPath;
-
-		public CFolderCommandBase(string pszName, string pszDescription) : base(pszName, pszDescription, false)
-		{
-		}
 
 		~CFolderCommandBase()
 		{
@@ -382,7 +378,7 @@ internal class Program
 				ParseError("Missing folder path argument.\n");
 			}
 			// On success, pass any remaining arguments on to the derived class.
-			return hr.Succeeded ? v_ProcessFolderArguments(ppszArgs.Skip(1).ToArray()) : hr;
+			return hr.Succeeded ? v_ProcessFolderArguments([.. ppszArgs.Skip(1)]) : hr;
 		}
 	}
 

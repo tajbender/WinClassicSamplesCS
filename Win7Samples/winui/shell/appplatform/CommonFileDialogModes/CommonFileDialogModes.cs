@@ -329,10 +329,7 @@ internal class Program
 		else
 		{
 			IFileDialogCustomize? pfdc = pfd as IFileDialogCustomize;
-			if (pfdc is not null)
-			{
-				pfdc.AddPushButton(c_idDone, "Done");
-			}
+			pfdc?.AddPushButton(c_idDone, "Done");
 		}
 
 		pfd.SetTitle("File Open Modal Basket Picker Sample");
@@ -425,10 +422,7 @@ internal class Program
 				case c_idDone:
 					{
 						IFileDialog? pfd = pfdc as IFileDialog;
-						if (pfd is not null)
-						{
-							pfd.Close(HRESULT.S_OK);
-						}
+						pfd?.Close(HRESULT.S_OK);
 					}
 					break;
 
@@ -452,11 +446,8 @@ internal class Program
 		pfd.SetOptions(dwOptions | FILEOPENDIALOGOPTIONS.FOS_ALLOWMULTISELECT | FILEOPENDIALOGOPTIONS.FOS_ALLNONSTORAGEITEMS);
 
 		IFileDialogCustomize? pfdc = pfd as IFileDialogCustomize;
-		if (pfdc is not null)
-		{
-			// The spacing pads the button a bit.
-			pfdc.AddPushButton(c_idAdd, " Add current folder ");
-		}
+		// The spacing pads the button a bit.
+		pfdc?.AddPushButton(c_idAdd, " Add current folder ");
 
 		IFileDialog2? pfd2 = pfd as IFileDialog2;
 		if (pfd2 is not null)
@@ -467,10 +458,7 @@ internal class Program
 		{
 			// pre Win7 we need to add a 3rd button, ugly but workable
 			pfdc = pfd as IFileDialogCustomize;
-			if (pfdc is not null)
-			{
-				pfdc.AddPushButton(c_idDone, "Done");
-			}
+			pfdc?.AddPushButton(c_idDone, "Done");
 		}
 
 		pfd.SetTitle("Pick Files and Folder Sample");

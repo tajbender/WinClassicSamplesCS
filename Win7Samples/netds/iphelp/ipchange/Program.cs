@@ -76,7 +76,7 @@ static class Program
 			try
 			{
 #pragma warning disable CS0618 // Type or member is obsolete
-				pAdapterInfo = GetAdaptersInfo().ToList();
+				pAdapterInfo = [.. GetAdaptersInfo()];
 #pragma warning restore CS0618 // Type or member is obsolete
 			}
 			catch (Exception ex)

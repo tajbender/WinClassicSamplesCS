@@ -4,9 +4,8 @@ using static Vanara.PInvoke.CoreAudio;
 
 namespace DuckingMediaPlayer;
 
-internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
+internal class CMediaPlayer(IWin32Window handle) : IAudioVolumeDuckNotification, IAudioSessionEvents
 {
-	private readonly IWin32Window AppWindow;
 	private bool DuckingRegistered;
 	private string FileName;
 	private IGraphBuilder GraphBuilder;
@@ -22,8 +21,6 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 	private IAudioSessionManager2 SessionManager2;
 	private bool SessionNotificationRegistered;
 	private ISimpleAudioVolume SimpleVolume;
-
-	public CMediaPlayer(IWin32Window handle) => AppWindow = handle;
 
 	// Get or set the mute state for the current audio session.
 	//
@@ -43,12 +40,12 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 				}
 				catch
 				{
-					MessageBox.Show(AppWindow, "Unable to retrieve mute for current session", "Get Mute Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to retrieve mute for current session", "Get Mute Error", MessageBoxButtons.OK);
 				}
 			}
 			else
 			{
-				MessageBox.Show(AppWindow, "Unable to retrieve simple volume control for current session", "Get Mute Error", MessageBoxButtons.OK);
+				MessageBox.Show(handle, "Unable to retrieve simple volume control for current session", "Get Mute Error", MessageBoxButtons.OK);
 			}
 			return false;
 		}
@@ -64,12 +61,12 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 				}
 				catch
 				{
-					MessageBox.Show(AppWindow, "Unable to set mute for current session", "Set Mute Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to set mute for current session", "Set Mute Error", MessageBoxButtons.OK);
 				}
 			}
 			else
 			{
-				MessageBox.Show(AppWindow, "Unable to retrieve simple volume control for current session", "Set Mute Error", MessageBoxButtons.OK);
+				MessageBox.Show(handle, "Unable to retrieve simple volume control for current session", "Set Mute Error", MessageBoxButtons.OK);
 			}
 		}
 	}
@@ -92,12 +89,12 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 				}
 				catch
 				{
-					MessageBox.Show(AppWindow, "Unable to retrieve volume for current session", "Get Volume Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to retrieve volume for current session", "Get Volume Error", MessageBoxButtons.OK);
 				}
 			}
 			else
 			{
-				MessageBox.Show(AppWindow, "Unable to retrieve simple volume control for current session", "Get Volume Error", MessageBoxButtons.OK);
+				MessageBox.Show(handle, "Unable to retrieve simple volume control for current session", "Get Volume Error", MessageBoxButtons.OK);
 			}
 			return 0.0f;
 		}
@@ -113,12 +110,12 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 				}
 				catch
 				{
-					MessageBox.Show(AppWindow, "Unable to retrieve volume for current session", "Set Volume Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to retrieve volume for current session", "Set Volume Error", MessageBoxButtons.OK);
 				}
 			}
 			else
 			{
-				MessageBox.Show(AppWindow, "Unable to retrieve simple volume control for current session", "Set Volume Error", MessageBoxButtons.OK);
+				MessageBox.Show(handle, "Unable to retrieve simple volume control for current session", "Set Volume Error", MessageBoxButtons.OK);
 			}
 		}
 	}
@@ -197,7 +194,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 	{
 		GraphBuilder = (IGraphBuilder)new FilterGraph();
 		MediaEvent = (IMediaEventEx)GraphBuilder;
-		MediaEvent.SetNotifyWindow(AppWindow.Handle, (int)WM_APP_GRAPHNOTIFY, default);
+		MediaEvent.SetNotifyWindow(handle.Handle, (int)WM_APP_GRAPHNOTIFY, default);
 		MediaSeeking = (IMediaSeeking)GraphBuilder;
 		GetSessionControl2();
 		SessionControl2.RegisterAudioSessionNotification(this);
@@ -267,7 +264,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 		HRESULT hr = GraphBuilder.RenderFile(FileName, default);
 		if (hr.Failed)
 		{
-			MessageBox.Show(AppWindow, "Unable to build graph for media file", "Set Filename Error", MessageBoxButtons.OK);
+			MessageBox.Show(handle, "Unable to build graph for media file", "Set Filename Error", MessageBoxButtons.OK);
 			return false;
 		}
 
@@ -317,10 +314,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 	public void Stop()
 	{
 		var mediaControl = (IMediaControl)GraphBuilder;
-		if (mediaControl is not null)
-		{
-			mediaControl.Stop();
-		}
+		mediaControl?.Stop();
 	}
 
 	// Sync the "Ducking Opt Out" state with the UI - either enable or disable ducking for this session.
@@ -337,7 +331,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 			}
 			catch
 			{
-				MessageBox.Show(AppWindow, "Unable to update the ducking preference", "Sync Ducking State Error", MessageBoxButtons.OK);
+				MessageBox.Show(handle, "Unable to update the ducking preference", "Sync Ducking State Error", MessageBoxButtons.OK);
 			}
 		}
 	}
@@ -385,7 +379,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 
 				if (hr.Failed)
 				{
-					MessageBox.Show(AppWindow, "Unable to register or unregister for ducking notifications", "Sync Ducking Pause Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to register or unregister for ducking notifications", "Sync Ducking Pause Error", MessageBoxButtons.OK);
 				}
 			}
 		}
@@ -427,7 +421,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 	{
 		if (EventContext != MediaPlayerEventContext)
 		{
-			PostMessage(AppWindow, WM_APP_SESSION_VOLUME_CHANGED, NewMute ? (IntPtr)1 : default, FLOAT2LPARAM(NewSimpleVolume));
+			PostMessage(handle, WM_APP_SESSION_VOLUME_CHANGED, NewMute ? (IntPtr)1 : default, FLOAT2LPARAM(NewSimpleVolume));
 		}
 		return HRESULT.S_OK;
 	}
@@ -437,14 +431,14 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 	// When we receive a duck notification, post a "Session Ducked" message to the application window.
 	HRESULT IAudioVolumeDuckNotification.OnVolumeDuckNotification(string sessionID, uint countCommunicationSessions)
 	{
-		PostMessage(AppWindow, WM_APP_SESSION_DUCKED);
+		PostMessage(handle, WM_APP_SESSION_DUCKED);
 		return 0;
 	}
 
 	// When we receive an unduck notification, post a "Session Unducked" message to the application window.
 	HRESULT IAudioVolumeDuckNotification.OnVolumeUnduckNotification(string sessionID)
 	{
-		PostMessage(AppWindow, WM_APP_SESSION_UNDUCKED);
+		PostMessage(handle, WM_APP_SESSION_UNDUCKED);
 		return 0;
 	}
 
@@ -481,7 +475,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 				}
 				catch
 				{
-					MessageBox.Show(AppWindow, "Unable to QI for SessionControl2", "Get SessionControl Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to QI for SessionControl2", "Get SessionControl Error", MessageBoxButtons.OK);
 				}
 			}
 		}
@@ -518,7 +512,7 @@ internal class CMediaPlayer : IAudioVolumeDuckNotification, IAudioSessionEvents
 				try { SimpleVolume = SessionManager2.GetSimpleAudioVolume(default, 0); }
 				catch
 				{
-					MessageBox.Show(AppWindow, "Unable to get Simple Volume", "Get Simple Volume Error", MessageBoxButtons.OK);
+					MessageBox.Show(handle, "Unable to get Simple Volume", "Get Simple Volume Error", MessageBoxButtons.OK);
 				}
 			}
 		}

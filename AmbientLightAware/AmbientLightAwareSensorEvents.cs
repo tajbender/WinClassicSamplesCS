@@ -2,31 +2,9 @@ using Vanara.PInvoke;
 using static Vanara.PInvoke.Ole32;
 using static Vanara.PInvoke.SensorsApi;
 
-internal class CAmbientLightAwareSensorEvents : ISensorEvents, IDisposable
+internal class CAmbientLightAwareSensorEvents(CAmbientLightAwareDlg dlg, CAmbientLightAwareSensorManagerEvents sensorManagerEvents) : ISensorEvents, IDisposable
 {
 	private readonly Dictionary<Guid, float> m_mapLux = [];
-
-	// Parent dialog used for callbacks
-	private readonly CAmbientLightAwareDlg m_pParentDlg;
-
-	// Parent class for callbacks Map to store lux values for each sensor
-	private readonly CAmbientLightAwareSensorManagerEvents m_pSensorManagerEvents;
-
-	///////////////////////////////////////////////////////////////////////////////
-	// CAmbientLightAwareSensorEvents::CAmbientLightAwareSensorEvents
-	//
-	// Description of function/method: Constructor.
-	//
-	// Parameters: ref CAmbientLightAwareDlg dlg: Parent dialog for callbacks ref CAmbientLightAwareSensorManagerEvents sensorManagerEvents:
-	// Parent class for callbacks
-	//
-	// Return Values: None
-	///////////////////////////////////////////////////////////////////////////////
-	public CAmbientLightAwareSensorEvents(CAmbientLightAwareDlg dlg, CAmbientLightAwareSensorManagerEvents sensorManagerEvents)
-	{
-		m_pParentDlg = dlg;
-		m_pSensorManagerEvents = sensorManagerEvents;
-	}
 
 	///////////////////////////////////////////////////////////////////////////////
 	// CAmbientLightAwareSensorEvents::GetSensorData
@@ -108,7 +86,7 @@ internal class CAmbientLightAwareSensorEvents : ISensorEvents, IDisposable
 	///////////////////////////////////////////////////////////////////////////////
 	HRESULT ISensorEvents.OnLeave(in Guid sensorID)
 	{
-		HRESULT hr = m_pSensorManagerEvents.RemoveSensor(sensorID); // Callback into parent
+		HRESULT hr = sensorManagerEvents.RemoveSensor(sensorID); // Callback into parent
 		if (hr.Succeeded)
 		{
 			// Remove the data for this device
@@ -196,6 +174,6 @@ internal class CAmbientLightAwareSensorEvents : ISensorEvents, IDisposable
 	{
 		float fpLux = m_mapLux.Values.Average();
 
-		return m_pParentDlg.UpdateLux(fpLux, m_mapLux.Count);
+		return dlg.UpdateLux(fpLux, m_mapLux.Count);
 	}
 }

@@ -76,7 +76,7 @@ internal class CDataObject : IDataObjectV
 			if ((pformatetcIn.tymed & TYMED.TYMED_HGLOBAL) != 0)
 			{
 				SafeHGlobalHandle h = new(c_szText);
-				pmedium.unionmember = h.TakeOwnership();
+				pmedium.unionmember = h.ReleaseOwnership();
 				pmedium.tymed = TYMED.TYMED_HGLOBAL;
 			}
 		}
@@ -121,8 +121,8 @@ internal class CDataObject : IDataObjectV
 			return HRESULT.S_OK;
 		else
 		{
-			var hr = SHCreateDataObject(PIDL.Null, 0, default, default, typeof(IDataObject).GUID, out var pdo);
-			if (hr.Succeeded) pdtobjShell = (IDataObjectV)pdo;
+			var hr = SHCreateDataObject(ppv: out IDataObject? pdo);
+			if (hr.Succeeded) pdtobjShell = (IDataObjectV)pdo!;
 			return hr;
 		}
 	}

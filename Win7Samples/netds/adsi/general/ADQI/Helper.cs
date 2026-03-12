@@ -12,6 +12,6 @@ internal static class Helper
 		string str => [str],
 		byte[] bytes => bytes.ToHexDumpString(16, 4, 0).Split('\n', StringSplitOptions.RemoveEmptyEntries),
 		object?[] obs => Array.ConvertAll(obs, o => o?.ToString() ?? ""),
-		_ => [var.ToString()],
+		_ => [var?.ToString() ?? ""],
 	};
 }

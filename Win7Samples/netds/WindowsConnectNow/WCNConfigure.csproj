@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="Vanara.PInvoke.FunDisc" />
+    <PackageReference Include="Vanara.PInvoke.IpHlpApi" />
+    <PackageReference Include="Vanara.PInvoke.Ole" />
+    <PackageReference Include="Vanara.PInvoke.WlanApi" />
+    <PackageReference Include="Vanara.PInvoke.WcnApi" />
+  </ItemGroup>
+</Project>

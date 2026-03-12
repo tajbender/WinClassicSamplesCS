@@ -5,6 +5,7 @@ class Program
 	[STAThread]
 	static int Main(string[] args)
 	{
+		if (args.Length == 0) args = [@"C:\Temp", @"C:\TempMirror"];
 		Console.Write("Press ctrl-C to stop gracefully\n");
 		Console.Write("-------------------------------\n");
 

@@ -155,7 +155,7 @@ public abstract class CCmdBase
 			if (hr.Succeeded)
 			{
 				// leave remaining arguments for the derived ref class pppszArgs = ppszArgs + iArg;
-				ppszArgs = ppszArgs.Skip(iArg).ToArray();
+				ppszArgs = [.. ppszArgs.Skip(iArg)];
 			}
 		}
 
@@ -177,17 +177,10 @@ public abstract class CCmdBase
 		protected string szUsage = pszUsage;
 	}
 
-	public class CEnumeratedOptionHandler<ARGVALUE> : COptionHandlerBase<ARGVALUE>
+	public class CEnumeratedOptionHandler<ARGVALUE>(Func<ARGVALUE, HRESULT> pmfnSetOption, string pszName, string pszDescription, string pszUsage,
+		ARGENTRY<ARGVALUE>[] pLookupTable) : COptionHandlerBase<ARGVALUE>(pmfnSetOption, pszName, pszUsage)
 	{
-		private ARGENTRY<ARGVALUE>[] pLookupTable;
-		private string szDescription;
-
-		public CEnumeratedOptionHandler(Func<ARGVALUE, HRESULT> pmfnSetOption, string pszName, string pszDescription, string pszUsage,
-			ARGENTRY<ARGVALUE>[] pLookupTable) : base(pmfnSetOption, pszName, pszUsage)
-		{
-			szDescription = pszDescription;
-			this.pLookupTable = (ARGENTRY<ARGVALUE>[])pLookupTable.Clone();
-		}
+		private ARGENTRY<ARGVALUE>[] pLookupTable = (ARGENTRY<ARGVALUE>[])pLookupTable.Clone();
 
 		public override void v_PrintUsage(CCmdBase pCmd)
 		{
@@ -212,17 +205,14 @@ public abstract class CCmdBase
 
 			if (hr.Failed)
 			{
-				pCmd.ParseError("Unrecognized {0}: {1}\n", szDescription, pszValue);
+				pCmd.ParseError("Unrecognized {0}: {1}\n", pszDescription, pszValue);
 			}
 			return hr;
 		}
 	}
 
-	public class CStringOptionHandler : COptionHandlerBase<string>
+	public class CStringOptionHandler(Func<string, HRESULT> pmfnSetOption, string pszName, string pszUsage) : COptionHandlerBase<string>(pmfnSetOption, pszName, pszUsage)
 	{
-		public CStringOptionHandler(Func<string, HRESULT> pmfnSetOption, string pszName, string pszUsage) :
-			base(pmfnSetOption, pszName, pszUsage) { }
-
 		public override void v_PrintUsage(CCmdBase pCmd) => pCmd.Output(" -{0,-18} {1}\n", szName, szUsage);
 
 		public override HRESULT v_SetOption(CCmdBase pCmd, string pszValue) => pmfnSetOption(pszValue);
@@ -306,7 +296,7 @@ public class CMetaCommand : CCmdBase
 				{
 					// save the remaining arguments for the specified command this assumes that the lifetime of ppszArgs and cArgs is tied to
 					// the calling function, CCmdBase::Execute
-					_ppszArgs = ppszArgs.Skip(1).ToArray();
+					_ppszArgs = [.. ppszArgs.Skip(1)];
 				}
 				else
 				{

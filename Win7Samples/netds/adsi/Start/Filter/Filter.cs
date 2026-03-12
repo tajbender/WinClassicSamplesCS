@@ -8,7 +8,7 @@ var pCont = (ADsComputer)ADsObject.GetObject($"WinNT://{Environment.MachineName}
 ///////////////////////////////////
 // Build variant filter
 /////////////////////////////////
-string[] pszFilter = { "user", "group" };
+string[] pszFilter = ["user", "group"];
 
 ///////////////////////////////////
 // Set the filter
