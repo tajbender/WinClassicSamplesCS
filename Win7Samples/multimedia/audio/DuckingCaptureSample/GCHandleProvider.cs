@@ -1,9 +1,7 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Vanara.PInvoke;
+﻿namespace Vanara.PInvoke;
 
 /// <summary>Self-disposing wrapper around a <see cref="GCHandle"/>.</summary>
-/// <seealso cref="System.IDisposable"/>
+/// <seealso cref="IDisposable"/>
 public class GCHandleProvider : IDisposable
 {
 	/// <summary>Initializes a new instance of the <see cref="GCHandleProvider"/> class.</summary>
@@ -38,7 +36,7 @@ public class GCHandleProvider : IDisposable
 	/// <typeparam name="T">The type of the target.</typeparam>
 	/// <param name="gcHandle">The <see cref="GCHandle"/> instance.</param>
 	/// <returns>The target of the handle.</returns>
-	public static T GetTarget<T>(IntPtr gcHandle) => (T)GCHandle.FromIntPtr(gcHandle).Target;
+	public static T GetTarget<T>(IntPtr gcHandle) => (T)GCHandle.FromIntPtr(gcHandle).Target!;
 
 	/// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
 	public void Dispose()

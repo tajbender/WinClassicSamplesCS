@@ -291,8 +291,6 @@ public class CPlaylistCreatorApp
 	[Guid("B011CE4C-1C1B-4A68-9240-D1D8866537E9")]
 	public class CCreateM3UPlaylistVerb : CApplicationVerb<CPlaylistCreatorApp, CCreateM3UPlaylistVerb>
 	{
-		public CCreateM3UPlaylistVerb() { }
-
 		protected override void DoVerb(IShellItemArray psia) => Application?.CreatePlaylistAsync(WM_APP_CREATE_M3U, psia);
 	}
 
@@ -300,8 +298,6 @@ public class CPlaylistCreatorApp
 	[Guid("352D62AD-3B26-4C1F-AD43-C2A4E6DFC916")]
 	public class CCreateWPLPlaylistVerb : CApplicationVerb<CPlaylistCreatorApp, CCreateWPLPlaylistVerb>
 	{
-		public CCreateWPLPlaylistVerb() { }
-
 		protected override void DoVerb(IShellItemArray psia) => Application?.CreatePlaylistAsync(WM_APP_CREATE_WPL, psia);
 	}
 }
