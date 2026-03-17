@@ -1,5 +1,5 @@
 # WinClassicSamplesCS
-A duplication in C# of the [Windows-classic-samples](https://github.com/Microsoft/Windows-classic-samples) using [Vanara](https://github.com/dahall/Vanara) libraries.
+A duplication in C# of the [Windows-classic-samples](https://github.com/Microsoft/Windows-classic-samples) using [Vanara](https://github.com/dahall/Vanara) libraries, this time using latest WinUI technology.
 
 ## Project Intent
 * Test and validate that the structures, methods and interfaces in Vanara using known code and outcomes.
@@ -8,6 +8,6 @@ A duplication in C# of the [Windows-classic-samples](https://github.com/Microsof
 
 ## [Work in Progress]: Add WinUI 3 based Samples.
 
-13/03/2016
+13/03/2016 Working on, and trying to integrate WinUI3 Samples. Including Browser.
 
-- https://github.com/electrifier/vamara-demo-browser/tree/e523ad3aa18bc96e4df368058f9145a0802a8e5f
+- https://github.com/electrifier/vamara-demo-browser/
