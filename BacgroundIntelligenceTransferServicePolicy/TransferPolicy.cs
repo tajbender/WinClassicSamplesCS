@@ -13,7 +13,7 @@ static class TransferPolicy
 	static void Main()
 	{
 		//The impersonation level must be at least RPC_C_IMP_LEVEL_IMPERSONATE.
-		CoInitializeSecurity(PSECURITY_DESCRIPTOR.NULL, -1, default, default, RPC_C_AUTHN_LEVEL.RPC_C_AUTHN_LEVEL_CONNECT, RPC_C_IMP_LEVEL.RPC_C_IMP_LEVEL_IMPERSONATE, default, EOLE_AUTHENTICATION_CAPABILITIES.EOAC_NONE).ThrowIfFailed();
+		CoInitializeSecurity(PSECURITY_DESCRIPTOR.NULL, default, RPC_C_AUTHN_LEVEL.RPC_C_AUTHN_LEVEL_CONNECT, RPC_C_IMP_LEVEL.RPC_C_IMP_LEVEL_IMPERSONATE).ThrowIfFailed();
 
 		using var pQueueMgr = ComReleaserFactory.Create(new IBackgroundCopyManager());
 
@@ -47,7 +47,7 @@ static class TransferPolicy
 	static void AlternateMain()
 	{
 		//The impersonation level must be at least RPC_C_IMP_LEVEL_IMPERSONATE.
-		CoInitializeSecurity(PSECURITY_DESCRIPTOR.NULL, -1, default, default, RPC_C_AUTHN_LEVEL.RPC_C_AUTHN_LEVEL_CONNECT, RPC_C_IMP_LEVEL.RPC_C_IMP_LEVEL_IMPERSONATE, default, EOLE_AUTHENTICATION_CAPABILITIES.EOAC_NONE).ThrowIfFailed();
+		CoInitializeSecurity(PSECURITY_DESCRIPTOR.NULL, default, RPC_C_AUTHN_LEVEL.RPC_C_AUTHN_LEVEL_CONNECT, RPC_C_IMP_LEVEL.RPC_C_IMP_LEVEL_IMPERSONATE).ThrowIfFailed();
 
 		// Create a Job
 		Console.Write("Creating Job...\n");
