@@ -1,19 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Window
-    x:Class="WinClassicSamplesBrowser.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:WinClassicSamplesBrowser"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="WinClassicSamplesBrowser">
+<Window x:Class="WinClassicSamplesBrowser.MainWindow"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="using:WinClassicSamplesBrowser"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        mc:Ignorable="d"
+        Title="WinClassicSamplesBrowser" >
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
     <Grid>
+        <!-- Layout: 3 Zeilen (AppBar) + 1 Spalte (Nav + Content) -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <!-- AppBar -->
+            <RowDefinition Height="*"/>
+            <!-- Rest -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <!-- Navigation -->
+            <ColumnDefinition Width="*"/>
+            <!-- Content -->
+        </Grid.ColumnDefinitions>
+
+        <!-- AppBar Platzhalter -->
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <TextBlock Text="WinClassic Samples Browser"
+               VerticalAlignment="Center"
+               Margin="12,0,0,0"
+               Style="{StaticResource SubtitleTextBlockStyle}"/>
+        </Grid>
+
+        <!-- NavigationView -->
+        <NavigationView Grid.Row="1"
+                Grid.Column="0"
+                PaneDisplayMode="Left"
+                IsBackButtonVisible="Collapsed"
+                IsSettingsVisible="False">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="File Explorer" Tag="explorer" Icon="Folder"/>
+            </NavigationView.MenuItems>
+
+        </NavigationView>
+
+        <!-- ContentFrame -->
+        <Frame x:Name="ContentFrame" Grid.Row="1" Grid.Column="1"/>
 
     </Grid>
 </Window>

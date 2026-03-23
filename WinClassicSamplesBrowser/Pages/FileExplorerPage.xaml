@@ -1,0 +1,11 @@
+<Page x:Class="WinClassicSamplesBrowser.Pages.FileExplorerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid>
+        <TextBlock Text="Welcome to WinClassic Samples Browser"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   VerticalAlignment="Center"/>
+    </Grid>
+</Page>

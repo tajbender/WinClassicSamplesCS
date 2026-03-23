@@ -56,6 +56,9 @@
     <None Update="Controls\Shell32\AppBarT.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Controls\CustomControlTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="Pages\FileExplorerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
