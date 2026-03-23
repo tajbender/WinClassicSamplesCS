@@ -11,13 +11,13 @@
   <Identity
     Name="679d5a46-995c-47a5-b7f2-cb8d12a5a286"
     Publisher="CN=tajbe"
-    Version="1.0.0.0" />
+    Version="5.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="679d5a46-995c-47a5-b7f2-cb8d12a5a286" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WinClassicSamplesBrowser</DisplayName>
-    <PublisherDisplayName>tajbe</PublisherDisplayName>
+    <PublisherDisplayName>Vanara</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
