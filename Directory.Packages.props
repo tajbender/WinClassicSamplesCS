@@ -17,14 +17,14 @@
     <PackageVersion Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
     <PackageVersion Include="Microsoft.Windows.SDK.Contracts" Version="10.0.26100.7705" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.8.260209005" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.5.250108004" />
     <PackageVersion Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageVersion Include="System.Data.OleDb" Version="10.0.4" />
     <PackageVersion Include="System.Drawing.Common" Version="10.0.4" />
     <PackageVersion Include="System.Management" Version="10.0.4" />
     <PackageVersion Include="Vanara.BITS" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.CodeGen" Version="$(VanaraVer)" />
-    <PackageVersion Include="Vanara.Core" Version="$(VanaraVer)" />
+    <PackageVersion Include="Vanara.Core" Version="4.2.1" />
     <PackageVersion Include="Vanara.DirectoryServices" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.Library" Version="$(VanaraVer)" />
     <PackageVersion Include="Vanara.PInvoke.AclUI" Version="$(VanaraVer)" />
