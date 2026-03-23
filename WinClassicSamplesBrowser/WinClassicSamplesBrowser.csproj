@@ -13,6 +13,12 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <Page Remove="Controls\Shell32\AppBarT.xaml" />
+    <Page Remove="Controls\Shell32\ExplorerView.xaml" />
+    <Page Remove="Controls\ShellNamespaceTreeView.xaml" />
+    <Page Remove="pages\FileExplorerPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -39,6 +45,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK" />
     <PackageReference Include="Vanara.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Controls\Shell32\ShellNamespaceTreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Controls\Shell32\ExplorerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Controls\Shell32\AppBarT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\FileExplorerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 
   <!--
