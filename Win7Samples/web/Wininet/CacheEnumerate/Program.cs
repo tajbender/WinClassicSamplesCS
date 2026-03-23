@@ -244,9 +244,8 @@ internal class Program
 	--*/
 	static void LogInetError(Win32Error err, string str)
 	{
-		StringBuilder msgBuffer = new(512);
 		var dwResult = FormatMessage(FormatMessageFlags.FORMAT_MESSAGE_FROM_HMODULE, GetModuleHandle("wininet.dll"),
-			(uint)err, LANGID.LANG_USER_DEFAULT, msgBuffer, (uint)msgBuffer.Capacity, default);
+			(uint)err, LANGID.LANG_USER_DEFAULT, out var msgBuffer);
 		if (dwResult != 0)
 			Console.Error.Write("{0}: {1}\n", str, msgBuffer);
 		else

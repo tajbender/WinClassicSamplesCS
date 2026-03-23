@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.4.11605.240 stable
+VisualStudioVersion = 18.4.11605.240
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExplorerBrowserSearch", "Win7Samples\winui\shell\appplatform\ExplorerBrowserSearch\ExplorerBrowserSearch.csproj", "{BF35499A-12D1-4BEE-90C1-9C74F5236741}"
 EndProject
@@ -615,6 +615,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetLocation", "LocationSetDefault\SetLocation.csproj", "{72FFAC7E-4924-654C-D2C0-064F40698851}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationEvents", "LocationAwarenessEvents\LocationEvents.csproj", "{53F61145-9931-1916-2021-A45530844D60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasskeyManager", "PasskeyManager\PasskeyManager.csproj", "{D0180409-5D49-4831-B834-9CD4191CAB61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -3499,6 +3501,24 @@ Global
 		{53F61145-9931-1916-2021-A45530844D60}.Release|x64.Build.0 = Release|Any CPU
 		{53F61145-9931-1916-2021-A45530844D60}.Release|x86.ActiveCfg = Release|Any CPU
 		{53F61145-9931-1916-2021-A45530844D60}.Release|x86.Build.0 = Release|Any CPU
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|Any CPU.Build.0 = Debug|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|x64.ActiveCfg = Debug|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|x64.Build.0 = Debug|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|x64.Deploy.0 = Debug|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|x86.ActiveCfg = Debug|x86
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|x86.Build.0 = Debug|x86
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Debug|x86.Deploy.0 = Debug|x86
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|Any CPU.ActiveCfg = Release|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|Any CPU.Build.0 = Release|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|Any CPU.Deploy.0 = Release|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|x64.ActiveCfg = Release|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|x64.Build.0 = Release|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|x64.Deploy.0 = Release|x64
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|x86.ActiveCfg = Release|x86
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|x86.Build.0 = Release|x86
+		{D0180409-5D49-4831-B834-9CD4191CAB61}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

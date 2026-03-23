@@ -164,7 +164,6 @@ static class BuildChain
 			default, // search no additional stores
 			ChainPara, // use AND logic and enhanced key usage as indicated in the ChainPara data structure
 			dwFlags,
-			default, // currently reserved
 			out var pChainContext)) // return a pointer to the chain created
 		{
 			hr = (HRESULT)Win32Error.GetLastError();
