@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="WinClassicSamplesBrowser.Pages.HomePage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:WinClassicSamplesBrowser.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="24">
+
+            <TextBlock Text="WinClassic Samples Browser"
+                   Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <TextBlock Text="Eine moderne WinUI 3 Oberfläche für die klassischen Windows Shell Samples."
+                   Style="{StaticResource BodyTextBlockStyle}"
+                   Opacity="0.8"/>
+
+            <!-- Cards -->
+            <Grid ColumnSpacing="24" RowSpacing="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Card 1 -->
+                <Grid Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  CornerRadius="8"
+                  Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="File Explorer"
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Öffne den modernen Explorer mit Shell-Interop."
+                               TextWrapping="Wrap"
+                               Opacity="0.7"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Card 2 -->
+                <Grid Grid.Column="1"
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  CornerRadius="8"
+                  Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Shell Samples"
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Klassische Windows Shell Beispiele in C#."
+                               TextWrapping="Wrap"
+                               Opacity="0.7"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Card 3 -->
+                <Grid Grid.Row="1"
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  CornerRadius="8"
+                  Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Vanara API"
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Interop‑Funktionen und Shell‑APIs."
+                               TextWrapping="Wrap"
+                               Opacity="0.7"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Card 4 -->
+                <Grid Grid.Row="1" Grid.Column="1"
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  CornerRadius="8"
+                  Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Einstellungen"
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="App‑Konfiguration und Optionen."
+                               TextWrapping="Wrap"
+                               Opacity="0.7"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+         </StackPanel>
+    </ScrollViewer>
+</Page>

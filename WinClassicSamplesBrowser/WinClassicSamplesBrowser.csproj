@@ -14,6 +14,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Pages\HomePage.xaml" />
+    <None Remove="Themes\AppStyles.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <Page Remove="Controls\Shell32\AppBarT.xaml" />
     <Page Remove="Controls\Shell32\ExplorerView.xaml" />
     <Page Remove="Controls\ShellNamespaceTreeView.xaml" />
@@ -56,6 +60,12 @@
     <None Update="Controls\Shell32\AppBarT.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Themes\AppStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\CustomControlTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

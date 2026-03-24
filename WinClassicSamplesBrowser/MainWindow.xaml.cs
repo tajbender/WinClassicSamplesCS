@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using WinClassicSamplesBrowser.Pages;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -25,6 +26,25 @@ public sealed partial class MainWindow : Window
 {
     public MainWindow()
     {
-        //InitializeComponent();
+        InitializeComponent();
+
+        //ContentFrame.Navigate(typeof(HomePage));
+    }
+
+    private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItem is NavigationViewItem item)
+        {
+            switch (item.Tag)
+            {
+                case "home":
+                    ContentFrame.Navigate(typeof(HomePage));
+                    break;
+
+                case "explorer":
+                    // später: FileExplorerPage
+                    break;
+            }
+        }
     }
 }

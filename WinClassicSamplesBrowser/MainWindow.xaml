@@ -13,12 +13,11 @@
     </Window.SystemBackdrop>
 
     <Grid>
-        <!-- Layout: 3 Zeilen (AppBar) + 1 Spalte (Nav + Content) -->
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <!-- AppBar -->
             <RowDefinition Height="*"/>
-            <!-- Rest -->
+            <!-- Content -->
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -28,22 +27,26 @@
             <!-- Content -->
         </Grid.ColumnDefinitions>
 
-        <!-- AppBar Platzhalter -->
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <!-- AppBar -->
+        <Grid Grid.Row="0" Grid.ColumnSpan="2"
+              Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <TextBlock Text="WinClassic Samples Browser"
-               VerticalAlignment="Center"
-               Margin="12,0,0,0"
-               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                       VerticalAlignment="Center"
+                       Margin="12,0,0,0"
+                       Style="{StaticResource SubtitleTextBlockStyle}"/>
         </Grid>
 
-        <!-- NavigationView -->
+        <!-- Navigation -->
         <NavigationView Grid.Row="1"
-                Grid.Column="0"
-                PaneDisplayMode="Left"
-                IsBackButtonVisible="Collapsed"
-                IsSettingsVisible="False">
+                        Grid.Column="0"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False"
+                        PaneDisplayMode="Left"
+                        SelectionChanged="NavigationView_SelectionChanged">
 
             <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="home" Icon="Home"/>
+                <NavigationViewItemSeparator/>
                 <NavigationViewItem Content="File Explorer" Tag="explorer" Icon="Folder"/>
             </NavigationView.MenuItems>
 
