@@ -42,7 +42,7 @@ public sealed partial class MainWindow : Window
                     break;
 
                 case "explorer":
-                    // später: FileExplorerPage
+                    ContentFrame.Navigate(typeof(FileExplorerPage));
                     break;
             }
         }

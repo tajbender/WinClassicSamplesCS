@@ -60,10 +60,10 @@
     <None Update="Controls\Shell32\AppBarT.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <Page Update="Themes\AppStyles.xaml">
+    <Page Update="Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Pages\HomePage.xaml">
+    <Page Update="Themes\AppStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\CustomControlTemplate.xaml">
