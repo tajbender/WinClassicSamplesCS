@@ -14,14 +14,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Pages\HomePage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
     <None Remove="Themes\AppStyles.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="Controls\Shell32\AppBarT.xaml" />
     <Page Remove="Controls\Shell32\ExplorerView.xaml" />
     <Page Remove="Controls\ShellNamespaceTreeView.xaml" />
-    <Page Remove="pages\FileExplorerPage.xaml" />
+    <Page Remove="Views\FileExplorerPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
