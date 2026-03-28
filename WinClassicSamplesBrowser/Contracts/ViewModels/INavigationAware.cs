@@ -1,4 +1,4 @@
-﻿namespace TemplateStudioApp.Contracts.ViewModels;
+﻿namespace WinClassicSamplesBrowser.Contracts.ViewModels;
 
 public interface INavigationAware
 {
