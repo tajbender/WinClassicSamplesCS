@@ -48,8 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Vanara.Core" />
+    <PackageReference Include="WinUIEx" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Controls\Shell32\ShellNamespaceTreeView.xaml">

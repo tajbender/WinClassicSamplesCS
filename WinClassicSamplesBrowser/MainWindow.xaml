@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Window x:Class="WinClassicSamplesBrowser.MainWindow"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="using:WinClassicSamplesBrowser"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        mc:Ignorable="d"
-        Title="WinClassicSamplesBrowser" >
+<windowex:WindowEx x:Class="WinClassicSamplesBrowser.MainWindow"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:local="using:WinClassicSamplesBrowser"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:windowex="using:WinUIEx"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   mc:Ignorable="d"
+                   Title="WinClassicSamplesBrowser" >
 
-    <Window.SystemBackdrop>
+    <windowex:WindowEx.SystemBackdrop>
         <MicaBackdrop />
-    </Window.SystemBackdrop>
+    </windowex:WindowEx.SystemBackdrop>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -56,4 +57,4 @@
         <Frame x:Name="ContentFrame" Grid.Row="1" Grid.Column="1"/>
 
     </Grid>
-</Window>
+</windowex:WindowEx>
