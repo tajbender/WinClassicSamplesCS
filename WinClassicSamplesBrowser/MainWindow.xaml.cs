@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using WinClassicSamplesBrowser.Pages;
+using WinClassicSamplesBrowser.Views;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinUIEx;

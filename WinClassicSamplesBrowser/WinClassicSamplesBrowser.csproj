@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
@@ -14,14 +14,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\FileExplorerPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Themes\AppStyles.xaml" />
+    <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\WebViewPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="Controls\Shell32\AppBarT.xaml" />
     <Page Remove="Controls\Shell32\ExplorerView.xaml" />
     <Page Remove="Controls\ShellNamespaceTreeView.xaml" />
-    <Page Remove="Views\FileExplorerPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +52,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Vanara.Core" />
     <PackageReference Include="WinUIEx" />
@@ -64,6 +67,12 @@
     <None Update="Controls\Shell32\AppBarT.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\WebViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

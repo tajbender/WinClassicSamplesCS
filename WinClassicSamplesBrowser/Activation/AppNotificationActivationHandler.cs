@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
+using System.Threading.Tasks;
 using WinClassicSamplesBrowser.Contracts.Services;
 using WinClassicSamplesBrowser.ViewModels;
 

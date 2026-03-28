@@ -16,7 +16,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-namespace WinClassicSamplesBrowser.Pages;
+namespace WinClassicSamplesBrowser.Views;
 
 public sealed partial class FileExplorerPage : Page
 {

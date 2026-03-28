@@ -1,26 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using WinClassicSamplesBrowser.Activation;
 using WinClassicSamplesBrowser.Contracts.Services;
+using WinClassicSamplesBrowser.Models;
 using WinClassicSamplesBrowser.Services;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.ApplicationSettings;
+using WinClassicSamplesBrowser.ViewModels;
+using WinClassicSamplesBrowser.Views;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -52,45 +38,42 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        Host = Microsoft.Extensions.Hosting.Host.
-CreateDefaultBuilder().
-UseContentRoot(AppContext.BaseDirectory).
-ConfigureServices((context, services) =>
-{
-    // Default Activation Handler
-    services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+        Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder().
+            UseContentRoot(AppContext.BaseDirectory).
+            ConfigureServices((context, services) =>
+        {
+            // Default Activation Handler
+            services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
-    // Other Activation Handlers
-    services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
+            // Other Activation Handlers
+            services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
 
-    // Services
-    services.AddSingleton<IAppNotificationService, AppNotificationService>();
-    services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-    services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-    services.AddTransient<IWebViewService, WebViewService>();
-    services.AddTransient<INavigationViewService, NavigationViewService>();
+            // Services
+            services.AddSingleton<IAppNotificationService, AppNotificationService>();
+            services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddTransient<IWebViewService, WebViewService>();
+            services.AddTransient<INavigationViewService, NavigationViewService>();
 
-    services.AddSingleton<IActivationService, ActivationService>();
-    services.AddSingleton<IPageService, PageService>();
-    services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IActivationService, ActivationService>();
+            services.AddSingleton<IPageService, PageService>();
+            services.AddSingleton<INavigationService, NavigationService>();
 
-    // Core Services
-    services.AddSingleton<IFileService, FileService>();
+            // Core Services
+            services.AddSingleton<IFileService, FileService>();
 
-    // Views and ViewModels
-    services.AddTransient<SettingsViewModel>();
-    services.AddTransient<SettingsPage>();
-    services.AddTransient<WebViewViewModel>();
-    services.AddTransient<WebViewPage>();
-    services.AddTransient<MainViewModel>();
-    services.AddTransient<MainPage>();
-    services.AddTransient<ShellPage>();
-    services.AddTransient<ShellViewModel>();
+            // Views and ViewModels
+            services.AddTransient<SettingsViewModel>();
+            services.AddTransient<SettingsPage>();
+            services.AddTransient<WebViewViewModel>();
+            services.AddTransient<WebViewPage>();
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<HomePage>();
+            services.AddTransient<ShellViewModel>();
 
-    // Configuration
-    services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-}).
-Build();
+            // Configuration
+            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+        }).Build();
 
         App.GetService<IAppNotificationService>().Initialize();
     }
