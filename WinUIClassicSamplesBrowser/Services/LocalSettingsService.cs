@@ -4,8 +4,6 @@ using Windows.ApplicationModel;
 using Windows.Storage;
 
 using WinUIClassicSamplesBrowser.Contracts.Services;
-using WinUIClassicSamplesBrowser.Core.Contracts.Services;
-using WinUIClassicSamplesBrowser.Core.Helpers;
 using WinUIClassicSamplesBrowser.Helpers;
 using WinUIClassicSamplesBrowser.Models;
 

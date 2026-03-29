@@ -1,4 +1,4 @@
-﻿namespace WinUIClassicSamplesBrowser.Core.Contracts.Services;
+﻿namespace WinUIClassicSamplesBrowser.Contracts.Services;
 
 public interface IFileService
 {

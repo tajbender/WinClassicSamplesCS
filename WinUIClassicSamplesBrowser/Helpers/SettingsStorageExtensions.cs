@@ -1,8 +1,6 @@
 ﻿using Windows.Storage;
 using Windows.Storage.Streams;
 
-using WinUIClassicSamplesBrowser.Core.Helpers;
-
 namespace WinUIClassicSamplesBrowser.Helpers;
 
 // Use these extension methods to store and retrieve local and roaming app data

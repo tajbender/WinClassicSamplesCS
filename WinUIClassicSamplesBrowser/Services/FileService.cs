@@ -1,10 +1,9 @@
 ﻿using System.Text;
 
 using Newtonsoft.Json;
+using WinUIClassicSamplesBrowser.Contracts.Services;
 
-using WinUIClassicSamplesBrowser.Core.Contracts.Services;
-
-namespace WinUIClassicSamplesBrowser.Core.Services;
+namespace WinUIClassicSamplesBrowser.Services;
 
 public class FileService : IFileService
 {

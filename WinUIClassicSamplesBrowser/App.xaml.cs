@@ -4,8 +4,6 @@ using Microsoft.UI.Xaml;
 
 using WinUIClassicSamplesBrowser.Activation;
 using WinUIClassicSamplesBrowser.Contracts.Services;
-using WinUIClassicSamplesBrowser.Core.Contracts.Services;
-using WinUIClassicSamplesBrowser.Core.Services;
 using WinUIClassicSamplesBrowser.Helpers;
 using WinUIClassicSamplesBrowser.Models;
 using WinUIClassicSamplesBrowser.Notifications;

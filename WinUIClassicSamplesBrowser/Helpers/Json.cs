@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WinUIClassicSamplesBrowser.Core.Helpers;
+namespace WinUIClassicSamplesBrowser.Helpers;
 
 public static class Json
 {
