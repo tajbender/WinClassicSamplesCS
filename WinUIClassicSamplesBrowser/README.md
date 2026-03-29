@@ -1,6 +1,26 @@
-﻿*Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
+﻿# WinUI Classic Samples Browser
 
-## Getting Started
+A Sample Application for browsing the [WinClassicSamplesCS](https://github.com/dahall/WinClassicSamplesCS) Gallery, built with Template Studio for WinUI.
+
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Getting Started with Template Studio for WinUI](#getting-started-with-template-studio-for-winui)
+
+## Prerequisites
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) with the following workloads:
+  - Universal Windows Platform development
+  - .NET desktop development
+  - Desktop development with C++
+- [Windows App SDK](https://docs.microsoft.com/windows/apps/windows-app-sdk/) version 1.4 or later
+
+The following libraries and tools are used in this project:
+- [Vanara](https://github.com/dahall/Vanara) A set of .NET libraries for Windows implementing PInvoke calls to many native Windows APIs with supporting wrappers.
+- [WinUI 3](https://docs.microsoft.com/windows/apps/winui/) for building the user interface, including the following Extensions:
+  - [Template Studio for WinUI](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftTemplateStudio) Visual Studio extension
+  - [WinUIEx](https://dotmorten.github.io/WinUIEx/) WinUI Extensions library
+
+
+## Getting Started with Template Studio for WinUI
 
 Browse and address `TODO:` comments in `View -> Task List` to learn the codebase and understand next steps for turning the generated code into production code.
 
