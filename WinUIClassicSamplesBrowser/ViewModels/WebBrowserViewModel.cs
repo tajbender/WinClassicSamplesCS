@@ -16,7 +16,7 @@ public partial class WebBrowserViewModel : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
     [ObservableProperty]
-    private Uri source = new("https://docs.microsoft.com/windows/apps/");
+    private Uri source = new("https://github.com/dahall/WinClassicSamplesCS?tab=readme-ov-file#winclassicsamplescs");
 
     [ObservableProperty]
     private bool isLoading = true;
