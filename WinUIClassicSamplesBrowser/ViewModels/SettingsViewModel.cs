@@ -23,6 +23,10 @@ public partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private string _versionDescription;
 
+    [ObservableProperty]
+    private string _tableItems;
+
+
     public ICommand SwitchThemeCommand
     {
         get;
@@ -61,5 +65,17 @@ public partial class SettingsViewModel : ObservableRecipient
         }
 
         return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+    }
+}
+
+public class KeyValueItem
+{
+    public string Key
+    {
+        get; set;
+    }
+    public string Value
+    {
+        get; set;
     }
 }
