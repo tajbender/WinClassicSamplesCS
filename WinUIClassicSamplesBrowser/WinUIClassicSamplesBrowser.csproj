@@ -15,6 +15,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <PackageIcon>Assets\Miscellaneous Debris\Microsoft WinUI Logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
