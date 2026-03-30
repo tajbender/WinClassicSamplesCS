@@ -123,6 +123,16 @@ public partial class RuntimeInfoViewModel : ObservableObject
             return "(dynamic / in-memory)";
         }
     }
+
+    public void LoadTableFromAssembly(AssemblyInfoModel asm)
+    {
+        TableItems.Clear();
+
+        TableItems.Add(new KeyValueItem { Key = "Name", Value = asm.Name });
+        TableItems.Add(new KeyValueItem { Key = "Version", Value = asm.Version });
+        TableItems.Add(new KeyValueItem { Key = "Informational Version", Value = asm.InformationalVersion });
+        TableItems.Add(new KeyValueItem { Key = "Location", Value = asm.Location });
+    }
 }
 
 public class AssemblyInfoModel

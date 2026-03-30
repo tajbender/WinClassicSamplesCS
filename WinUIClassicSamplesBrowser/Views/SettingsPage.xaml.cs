@@ -17,4 +17,9 @@ public sealed partial class SettingsPage : Page
         ViewModel = App.GetService<SettingsViewModel>();
         InitializeComponent();
     }
+
+    private void OnAssemblySelected(AssemblyInfoModel asm)
+    {
+// TODO:        ViewModel.LoadTableFromAssembly(asm);
+    }
 }
