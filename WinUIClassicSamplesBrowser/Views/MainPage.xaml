@@ -4,9 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:WinUIClassicSamplesBrowser.ViewModels" 
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        
+        <Expander HorizontalContentAlignment="Left" IsExpanded="True">
+            <Expander.Header>
+                <ToggleButton Content="This ToggleButton is centered" HorizontalAlignment="Center"/>
+            </Expander.Header>
+            <Expander.Content>
+                <WebView2 Source="https://www.bing.com" HorizontalAlignment="Left" Width="800" Height="600"/>
+            </Expander.Content>
+        </Expander>
     </Grid>
 </Page>
