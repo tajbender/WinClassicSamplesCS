@@ -4,6 +4,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../Vanara.WinUI.Extensions/Vanara.WinUI.Extensions.csproj" Id="9457556b-f52b-4478-97de-ab05b6aabfc5" />
   <Project Path="WinUIClassicSamplesBrowser.csproj">
     <Platform Solution="*|arm64" Project="arm64" />
     <Platform Solution="*|x64" Project="x64" />

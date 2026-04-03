@@ -61,6 +61,10 @@
   <ItemGroup>
     <Folder Include="Assets\Docs\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vanara.WinUI.Extensions\Vanara.WinUI.Extensions.csproj" />
+  </ItemGroup>
   
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
