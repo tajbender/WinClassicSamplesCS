@@ -20,6 +20,35 @@ public sealed partial class ShellPage : Page
         get;
     }
 
+    public enum FolderType
+    {
+        Default,
+        Desktop,
+        Documents,
+        Downloads,
+        Pictures
+    }
+
+    public class Folder
+    {
+        public string Name
+        {
+            get; set;
+        }
+        public FolderType Type
+        {
+            get; set;
+        }
+
+        public string IconGlyph => Type switch
+        {
+            FolderType.Desktop => "\uE8FC",
+            FolderType.Documents => "\uE8A5",
+            FolderType.Downloads => "\uE896",
+            FolderType.Pictures => "\uEB9F",
+            _ => "\uE8B7"
+        };
+    }
 
     /// <summary>
     /// Initializes a new instance of the ShellPage class with the specified view model and sets up navigation and

@@ -7,6 +7,10 @@
     xmlns:helpers="using:WinUIClassicSamplesBrowser.Helpers"
     xmlns:behaviors="using:WinUIClassicSamplesBrowser.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:viewmodels="using:WinUIClassicSamplesBrowser.ViewModels"
+    xmlns:data="using:WinUIClassicSamplesBrowser.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    mc:Ignorable="d"
     Loaded="OnLoaded">
 
     <Grid>
@@ -49,6 +53,30 @@
                            Grid.Column="2"
                            VerticalAlignment="Center"
                            Margin="0,0,12,0" >
+
+                <!--<BreadcrumbBar.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Bind Folder }">
+                        <BreadcrumbBarItem>
+                            <BreadcrumbBarItem.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        --><!-- Icon --><!--
+                                        <FontIcon Glyph="{Binding IconGlyph}"
+                                                  FontFamily="Segoe Fluent Icons"
+                                                  FontSize="14"
+                                                  VerticalAlignment="Center"/>
+
+                                        --><!-- Folder Name --><!--
+                                        <TextBlock Text="{Binding Name}"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </BreadcrumbBarItem.ContentTemplate>
+                        </BreadcrumbBarItem>
+                    </DataTemplate>
+                </BreadcrumbBar.ItemTemplate>-->
+
+
             </BreadcrumbBar>
         </Grid>
 
