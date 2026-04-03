@@ -8,14 +8,17 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        <Expander HorizontalContentAlignment="Left" IsExpanded="True">
-            <Expander.Header>
-                <ToggleButton Content="This ToggleButton is centered" HorizontalAlignment="Center"/>
-            </Expander.Header>
-            <Expander.Content>
-                <WebView2 Source="https://www.bing.com" HorizontalAlignment="Left" Width="800" Height="600"/>
-            </Expander.Content>
-        </Expander>
+    <Grid x:Name="ContentArea" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="256"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderThickness="2" BorderBrush="#FFFFD700" Background="#FFFFFFFF">
+            <ListView x:Name="ExamplesListView" SelectionMode="Single" />
+        </Border>
+        <Border Grid.Column="1" BorderThickness="2" BorderBrush="#FFFFD700" Background="#FFFFFFFF">
+            <TextBlock Text="Text inside a border" FontSize="18" Foreground="Black" />
+        </Border>
     </Grid>
 </Page>
