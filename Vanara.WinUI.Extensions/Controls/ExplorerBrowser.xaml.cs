@@ -1,12 +1,14 @@
-﻿using electrifier.Controls.Helpers;
-using Microsoft.UI.Xaml.Controls;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Controls;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
+using Vanara.WinUI.Extensions.Controls.Helpers;
 
-namespace electrifier.Controls;
+namespace Vanara.WinUI.Extensions.Controls;
 
 public sealed partial class ExplorerBrowser : UserControl
 {

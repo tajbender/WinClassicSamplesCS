@@ -1,13 +1,15 @@
-﻿using electrifier.Controls.Contracts;
-using electrifier.Controls.Services;
-using Microsoft.UI.Xaml.Media.Imaging;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
+using Vanara.WinUI.Extensions.Controls.Contracts;
+using Vanara.WinUI.Extensions.Controls.Services;
 
-namespace electrifier.Controls.Helpers;
+namespace Vanara.WinUI.Extensions.Controls.Helpers;
 
 public class BrowserItemFactory
 {

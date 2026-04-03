@@ -1,15 +1,16 @@
-﻿using electrifier.Controls.Helpers;
-using Microsoft.UI.Xaml.Media.Imaging;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
+using Vanara.WinUI.Extensions.Controls.Helpers;
 
-namespace electrifier.Controls.Services;
+namespace Vanara.WinUI.Extensions.Controls.Services;
 
 // TODO: WARN: Add Shell Log-Writer class, for logging Shell32 operations
 
@@ -102,11 +103,11 @@ internal class Shel32NamespaceService
         gdiBitmap.UnlockBits(data);
 
         // get WinRT SoftwareBitmap
-        var softwareBitmap = new Windows.Graphics.Imaging.SoftwareBitmap(
-            Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
+        var softwareBitmap = new global::Windows.Graphics.Imaging.SoftwareBitmap(
+            global::Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
             gdiBitmap.Width,
             gdiBitmap.Height,
-            Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied);
+            global::Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied);
         softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
 
         // build WinUI3 SoftwareBitmapSource

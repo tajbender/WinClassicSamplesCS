@@ -1,7 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System;
 using System.Globalization;
+using System.Linq;
+using Microsoft.UI.Xaml;
 
-namespace electrifier.Controls.Localization;
+namespace Vanara.WinUI.Extensions.Controls.Localization;
 
 public sealed class LocalizationManager
 {

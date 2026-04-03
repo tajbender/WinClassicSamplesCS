@@ -1,15 +1,15 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using CommunityToolkit.WinUI.Collections;
-using electrifier.Controls.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Vanara.Windows.Shell;
+using Vanara.WinUI.Extensions.Controls.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace electrifier.Controls;
+namespace Vanara.WinUI.Extensions.Controls;
 
 public sealed partial class ShellListView : UserControl
 {

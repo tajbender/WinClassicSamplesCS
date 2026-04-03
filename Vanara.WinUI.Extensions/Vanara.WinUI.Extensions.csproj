@@ -14,8 +14,21 @@
     <None Include="TemplateClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="CommunityToolkit.WinUI.Collections" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" />
+    <PackageReference Include="CommunityToolkit.WinUI.Extensions" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3856.49" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1721" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250602001" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.1" />
+    <PackageReference Include="Vanara.Windows.Shell" />
+    <PackageReference Include="Vanara.Windows.Shell" Version="5.0.1" />
+    <PackageReference Include="Vanara.Windows.Shell.Common" />
+    <PackageReference Include="Vanara.Windows.Shell.Common" Version="5.0.1" />
+    <PackageReference Include="WinUIEx" />
   </ItemGroup>
 </Project>

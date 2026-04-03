@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
-namespace electrifier.Controls.Helpers;
+namespace Vanara.WinUI.Extensions.Controls.Helpers;
 
 /// <summary>
 /// <seealso href="https://github.com/microsoft/WinUI-Gallery/blob/main/WinUIGallery/Helpers/WindowsSystemDispatcherQueueHelper.cs"/>
@@ -26,7 +21,7 @@ internal class WindowsSystemDispatcherQueueHelper
     private object m_dispatcherQueueController = null;
     public void EnsureWindowsSystemDispatcherQueueController()
     {
-        if (Windows.System.DispatcherQueue.GetForCurrentThread() != null)
+        if (global::Windows.System.DispatcherQueue.GetForCurrentThread() != null)
         {
             // one already exists, so we'll just use it.
             return;

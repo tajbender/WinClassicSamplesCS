@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace electrifier.Controls.Contracts;
+namespace Vanara.WinUI.Extensions.Controls.Contracts;
 
 /// <summary>
 /// Abstract base class AbstractBrowserItem.
@@ -8,7 +10,7 @@ namespace electrifier.Controls.Contracts;
 /// Enclosing Type <typeparam name="T">ShellItem</typeparam> as reference to the underlying Shell Namespace Item reference.
 /// </summary>
 [DebuggerDisplay($"{{{nameof(ToString)}(),nq}}")]
-public abstract class AbstractBrowserItem<T> : IEquatable<AbstractBrowserItem<T>?> // TODO: IDisposable
+public abstract class AbstractBrowserItem<T> : IEquatable<AbstractBrowserItem<T>> // TODO: IDisposable
 {
     public readonly IEnumerable<AbstractBrowserItem<T>>? ChildItems;
     public readonly bool? IsFolder;
