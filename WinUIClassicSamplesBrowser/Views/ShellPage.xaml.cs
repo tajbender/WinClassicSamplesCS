@@ -38,6 +38,8 @@ public sealed partial class ShellPage : Page
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        LocationBreadcrumbBar.ItemsSource = new string[] { "Home", "Documents", "Design", "Northwind", "Images", "Folder1", "Folder2", "Folder3" };
+
         TitleBarHelper.UpdateTitleBar(RequestedTheme);
 
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
