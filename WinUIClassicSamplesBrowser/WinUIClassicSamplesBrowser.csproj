@@ -8,7 +8,7 @@
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<Platforms>x86;x64;arm64</Platforms>
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-		<PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
+		<PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UseWinUI>true</UseWinUI>
@@ -27,7 +27,7 @@
 		<PackageReference Include="Markdig" Version="1.1.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829000" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250602001" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="Vanara.WinUI.Extensions" Version="5.0.1" />
