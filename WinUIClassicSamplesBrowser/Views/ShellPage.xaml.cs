@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
@@ -19,6 +20,15 @@ public sealed partial class ShellPage : Page
         get;
     }
 
+
+    /// <summary>
+    /// Initializes a new instance of the ShellPage class with the specified view model and sets up navigation and
+    /// window customization.
+    /// </summary>
+    /// <remarks>This constructor configures navigation services and customizes the window's title bar for
+    /// enhanced appearance and integration with the application's theme. Ensure that the provided view model is fully
+    /// initialized before passing it to this constructor.</remarks>
+    /// <param name="viewModel">The ShellViewModel instance that provides data binding and navigation services for the page. Cannot be null.</param>
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
@@ -34,6 +44,8 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+
+        //AppTitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)

@@ -11,38 +11,47 @@
 
     <Grid>
         <Grid x:Name="AppTitleBar"
-              Canvas.ZIndex="1"
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+              VerticalAlignment="Top"
               IsHitTestVisible="True"
-              VerticalAlignment="Top">
+              Canvas.ZIndex="1">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="/Assets/WindowIcon.ico" 
-                   Height="42" 
-                   HorizontalAlignment="Left"
-                   Width="42" />
-            <TextBlock Grid.Column="1" x:Name="AppTitleBarText"
+            <Grid.Resources>
+                <Thickness x:Key="DragRegionMargin">0,0,0,0</Thickness>
+            </Grid.Resources>
+
+            <!-- Drag Region -->
+            <Grid Grid.ColumnSpan="3"
+                  Background="Transparent"
+                  IsHitTestVisible="False"/>
+            <!-- Drag Region End -->
+
+            <Image x:Name="AppTitleBarImage"
+                   Grid.Column="0"
+                   Source="/Assets/WindowIcon.ico"
+                   Width="32"
+                   Height="32"
+                   Margin="8,0,12,0"
+                   VerticalAlignment="Center"/>
+            <TextBlock x:Name="AppTitleBarText"
+                       Grid.Column="1"
                        VerticalAlignment="Center"
-                       TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
-                       Margin="28,0,0,0"/>
-            <BreadcrumbBar Grid.Column="2" x:Name="LocationBreadcrumbBar">
-                <!--<BreadcrumbBar.ItemTemplate>
-                    <DataTemplate x:DataType="l:Folder">
-                        <BreadcrumbBarItem Content="{Binding}" AutomationProperties.Name="{Binding Name}">
-                            <BreadcrumbBarItem.ContentTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </BreadcrumbBarItem.ContentTemplate>
-                        </BreadcrumbBarItem>
-                    </DataTemplate>
-                </BreadcrumbBar.ItemTemplate>-->
+                       TextWrapping="NoWrap"
+                       Margin="0,0,16,0"/>
+            <!-- Breadcrumb Navigation -->
+            <BreadcrumbBar x:Name="LocationBreadcrumbBar"
+                           Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Margin="0,0,12,0" >
             </BreadcrumbBar>
         </Grid>
+
         <NavigationView
             x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
