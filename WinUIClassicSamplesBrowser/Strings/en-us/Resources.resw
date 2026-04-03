@@ -124,7 +124,7 @@
     <value>WinUIClassicSamplesBrowser</value>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Main</value>
+    <value>Classic Samples Browser</value>
   </data>
   <data name="WebView_Loading.Text" xml:space="preserve">
     <value>Loading...</value>
@@ -160,7 +160,7 @@
     <value>Open in browser</value>
   </data>
   <data name="Shell_WebBrowser.Content" xml:space="preserve">
-    <value>WebBrowser</value>
+    <value>Web Browser</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
@@ -181,13 +181,13 @@
     <value>About this application</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>TODO: Replace with your app description.</value>
+    <value>Vanara - WinUIClassicSamplesBrowser</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>Privacy Statement</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
+    <value>https://github.com/dahall/Vanara</value>
   </data>
   <data name="AppNotificationSamplePayload" xml:space="preserve">
     <value>&lt;toast launch="action=ToastClick"&gt;
@@ -205,5 +205,8 @@
   </data>
   <data name="Shell_MarkdownViewer.Content" xml:space="preserve">
     <value>Markdown Viewer</value>
+  </data>
+  <data name="Shell_RibbonConverter.Content" xml:space="preserve">
+    <value>Ribbon Converter</value>
   </data>
 </root>
