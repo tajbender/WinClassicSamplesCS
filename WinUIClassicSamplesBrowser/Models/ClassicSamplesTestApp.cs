@@ -23,6 +23,8 @@ public partial class ClassicSamplesTestApp : ObservableObject
     [ObservableProperty]
     private bool _isRunning;
 
+//    private ImagePath _imageSource;
+
     public ClassicSamplesTestApp(string relativePath)
     {
         _relativePath = relativePath;
