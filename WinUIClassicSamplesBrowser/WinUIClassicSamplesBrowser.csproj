@@ -32,6 +32,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="WinUIEx" Version="2.3.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\WindowIcon.Dark.ico" />
+  </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
