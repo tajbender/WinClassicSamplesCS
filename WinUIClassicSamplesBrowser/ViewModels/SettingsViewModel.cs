@@ -21,7 +21,7 @@ public partial class SettingsViewModel : ObservableRecipient
     private ElementTheme _elementTheme;
 
     [ObservableProperty]
-    private string _versionDescription;
+    private string _versionDescription = GetVersionDescription();
 
     [ObservableProperty]
     private string _tableItems;
@@ -36,7 +36,6 @@ public partial class SettingsViewModel : ObservableRecipient
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
-        _versionDescription = GetVersionDescription();
 
         SwitchThemeCommand = new RelayCommand<ElementTheme>(
             async (param) =>

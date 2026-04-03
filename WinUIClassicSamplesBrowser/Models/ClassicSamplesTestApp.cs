@@ -12,21 +12,21 @@ namespace WinUIClassicSamplesBrowser.Models;
 public partial class ClassicSamplesTestApp : ObservableObject
 {
     [ObservableProperty]
-    private string name;
+    private string _name;
 
     [ObservableProperty]
-    private string relativePath;
+    private string _relativePath;
 
     [ObservableProperty]
-    private bool isAvailable;
+    private bool _isAvailable;
 
     [ObservableProperty]
-    private bool isRunning;
+    private bool _isRunning;
 
     public ClassicSamplesTestApp(string relativePath)
     {
-        this.relativePath = relativePath;
-        this.name = Path.GetFileName(relativePath);
+        _relativePath = relativePath;
+        _name = Path.GetFileName(relativePath);
     }
 
     public async Task CheckAvailability(IFileService fileService)

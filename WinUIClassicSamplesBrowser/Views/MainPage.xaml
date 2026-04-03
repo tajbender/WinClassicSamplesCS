@@ -14,11 +14,11 @@
             <ColumnDefinition Width="256"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" BorderThickness="2" BorderBrush="#FFFFD700" Background="#FFFFFFFF">
-            <ListView x:Name="ExamplesListView" SelectionMode="Single" />
+        <Border Grid.Column="0" BorderThickness="2" BorderBrush="DarkOliveGreen" >
+            <ListView x:Name="ExamplesListView" ItemsSource="{x:Bind SampleApps}" SelectionMode="Single" />
         </Border>
-        <Border Grid.Column="1" BorderThickness="2" BorderBrush="#FFFFD700" Background="#FFFFFFFF">
-            <TextBlock Text="Text inside a border" FontSize="18" Foreground="Black" />
+        <Border Grid.Column="1" BorderThickness="2" BorderBrush="DarkOliveGreen" >
+            <TextBlock Text="Text inside a border" FontSize="18" />
         </Border>
     </Grid>
 </Page>

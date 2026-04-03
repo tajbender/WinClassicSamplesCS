@@ -33,19 +33,19 @@ public class PageService : IPageService
         return pageType;
     }
 
-    private void Configure<VM, V>()
-        where VM : ObservableObject
-        where V : Page
+    private void Configure<TVm, TV>()
+        where TVm : ObservableObject
+        where TV : Page
     {
         lock (_pages)
         {
-            var key = typeof(VM).FullName!;
+            var key = typeof(TVm).FullName!;
             if (_pages.ContainsKey(key))
             {
                 throw new ArgumentException($"The key {key} is already configured in PageService");
             }
 
-            var type = typeof(V);
+            var type = typeof(TV);
             if (_pages.ContainsValue(type))
             {
                 throw new ArgumentException($"This type is already configured with key {_pages.First(p => p.Value == type).Key}");

@@ -10,11 +10,10 @@ public sealed partial class WebBrowserPage : Page
     public WebBrowserViewModel ViewModel
     {
         get;
-    }
+    } = App.GetService<WebBrowserViewModel>();
 
     public WebBrowserPage()
     {
-        ViewModel = App.GetService<WebBrowserViewModel>();
         InitializeComponent();
 
         ViewModel.WebViewService.Initialize(WebView);

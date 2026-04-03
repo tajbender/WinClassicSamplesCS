@@ -11,8 +11,8 @@ namespace WinUIClassicSamplesBrowser.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {
-    private const string _defaultApplicationDataFolder = "WinUIClassicSamplesBrowser/ApplicationData";
-    private const string _defaultLocalSettingsFile = "LocalSettings.json";
+    private const string DefaultApplicationDataFolder = "WinUIClassicSamplesBrowser/ApplicationData";
+    private const string DefaultLocalSettingsFile = "LocalSettings.json";
 
     private readonly IFileService _fileService;
     private readonly LocalSettingsOptions _options;
@@ -21,7 +21,7 @@ public class LocalSettingsService : ILocalSettingsService
     private readonly string _applicationDataFolder;
     private readonly string _localsettingsFile;
 
-    private IDictionary<string, object> _settings;
+    private IDictionary<string, object> _settings = new Dictionary<string, object>();
 
     private bool _isInitialized;
 
@@ -30,10 +30,8 @@ public class LocalSettingsService : ILocalSettingsService
         _fileService = fileService;
         _options = options.Value;
 
-        _applicationDataFolder = Path.Combine(_localApplicationData, _options.ApplicationDataFolder ?? _defaultApplicationDataFolder);
-        _localsettingsFile = _options.LocalSettingsFile ?? _defaultLocalSettingsFile;
-
-        _settings = new Dictionary<string, object>();
+        _applicationDataFolder = Path.Combine(_localApplicationData, _options.ApplicationDataFolder ?? DefaultApplicationDataFolder);
+        _localsettingsFile = _options.LocalSettingsFile ?? DefaultLocalSettingsFile;
     }
 
     private async Task InitializeAsync()

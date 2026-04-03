@@ -16,13 +16,13 @@ public partial class WebBrowserViewModel : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
     [ObservableProperty]
-    private Uri source = new("https://github.com/dahall/WinClassicSamplesCS?tab=readme-ov-file#winclassicsamplescs");
+    private Uri _source = new("https://github.com/dahall/WinClassicSamplesCS?tab=readme-ov-file#winclassicsamplescs");
 
     [ObservableProperty]
-    private bool isLoading = true;
+    private bool _isLoading = true;
 
     [ObservableProperty]
-    private bool hasFailures;
+    private bool _hasFailures;
 
     public IWebViewService WebViewService
     {

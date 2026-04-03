@@ -6,13 +6,12 @@ namespace WinUIClassicSamplesBrowser.ViewModels;
 
 public partial class MainViewModel : ObservableRecipient
 {
-    public ClassicSamplesTestApp[] SampleApps;
-    public IFileService FileService;
+    [ObservableProperty]
+    private ClassicSamplesTestApp[] _sampleApps = new ClassicSamplesTestApp[] {
+        new(@"*.\TestExampleA\bin\UnitTest.exe"),
+        new(@"*.\TestExample2\bin\UnitTest.exe"),
+        new(@"*.\TestExample3\bin\UnitTest.exe"),
+    };
 
-    public MainViewModel()
-    {
-        SampleApps = new ClassicSamplesTestApp[] {
-            new("*"),
-        };
-    }
+    public IFileService FileService;
 }
