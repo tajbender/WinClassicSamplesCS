@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="WinUIClassicSamplesBrowser.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:WinUIClassicSamplesBrowser.ViewModels"
+    xmlns:data="using:WinUIClassicSamplesBrowser.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    mc:Ignorable="d">
+
+    <Grid ColumnDefinitions="*, 320">
+        <!-- Main Content -->
+        <FlipView Height="256" BorderBrush="Black" BorderThickness="3"
+                  AutomationProperties.AutomationControlType="List"
+                  AutomationProperties.LocalizedControlType="list"
+                  ItemsSource="{x:Bind SampleApps, Mode=OneWay}">
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="data:ClassicSamplesTestApp">
+                    <StackPanel Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <SymbolIcon Symbol="AllApps" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
+                            <TextBlock Text="Application"
+                                       Style="{StaticResource SubtitleTextBlockStyle}" />
+                        </StackPanel>
+                        <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="8"
+                                Padding="12">
+                            <TextBlock Text="TODO: Feed me!" />
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+        <!-- Sidebar -->
+        <ScrollViewer Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="12">
+            <StackPanel Spacing="16">
+                <!-- Dummy Panel 1 -->
+                <StackPanel>
+                    <TextBlock Text="Tip of the day"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Margin="0,0,0,4"/>
+                    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            CornerRadius="8"
+                            Padding="12">
+                        <TextBlock Text="TODO: Feed me!"/>
+                    </Border>
+                </StackPanel>
+                <!-- Dummy Panel 2 -->
+                <StackPanel>
+                    <TextBlock Text="Details"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Margin="0,0,0,4"/>
+                    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            CornerRadius="8"
+                            Padding="12">
+                        <TextBlock Text="TODO: Feed me!"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
