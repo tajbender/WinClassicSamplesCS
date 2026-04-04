@@ -6,9 +6,10 @@
     xmlns:local="using:WinUIClassicSamplesBrowser.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:WinUIClassicSamplesBrowser.Controls"
+    xmlns:controls="using:Vanara.WinUI.Extensions.Controls"
+    xmlns:controls1="using:WinUIClassicSamplesBrowser.Controls"
     mc:Ignorable="d">
     <Grid>
-        <controls:ExplorerBrowserControl/>
+        <controls:ExplorerBrowser />
     </Grid>
 </Page>
