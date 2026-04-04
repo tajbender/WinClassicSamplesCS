@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:WinUIClassicSamplesBrowser.ViewModels"
     xmlns:data="using:WinUIClassicSamplesBrowser.Models"
+    xmlns:controls="using:Vanara.WinUI.Extensions.Controls"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     mc:Ignorable="d">
 
@@ -17,12 +18,11 @@
         <!-- TODO: BackgroundSource="Backdrop" -->
     </Page.Resources>
 
-
-    <Grid ColumnDefinitions="*, 320" Background="{StaticResource PanelAcrylic}">
-        <!-- Main Content -->
-        <FlipView Height="256" BorderBrush="Black" BorderThickness="3"
-                  AutomationProperties.AutomationControlType="List"
+    <Grid Background="{StaticResource PanelAcrylic}" ColumnDefinitions="*, 320" RowDefinitions="*, *">
+        <!-- Main Content Flip View -->
+        <FlipView AutomationProperties.AutomationControlType="List"
                   AutomationProperties.LocalizedControlType="list"
+                  BorderBrush="Black" BorderThickness="3" Height="256" 
                   ItemsSource="{x:Bind SampleApps, Mode=OneWay}">
             <FlipView.ItemTemplate>
                 <DataTemplate x:DataType="data:ClassicSamplesTestApp">
@@ -41,6 +41,12 @@
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
+
+        <!-- Main Content Scroll Viewer -->
+        <ScrollViewer Grid.Column="0" Grid.Row="1">
+            <!--<controls:ExplorerBrowser/>-->
+        </ScrollViewer>
+
         <!-- Sidebar -->
         <ScrollViewer Grid.Column="1"
                       VerticalScrollBarVisibility="Auto"
