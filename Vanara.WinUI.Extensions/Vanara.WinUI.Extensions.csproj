@@ -14,10 +14,10 @@
 		<None Include="TemplateClass.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-		<PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.1.0" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.1.0" />
-		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.1.240821" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.1.240821" />
+		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3856.49" />
