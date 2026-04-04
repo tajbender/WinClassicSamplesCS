@@ -12,10 +12,10 @@ namespace WinUIClassicSamplesBrowser;
 
 public sealed partial class MainWindow : Window
 {
+    private readonly SystemBackdropConfiguration? _configuration = new();
     private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+    private readonly MicaController? _micaController;
     private readonly UISettings _settings = new();
-    private MicaController? _micaController;
-    private SystemBackdropConfiguration? _configuration = new SystemBackdropConfiguration();
 
     public MainWindow()
     {
@@ -28,6 +28,12 @@ public sealed partial class MainWindow : Window
         // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
         // info: cannot use FrameworkElement.ActualThemeChanged event
         _settings.ColorValuesChanged += Settings_ColorValuesChanged;
+
+        // Mica Backdrop handling
+        _micaController = new MicaController();
+        _micaController.Kind = MicaKind.BaseAlt;
+        _micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
+        _micaController.SetSystemBackdropConfiguration(_configuration);
     }
 
     public bool TrySetMicaBackdrop()
@@ -40,10 +46,10 @@ public sealed partial class MainWindow : Window
             this._configuration.IsInputActive = true;
             this._configuration.Theme = SystemBackdropTheme.Default;
 
-            _micaController = new MicaController();
-            _micaController.Kind = MicaKind.BaseAlt;
-            _micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
-            _micaController.SetSystemBackdropConfiguration(_configuration);
+//            _micaController = new MicaController();
+//            _micaController.Kind = MicaKind.BaseAlt;
+//            _micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
+//            _micaController.SetSystemBackdropConfiguration(_configuration);
 
             return true;
         }
