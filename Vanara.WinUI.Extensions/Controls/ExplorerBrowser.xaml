@@ -16,9 +16,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <CommandBar Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Grid.Row="0"
+        <CommandBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
                     DefaultLabelPosition="Collapsed"
                     HorizontalAlignment="Left">
             <AppBarButton Icon="Back" Label="Navigate back" />
@@ -180,49 +178,33 @@
                 </SplitButton>
             </AppBarElementContainer>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Undo"
-                              Label="Undo"
-                                />
+                <AppBarButton Icon="Undo" Label="Undo" />
                 <AppBarSeparator />
-                <AppBarButton Icon="Pin"
-                              Label="Pin to Quick access"
-                                />
+                <AppBarButton Icon="Pin" Label="Pin to Quick access" />
                 <AppBarSeparator />
-                <AppBarButton Icon="SelectAll"
-                              Label="Select all"
-                                />
+                <AppBarButton Icon="SelectAll" Label="Select all" />
                 <!-- TODO: The Icon="ViewAll" is the one, that Windows Explorer uses for `Select none` -->
-                <AppBarButton Icon="ClearSelection"
-                              Label="Select none"
-                                />
-                <AppBarButton Icon="Shuffle"
-                              Label="Invert selection"
-                                />
+                <AppBarButton Icon="ClearSelection" Label="Select none" />
+                <AppBarButton Icon="Shuffle" Label="Invert selection" />
                 <AppBarSeparator />
-                <AppBarButton Icon="Repair"
-                              Label="Properties"
-                                />
-                <AppBarButton Icon="Setting"
-                              Label="Options"
-                                />
+                <AppBarButton Icon="Repair" Label="Properties" />
+                <AppBarButton Icon="Setting" Label="Options" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
         <SplitView Grid.Column="0"
                    Grid.Row="1"
-                   PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                    IsPaneOpen="True"
                    OpenPaneLength="192"
                    DisplayMode="Inline">
             <SplitView.Pane>
                 <controls:ShellNamespaceTreeControl x:Name="PrimaryShellTreeView" />
             </SplitView.Pane>
-            <Grid>
+            <Grid> 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <controls:ShellListView x:Name="PrimaryShellListView"
-                                     Grid.Row="0" />
+                <controls:ShellListView x:Name="PrimaryShellListView" Grid.Row="0"/>
                 <CommandBar Grid.Column="0"
                             Grid.Row="1"
                             HorizontalAlignment="Left"
@@ -271,8 +253,7 @@
         <Border Grid.Column="1"
                 Grid.Row="1"
                 MinWidth="192"
-                BorderThickness="7"
-                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                BorderThickness="7">
         </Border>
     </Grid>
 </UserControl>
