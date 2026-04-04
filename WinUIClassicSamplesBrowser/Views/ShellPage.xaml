@@ -9,8 +9,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:viewmodels="using:WinUIClassicSamplesBrowser.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-    mc:Ignorable="d"
-    Loaded="OnLoaded">
+    mc:Ignorable="d">
 
     <Grid>
         <Grid x:Name="AppTitleBar"
@@ -79,7 +78,7 @@
             </BreadcrumbBar>
         </Grid>
 
-<NavigationView
+        <NavigationView
             x:Name="NavigationViewControl"
             Background="Transparent"            
             Canvas.ZIndex="0"
@@ -88,8 +87,33 @@
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
             IsSettingsVisible="True"
             ExpandedModeThresholdWidth="172"
-            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
+            DisplayModeChanged="NavigationViewControl_DisplayModeChanged" >
+            <!-- Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}" -->
+
+            <NavigationView.Header>
+                <TextBlock Text="Classic Samples Browser" FontSize="20" FontWeight="SemiBold" Margin="12,8,0,12"/>
+            </NavigationView.Header>
+
+            <NavigationView.Resources>
+                <!-- The Selected state brushes are used when the item is selected. -->
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="#33FFFFFF"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="White"/>
+
+                <!-- The PointerOver state brushes are used when the item is hovered, but not selected. -->
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundPointerOver" Color="#1AFFFFFF"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="White"/>
+
+                <!-- The Pressed state brushes are used when the item is pressed, but not selected. -->
+                <Style TargetType="NavigationViewItem">
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="Margin" Value="4,2"/>
+                    <Setter Property="CornerRadius" Value="8"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="MinWidth" Value="0"/>
+                </Style>
+            </NavigationView.Resources>
+
+
             <NavigationView.MenuItems>
                 <!--
                 TODO: Update item titles by updating <x:Uid>.Content entries in Strings/en-us/Resources.resw.

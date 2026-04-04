@@ -11,6 +11,9 @@
 		<Compile Remove="TemplateClass.cs" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Controls\ShellContextRibbon.xaml" />
+	</ItemGroup>
+	<ItemGroup>
 		<None Include="TemplateClass.cs" />
 	</ItemGroup>
 	<ItemGroup>
@@ -29,5 +32,10 @@
 		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.1" />
 		<PackageReference Include="Vanara.Windows.Shell.Common" Version="5.0.1" />
 		<PackageReference Include="WinUIEx" Version="2.3.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\ShellContextRibbon.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 </Project>
