@@ -1,10 +1,7 @@
 ﻿using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-using Microsoft.Windows.AppNotifications;
-
 using WinUIClassicSamplesBrowser.Contracts.Services;
-using WinUIClassicSamplesBrowser.ViewModels;
 
 namespace WinUIClassicSamplesBrowser.Activation;
 

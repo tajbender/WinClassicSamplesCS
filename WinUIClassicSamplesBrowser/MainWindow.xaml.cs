@@ -1,13 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Dispatching;
 using Windows.UI.ViewManagement;
 using WinRT;
-
 using WinUIClassicSamplesBrowser.Helpers;
+using WinUIEx;
 
 namespace WinUIClassicSamplesBrowser;
 

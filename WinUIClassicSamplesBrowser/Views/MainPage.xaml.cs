@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using WinUIClassicSamplesBrowser.Models;
 using WinUIClassicSamplesBrowser.ViewModels;
 

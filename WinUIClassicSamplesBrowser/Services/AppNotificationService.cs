@@ -4,7 +4,6 @@ using System.Web;
 using Microsoft.Windows.AppNotifications;
 
 using WinUIClassicSamplesBrowser.Contracts.Services;
-using WinUIClassicSamplesBrowser.ViewModels;
 
 namespace WinUIClassicSamplesBrowser.Notifications;
 

@@ -10,6 +10,7 @@ using WinUIClassicSamplesBrowser.Notifications;
 using WinUIClassicSamplesBrowser.Services;
 using WinUIClassicSamplesBrowser.ViewModels;
 using WinUIClassicSamplesBrowser.Views;
+using WinUIEx;
 
 namespace WinUIClassicSamplesBrowser;
 
