@@ -1,13 +1,9 @@
 ﻿using System.Reflection;
 using System.Windows.Input;
-
+using Windows.ApplicationModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using Microsoft.UI.Xaml;
-
-using Windows.ApplicationModel;
-
 using WinUIClassicSamplesBrowser.Contracts.Services;
 using WinUIClassicSamplesBrowser.Helpers;
 

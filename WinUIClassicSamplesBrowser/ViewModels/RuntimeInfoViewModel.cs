@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Text;
+using Windows.ApplicationModel.DataTransfer;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyModel;
-using Windows.ApplicationModel.DataTransfer;
 
 namespace WinUIClassicSamplesBrowser.ViewModels;
 

@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Windows.Storage;
-
+﻿using Windows.Storage;
+using Microsoft.Extensions.Options;
 using WinUIClassicSamplesBrowser.Contracts.Services;
 using WinUIClassicSamplesBrowser.Helpers;
 using WinUIClassicSamplesBrowser.Models;

@@ -17,7 +17,7 @@ using WinUIEx;
 namespace WinUIClassicSamplesBrowser;
 
 // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
-public partial class App : Application
+public partial class App : Microsoft.UI.Xaml.Application
 {
     // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
     // https://docs.microsoft.com/dotnet/core/extensions/generic-host

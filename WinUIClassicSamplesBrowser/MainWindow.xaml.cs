@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Composition;
-using Microsoft.UI.Dispatching;
 using Windows.UI.ViewManagement;
+using Microsoft.UI.Composition;
+using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Dispatching;
 using WinRT;
 using WinUIClassicSamplesBrowser.Helpers;
 using WinUIEx;
