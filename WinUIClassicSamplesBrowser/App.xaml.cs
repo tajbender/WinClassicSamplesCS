@@ -5,7 +5,6 @@ using WinUIClassicSamplesBrowser.Activation;
 using WinUIClassicSamplesBrowser.Contracts.Services;
 using WinUIClassicSamplesBrowser.Helpers;
 using WinUIClassicSamplesBrowser.Models;
-using WinUIClassicSamplesBrowser.Notifications;
 using WinUIClassicSamplesBrowser.Services;
 using WinUIClassicSamplesBrowser.ViewModels;
 using WinUIClassicSamplesBrowser.Views;

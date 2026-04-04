@@ -1,12 +1,9 @@
 ﻿using System.Collections.Specialized;
 using System.Web;
-
 using Microsoft.Windows.AppNotifications;
-
 using WinUIClassicSamplesBrowser.Contracts.Services;
-using WinUIClassicSamplesBrowser.ViewModels;
 
-namespace WinUIClassicSamplesBrowser.Notifications;
+namespace WinUIClassicSamplesBrowser.Services;
 
 public class AppNotificationService : IAppNotificationService
 {
