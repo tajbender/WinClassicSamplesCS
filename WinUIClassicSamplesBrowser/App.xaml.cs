@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
 using WinUIClassicSamplesBrowser.Activation;
 using WinUIClassicSamplesBrowser.Contracts.Services;
 using WinUIClassicSamplesBrowser.Helpers;
@@ -10,6 +9,7 @@ using WinUIClassicSamplesBrowser.Notifications;
 using WinUIClassicSamplesBrowser.Services;
 using WinUIClassicSamplesBrowser.ViewModels;
 using WinUIClassicSamplesBrowser.Views;
+using WinUIEx;
 
 namespace WinUIClassicSamplesBrowser;
 
@@ -45,10 +45,9 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        Host = Microsoft.Extensions.Hosting.Host.
-        CreateDefaultBuilder().
-        UseContentRoot(AppContext.BaseDirectory).
-        ConfigureServices((context, services) =>
+        Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder().
+            UseContentRoot(AppContext.BaseDirectory).
+            ConfigureServices((context, services) =>
         {
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();

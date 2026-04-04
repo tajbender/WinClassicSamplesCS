@@ -8,6 +8,7 @@ using Windows.UI.ViewManagement;
 using WinRT;
 
 using WinUIClassicSamplesBrowser.Helpers;
+using WinUIEx;
 
 namespace WinUIClassicSamplesBrowser;
 
