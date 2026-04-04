@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
@@ -40,7 +43,10 @@ public partial class App : Application
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 
-    public static UIElement? AppTitlebar { get; set; }
+    public static UIElement? AppTitlebar
+    {
+        get; set;
+    }
 
     public App()
     {
@@ -95,8 +101,41 @@ public partial class App : Application
     {
         // TODO: Log and handle exceptions as appropriate.
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        var guruMeditation = new StringBuilder();
+        guruMeditation.AppendFormat($"System error {e.Message}");
+        guruMeditation.AppendLine($"stack: {e.ToString()}");
+
+        var comEx = e.Exception;
+        var isComException = e.Exception.Equals((COMException)comEx);
+        
+        if (comEx != null)
+        {
+            if (comEx.HResult.Equals(0x80040154)) /* REGDB_E_CLASSNOTREG */
+            {
+            }
+        }
+
+
+        /** todo: handle this excaption: */
+                /* System.Runtime.InteropServices.COMException
+                    HResult=0x80040154
+                    Message=Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))
+                    Source=System.Private.CoreLib
+                    StackTrace:
+                     at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)
+                     at WinRT.ActivationFactory.Get(String typeName, Guid iid)
+                     at Microsoft.UI.Xaml.Application.get__objRef_global__Microsoft_UI_Xaml_IApplicationStatics()
+                     at Microsoft.UI.Xaml.Application.Start(ApplicationInitializationCallback callback)
+                     at WinUIClassicSamplesBrowser.Program.Main(String[] args) in D:\gitSource\WinUI Classic Samples Browser\WinUIClassicSamplesBrowser\obj\x64\Debug\net8.0-windows10.0.22621.0\App.g.i.cs:line 26
+                */
+
+                if (e.Handled)
+        {
+            Debug.Fail(e.Message);
+        }
     }
 
+    /* TODO: $exception	{"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))"}	System.Runtime.InteropServices.COMException */
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
