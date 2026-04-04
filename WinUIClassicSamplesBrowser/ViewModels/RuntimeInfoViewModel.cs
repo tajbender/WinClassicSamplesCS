@@ -17,19 +17,19 @@ public partial class RuntimeInfoViewModel : ObservableObject
     {
         get;
     }
-        = new();
+        = [];
 
     public ObservableCollection<LibraryInfoModel> ReferencedLibraries
     {
         get;
     }
-        = new();
+        = [];
 
     public ObservableCollection<KeyValueItem> TableItems
     {
         get;
     }
-        = new();
+        = [];
 
     public RuntimeInfoViewModel()
     {
