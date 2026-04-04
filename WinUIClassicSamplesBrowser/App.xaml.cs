@@ -93,42 +93,42 @@ public partial class App : Microsoft.UI.Xaml.Application
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
-        var guruMeditation = new StringBuilder();
-        guruMeditation.AppendFormat($"System error {e.Message}");
-        guruMeditation.AppendLine($"stack: {e.ToString()}");
+        //// TODO: Log and handle exceptions as appropriate.
+        //// https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        //var guruMeditation = new StringBuilder();
+        //guruMeditation.AppendFormat($"System error {e.Message}");
+        //guruMeditation.AppendLine($"stack: {e.ToString()}");
 
-        var comEx = e.Exception;
-        var isComException = e.Exception.Equals((COMException)comEx);
+        //var comEx = e.Exception;
+        //var isComException = e.Exception.Equals((COMException)comEx);
         
-        if (comEx != null)
-        {
-            if (comEx.HResult.Equals(0x80040154)) /* REGDB_E_CLASSNOTREG (0x80040154 (REGDB_E_CLASSNOTREG)) */
-            {
-                guruMeditation.AppendLine($"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))");
-            }
+        //if (comEx != null)
+        //{
+        //    if (comEx.HResult.Equals(0x80040154)) /* REGDB_E_CLASSNOTREG (0x80040154 (REGDB_E_CLASSNOTREG)) */
+        //    {
+        //        guruMeditation.AppendLine($"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))");
+        //    }
 
-            e.Handled = true;
-        }
-        if (!e.Handled)
-        {
-            Debug.Fail(e.Message);
-        }
+        //    e.Handled = true;
+        //}
+        //if (!e.Handled)
+        //{
+        //    Debug.Fail(e.Message);
+        //}
 
-        ////** todo: todo: handle exception:
-        /* $exception	{"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))"}	System.Runtime.InteropServices.COMException */
-        //// * System.Runtime.Intero
-        //// * HResult=0x80040154
-        //// * Message=Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))
-        //// * Source=System.Private.CoreLib
-        //// * StackTrace:
-        ////            at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)
-        ////            at WinRT.ActivationFactory.Get(String typeName, Guid iid)
-        ////            at Microsoft.UI.Xaml.Application.get__objRef_global__Microsoft_UI_Xaml_IApplicationStatics()
-        ////            at Microsoft.UI.Xaml.Application.Start(ApplicationInitializationCallback callback)
-        ////            at WinUIClassicSamplesBrowser.Program.Main(String[] args)
-        ////        in D:\gitSource\WinUI Classic Samples Browser\WinUIClassicSamplesBrowser\obj\x64\Debug\net8.0-windows10.0.22621.0\App.g.i.cs:line 26 */
+        //////** todo: todo: handle exception:
+        ///* $exception	{"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))"}	System.Runtime.InteropServices.COMException */
+        ////// * System.Runtime.Intero
+        ////// * HResult=0x80040154
+        ////// * Message=Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))
+        ////// * Source=System.Private.CoreLib
+        ////// * StackTrace:
+        //////            at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)
+        //////            at WinRT.ActivationFactory.Get(String typeName, Guid iid)
+        //////            at Microsoft.UI.Xaml.Application.get__objRef_global__Microsoft_UI_Xaml_IApplicationStatics()
+        //////            at Microsoft.UI.Xaml.Application.Start(ApplicationInitializationCallback callback)
+        //////            at WinUIClassicSamplesBrowser.Program.Main(String[] args)
+        //////        in D:\gitSource\WinUI Classic Samples Browser\WinUIClassicSamplesBrowser\obj\x64\Debug\net8.0-windows10.0.22621.0\App.g.i.cs:line 26 */
 
     }
 
