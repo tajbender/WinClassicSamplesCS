@@ -17,6 +17,9 @@ public sealed partial class MainWindow : WindowEx
 
     private readonly UISettings _settings = new();
 
+    MicaController? micaController;
+    SystemBackdropConfiguration? configuration;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -36,15 +39,15 @@ public sealed partial class MainWindow : WindowEx
 
         try
         {
-            var config = new SystemBackdropConfiguration
+            var configuration = new SystemBackdropConfiguration
             {
                 IsInputActive = true,
                 Theme = SystemBackdropTheme.Default
             };
 
-            var micaController = new MicaController();
+            micaController = new MicaController();
             micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
-            micaController.SetSystemBackdropConfiguration(config);
+            micaController.SetSystemBackdropConfiguration(configuration);
 
             return true;
         }
@@ -71,32 +74,3 @@ public sealed partial class MainWindow : WindowEx
         });
     }
 }
-
-
-
-//public sealed partial class MainWindow : Window
-//{
-//    MicaController? micaController;
-//    SystemBackdropConfiguration? configuration;
-//
-//    public MainWindow()
-//    {
-//        this.InitializeComponent();
-//        //TrySetMicaBackdrop();
-//    }
-//
-//    //bool TrySetMicaBackdrop()
-//    //{
-//    //    if (!MicaController.IsSupported()) return false;
-//
-//    //    configuration = new SystemBackdropConfiguration();
-//    //    configuration.IsInputActive = true;
-//    //    configuration.Theme = SystemBackdropTheme.Default;
-//
-//    //    micaController = new MicaController();
-//    //    micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
-//    //    micaController.SetSystemBackdropConfiguration(configuration);
-//
-//    //    return true;
-//    //}
-//}
