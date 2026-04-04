@@ -1,4 +1,11 @@
-﻿using Windows.UI.ViewManagement;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Composition;
+using Microsoft.UI.Dispatching;
+using Windows.UI.ViewManagement;
+using WinRT;
 
 using WinUIClassicSamplesBrowser.Helpers;
 
@@ -6,9 +13,9 @@ namespace WinUIClassicSamplesBrowser;
 
 public sealed partial class MainWindow : WindowEx
 {
-    private Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+    private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-    private UISettings _settings = new();
+    private readonly UISettings _settings = new();
 
     public MainWindow()
     {
@@ -22,6 +29,37 @@ public sealed partial class MainWindow : WindowEx
         _settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
     }
 
+    public bool TrySetMicaBackdrop()
+    {
+        if (!MicaController.IsSupported())
+            return false;
+
+        try
+        {
+            var config = new SystemBackdropConfiguration
+            {
+                IsInputActive = true,
+                Theme = SystemBackdropTheme.Default
+            };
+
+            var micaController = new MicaController();
+            micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
+            micaController.SetSystemBackdropConfiguration(config);
+
+            return true;
+        }
+        catch (COMException comEx)
+        {
+            Debug.Fail(comEx.Message, $"hResult<{comEx.HResult}>");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Debug.Fail(ex.Message, ex.HelpLink);
+            throw;
+        }
+    }
+
     // this handles updating the caption button colors correctly when indows system theme is changed
     // while the app is open
     private void Settings_ColorValuesChanged(UISettings sender, object args)
@@ -33,3 +71,32 @@ public sealed partial class MainWindow : WindowEx
         });
     }
 }
+
+
+
+//public sealed partial class MainWindow : Window
+//{
+//    MicaController? micaController;
+//    SystemBackdropConfiguration? configuration;
+//
+//    public MainWindow()
+//    {
+//        this.InitializeComponent();
+//        //TrySetMicaBackdrop();
+//    }
+//
+//    //bool TrySetMicaBackdrop()
+//    //{
+//    //    if (!MicaController.IsSupported()) return false;
+//
+//    //    configuration = new SystemBackdropConfiguration();
+//    //    configuration.IsInputActive = true;
+//    //    configuration.Theme = SystemBackdropTheme.Default;
+//
+//    //    micaController = new MicaController();
+//    //    micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
+//    //    micaController.SetSystemBackdropConfiguration(configuration);
+//
+//    //    return true;
+//    //}
+//}

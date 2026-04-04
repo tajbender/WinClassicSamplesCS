@@ -82,7 +82,7 @@ internal class Shel32NamespaceService
     /// <remarks>TODO: INFO: Investigate <seealso href="https://learn.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.imaging.writeablebitmap?view=winrt-26100">uwp/api/windows.ui.xaml.media.imaging.WriteableBitmap (WARN: Links to UWP)</seealso></remarks>
     /// <param name="bitmapIcon">The <seealso cref="WinUIEx.Icon">Icon</seealso>.</param>
     /// <returns>Task&lt;SoftwareBitmapSource?&gt;</returns>
-    public static async Task<SoftwareBitmapSource?> GetWinUi3BitmapSourceFromIcon(System.Drawing.Icon bitmapIcon)
+    public static async Task<SoftwareBitmapSource?> GetWinUi3BitmapSourceFromIcon(Icon bitmapIcon)
     {
         ArgumentNullException.ThrowIfNull(bitmapIcon);
 
