@@ -44,9 +44,9 @@ public class AppNotificationService : IAppNotificationService
 
         App.MainWindow.DispatcherQueue.TryEnqueue(() =>
         {
-            App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
-
-            App.MainWindow.BringToFront();
+            /** todo: REMOVED 04-04-26 tajbender, raplaced `WindowEx` by `Window` *
+             * App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
+             * App.MainWindow.BringToFront(); */
         });
     }
 

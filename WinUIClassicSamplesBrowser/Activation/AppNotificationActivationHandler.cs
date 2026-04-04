@@ -41,10 +41,13 @@ public class AppNotificationActivationHandler : ActivationHandler<LaunchActivate
         ////     });
         //// }
 
+
+        /** REMOVED 04-04-26 tajbender, raplaced `WindowEx` by `Window` *
         App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
         {
             App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification activations.", "Notification Activation");
         });
+        */
 
         await Task.CompletedTask;
     }
