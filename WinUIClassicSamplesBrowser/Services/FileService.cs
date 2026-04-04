@@ -46,7 +46,9 @@ public class FileService : IFileService
                 || string.Equals(Path.GetExtension(filePath), ".com", StringComparison.OrdinalIgnoreCase);
 
             if (isExecutable)
+            {
                 return true;
+            }
         }
 
         return false;
@@ -55,14 +57,18 @@ public class FileService : IFileService
     public bool IsPeExecutable(string filePath)
     {
         if (!File.Exists(filePath))
+        {
             return false;
+        }
 
         using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
         using var br = new BinaryReader(fs);
 
         // DOS-Header: "MZ"
         if (br.ReadUInt16() != 0x5A4D)
+        {
             return false;
+        }
 
         // PE-Header-Offset
         fs.Seek(0x3C, SeekOrigin.Begin);

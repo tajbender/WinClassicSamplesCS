@@ -34,6 +34,7 @@ internal class WindowsSystemDispatcherQueueHelper
             options.threadType = 2;    // DQTYPE_THREAD_CURRENT
             options.apartmentType = 2; // DQTAT_COM_STA
 
+            // TODO: Handle failure gracefully (e.g. throw an exception, or at least log the failure)
             CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
         }
     }

@@ -43,7 +43,9 @@ public partial class RuntimeInfoViewModel : ObservableObject
         var sb = new StringBuilder();
 
         foreach (var item in TableItems)
+        {
             sb.AppendLine($"{item.Key}: {item.Value}");
+        }
 
         Clipboard.SetContent(
             new DataPackage
@@ -61,7 +63,9 @@ public partial class RuntimeInfoViewModel : ObservableObject
         sb.AppendLine("|-----|--------|");
 
         foreach (var item in TableItems)
+        {
             sb.AppendLine($"| {item.Key} | {item.Value} |");
+        }
 
         Clipboard.SetContent(
             new DataPackage
@@ -97,7 +101,9 @@ public partial class RuntimeInfoViewModel : ObservableObject
         var context = DependencyContext.Default;
 
         if (context == null)
+        {
             return;
+        }
 
         foreach (var lib in context.RuntimeLibraries.OrderBy(l => l.Name))
         {

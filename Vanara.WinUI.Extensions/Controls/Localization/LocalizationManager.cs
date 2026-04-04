@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Globalization;
 using System.Linq;
 using Microsoft.UI.Xaml;
@@ -11,6 +12,7 @@ public sealed class LocalizationManager
 
     private LocalizationManager()
     {
+
     }
 
     public event EventHandler? LanguageChanged;
@@ -22,7 +24,9 @@ public sealed class LocalizationManager
         var culture = new CultureInfo(cultureName);
 
         if (Equals(culture, CurrentCulture))
+        {
             return;
+        }
 
         CurrentCulture = culture;
         CultureInfo.CurrentCulture = culture;
@@ -35,22 +39,23 @@ public sealed class LocalizationManager
 
     private void ReloadResourceDictionary(CultureInfo culture)
     {
-        // Annahme: du hast genau EIN Vanara‑Dictionary gemerged
+        // NOTE: assert *one* Vanara‑Dictionary is merged
         var app = (Application)Application.Current;
 
         var rd = app.Resources.MergedDictionaries
-            .FirstOrDefault(d => d.Source != null &&
-                                 d.Source.OriginalString.Contains("Resources/Vanara.WinUI.xaml"));
+            .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Resources/Vanara.WinUI.xaml"));
 
         if (rd == null)
+        {
             return;
+        }
 
-        // Neutral (englisch)
+        // Neutral (english)
         Uri newSource;
 
         if (culture.TwoLetterISOLanguageName.Equals("en", StringComparison.OrdinalIgnoreCase))
         {
-            newSource = new Uri("ms-appx:///Resources/Vanara.WinUI.xaml");
+            newSource = new Uri($"ms-appx:///Resources/Vanara.WinUI.xaml");
         }
         else
         {
@@ -69,7 +74,6 @@ public sealed class LocalizationManager
             return s;
         }
 
-        // Fallback: Key anzeigen, damit man Fehler sieht
-        return $"[{key}]";
+        return $"WARN: No `string<[]>` for key `{key}`.";
     }
 }
