@@ -9,7 +9,16 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     mc:Ignorable="d">
 
-    <Grid ColumnDefinitions="*, 320">
+    <Page.Resources>
+        <AcrylicBrush x:Key="PanelAcrylic"
+                      TintColor="#202020"
+                      TintOpacity="0.5"
+                      FallbackColor="#202020" />
+        <!-- TODO: BackgroundSource="Backdrop" -->
+    </Page.Resources>
+
+
+    <Grid ColumnDefinitions="*, 320" Background="{StaticResource PanelAcrylic}">
         <!-- Main Content -->
         <FlipView Height="256" BorderBrush="Black" BorderThickness="3"
                   AutomationProperties.AutomationControlType="List"

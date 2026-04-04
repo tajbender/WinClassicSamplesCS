@@ -19,7 +19,6 @@ public sealed partial class ExplorerBrowser : UserControl
     private Task<HRESULT>? _currentNavigationTask;
     private bool _isLoading;
 
-
     public ExplorerBrowser()
     {
         InitializeComponent();
@@ -82,16 +81,12 @@ public sealed partial class ExplorerBrowser : UserControl
             Debug.Fail(
                 $"[Error] Navigate(<{target}>) failed. COMException: <HResult: {comEx.HResult}>: `{comEx.Message}`");
 
-            return new HRESULT(comEx.HResult);
+            throw;
         }
         catch (Exception ex)
         {
             Debug.Fail($"[Error] Navigate(<{target}>) failed, reason unknown: {ex.Message}");
             throw;
-        }
-        finally
-        {
-            //IsLoading = false;
         }
 
         return HRESULT.S_OK;
@@ -101,7 +96,11 @@ public sealed partial class ExplorerBrowser : UserControl
     private async void PrimaryShellTreeView_Navigated(object sender, NavigatedEventArgs e)
     {
         Debug.Print($".PrimaryShellTreeView_Navigated() to {e.NewLocation.Name}");
+        Debug.Print($"warn: This is a fire-and-forget call, no await");
+        Debug.Print($"info: Use existing ShellBrowserItem from TreeView.");
 
-        _ = Navigate(new ShellBrowserItem(e.NewLocation));  // WARN: This is a fire-and-forget call, no await! // WARN: Use existing ShellBrowserItem from TreeView
+        _ = Navigate(
+            new ShellBrowserItem(e
+                .NewLocation)); 
     }
 }

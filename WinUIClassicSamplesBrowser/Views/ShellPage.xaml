@@ -79,14 +79,15 @@
             </BreadcrumbBar>
         </Grid>
 
-        <NavigationView
+<NavigationView
             x:Name="NavigationViewControl"
+            Background="Transparent"            
             Canvas.ZIndex="0"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
             IsSettingsVisible="True"
-            ExpandedModeThresholdWidth="1280"
+            ExpandedModeThresholdWidth="172"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
             <NavigationView.MenuItems>

@@ -18,7 +18,7 @@ public sealed partial class MainWindow : WindowEx
     private readonly UISettings _settings = new();
 
     MicaController? micaController;
-    SystemBackdropConfiguration? configuration;
+    SystemBackdropConfiguration? configuration = new SystemBackdropConfiguration();
 
     public MainWindow()
     {
@@ -39,13 +39,11 @@ public sealed partial class MainWindow : WindowEx
 
         try
         {
-            var configuration = new SystemBackdropConfiguration
-            {
-                IsInputActive = true,
-                Theme = SystemBackdropTheme.Default
-            };
+            this.configuration.IsInputActive = true;
+            this.configuration.Theme = SystemBackdropTheme.Default;
 
             micaController = new MicaController();
+            micaController.Kind = MicaKind.BaseAlt;
             micaController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
             micaController.SetSystemBackdropConfiguration(configuration);
 
