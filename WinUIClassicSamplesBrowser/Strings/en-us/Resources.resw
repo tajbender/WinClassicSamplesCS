@@ -209,4 +209,7 @@
   <data name="Shell_RibbonConverter.Content" xml:space="preserve">
     <value>Ribbon Converter</value>
   </data>
+  <data name="Shell_GitHubCopilot.Content" xml:space="preserve">
+    <value>GitHub Copilot</value>
+  </data>
 </root>
