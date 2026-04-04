@@ -12,7 +12,7 @@ using WinUIEx;
 
 namespace WinUIClassicSamplesBrowser;
 
-public sealed partial class MainWindow : WindowEx
+public sealed partial class MainWindow : Window
 {
     private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
