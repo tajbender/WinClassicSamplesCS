@@ -18,8 +18,8 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="Styles\ThemeResources.xaml" />
-	  <None Remove="Views\ExplorerBrowserPage.xaml" />
+		<None Remove="Styles\ThemeResources.xaml" />
+		<None Remove="Views\ExplorerBrowserPage.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -53,10 +53,10 @@
 			<PackagePath>\</PackagePath>
 		</None>
 		<Page Update="Styles\ThemeResources.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</Page>
 		<Page Update="Views\ExplorerBrowserPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</Page>
 	</ItemGroup>
 

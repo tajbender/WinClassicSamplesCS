@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
 using WinUIClassicSamplesBrowser.Activation;
 using WinUIClassicSamplesBrowser.Contracts.Services;
 using WinUIClassicSamplesBrowser.Helpers;
@@ -50,12 +49,10 @@ public partial class App : Application
 
     public App()
     {
+        UnhandledException += App_UnhandledException;
         InitializeComponent();
 
-        Host = Microsoft.Extensions.Hosting.Host.
-        CreateDefaultBuilder().
-        UseContentRoot(AppContext.BaseDirectory).
-        ConfigureServices((context, services) =>
+        Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder().UseContentRoot(AppContext.BaseDirectory).ConfigureServices((context, services) =>
         {
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
@@ -89,12 +86,9 @@ public partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-        }).
-        Build();
+        }).Build();
 
         GetService<IAppNotificationService>().Initialize();
-
-        UnhandledException += App_UnhandledException;
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -110,32 +104,34 @@ public partial class App : Application
         
         if (comEx != null)
         {
-            if (comEx.HResult.Equals(0x80040154)) /* REGDB_E_CLASSNOTREG */
+            if (comEx.HResult.Equals(0x80040154)) /* REGDB_E_CLASSNOTREG (0x80040154 (REGDB_E_CLASSNOTREG)) */
             {
+                guruMeditation.AppendLine($"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))");
             }
+
+            e.Handled = true;
         }
-
-
-        /** todo: handle this excaption: */
-                /* System.Runtime.InteropServices.COMException
-                    HResult=0x80040154
-                    Message=Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))
-                    Source=System.Private.CoreLib
-                    StackTrace:
-                     at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)
-                     at WinRT.ActivationFactory.Get(String typeName, Guid iid)
-                     at Microsoft.UI.Xaml.Application.get__objRef_global__Microsoft_UI_Xaml_IApplicationStatics()
-                     at Microsoft.UI.Xaml.Application.Start(ApplicationInitializationCallback callback)
-                     at WinUIClassicSamplesBrowser.Program.Main(String[] args) in D:\gitSource\WinUI Classic Samples Browser\WinUIClassicSamplesBrowser\obj\x64\Debug\net8.0-windows10.0.22621.0\App.g.i.cs:line 26
-                */
-
-                if (e.Handled)
+        if (!e.Handled)
         {
             Debug.Fail(e.Message);
         }
+
+        ////** todo: todo: handle exception:
+        /* $exception	{"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))"}	System.Runtime.InteropServices.COMException */
+        //// * System.Runtime.Intero
+        //// * HResult=0x80040154
+        //// * Message=Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))
+        //// * Source=System.Private.CoreLib
+        //// * StackTrace:
+        ////            at System.Runtime.InteropServices.Marshal.ThrowExceptionForHR(Int32 errorCode)
+        ////            at WinRT.ActivationFactory.Get(String typeName, Guid iid)
+        ////            at Microsoft.UI.Xaml.Application.get__objRef_global__Microsoft_UI_Xaml_IApplicationStatics()
+        ////            at Microsoft.UI.Xaml.Application.Start(ApplicationInitializationCallback callback)
+        ////            at WinUIClassicSamplesBrowser.Program.Main(String[] args)
+        ////        in D:\gitSource\WinUI Classic Samples Browser\WinUIClassicSamplesBrowser\obj\x64\Debug\net8.0-windows10.0.22621.0\App.g.i.cs:line 26 */
+
     }
 
-    /* TODO: $exception	{"Class not registered (0x80040154 (REGDB_E_CLASSNOTREG))"}	System.Runtime.InteropServices.COMException */
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
