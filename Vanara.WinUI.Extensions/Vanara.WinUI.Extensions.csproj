@@ -6,6 +6,7 @@
 		<UseWinUI>true</UseWinUI>
 		<WinUISDKReferences>false</WinUISDKReferences>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="TemplateClass.cs" />
