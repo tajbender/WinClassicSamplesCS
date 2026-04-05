@@ -1,0 +1,1082 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "net8.0",
+    "targetDisplayName": ".NETCoreApp,Version=v8.0"
+  },
+  "analysisStartTime": "2026-04-05T16:48:16.2547877Z",
+  "analysisEndTime": "2026-04-05T16:48:20.5412012Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 1,
+      "issues": 4,
+      "incidents": 40,
+      "effort": 40
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 4,
+        "Optional": 0,
+        "Potential": 36,
+        "Information": 0
+      },
+      "category": {
+        "NuGet": 5,
+        "Project": 1,
+        "Api": 34
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "WinUIClassicSamplesBrowser.csproj",
+      "startingProject": true,
+      "issues": 4,
+      "storyPoints": 40,
+      "properties": {
+        "appName": "WinUIClassicSamplesBrowser",
+        "projectKind": "WinForms",
+        "frameworks": [
+          "net7.0-windows10.0.19041.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 60,
+        "numberOfCodeFiles": 48,
+        "linesTotal": 4088,
+        "linesOfCode": 2273,
+        "totalApiScanned": 7474,
+        "minLinesOfCodeToChange": 34,
+        "maxLinesOfCodeToChange": 34
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "b11297ad-b5bc-458d-aaf7-248838e213ad",
+          "ruleId": "NuGet.0002",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.DependencyModel, 6.0.2\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyModel, and replace with new package Microsoft.Extensions.DependencyModel 8.0.2",
+              "protected": "Microsoft.Extensions.DependencyModel, 6.0.2\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyModel, and replace with new package Microsoft.Extensions.DependencyModel 8.0.2"
+            },
+            "kind": "File",
+            "path": "WinUIClassicSamplesBrowser.csproj",
+            "snippet": "Microsoft.Extensions.DependencyModel, 6.0.2\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyModel, and replace with new package Microsoft.Extensions.DependencyModel 8.0.2",
+            "protectedSnippet": "Microsoft.Extensions.DependencyModel, 6.0.2\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyModel, and replace with new package Microsoft.Extensions.DependencyModel 8.0.2",
+            "label": "Microsoft.Extensions.DependencyModel 6.0.2",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageVersion": "6.0.2",
+              "PackageNewVersion": "8.0.2",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "dad848b7-5309-4e85-9a05-94839be8a319",
+          "ruleId": "NuGet.0002",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Hosting, 6.0.1\n\nRecommendation:\n\nRemove Microsoft.Extensions.Hosting, and replace with new package Microsoft.Extensions.Hosting 8.0.1",
+              "protected": "Microsoft.Extensions.Hosting, 6.0.1\n\nRecommendation:\n\nRemove Microsoft.Extensions.Hosting, and replace with new package Microsoft.Extensions.Hosting 8.0.1"
+            },
+            "kind": "File",
+            "path": "WinUIClassicSamplesBrowser.csproj",
+            "snippet": "Microsoft.Extensions.Hosting, 6.0.1\n\nRecommendation:\n\nRemove Microsoft.Extensions.Hosting, and replace with new package Microsoft.Extensions.Hosting 8.0.1",
+            "protectedSnippet": "Microsoft.Extensions.Hosting, 6.0.1\n\nRecommendation:\n\nRemove Microsoft.Extensions.Hosting, and replace with new package Microsoft.Extensions.Hosting 8.0.1",
+            "label": "Microsoft.Extensions.Hosting 6.0.1",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Hosting",
+              "PackageVersion": "6.0.1",
+              "PackageNewVersion": "8.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "fb1dcbed-bbc3-4935-8f80-f87a742d3f35",
+          "ruleId": "NuGet.0001",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.WindowsAppSDK, 1.4.231008000\n\nRecommendation:\n\nMicrosoft.WindowsAppSDK, 1.8.260317003",
+              "protected": "Microsoft.WindowsAppSDK, 1.4.231008000\n\nRecommendation:\n\nMicrosoft.WindowsAppSDK, 1.8.260317003"
+            },
+            "kind": "File",
+            "path": "WinUIClassicSamplesBrowser.csproj",
+            "snippet": "Microsoft.WindowsAppSDK, 1.4.231008000\n\nRecommendation:\n\nMicrosoft.WindowsAppSDK, 1.8.260317003",
+            "protectedSnippet": "Microsoft.WindowsAppSDK, 1.4.231008000\n\nRecommendation:\n\nMicrosoft.WindowsAppSDK, 1.8.260317003",
+            "label": "Microsoft.WindowsAppSDK 1.4.231008000",
+            "properties": {
+              "PackageId": "Microsoft.WindowsAppSDK",
+              "PackageVersion": "1.4.231008000",
+              "PackageNewVersion": "1.8.260317003",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "dc11814e-e454-4e23-bca1-acc0e9706a8a",
+          "ruleId": "NuGet.0001",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Xaml.Behaviors.WinUI.Managed, 2.0.9\n\nRecommendation:\n\nNo supported version found",
+              "protected": "Microsoft.Xaml.Behaviors.WinUI.Managed, 2.0.9\n\nRecommendation:\n\nNo supported version found"
+            },
+            "kind": "File",
+            "path": "WinUIClassicSamplesBrowser.csproj",
+            "snippet": "Microsoft.Xaml.Behaviors.WinUI.Managed, 2.0.9\n\nRecommendation:\n\nNo supported version found",
+            "protectedSnippet": "Microsoft.Xaml.Behaviors.WinUI.Managed, 2.0.9\n\nRecommendation:\n\nNo supported version found",
+            "label": "Microsoft.Xaml.Behaviors.WinUI.Managed 2.0.9",
+            "properties": {
+              "PackageId": "Microsoft.Xaml.Behaviors.WinUI.Managed",
+              "PackageVersion": "2.0.9",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "e0aa2db2-a06a-4b3f-a44f-40a606a1fade",
+          "ruleId": "NuGet.0001",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "WinUIEx, 2.3.2\n\nRecommendation:\n\nNo supported version found",
+              "protected": "WinUIEx, 2.3.2\n\nRecommendation:\n\nNo supported version found"
+            },
+            "kind": "File",
+            "path": "WinUIClassicSamplesBrowser.csproj",
+            "snippet": "WinUIEx, 2.3.2\n\nRecommendation:\n\nNo supported version found",
+            "protectedSnippet": "WinUIEx, 2.3.2\n\nRecommendation:\n\nNo supported version found",
+            "label": "WinUIEx 2.3.2",
+            "properties": {
+              "PackageId": "WinUIEx",
+              "PackageVersion": "2.3.2",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "57a2a629-4cc2-4187-b5bc-0ab4b7240254",
+          "ruleId": "Project.0002",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0-windows10.0.19041.0\nRecommended target framework: net8.0-windows10.0.22000.0",
+              "protected": "Current target framework: net7.0-windows10.0.19041.0\nRecommended target framework: net8.0-windows10.0.22000.0"
+            },
+            "kind": "File",
+            "path": "WinUIClassicSamplesBrowser.csproj",
+            "snippet": "Current target framework: net7.0-windows10.0.19041.0\nRecommended target framework: net8.0-windows10.0.22000.0",
+            "protectedSnippet": "Current target framework: net7.0-windows10.0.19041.0\nRecommended target framework: net8.0-windows10.0.22000.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0-windows10.0.19041.0",
+              "RecommendedTargetFramework": "net8.0-windows10.0.22000.0"
+            }
+          }
+        },
+        {
+          "incidentId": "b66eb0ae-7bbc-4a55-a704-28f3b625990e",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var item = await folder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);",
+              "protected": "T:System.WindowsRuntimeSystemExtensions"
+            },
+            "kind": "File",
+            "path": "Helpers\\SettingsStorageExtensions.cs",
+            "snippet": "var item = await folder.TryGetItemAsync(fileName).AsTask().ConfigureAwait(false);",
+            "protectedSnippet": "T:System.WindowsRuntimeSystemExtensions",
+            "label": "T:System.WindowsRuntimeSystemExtensions",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 78,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "3d9c8a68-285c-4f04-8a8e-a3140ece6c91",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.BackgroundColor = Colors.Transparent;",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.BackgroundColor = Colors.Transparent;",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 71,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "e986047d-8aed-4029-bd0d-11bbb7bc0768",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "00dffb3d-acce-4182-8e6d-6afb411c2f15",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "7e56513e-ca22-428b-8628-24d0577a3cf4",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "e20f99fa-bad2-440b-b0fd-5f2cff6f4394",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "label": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "59a250e0-1e42-4ca1-b944-17a3b77e2236",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "f40b3f3e-a477-4a95-939b-b745cd43d487",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "769a7325-ea84-47a0-9847-0856bcf6d27b",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonPressedBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x66, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "label": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 64,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "d4a15e86-f53c-44b7-8027-0f37da6f84a9",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "10cc9d59-dd4c-43d7-bc94-706baa6ead62",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "90f67bca-f3fb-4281-9c4a-f8a1c53c29a2",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "63394ecc-ed4d-481d-afdd-d0ee148a3857",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "label": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "baa295d2-d7d8-4dfe-b109-08ab4f46d715",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "cd834ba9-62fa-4b1e-a78b-c950e38b1854",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "fe09dea5-f493-4c1d-bf1f-51ae6ef88bc0",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverBackgroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF),\r\n                ElementTheme.Light =\u003E Color.FromArgb(0x33, 0x00, 0x00, 0x00),\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "label": "M:Windows.UI.Color.FromArgb(System.Byte,System.Byte,System.Byte,System.Byte)",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 57,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "284d8141-91ce-400d-8fdd-db40cabde15d",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 50,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "745898bc-655e-4fdd-b649-d079032eb513",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 50,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "59df4e0a-7ad2-4345-bab9-f3e678a3b563",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonHoverForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonHoverForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 50,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "906b7ff4-6d6b-4914-a089-8ef87f320b40",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 43,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "325e85ca-5c96-40c0-bd5a-3682e50f70dd",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 43,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "bc93edb2-561f-40ca-97cb-1d0b2d9b1f91",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "App.MainWindow.AppWindow.TitleBar.ButtonForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "App.MainWindow.AppWindow.TitleBar.ButtonForegroundColor = theme switch\r\n            {\r\n                ElementTheme.Dark =\u003E Colors.White,\r\n                ElementTheme.Light =\u003E Colors.Black,\r\n                _ =\u003E Colors.Transparent\r\n            };",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 43,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "1ec23360-83d4-4c9c-a68e-78caa682909b",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "theme = background == Colors.White ? ElementTheme.Light : ElementTheme.Dark;",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "theme = background == Colors.White ? ElementTheme.Light : ElementTheme.Dark;",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 35,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "ce46cb8a-27cb-40de-83c1-62e5435411e2",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Runtime.WindowsRuntime, 4.7.0. Add package reference to System.Runtime.WindowsRuntime, 4.7.0",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var background = uiSettings.GetColorValue(UIColorType.Background);",
+              "protected": "T:Windows.UI.Color"
+            },
+            "kind": "File",
+            "path": "Helpers\\TitleBarHelper.cs",
+            "snippet": "var background = uiSettings.GetColorValue(UIColorType.Background);",
+            "protectedSnippet": "T:Windows.UI.Color",
+            "label": "T:Windows.UI.Color",
+            "properties": {
+              "PackageId": "System.Runtime.WindowsRuntime",
+              "PackageNewVersion": "4.7.0"
+            },
+            "line": 33,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "285cddac-f285-4377-b136-24752d0df50e",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+              "protected": "P:Microsoft.Extensions.DependencyModel.RuntimeAssetGroup.AssetPaths"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.RuntimeAssetGroup.AssetPaths",
+            "label": "P:Microsoft.Extensions.DependencyModel.RuntimeAssetGroup.AssetPaths",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "1e5a5694-1d28-4b43-a052-404868bca79c",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+              "protected": "P:Microsoft.Extensions.DependencyModel.RuntimeLibrary.RuntimeAssemblyGroups"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.RuntimeLibrary.RuntimeAssemblyGroups",
+            "label": "P:Microsoft.Extensions.DependencyModel.RuntimeLibrary.RuntimeAssemblyGroups",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "cb15db58-dc4e-4085-af7f-10a15bcb76b8",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+              "protected": "P:Microsoft.Extensions.DependencyModel.Library.Type"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.Library.Type",
+            "label": "P:Microsoft.Extensions.DependencyModel.Library.Type",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "199a3eb4-62cf-48a9-9031-1d1c32bef852",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+              "protected": "P:Microsoft.Extensions.DependencyModel.Library.Version"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.Library.Version",
+            "label": "P:Microsoft.Extensions.DependencyModel.Library.Version",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "436ec883-ae2c-483f-a0f0-28ddfe0f4ba0",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+              "protected": "P:Microsoft.Extensions.DependencyModel.Library.Name"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.Library.Name",
+            "label": "P:Microsoft.Extensions.DependencyModel.Library.Name",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "a5e057ac-050f-41c1-a01f-5467fc7cd013",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "foreach (var lib in context.RuntimeLibraries.OrderBy(l =\u003E l.Name))\r\n        {\r\n            ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });\r\n        }",
+              "protected": "P:Microsoft.Extensions.DependencyModel.Library.Name"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "foreach (var lib in context.RuntimeLibraries.OrderBy(l =\u003E l.Name))\r\n        {\r\n            ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });\r\n        }",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.Library.Name",
+            "label": "P:Microsoft.Extensions.DependencyModel.Library.Name",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 101,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "6b1e9389-fa6d-47f6-85e4-b15d85a58b6b",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "foreach (var lib in context.RuntimeLibraries.OrderBy(l =\u003E l.Name))\r\n        {\r\n            ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });\r\n        }",
+              "protected": "P:Microsoft.Extensions.DependencyModel.DependencyContext.RuntimeLibraries"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "foreach (var lib in context.RuntimeLibraries.OrderBy(l =\u003E l.Name))\r\n        {\r\n            ReferencedLibraries.Add(new LibraryInfoModel\r\n            {\r\n                Name = lib.Name,\r\n                Version = lib.Version,\r\n                Type = lib.Type,\r\n                Path = string.Join(\u0022;\u0022, lib.RuntimeAssemblyGroups\r\n                    .SelectMany(g =\u003E g.AssetPaths))\r\n            });\r\n        }",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.DependencyContext.RuntimeLibraries",
+            "label": "P:Microsoft.Extensions.DependencyModel.DependencyContext.RuntimeLibraries",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 101,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "2f7c7a69-7a3e-4747-8cb2-31c3bca10ff7",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var context = DependencyContext.Default;",
+              "protected": "T:Microsoft.Extensions.DependencyModel.DependencyContext"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "var context = DependencyContext.Default;",
+            "protectedSnippet": "T:Microsoft.Extensions.DependencyModel.DependencyContext",
+            "label": "T:Microsoft.Extensions.DependencyModel.DependencyContext",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 96,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "9e869f9d-7be0-4b5a-8392-9996a4d5da02",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var context = DependencyContext.Default;",
+              "protected": "T:Microsoft.Extensions.DependencyModel.DependencyContext"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "var context = DependencyContext.Default;",
+            "protectedSnippet": "T:Microsoft.Extensions.DependencyModel.DependencyContext",
+            "label": "T:Microsoft.Extensions.DependencyModel.DependencyContext",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 96,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "131c7a7d-8da3-47f0-8596-d2abc27c668f",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3. Add package reference to Microsoft.Extensions.DependencyModel, 9.0.0-preview.6.24302.3",
+          "projectPath": "WinUIClassicSamplesBrowser.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var context = DependencyContext.Default;",
+              "protected": "P:Microsoft.Extensions.DependencyModel.DependencyContext.Default"
+            },
+            "kind": "File",
+            "path": "ViewModels\\RuntimeInfoViewModel.cs",
+            "snippet": "var context = DependencyContext.Default;",
+            "protectedSnippet": "P:Microsoft.Extensions.DependencyModel.DependencyContext.Default",
+            "label": "P:Microsoft.Extensions.DependencyModel.DependencyContext.Default",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyModel",
+              "PackageNewVersion": "9.0.0-preview.6.24302.3"
+            },
+            "line": 96,
+            "column": 8
+          }
+        }
+      ],
+      "features": []
+    }
+  ],
+  "rules": {
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "isFeature": false,
+      "description": "NuGet package upgrade is recommended for selected target framework.\n\nStandard .NET packages are recommended to have versions matching version of .NET that project targets.\n\nSome other packages also are known to work better for selected target frameworks.",
+      "label": "NuGet package upgrade is recommended",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    },
+    "NuGet.0001": {
+      "id": "NuGet.0001",
+      "isFeature": false,
+      "description": "NuGet package is incompatible with selected target framework.\n\nPackage needs to be upgraded to a version supporting selected project target framework. If there no new package versions supporting new target framework, different package needs to be used and all code needs to be upgraded to new API.",
+      "label": "NuGet package is incompatible",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262529",
+          "isCustom": false
+        }
+      ]
+    },
+    "Project.0002": {
+      "id": "Project.0002",
+      "isFeature": false,
+      "description": "Project\u0027s target framework(s) needs to be changed to the new target framework that you selected for this upgrade.\n\nDuring upgrade target framework will be adjusted to corresponding platform when applicable. In some cases project would result in multiple target frameworks after the upgrade if it was using features that now have their own platforms in modern .NET frameworks (windows, iOS, Android etc).",
+      "label": "Project\u0027s target framework(s) needs to be changed",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Overview of porting from .NET Framework to .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET project SDKs",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0002": {
+      "id": "Api.0002",
+      "isFeature": false,
+      "description": "API is source incompatible for selected .NET version: requires code changes to compile successfully when targeting a new version, such as removing obsolete APIs or changing method signatures.",
+      "label": "Source incompatible for selected .NET version",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}
