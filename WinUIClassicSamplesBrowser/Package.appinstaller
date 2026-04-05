@@ -3,15 +3,15 @@
               Version="{Version}"
               xmlns="http://schemas.microsoft.com/appx/appinstaller/2017/2">
 
-  <!-- Read more about updating settings with Package.appinstaller at https://docs.microsoft.com/windows/msix/app-installer/update-settings -->
+	<!-- Read more about updating settings with Package.appinstaller at https://docs.microsoft.com/windows/msix/app-installer/update-settings -->
 
-  <MainBundle Name="{Name}"
-              Version="{Version}"
-              Publisher="{Publisher}"
-              Uri="{MainPackageUri}"/>
+	<MainBundle Name="{Name}"
+				Version="{Version}"
+				Publisher="{Publisher}"
+				Uri="{MainPackageUri}"/>
 
-  <UpdateSettings>
-    <OnLaunch HoursBetweenUpdateChecks="0" />
-  </UpdateSettings>
+	<UpdateSettings>
+		<OnLaunch HoursBetweenUpdateChecks="0" />
+	</UpdateSettings>
 
 </AppInstaller>
