@@ -1,4 +1,5 @@
 ﻿using Vanara.InteropServices;
+using Vanara.PInvoke;
 using static Vanara.PInvoke.Ole32;
 using static Vanara.PInvoke.PropSys;
 using static Vanara.PInvoke.Shell32;
@@ -152,8 +153,7 @@ internal class Program
 
 	private static void PrintProperty(IPropertyStore pps, PROPERTYKEY key, string pszCanonicalName)
 	{
-		PROPVARIANT propvarValue = new();
-		pps.GetValue(key, propvarValue);
+		pps.GetValue(key, out PROPVARIANT propvarValue);
 		Console.Write("{0} = {1}\n", pszCanonicalName, propvarValue);
 	}
 

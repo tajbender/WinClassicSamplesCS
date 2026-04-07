@@ -115,13 +115,13 @@ internal partial class Program
 		for (uint index = 0; index < numFormats; index++)
 		{
 			using PROPVARIANT format = new();
-			formats.GetAt(index, format);
+			formats.GetAt(index, out format.GetRefValue());
 
 			// We have a format. It is assumed that
 			// formats are returned as VT_CLSID VarTypes.
-			if (format.vt == VARTYPE.VT_CLSID && format.puuid.HasValue)
+			if (format.vt == VARTYPE.VT_CLSID && format.puuid.Value.HasValue)
 			{
-				DisplayFormat(capabilities, format.puuid.Value);
+				DisplayFormat(capabilities, format.puuid.Value!.Value);
 				Console.WriteLine();
 			}
 		}
@@ -146,13 +146,13 @@ internal partial class Program
 		for (uint index = 0; index < numEvents; index++)
 		{
 			using PROPVARIANT @event = new();
-			events.GetAt(index, @event);
+			events.GetAt(index, out @event.GetRefValue());
 
 			// We have an event. It is assumed that
 			// events are returned as VT_CLSID VarTypes.
-			if (@event.vt == VARTYPE.VT_CLSID && @event.puuid.HasValue)
+			if (@event.vt == VARTYPE.VT_CLSID && @event.puuid.Value.HasValue)
 			{
-				DisplayEvent(capabilities, @event.puuid.Value);
+				DisplayEvent(capabilities, @event.puuid.Value!.Value);
 				Console.WriteLine();
 			}
 		}
@@ -181,7 +181,7 @@ internal partial class Program
 		for (uint index = 0; index < numServices; index++)
 		{
 			using PROPVARIANT abstractService = new();
-			abstractServices.GetAt(index, abstractService);
+			abstractServices.GetAt(index, out abstractService.GetRefValue());
 
 			if (abstractService.puuid == SERVICE_FullEnumSync)
 			{

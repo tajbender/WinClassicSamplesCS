@@ -159,7 +159,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			try
 			{
 				//using (var evt = new PIXEvent(m_commandQueue!, "Render"))
-				PIXEvent.PIXBeginEvent(m_commandQueue!, 0, "Render");
+				using (PIXEvent pe = new(m_commandQueue!, "Render"))
 				{
 					// Record all the commands we need to render the scene into the command lists.
 					PopulateCommandLists();
@@ -168,7 +168,6 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 					ID3D12CommandList[] ppCommandLists = [m_sceneCommandList!, m_postCommandList!];
 					m_commandQueue!.ExecuteCommandLists(ppCommandLists.Length, ppCommandLists);
 				}
-				PIXEvent.PIXEndEvent(m_commandQueue!);
 
 				// When using sync interval 0, it is recommended to always pass the tearing flag when it is supported, even when presenting
 				// in windowed mode. However, this flag cannot be used if the app is in fullscreen mode as a result of calling SetFullscreenState.
@@ -354,10 +353,9 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				DepthStencilState = new() { DepthEnable = false, StencilEnable = false },
 				SampleMask = uint.MaxValue,
 				PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE.D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
-				NumRenderTargets = 1,
-				RTVFormats = [DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, 0, 0, 0, 0, 0],
 				SampleDesc = new() { Count = 1 }
 			};
+			psoDesc.SetRTVFormats([DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM]);
 			DumpVal(psoDesc, nameof(psoDesc));
 			m_scenePipelineState = m_device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
 			NAME_D3D12_OBJECT(m_scenePipelineState);
