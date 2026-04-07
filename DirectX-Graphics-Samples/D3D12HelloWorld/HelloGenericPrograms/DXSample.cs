@@ -156,8 +156,10 @@ internal abstract class DXSample
 	{
 		if (FunctionHelper.IidGetObj(CreateDXGIFactory1, out IDXGIFactory6 factory).Succeeded)
 		{
-			BOOL allowTearing = false;
-			TearingSupport = factory.CheckFeatureSupport(ref allowTearing, DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING).Succeeded && allowTearing;
+			using var pbool = SafeCoTaskMemHandle.CreateFromStructure((BOOL)false);
+			TearingSupport = factory.CheckFeatureSupport(DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING, pbool, 4).Succeeded && pbool.ToStructure<BOOL>().Value;
+			//BOOL allowTearing = false;
+			//TearingSupport = factory.CheckFeatureSupport(ref allowTearing, DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING).Succeeded && allowTearing;
 		}
 	}
 

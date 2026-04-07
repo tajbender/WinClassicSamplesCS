@@ -337,14 +337,21 @@ public class PIXEvent : IDisposable
 	public void Dispose()
 	{
 		GC.SuppressFinalize(this);
-		if (iUnk is ID3D12CommandQueue pCommandQueue)
-			PIXEndEvent(pCommandQueue);
-		else if (iUnk is ID3D12GraphicsCommandList pCommandList)
-			PIXEndEvent(pCommandList);
-		else if (iUnk is ID3DUserDefinedAnnotation pAnnotation)
-			PIXEndEvent(pAnnotation);
-		else if (iUnk is ID3D11DeviceContext2 pContext)
-			PIXEndEvent(pContext);
-		Marshal.ReleaseComObject(iUnk);
+		switch (iUnk)
+		{
+			case ID3D12CommandQueue pCommandQueue:
+				PIXEndEvent(pCommandQueue);
+				break;
+			case ID3D12GraphicsCommandList pCommandList:
+				PIXEndEvent(pCommandList);
+				break;
+			case ID3DUserDefinedAnnotation pAnnotation:
+				PIXEndEvent(pAnnotation);
+				break;
+			case ID3D11DeviceContext2 pContext:
+				PIXEndEvent(pContext);
+				break;
+		}
+		//Marshal.ReleaseComObject(iUnk);
 	}
 }
