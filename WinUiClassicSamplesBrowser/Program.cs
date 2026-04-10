@@ -1,9 +1,12 @@
-﻿namespace ClassicSamplesBrowser;
+﻿using Microsoft.UI.Xaml;
 
-class Program
+namespace ClassicSamplesBrowser;
+
+public static class Program
 {
+    [STAThread]
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Application.Start(p => new App());
     }
 }
