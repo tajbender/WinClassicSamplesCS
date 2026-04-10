@@ -122,8 +122,7 @@ static partial class Program
 		{
 			// Get the folder id
 			using PROPVARIANT folderID = new();
-
-			folderIDs.GetAt(index, folderID);
+			folderIDs.GetAt(index, out folderID.GetRefValue());
 			if (folderID.vt == VARTYPE.VT_LPWSTR)
 			{
 				// Get the properties for this item

@@ -186,7 +186,7 @@
 			// Define the vertex input layout.
 			SafeNativeArray<D3D12_INPUT_ELEMENT_DESC> inputElementDescs = [
 				new("POSITION", DXGI_FORMAT.DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA),
-				new("COLOR", DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_FLOAT, 12, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA)
+				new("TEXCOORD", DXGI_FORMAT.DXGI_FORMAT_R32G32_FLOAT, 12, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA)
 			];
 
 			// Describe and create the graphics pipeline state object (PSO).
@@ -201,10 +201,9 @@
 				DepthStencilState = new() { DepthEnable = false, StencilEnable = false },
 				SampleMask = uint.MaxValue,
 				PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE.D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
-				NumRenderTargets = 1,
-				RTVFormats = [DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, 0, 0, 0, 0, 0],
 				SampleDesc = new() { Count = 1 }
 			};
+			psoDesc.SetRTVFormats([DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM]);
 			m_pipelineState = m_device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
 		}
 

@@ -269,8 +269,7 @@ public class CMyFDHelper : IFunctionDiscoveryNotification
 				object? val = null;
 				try
 				{
-					using PROPVARIANT pv = new();
-					pPStore.GetValue(key, pv);
+					pPStore.GetValue(key, out PROPVARIANT pv);
 					val = pv.Value;
 				}
 				catch (Exception ex)

@@ -511,8 +511,7 @@ internal class Program
 						if (hr.Succeeded)
 						{
 							// Get the value of the property.
-							PROPVARIANT propvarValue = new();
-							pps.GetValue(key, propvarValue);
+							pps.GetValue(key, out PROPVARIANT propvarValue);
 							// Write the property to the file.
 							hr = WritePropertyToCustomFile(pszNewFileName, pszPropertyName, propvarValue.ToString());
 						}

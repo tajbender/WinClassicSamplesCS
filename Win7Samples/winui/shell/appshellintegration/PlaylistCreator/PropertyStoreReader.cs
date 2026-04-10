@@ -36,8 +36,8 @@ internal class CPropertyStoreReader
 
 	public PROPVARIANT GetValue(in PROPERTYKEY key)
 	{
-		var propvar = new PROPVARIANT();
-		_pps?.GetValue(key, propvar);
+		PROPVARIANT propvar = new();
+		_pps?.GetValue(key, out propvar);
 		return propvar;
 	}
 }

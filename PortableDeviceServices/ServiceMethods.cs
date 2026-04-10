@@ -130,13 +130,13 @@ internal partial class Program
 		for (uint dwIndex = 0; dwIndex < dwNumMethods; dwIndex++)
 		{
 			using PROPVARIANT pv = new();
-			pMethods.GetAt(dwIndex, pv);
+			pMethods.GetAt(dwIndex, out pv.GetRefValue());
 
 			// We have a method. It is assumed that
 			// methods are returned as VT_CLSID VarTypes.
 			if (pv.VarType == VarEnum.VT_CLSID)
 			{
-				DisplayMethod(pCapabilities, pv.puuid.GetValueOrDefault());
+				DisplayMethod(pCapabilities, pv.puuid.Value.GetValueOrDefault());
 				Console.WriteLine();
 			}
 		}

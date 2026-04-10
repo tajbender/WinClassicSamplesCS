@@ -47,17 +47,20 @@ internal partial class D3D1211on12(int width, int height, string name) : DXSampl
 
 	public override void OnRender()
 	{
-		using (PIXEvent evt = new(m_commandQueue!, "Render 3D"))
+		if (m_commandQueue is null)
+			throw new ArgumentNullException(nameof(m_commandQueue));
+
+		using (PIXEvent evt = new(m_commandQueue, "Render 3D"))
 		{
 			// Record all the commands we need to render the scene into the command list.
 			PopulateCommandList();
 
 			// Execute the command list.
 			ID3D12CommandList[] ppCommandLists = [m_commandList!];
-			m_commandQueue!.ExecuteCommandLists(ppCommandLists.Length, ppCommandLists);
+			m_commandQueue.ExecuteCommandLists(ppCommandLists.Length, ppCommandLists);
 		}
 
-		using (PIXEvent evt = new(m_commandQueue!, "Render UI"))
+		using (PIXEvent evt = new(m_commandQueue, "Render UI"))
 			RenderUI();
 
 		// Present the frame.
@@ -106,11 +109,10 @@ internal partial class D3D1211on12(int width, int height, string name) : DXSampl
 				BlendState = new(),
 				SampleMask = uint.MaxValue,
 				PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE.D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
-				NumRenderTargets = 1,
-				RTVFormats = [DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, default, default, default, default, default, default, default],
 				DepthStencilState = { DepthEnable = false, StencilEnable = false },
 				SampleDesc = { Count = 1 }
 			};
+			psoDesc.SetRTVFormats([DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM]);
 
 			m_pipelineState = m_d3d12Device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
 			NAME_D3D12_OBJECT(m_pipelineState);

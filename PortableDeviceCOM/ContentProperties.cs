@@ -136,7 +136,7 @@ static partial class Program
 		// 3) Attempt to get the unique idenifier for the object from the device
 		IPortableDevicePropVariantCollection objectIDs = content.GetObjectIDsFromPersistentUniqueIDs(persistentUniqueIDs);
 		using PROPVARIANT objectID = new();
-		objectIDs.GetAt(0, objectID);
+		objectIDs.GetAt(0, out objectID.GetRefValue());
 		Console.Write("The persistent unique identifier '{0}' relates to object identifier '{1}' on the device.\n", selection, objectID.pwszVal);
 	}
 
@@ -308,7 +308,7 @@ static partial class Program
 
 			// Get the Object ID whose properties we will set
 			using PROPVARIANT objectID = new();
-			objectIDs.GetAt(index, objectID);
+			objectIDs.GetAt(index, out objectID.GetRefValue());
 
 			// Save them into the IPortableDeviceValues so the driver knows which object this proeprty set belongs to
 			newvalues.SetStringValue(WPD_OBJECT_ID, objectID.pwszVal!);

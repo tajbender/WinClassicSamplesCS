@@ -142,7 +142,7 @@ static partial class Program
 		for (uint objectIDIndex = 0; objectIDIndex < numObjectIDs; objectIDIndex++)
 		{
 			using PROPVARIANT objectID = new();
-			functionalObjectIDs.GetAt(objectIDIndex, objectID);
+			functionalObjectIDs.GetAt(objectIDIndex, out objectID.GetRefValue());
 
 			// We have a functional object identifier. It is assumed that object identifiers are returned as VT_LPWSTR varTypes.
 			if (objectID.vt == VARTYPE.VT_LPWSTR && objectID.pwszVal != default)
@@ -180,18 +180,18 @@ static partial class Program
 		for (uint index = 0; index < numFunctionalCategories; index++)
 		{
 			using PROPVARIANT pv = new();
-			functionalCategories.GetAt(index, pv);
+			functionalCategories.GetAt(index, out pv.GetRefValue());
 
 			// We have a functional category. It is assumed that functional categories are returned as VT_CLSID varTypes.
 			if (pv.vt == VARTYPE.VT_CLSID && pv.puuid != default)
 			{
 				// Display the functional category name
 				Console.Write("Functional Category: ");
-				DisplayFunctionalCategory(pv.puuid!.Value);
+				DisplayFunctionalCategory(pv.puuid!.Value!.Value);
 				Console.Write("\n");
 
 				// Display the object identifiers for all functional objects within this category
-				IPortableDevicePropVariantCollection functionalObjectIDs = capabilities.GetFunctionalObjects(pv.puuid!.Value);
+				IPortableDevicePropVariantCollection functionalObjectIDs = capabilities.GetFunctionalObjects(pv.puuid!.Value!.Value);
 				Console.Write("Functional Objects: ");
 				DisplayFunctionalObjectIDs(functionalObjectIDs);
 				Console.Write("\n\n");
@@ -216,13 +216,13 @@ static partial class Program
 		for (uint contentTypeIndex = 0; contentTypeIndex < numContentTypes; contentTypeIndex++)
 		{
 			using PROPVARIANT contentType = new();
-			contentTypes.GetAt(contentTypeIndex, contentType);
+			contentTypes.GetAt(contentTypeIndex, out contentType.GetRefValue());
 
 			// We have a content type. It is assumed that content types are returned as VT_CLSID varTypes.
 			if (contentType.vt == VARTYPE.VT_CLSID && contentType.puuid != default)
 			{
 				// Display the content types separated by commas
-				DisplayContentType(contentType.puuid!.Value);
+				DisplayContentType(contentType.puuid!.Value!.Value);
 
 				if ((contentTypeIndex + 1) < numContentTypes)
 				{
@@ -254,13 +254,13 @@ static partial class Program
 		for (uint index = 0; index < numCategories; index++)
 		{
 			using PROPVARIANT pv = new();
-			functionalCategories.GetAt(index, pv);
+			functionalCategories.GetAt(index, out pv.GetRefValue());
 
 			// We have a functional category. It is assumed that functional categories are returned as VT_CLSID varTypes.
 			if (pv.vt == VARTYPE.VT_CLSID && pv.puuid != default)
 			{
 				// Display the functional category name
-				DisplayFunctionalCategory(pv.puuid!.Value);
+				DisplayFunctionalCategory(pv.puuid!.Value!.Value);
 				Console.Write("\n");
 			}
 		}
@@ -285,18 +285,18 @@ static partial class Program
 		for (uint index = 0; index < numCategories; index++)
 		{
 			using PROPVARIANT pv = new();
-			functionalCategories.GetAt(index, pv);
+			functionalCategories.GetAt(index, out pv.GetRefValue());
 
 			// We have a functional category. It is assumed that functional categories are returned as VT_CLSID varTypes.
 			if (pv.vt == VARTYPE.VT_CLSID && pv.puuid != default)
 			{
 				// Display the functional category name
 				Console.Write("Functional Category: ");
-				DisplayFunctionalCategory(pv.puuid!.Value);
+				DisplayFunctionalCategory(pv.puuid!.Value!.Value);
 				Console.Write("\n");
 
 				// Display the content types supported for this category
-				IPortableDevicePropVariantCollection contentTypes = capabilities.GetSupportedContentTypes(pv.puuid!.Value);
+				IPortableDevicePropVariantCollection contentTypes = capabilities.GetSupportedContentTypes(pv.puuid!.Value!.Value);
 				Console.Write("Supported Content Types: ");
 				DisplayContentTypes(contentTypes);
 				Console.Write("\n\n");
@@ -321,7 +321,7 @@ static partial class Program
 		for (uint dwIndex = 0; dwIndex < numCategories; dwIndex++)
 		{
 			using PROPVARIANT pv = new();
-			functionalCategories.GetAt(dwIndex, pv);
+			functionalCategories.GetAt(dwIndex, out pv.GetRefValue());
 
 			// We have a functional category. It is assumed that functional categories are returned as VT_CLSID varTypes.
 			if (pv.vt == VARTYPE.VT_CLSID && functionalCategory == pv.puuid!.Value)
@@ -446,7 +446,7 @@ static partial class Program
 		// Assume the device only has one rendering information object for this example. We are going to request the first Object Identifier
 		// found in the collection.
 		using PROPVARIANT pv = new();
-		renderingInfoObjects.GetAt(0, pv);
+		renderingInfoObjects.GetAt(0, out pv.GetRefValue());
 		if (pv.vt == VARTYPE.VT_LPWSTR && pv.pwszVal != default)
 		{
 			IPortableDeviceValuesCollection renderingInfoProfiles = ReadProfileInformationProperties(device, pv.pwszVal);
@@ -486,15 +486,15 @@ static partial class Program
 		for (uint index = 0; index < numEvents; index++)
 		{
 			using PROPVARIANT pv = new();
-			evts.GetAt(index, pv);
+			evts.GetAt(index, out pv.GetRefValue());
 			// We have an evt. It is assumed that evts are returned as VT_CLSID varTypes.
 			if (pv.vt == VARTYPE.VT_CLSID && pv.puuid != default)
 			{
 				// Display the evt name
-				DisplayEvent(pv.puuid!.Value);
+				DisplayEvent(pv.puuid!.Value!.Value);
 				Console.Write("\n");
 				// Display the evt options
-				DisplayEventOptions(capabilities, pv.puuid!.Value);
+				DisplayEventOptions(capabilities, pv.puuid!.Value!.Value);
 				Console.Write("\n");
 			}
 		}
