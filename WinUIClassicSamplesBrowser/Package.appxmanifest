@@ -12,8 +12,8 @@
 
   <Identity
     Name="3cfb3188-2072-493c-bb77-fb737ce77c08"
-    Publisher="CN=tajbe"
-    Version="1.0.0.0" />
+    Publisher="CN=dahall"
+    Version="5.0.0.0" />
     
   <mp:PhoneIdentity PhoneProductId="3cfb3188-2072-493c-bb77-fb737ce77c08" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
     
