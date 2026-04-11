@@ -8,9 +8,48 @@
 		<UseWinUI>true</UseWinUI>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Views\AboutPage.xaml" />
+	  <None Remove="Views\HomePage.xaml" />
+	  <None Remove="Views\MainPage.xaml" />
+	  <None Remove="Views\SamplesPage.xaml" />
+	  <None Remove="Views\SettingsPage.xaml" />
+	</ItemGroup>
+	<ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
 	  <PackageReference Include="Vanara.Core" Version="5.0.3" />
 	  <PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.3" />
 	  <PackageReference Include="Vanara.Windows.Shell" Version="5.0.3" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	  <Folder Include="Controls\" />
+	  <Folder Include="Resources\" />
+	  <Folder Include="Services\" />
+	  <Folder Include="ViewModels\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\AboutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\SamplesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 </Project>
