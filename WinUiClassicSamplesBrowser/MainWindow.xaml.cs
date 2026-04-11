@@ -2,7 +2,6 @@ using ClassicSamplesBrowser.Helpers;
 using ClassicSamplesBrowser.Views;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using WinRT;
 
 namespace ClassicSamplesBrowser;

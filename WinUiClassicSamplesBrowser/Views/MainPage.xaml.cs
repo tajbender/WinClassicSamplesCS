@@ -1,31 +1,39 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace ClassicSamplesBrowser.Views;
 
-namespace ClassicSamplesBrowser.Views
+public sealed partial class MainPage : Page
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public MainPage()
     {
-        public MainPage()
+        InitializeComponent();
+        ContentFrame.Navigate(typeof(HomePage));
+    }
+
+    private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItem is NavigationViewItem item)
         {
-            InitializeComponent();
+            var tag = item.Tag?.ToString();
+
+            switch (tag)
+            {
+                case "HomePage":
+                    ContentFrame.Navigate(typeof(HomePage));
+                    HeaderTitle.Text = "Home";
+                    break;
+
+                case "SamplesPage":
+                    ContentFrame.Navigate(typeof(SamplesPage));
+                    HeaderTitle.Text = "Samples";
+                    break;
+
+                case "AboutPage":
+                    ContentFrame.Navigate(typeof(AboutPage));
+                    HeaderTitle.Text = "About";
+                    break;
+            }
         }
     }
 }
