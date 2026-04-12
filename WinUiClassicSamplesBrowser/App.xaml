@@ -1,24 +1,27 @@
 <Application
     x:Class="ClassicSamplesBrowser.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:system="using:System"     
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Application.Resources>
         <ResourceDictionary>
-            <!-- Mica BaseAlt Brush -->
-            <SolidColorBrush x:Key="MicaBaseAltFillColorDefaultBrush" Color="{ThemeResource SystemBaseLowColor}" />
-
             <!-- Mica style Brushes -->
-            <SolidColorBrush x:Key="MicaBaseFillColorSecondaryBrush" Color="{ThemeResource SystemBaseHighColor}" />
+            <SolidColorBrush x:Key="MicaBaseAltFillColorDefaultBrush" Color="{ThemeResource SystemBaseLowColor}" />
             <SolidColorBrush x:Key="MicaBaseFillColorDefaultBrush" Color="{ThemeResource SystemBaseMediumColor}" />
-            <SolidColorBrush x:Key="TabViewButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="MicaBaseFillColorSecondaryBrush" Color="{ThemeResource SystemBaseHighColor}" />
             <SolidColorBrush x:Key="TabViewButtonBackground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="TabViewButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="TabViewScrollButtonBackground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="TabViewScrollButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
 
-
-            <!--<SolidColorBrush x:Key="TabViewItemAddButtonFontSize"  />-->
-
-            <!-- Corners -->
+            <!-- Corners Radius' -->
             <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+
+            <!-- Fonts -->
+            <system:Double x:Key="TabViewItemAddButtonFontSize">14</system:Double>
+            <system:Double x:Key="TabViewItemScrollButonFontSize">14</system:Double>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
