@@ -32,8 +32,8 @@ public class WindowsSystemDispatcherQueueHelper
             DispatcherQueueOptions options = new DispatcherQueueOptions
             {
                 dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions)),
-                threadType = 2,      // DQTYPE_THREAD_CURRENT
-                apartmentType = 2    // DQTAT_COM_STA
+                threadType = 2,      // INFO: TODO: Use Vanara' enum here: `DQTYPE_THREAD_CURRENT`
+                apartmentType = 2    // INFO: TODO: Use Vanara' enum here: `DQTAT_COM_STA`
             };
 
             CreateDispatcherQueueController(options, out _dispatcherQueueController);

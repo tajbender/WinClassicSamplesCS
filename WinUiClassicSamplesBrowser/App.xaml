@@ -9,10 +9,13 @@
             <SolidColorBrush x:Key="MicaBaseAltFillColorDefaultBrush" Color="{ThemeResource SystemBaseLowColor}" />
 
             <!-- Mica style Brushes -->
-            <SolidColorBrush x:Key="TabViewButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
-            <SolidColorBrush x:Key="TabViewButtonBackground" Color="{ThemeResource SystemBaseMediumColor}" />
             <SolidColorBrush x:Key="MicaBaseFillColorSecondaryBrush" Color="{ThemeResource SystemBaseHighColor}" />
             <SolidColorBrush x:Key="MicaBaseFillColorDefaultBrush" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="TabViewButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="TabViewButtonBackground" Color="{ThemeResource SystemBaseMediumColor}" />
+
+
+            <!--<SolidColorBrush x:Key="TabViewItemAddButtonFontSize"  />-->
 
             <!-- Corners -->
             <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
