@@ -625,7 +625,7 @@ This instance of the QOS sample program is aiming to:
 							// congested and bandwidth is available.
 							targetBandwidthWithOverhead = QOS_ADD_OVERHEAD(addressFamily, IPPROTO.IPPROTO_UDP, dataBuffer.Size, targetBitRate);
 
-							bufferSize = (uint)Marshal.SizeOf(typeof(ulong));
+							bufferSize = (uint)Marshal.SizeOf<ulong>();
 
 							result = QOSNotifyFlow(qosHandle, flowID, QOS_NOTIFY_FLOW.QOSNotifyAvailable, targetBandwidthWithOverhead, ref availableOverlapped);
 							if (result == false)

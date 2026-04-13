@@ -125,7 +125,7 @@ internal static class KList
 		Console.Write("\t   RealmName  = {0}\n", CacheRequest.RealmName);
 
 		using var pin = new PinnedObject(CacheRequest);
-		var Status = LsaCallAuthenticationPackage(LogonHandle, PackageId, pin, (uint)Marshal.SizeOf(typeof(KERB_PURGE_TKT_CACHE_REQUEST)), out _, out _, out var SubStatus);
+		var Status = LsaCallAuthenticationPackage(LogonHandle, PackageId, pin, (uint)Marshal.SizeOf<KERB_PURGE_TKT_CACHE_REQUEST>(), out _, out _, out var SubStatus);
 
 		if (Status.Failed || SubStatus.Failed)
 		{
@@ -240,7 +240,7 @@ internal static class KList
 		var CacheRequest = new KERB_RETRIEVE_TKT_REQUEST { MessageType = KERB_PROTOCOL_MESSAGE_TYPE.KerbRetrieveEncodedTicketMessage, TargetName = Target };
 
 		using var pin = new PinnedObject(CacheRequest);
-		var Status = LsaCallAuthenticationPackage(LogonHandle, PackageId, pin, (uint)Marshal.SizeOf(typeof(KERB_RETRIEVE_TKT_REQUEST)), out var mem, out var ResponseSize, out var SubStatus);
+		var Status = LsaCallAuthenticationPackage(LogonHandle, PackageId, pin, (uint)Marshal.SizeOf<KERB_RETRIEVE_TKT_REQUEST>(), out var mem, out var ResponseSize, out var SubStatus);
 
 		if (Status.Failed || SubStatus.Failed)
 		{

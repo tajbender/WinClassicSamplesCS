@@ -653,7 +653,7 @@ public static partial class Program
 																														   // include space
 																														   // for the include
 																														   // space for the
-																														   // NULL-terminator Marshal.SizeOf(typeof(ushort));
+																														   // NULL-terminator Marshal.SizeOf<ushort>();
 				_ => MAX_COL_SIZE,// For any other type, we will simply use our maximum
 								  // column buffer size, since the display size of these columns may be variable (e.g. DBTYPE_VARIANT) or
 								  // unknown (e.g. provider-specific types)

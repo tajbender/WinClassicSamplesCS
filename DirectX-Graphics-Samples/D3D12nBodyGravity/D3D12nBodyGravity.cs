@@ -190,7 +190,7 @@ internal partial class D3D12nBodyGravity(int width, int height, string name) : D
 
 		if (m_pConstantBufferGSData != IntPtr.Zero)
 		{
-			IntPtr destination = m_pConstantBufferGSData.Offset(Marshal.SizeOf(typeof(ConstantBufferGS)) * m_frameIndex);
+			IntPtr destination = m_pConstantBufferGSData.Offset(Marshal.SizeOf<ConstantBufferGS>() * m_frameIndex);
 			_ = destination.Write(constantBufferGS);
 		}
 	}
@@ -664,7 +664,7 @@ internal partial class D3D12nBodyGravity(int width, int height, string name) : D
 
 		// Create the compute shader's constant buffer.
 		{
-			uint bufferSize = (uint)Marshal.SizeOf(typeof(ConstantBufferCS));
+			uint bufferSize = (uint)Marshal.SizeOf<ConstantBufferCS>();
 
 			if (m_bIsEnhancedBarriersEnabled)
 			{
@@ -742,7 +742,7 @@ internal partial class D3D12nBodyGravity(int width, int height, string name) : D
 
 		// Create the geometry shader's constant buffer.
 		{
-			uint constantBufferGSSize = (uint)Marshal.SizeOf(typeof(ConstantBufferGS)) * FrameCount;
+			uint constantBufferGSSize = (uint)Marshal.SizeOf<ConstantBufferGS>() * FrameCount;
 
 			if (m_bIsEnhancedBarriersEnabled)
 			{
@@ -1195,17 +1195,5 @@ internal partial class D3D12nBodyGravity(int width, int height, string name) : D
 	{
 		public D3D12nBodyGravity? pContext;
 		public int threadIndex;
-	}
-}
-
-internal static class Ext
-{
-	public static HRESULT Map(this ID3D12Resource resource, uint subresource, [In, Optional] D3D12_RANGE? readRange, out IntPtr dataPtr)
-	{
-		unsafe
-		{
-			fixed (void* pData = &dataPtr)
-				return resource.Map(subresource, readRange, (IntPtr)pData);
-		}
 	}
 }

@@ -234,7 +234,7 @@ void GenerateSineSamples<T>(byte[] Buffer, uint Frequency, ushort ChannelCount, 
 			T* dataBuffer = (T*)pBuffer;
 			double theta = InitialTheta;
 
-			for (int i = 0; i < Buffer.Length / Marshal.SizeOf(typeof(T)); i += ChannelCount)
+			for (int i = 0; i < Buffer.Length / Marshal.SizeOf<T>(); i += ChannelCount)
 			{
 				double sinValue = Math.Sin(theta);
 				for (ushort j = 0; j < ChannelCount; j++)

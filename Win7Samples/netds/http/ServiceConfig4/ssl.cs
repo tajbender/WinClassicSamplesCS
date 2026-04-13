@@ -328,11 +328,11 @@ internal partial class Program
 		uint dwSockAddrLength;
 		if (pSockAddrIn.sin_family == ADDRESS_FAMILY.AF_INET)
 		{
-			dwSockAddrLength = (uint)Marshal.SizeOf(typeof(SOCKADDR_IN));
+			dwSockAddrLength = (uint)Marshal.SizeOf<SOCKADDR_IN>();
 		}
 		else if (pSockAddrIn.sin_family == ADDRESS_FAMILY.AF_INET6)
 		{
-			dwSockAddrLength = (uint)Marshal.SizeOf(typeof(SOCKADDR_IN6));
+			dwSockAddrLength = (uint)Marshal.SizeOf<SOCKADDR_IN6>();
 		}
 		else
 		{

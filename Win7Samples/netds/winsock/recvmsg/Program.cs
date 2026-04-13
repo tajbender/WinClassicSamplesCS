@@ -219,7 +219,7 @@ static class Program
 
 	static bool AllocAndInitIpv6PktInfo(ref WSAMSG pWSAMsg)
 	{
-		pWSAMsg.Control.len = WSA_CMSG_SPACE(Marshal.SizeOf(typeof(IN6_PKTINFO)));
+		pWSAMsg.Control.len = WSA_CMSG_SPACE(Marshal.SizeOf<IN6_PKTINFO>());
 		pWSAMsg.Control.buf = Marshal.AllocCoTaskMem((int)pWSAMsg.Control.len); //caller frees heap allocated CtrlBuf
 		return true;
 	}

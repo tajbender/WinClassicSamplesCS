@@ -90,7 +90,7 @@ public static class ShellHelpers
 	// HICON that is created
 	public static void SetDialogIcon(HWND hdlg, SHSTOCKICONID siid)
 	{
-		SHSTOCKICONINFO sii = new() { cbSize = (uint)Marshal.SizeOf(typeof(SHSTOCKICONINFO)) };
+		SHSTOCKICONINFO sii = new() { cbSize = (uint)Marshal.SizeOf<SHSTOCKICONINFO>() };
 		if (SHGetStockIconInfo(siid, SHGSI.SHGSI_ICON | SHGSI.SHGSI_SMALLICON, ref sii).Succeeded)
 		{
 			SendMessage(hdlg, WindowMessage.WM_SETICON, WM_ICON_WPARAM.ICON_SMALL, (IntPtr)sii.hIcon);
@@ -149,7 +149,7 @@ public static class ShellHelpers
 		{
 			SHELLEXECUTEINFO ei = new()
 			{
-				cbSize = Marshal.SizeOf(typeof(SHELLEXECUTEINFO)),
+				cbSize = Marshal.SizeOf<SHELLEXECUTEINFO>(),
 				fMask = ShellExecuteMaskFlags.SEE_MASK_INVOKEIDLIST,
 				hwnd = hwnd,
 				nShellExecuteShow = ShowWindowCommand.SW_NORMAL,

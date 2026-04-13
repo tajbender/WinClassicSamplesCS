@@ -50,7 +50,7 @@ internal class DISPLAYMANAGER : IDisposable
 			}
 			if (Data.DirtyCount != 0)
 			{
-				Ret = CopyDirty(Data.Frame, SharedSurf, Data.MetaData.Offset(Data.MoveCount * Marshal.SizeOf(typeof(DXGI_OUTDUPL_MOVE_RECT))).ToArray<RECT>(Data.DirtyCount)!, Data.DirtyCount, OffsetX, OffsetY, DeskDesc);
+				Ret = CopyDirty(Data.Frame, SharedSurf, Data.MetaData.Offset(Data.MoveCount * Marshal.SizeOf<DXGI_OUTDUPL_MOVE_RECT>()).ToArray<RECT>(Data.DirtyCount)!, Data.DirtyCount, OffsetX, OffsetY, DeskDesc);
 			}
 		}
 		return Ret;
@@ -341,7 +341,7 @@ internal class DISPLAYMANAGER : IDisposable
 		{
 			return ProcessFailure(m_Device, "Failed to create vertex buffer in dirty rect processing", "Error", hr, SystemTransitionsExpectedErrors);
 		}
-		uint Stride = (uint)Marshal.SizeOf(typeof(VERTEX));
+		uint Stride = (uint)Marshal.SizeOf<VERTEX>();
 		uint Offset = 0;
 		m_DeviceContext.IASetVertexBuffers(0, 1, [VertBuf!], [Stride], [Offset]);
 

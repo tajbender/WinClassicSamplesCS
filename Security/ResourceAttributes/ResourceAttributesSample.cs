@@ -382,7 +382,7 @@ true/false - If the function succeeds, true is returned, otherwise false.
 	// Get the entire size required for the resource attribute structure, so we
 	// can allocate a single block of contiguous memory.
 	SizeT NameBytes = AttributeTokens.Name.GetByteCount(true, CharSet.Unicode);
-	SizeT ByteCount = ALIGN(Marshal.SizeOf(typeof(CLAIM_SECURITY_ATTRIBUTE_V1)));
+	SizeT ByteCount = ALIGN(Marshal.SizeOf<CLAIM_SECURITY_ATTRIBUTE_V1>());
 	SizeT offset = ByteCount;
 	ByteCount += ALIGN(NameBytes);
 	ByteCount += ALIGN(Values.Length * GetValueSize(ValueType));
@@ -661,8 +661,8 @@ uint GetValueSize(CLAIM_SECURITY_ATTRIBUTE_TYPE ClaimType)
 {
 	var Size = ClaimType switch
 	{
-		CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_INT64 => Marshal.SizeOf(typeof(long)),
-		CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_UINT64 or CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_BOOLEAN => Marshal.SizeOf(typeof(ulong)),
+		CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_INT64 => Marshal.SizeOf<long>(),
+		CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_UINT64 or CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_BOOLEAN => Marshal.SizeOf<ulong>(),
 		CLAIM_SECURITY_ATTRIBUTE_TYPE.CLAIM_SECURITY_ATTRIBUTE_TYPE_STRING => IntPtr.Size,
 		_ => 0,
 	};

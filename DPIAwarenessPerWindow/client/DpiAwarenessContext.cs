@@ -296,7 +296,7 @@ internal static partial class Program
 		SafeLPTSTR szFile = new(MAX_PATH);      // buffer for file name
 		OPENFILENAME ofn = new()
 		{
-			lStructSize = (uint)Marshal.SizeOf(typeof(OPENFILENAME)),
+			lStructSize = (uint)Marshal.SizeOf<OPENFILENAME>(),
 			hwndOwner = hWnd,
 			lpstrFile = szFile,
 			nMaxFile = (uint)szFile.Capacity,

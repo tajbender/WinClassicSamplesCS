@@ -243,7 +243,7 @@
 			m_vertexBufferView = new()
 			{
 				BufferLocation = m_vertexBuffer.GetGPUVirtualAddress(),
-				StrideInBytes = (uint)Marshal.SizeOf(typeof(Vertex)),
+				StrideInBytes = (uint)Marshal.SizeOf<Vertex>(),
 				SizeInBytes = vertexBufferSize
 			};
 		}

@@ -270,7 +270,7 @@ public partial class GroupChat : Form
 		}
 		if (bAddNullIdentity)
 		{
-			var ni = new PEER_NAME_PAIR { dwSize = (uint)Marshal.SizeOf(typeof(PEER_NAME_PAIR)), pwzFriendlyName = "NULL Identity" };
+			var ni = new PEER_NAME_PAIR { dwSize = (uint)Marshal.SizeOf<PEER_NAME_PAIR>(), pwzFriendlyName = "NULL Identity" };
 			hwndCtrl.Items.Add(ni);
 		}
 		if (hwndCtrl.Items.Count > 0)

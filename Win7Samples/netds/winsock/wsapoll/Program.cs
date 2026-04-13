@@ -34,7 +34,7 @@ static class Program
 			using PinnedObject puNonBlockingMode = new(uNonBlockingMode);
 			ioctlsocket(lsock, WinSockIOControlCode.FIONBIO, puNonBlockingMode).ThrowIfFailed();
 
-			bind(lsock, addr, Marshal.SizeOf(typeof(SOCKADDR_IN6))).ThrowIfFailed();
+			bind(lsock, addr, Marshal.SizeOf<SOCKADDR_IN6>()).ThrowIfFailed();
 
 			listen(lsock, 1).ThrowIfFailed();
 
@@ -93,7 +93,7 @@ static class Program
 			SOCKADDR_IN6 addrLoopback = (SOCKADDR_IN6)IN6_ADDR.Loopback;
 			addrLoopback.sin6_port = htons(DEFAULT_PORT);
 
-			connect(csock, (SOCKADDR)addrLoopback, Marshal.SizeOf(typeof(SOCKADDR_IN6))).ThrowIfFailed();
+			connect(csock, (SOCKADDR)addrLoopback, Marshal.SizeOf<SOCKADDR_IN6>()).ThrowIfFailed();
 
 			// Call WSAPoll for writeability on connecting socket
 			WSAPOLLFD[] fdarray = [new() { fd = csock, events = PollFlags.POLLWRNORM }];

@@ -99,7 +99,7 @@ if (char.ToLower(args[0][0]) == 'r')
 
 	Console.Write("\nRegression Test 1: Do not zero memory for the Overlapped structure\n");
 
-	Console.Write("\nRegression Test 1: ZeroMemory(&Overlapped, Marshal.SizeOf(typeof(Overlapped))) NOT called\n");
+	Console.Write("\nRegression Test 1: ZeroMemory(&Overlapped, Marshal.SizeOf<Overlapped>()) NOT called\n");
 
 	using (var hEvent = CreateEvent())
 	if (hEvent.IsInvalid)

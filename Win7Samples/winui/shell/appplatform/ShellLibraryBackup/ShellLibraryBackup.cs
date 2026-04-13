@@ -210,7 +210,7 @@ internal class Program
 		// Create the main page of the wizard
 		PROPSHEETPAGE psp = new()
 		{
-			dwSize = (uint)Marshal.SizeOf(typeof(PROPSHEETPAGE)),
+			dwSize = (uint)Marshal.SizeOf<PROPSHEETPAGE>(),
 			dwFlags = PropSheetFlags.PSP_USEHEADERTITLE,
 			hInstance = g_hinst,
 			pszTemplate = IDD_MainPage,
@@ -240,7 +240,7 @@ internal class Program
 		{
 			PROPSHEETHEADER psh = new()
 			{
-				dwSize = (uint)Marshal.SizeOf(typeof(PROPSHEETHEADER)),
+				dwSize = (uint)Marshal.SizeOf<PROPSHEETHEADER>(),
 				dwFlags = PropSheetHeaderFlags.PSH_AEROWIZARD | PropSheetHeaderFlags.PSH_WIZARD,
 				hInstance = g_hinst,
 				nPages = (uint)rhpsp.Count,

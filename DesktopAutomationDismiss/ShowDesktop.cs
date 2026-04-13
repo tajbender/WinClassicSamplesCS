@@ -275,7 +275,7 @@ internal static class Program
 			new INPUT { type = INPUTTYPE.INPUT_KEYBOARD, ki = new KEYBDINPUT { wVk = VK_LWIN, dwFlags = KEYEVENTF.KEYEVENTF_KEYUP } },
 		};
 
-		if (SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT))) != (uint)inputs.Length)
+		if (SendInput((uint)inputs.Length, inputs, Marshal.SizeOf<INPUT>()) != (uint)inputs.Length)
 		{
 			OutputString("SendInput failed: {0}\n", Win32Error.GetLastError().ToHRESULT());
 		}
