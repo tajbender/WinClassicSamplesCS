@@ -23,10 +23,10 @@
     <Using Include="System.Threading"/>
     <Using Include="System.Runtime.InteropServices.ComTypes.FILETIME" Alias="FILETIME"/>
   </ItemGroup>
-  <!-- <ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Vanara.CodeGen">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup> -->
+  </ItemGroup>
 </Project>
