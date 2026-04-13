@@ -13,9 +13,9 @@ namespace ClassicSamplesBrowser.Views;
 /// </summary>
 
 
-public sealed partial class StartPage : Page
+public sealed partial class DocumentationPage : Page
 {
-    public StartPage()
+    public DocumentationPage()
     {
         InitializeComponent();
         LoadVersions();
@@ -32,8 +32,8 @@ public sealed partial class StartPage : Page
                 "3.4.0"
             };
 
-        VersionSelector.ItemsSource = versions;
-        VersionSelector.SelectedIndex = 0;
+        //VersionSelector.ItemsSource = versions;
+        //VersionSelector.SelectedIndex = 0;
     }
 
     private void OpenExplorer_Click(object sender, RoutedEventArgs e)
