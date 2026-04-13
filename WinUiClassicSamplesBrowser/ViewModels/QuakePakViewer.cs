@@ -1,5 +1,5 @@
 ﻿namespace ClassicSamplesBrowser.ViewModels;
 
-internal class MemberViewModel
+internal class QuakePakViewer
 {
 }
