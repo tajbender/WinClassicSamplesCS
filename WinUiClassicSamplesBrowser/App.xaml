@@ -16,7 +16,7 @@
             <SolidColorBrush x:Key="TabViewScrollButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
             <system:Double x:Key="TabViewItemAddButtonFontSize">14</system:Double>
             <system:Double x:Key="TabViewItemScrollButtonFontSize">14</system:Double>
-            <Style TargetType="TabViewItem">
+            <!--<Style TargetType="TabViewItem">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabViewItem">
@@ -30,17 +30,17 @@
                                     <SymbolIcon Symbol="Cancel" />
                                 </Button>
                             </Grid>
-                            <!--<ControlTemplate.Triggers>
+                            --><!--<ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="RootGrid" Property="Background" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
                                     <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="White" />
                                 </Trigger>
-                            </ControlTemplate.Triggers>-->
+                            </ControlTemplate.Triggers>--><!--
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
-            <Style TargetType="TabView">
+            </Style>-->
+            <!--<Style TargetType="TabView">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabView">
@@ -60,7 +60,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

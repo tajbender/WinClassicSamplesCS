@@ -6,7 +6,7 @@
 
     <Grid>
         <!-- Ryder-Style Sidebar -->
-        <NavigationView x:Name="NavView"
+        <!--<NavigationView x:Name="NavView"
                         PaneDisplayMode="LeftCompact"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="True"
@@ -14,7 +14,7 @@
                         OpenPaneLength="240"
                         SelectionChanged="NavView_SelectionChanged">
 
-            <!-- HeaderBar -->
+            --><!-- HeaderBar --><!--
             <NavigationView.Header>
                 <Grid Height="48">
                     <TextBlock x:Name="HeaderTitle"
@@ -24,27 +24,22 @@
                 </Grid>
             </NavigationView.Header>
 
-            <!-- Navigation Items -->
+            --><!-- Navigation Items --><!--
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Home" Content="Home" Tag="HomePage" />
                 <NavigationViewItem Icon="Library" Content="Samples" Tag="SamplesPage" />
                 <NavigationViewItem Icon="Help" Content="About" Tag="AboutPage" />
             </NavigationView.MenuItems>
 
-            <!-- Content -->
+            --><!-- Content --><!--
             <Frame x:Name="ContentFrame" />
 
-        </NavigationView>
+        </NavigationView>-->
 
-        <!-- Status Bar -->
-        <Border Height="28"
-                VerticalAlignment="Bottom">
-            <TextBlock x:Name="StatusText"
-                       Text="Ready."
-                       VerticalAlignment="Center"
-                       Margin="12,0,0,0"
-                       Opacity="0.7" />
+        <Frame x:Name="ContentFrame" />
+
+        <Border Height="28" VerticalAlignment="Bottom">
+            <TextBlock x:Name="StatusText" Margin="12,0,0,0" Opacity="0.7" Text="Ready." VerticalAlignment="Center" />
         </Border>
-
     </Grid>
 </Page>
