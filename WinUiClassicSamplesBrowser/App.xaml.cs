@@ -1,5 +1,4 @@
 using Microsoft.UI.Xaml;
-//using LaunchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs;
 
 namespace ClassicSamplesBrowser;
 

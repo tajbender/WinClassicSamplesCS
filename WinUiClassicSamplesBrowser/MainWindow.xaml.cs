@@ -1,16 +1,16 @@
-using WinRT;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Composition.SystemBackdrops;
-using ClassicSamplesBrowser.Views;
 using ClassicSamplesBrowser.Helpers;
+using ClassicSamplesBrowser.Views;
+using WinRT;
 
 namespace ClassicSamplesBrowser;
 
 public sealed partial class MainWindow : Window
 {
-    private WindowsSystemDispatcherQueueHelper _wsdqHelper;
     private MicaController _micaController;
-    private SystemBackdropConfiguration _backdropConfig;
+    private SystemBackdropConfiguration _sysBackdropConfiguration;
+    private WindowsSystemDispatcherQueueHelper _winDispatcherHelper;
 
     public MainWindow()
     {
@@ -22,7 +22,9 @@ public sealed partial class MainWindow : Window
 
     private void Window_Activated(object sender, WindowActivatedEventArgs args)
     {
-        _backdropConfig.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
+        _micaController = new MicaController();
+        _sysBackdropConfiguration.IsInputActive = (args.WindowActivationState != WindowActivationState.Deactivated);
+        _winDispatcherHelper = new WindowsSystemDispatcherQueueHelper();
     }
 
     private bool TrySetMicaBackdrop()
@@ -30,22 +32,22 @@ public sealed partial class MainWindow : Window
         if (!MicaController.IsSupported())
             return false;
 
-        _wsdqHelper = new WindowsSystemDispatcherQueueHelper();
-        _wsdqHelper.EnsureWindowsSystemDispatcherQueueController();
+        _winDispatcherHelper = new();
+        _winDispatcherHelper.EnsureWindowsSystemDispatcherQueueController();
 
-        _backdropConfig = new SystemBackdropConfiguration
+        _sysBackdropConfiguration = new()
         {
             IsInputActive = true,
             Theme = SystemBackdropTheme.Default
         };
 
-        _micaController = new MicaController
+        _micaController = new()
         {
             Kind = MicaKind.BaseAlt
         };
 
         _micaController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-        _micaController.SetSystemBackdropConfiguration(_backdropConfig);
+        _micaController.SetSystemBackdropConfiguration(_sysBackdropConfiguration);
 
         return true;
     }

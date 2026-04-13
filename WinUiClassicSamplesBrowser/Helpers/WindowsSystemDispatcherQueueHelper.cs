@@ -29,7 +29,7 @@ public class WindowsSystemDispatcherQueueHelper
 
         if (_dispatcherQueueController == IntPtr.Zero)
         {
-            DispatcherQueueOptions options = new DispatcherQueueOptions
+            DispatcherQueueOptions options = new()
             {
                 dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions)),
                 threadType = 2,      // INFO: TODO: Use Vanara' enum here: `DQTYPE_THREAD_CURRENT`
