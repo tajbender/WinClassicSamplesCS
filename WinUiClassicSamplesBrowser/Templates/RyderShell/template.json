@@ -1,0 +1,17 @@
+﻿{
+  "name": "RyderShell",
+  "description": "Sidebar + Hover Expand + Frame Navigation",
+  "files": [
+    {
+      "source": "Views/MainPage.xaml",
+      "target": "Views/MainPage.xaml"
+    },
+    {
+      "source": "Views/MainPage.xaml.cs",
+      "target": "Views/MainPage.xaml.cs"
+    }
+  ],
+  "dependencies": [
+    "CommunityToolkit.Mvvm"
+  ]
+}

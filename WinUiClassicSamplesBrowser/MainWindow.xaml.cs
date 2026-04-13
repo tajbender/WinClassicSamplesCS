@@ -3,6 +3,7 @@ using ClassicSamplesBrowser.Views;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using WinRT;
+using MainPage = ClassicSamplesBrowser.Templates.RyderShell.Views.MainPage;
 
 namespace ClassicSamplesBrowser;
 

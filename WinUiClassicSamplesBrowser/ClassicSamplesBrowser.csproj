@@ -25,9 +25,16 @@
 	  <Folder Include="Controls\" />
 	  <Folder Include="Resources\" />
 	  <Folder Include="Services\" />
+	  <Folder Include="Templates\RyderShell\Project\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Page Update="Templates\RyderShell\Styles\MainPage.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Templates\RyderShell\Views\MainPage.xaml">
+	    <SubType>Designer</SubType>
+	  </Page>
 	  <Page Update="Views\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
