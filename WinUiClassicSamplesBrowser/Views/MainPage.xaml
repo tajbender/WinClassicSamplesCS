@@ -36,10 +36,10 @@
 
         </NavigationView>-->
 
-        <Frame x:Name="ContentFrame" />
+        <!--<Frame x:Name="ContentFrame" />
 
         <Border Height="28" VerticalAlignment="Bottom">
             <TextBlock x:Name="StatusText" Margin="12,0,0,0" Opacity="0.7" Text="Ready." VerticalAlignment="Center" />
-        </Border>
+        </Border>-->
     </Grid>
 </Page>

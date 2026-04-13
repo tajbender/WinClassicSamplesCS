@@ -8,7 +8,7 @@
 		<UseWinUI>true</UseWinUI>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Content Remove="Assets\Vanara\Copilot_20260412_140844.png" />
+	  <Content Remove="Assets\Vanara\Insert-Amiga-Disk.png" />
 	  <Content Remove="Assets\Vanara\WinUi-Sailing.png" />
 	</ItemGroup>
 	<ItemGroup>

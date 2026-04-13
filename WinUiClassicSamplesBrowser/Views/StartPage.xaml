@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="ClassicSamplesBrowser.Views.StartPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,9 +9,15 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"  Padding="32" Spacing="8">
-            <TextBlock Text="Vanara API Explorer" FontWeight="SemiBold" FontSize="32" />
-            <TextBlock Text="Explore APIs, Samples, Wrappers and NuGet Versions" FontSize="16" Opacity="0.7"/>
+
+        <!-- HEADER -->
+        <StackPanel Padding="32" Spacing="4">
+            <TextBlock Text="Vanara API Explorer"
+                       FontSize="32"
+                       FontWeight="SemiBold"/>
+            <TextBlock Text="Browse APIs, Samples, Wrappers, NuGet Versions"
+                       FontSize="16"
+                       Opacity="0.7"/>
         </StackPanel>
 
         <!-- MAIN CONTENT -->
@@ -23,45 +28,50 @@
             </Grid.ColumnDefinitions>
 
             <!-- LEFT: ACTIONS -->
-            <StackPanel Spacing="16">
+            <StackPanel Spacing="20">
+
                 <!-- Version Selector -->
                 <StackPanel>
-                    <TextBlock Text="Select Vanara Version"
+                    <TextBlock Text="Vanara Version"
                                FontWeight="SemiBold"
                                Margin="0,0,0,4"/>
                     <ComboBox x:Name="VersionSelector"
                               PlaceholderText="Loading versions..."
-                              Width="240"/>
+                              Width="260"/>
                 </StackPanel>
-                <!-- Buttons -->
-                <Button Content="Open API Explorer"
-                        Click="OpenExplorer_Click"
-                        Width="240"/>
 
-                <Button Content="Open Samples Browser"
-                        Click="OpenSamples_Click"
-                        Width="240"/>
-
+                <!-- Load Assemblies -->
                 <Button Content="Load Assemblies"
                         Click="LoadAssemblies_Click"
-                        Width="240"/>
+                        Width="260"/>
 
-                <Button Content="Project Builder (Coming Soon)"
-                        Width="240"
+                <!-- Open API Explorer -->
+                <Button Content="Open API Explorer"
+                        Click="OpenExplorer_Click"
+                        Width="260"/>
+
+                <!-- Open Samples Browser -->
+                <Button Content="Open Samples Browser"
+                        Click="OpenSamples_Click"
+                        Width="260"/>
+
+                <!-- Project Builder -->
+                <Button Content="Project Builder (coming soon)"
+                        Width="260"
                         IsEnabled="False"/>
             </StackPanel>
 
             <!-- RIGHT: INFO PANEL -->
             <StackPanel Grid.Column="1" Padding="32" Spacing="12">
-                <TextBlock Text="What is this tool?"
+                <TextBlock Text="What this tool does"
                            FontSize="20"
                            FontWeight="SemiBold"/>
 
-                <TextBlock Text="This Explorer lets you browse Vanara APIs, inspect types, view samples, and explore NuGet versions. It is powered by reflection, NuGet metadata, and the Vanara test suite."
+                <TextBlock Text="This Explorer lets you browse Vanara APIs, inspect types, view samples, explore NuGet versions, and understand wrapper relationships. It is powered by reflection, NuGet metadata, and the Vanara test suite."
                            TextWrapping="Wrap"
                            Opacity="0.8"/>
 
-                <TextBlock Text="Features:"
+                <TextBlock Text="Core Features"
                            FontWeight="SemiBold"
                            Margin="0,12,0,0"/>
 
