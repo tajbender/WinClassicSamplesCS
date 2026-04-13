@@ -9,7 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Content Remove="Assets\Vanara\Insert-Amiga-Disk.png" />
-	  <Content Remove="Assets\Vanara\WinUi-Sailing.png" />
+	  <Content Remove="Assets\Vanara\WinUi Sailing in the seas of Cheese.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Views\AboutPage.xaml" />

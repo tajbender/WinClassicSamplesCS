@@ -7,7 +7,11 @@
     Activated="Window_Activated">
 
     <Grid x:Name="RootGrid">
-        <Frame x:Name="RootFrame" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="Assets/Vanara/WinUi Sailing in the Seas of Cheese.png" />
+        <Frame Grid.Row="1"  x:Name="RootFrame" />
     </Grid>
-
 </Window>
