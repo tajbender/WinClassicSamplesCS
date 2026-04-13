@@ -37,7 +37,7 @@ if (args.Length > 7)
 				case 'd':
 					if (myDnsRecord.wType == DNS_TYPE.DNS_TYPE_A)
 					{
-						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf(typeof(DNS_A_DATA)); //data structure for A records
+						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf<DNS_A_DATA>(); //data structure for A records
 						var HostipAddress = inet_addr(args[++i]);
 						myDnsRecord.Data = new DNS_A_DATA() { IpAddress = HostipAddress }; //convert string to proper address
 						if (HostipAddress == IN_ADDR.INADDR_NONE)
@@ -49,7 +49,7 @@ if (args.Length > 7)
 					}
 					else
 					{
-						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf(typeof(DNS_PTR_DATA)); //data structure for CNAME records
+						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf<DNS_PTR_DATA>(); //data structure for CNAME records
 						myDnsRecord.Data = new DNS_PTR_DATA { pNameHost = args[++i] };
 						break;
 					}

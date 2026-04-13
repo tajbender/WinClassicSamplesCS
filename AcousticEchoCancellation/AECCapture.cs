@@ -26,7 +26,7 @@ internal class CAECCapture : IDisposable
 		// Set the category as communications.
 		AudioClientProperties clientProperties = new()
 		{
-			cbSize = (uint)Marshal.SizeOf(typeof(AudioClientProperties)),
+			cbSize = (uint)Marshal.SizeOf<AudioClientProperties>(),
 			eCategory = AUDIO_STREAM_CATEGORY.AudioCategory_Communications
 		};
 		audioClient.SetClientProperties(clientProperties);

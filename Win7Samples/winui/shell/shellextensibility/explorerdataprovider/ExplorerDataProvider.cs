@@ -298,7 +298,7 @@ public class CFolderViewImplFolder(uint nLevel) : IShellFolder2, IPersistFolder2
 		HRESULT hr = HRESULT.E_NOINTERFACE;
 		if (riid == typeof(IShellView).GUID)
 		{
-			SFV_CREATE csfv = new() { cbSize = (uint)Marshal.SizeOf(typeof(SFV_CREATE)), pshf = this, psfvcb = new CFolderViewCB() };
+			SFV_CREATE csfv = new() { cbSize = (uint)Marshal.SizeOf<SFV_CREATE>(), pshf = this, psfvcb = new CFolderViewCB() };
 			hr = SHCreateShellFolderView(csfv, out IShellView? shv);
 			if (hr.Succeeded) ppv = shv;
 		}

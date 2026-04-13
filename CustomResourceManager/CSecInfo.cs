@@ -442,7 +442,7 @@ internal class CSecInfo : ISecurityInformation, ISecurityInformation3, IEffectiv
 				if (destDacl.IsNull)
 				{
 					// Align sizeNeeded to a uint
-					var dwSizeNeeded = (Marshal.SizeOf(typeof(ACL)) + (Marshal.SizeOf(typeof(uint)) - 1)) & 0xfffffffc;
+					var dwSizeNeeded = (Marshal.SizeOf<ACL>() + (Marshal.SizeOf<uint>() - 1)) & 0xfffffffc;
 
 					pDestDacl = new SafePACL((int)dwSizeNeeded);
 				}

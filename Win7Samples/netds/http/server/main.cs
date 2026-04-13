@@ -101,7 +101,7 @@ CleanUp:
 		Win32Error result = 0;
 
 		// Allocate a 2K buffer. Should be good for most requests, we'll grow this if required. We also need space for a HTTP_REQUEST structure.
-		using var pRequestBuffer = new SafeCoTaskMemHandle(Marshal.SizeOf(typeof(HTTP_REQUEST_V1)) + 2048);
+		using var pRequestBuffer = new SafeCoTaskMemHandle(Marshal.SizeOf<HTTP_REQUEST_V1>() + 2048);
 
 		// Wait for a new request -- This is indicated by a default request ID.
 		while (HttpReceiveHttpRequest(hReqQueue, HTTP_NULL_ID, 0, out HTTP_REQUEST? pRequest).Succeeded)

@@ -53,7 +53,7 @@ namespace Vanara.PInvoke
 			/// <summary>RFCOMM channel associated with the socket. See Remarks.</summary>
 			public uint port;
 
-			public byte[] GetAddressBytes() => ((IntPtr)new PinnedObject(this)).ToArray<byte>(Marshal.SizeOf(typeof(SOCKADDR_BTH))) ?? [];
+			public byte[] GetAddressBytes() => ((IntPtr)new PinnedObject(this)).ToArray<byte>(Marshal.SizeOf<SOCKADDR_BTH>()) ?? [];
 
 			public static explicit operator SOCKADDR(SOCKADDR_BTH sblth) => SOCKADDR.CreateFromStructure(sblth);
 		}
@@ -241,7 +241,7 @@ namespace WinsockBluetoothConnection
 				//
 				iResult = CXN_SUCCESS;
 				var bContinueLookup = false;
-				uint ulPQSSize = (uint)Marshal.SizeOf(typeof(WSAQUERYSET));
+				uint ulPQSSize = (uint)Marshal.SizeOf<WSAQUERYSET>();
 				iResult = (Win32Error)WSALookupServiceBegin(new WSAQUERYSET(NS.NS_BTH), ulFlags, out var hLookup);
 
 				//
@@ -487,7 +487,7 @@ namespace WinsockBluetoothConnection
 				//
 				// CSADDR_INFO
 				//
-				var scktAddr = new SOCKET_ADDRESS { iSockaddrLength = Marshal.SizeOf(typeof(SOCKADDR_BTH)), lpSockaddr = pSockAddrBthLocal };
+				var scktAddr = new SOCKET_ADDRESS { iSockaddrLength = Marshal.SizeOf<SOCKADDR_BTH>(), lpSockaddr = pSockAddrBthLocal };
 				var csaddrInfo = new CSADDR_INFO
 				{
 					LocalAddr = scktAddr,
@@ -503,7 +503,7 @@ namespace WinsockBluetoothConnection
 				using var lpCSAddrInfo = SafeCoTaskMemHandle.CreateFromStructure(csaddrInfo);
 				var wsaQuerySet = new WSAQUERYSET
 				{
-					dwSize = (uint)Marshal.SizeOf(typeof(WSAQUERYSET)),
+					dwSize = (uint)Marshal.SizeOf<WSAQUERYSET>(),
 					lpServiceClassId = (IntPtr)pg_guidServiceClass,
 					lpszServiceInstanceName = $"{Environment.MachineName} {CXN_INSTANCE_STRING}",
 					lpszComment = "Example Service instance registered in the directory service through RnR",

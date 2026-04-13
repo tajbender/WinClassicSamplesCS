@@ -792,7 +792,7 @@ internal static class Program
 
 					properties = (PEVT_VARIANT)eventDataBuffer;
 
-					result = EvtRender(renderContext, _event, EvtRenderEventValues, Marshal.SizeOf(typeof(eventDataBuffer)), properties, out bufferUsed, out propertyCount);
+					result = EvtRender(renderContext, _event, EvtRenderEventValues, Marshal.SizeOf<eventDataBuffer>(), properties, out bufferUsed, out propertyCount);
 				}
 			}
 

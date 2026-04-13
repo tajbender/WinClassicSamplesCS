@@ -89,13 +89,10 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	{
 		switch (key)
 		{
-			// Instrument the Space Bar to toggle between fullscreen states.
-			// The window message loop callback will receive a WM_SIZE message once the
-			// window is in the fullscreen state. At that point, the IDXGISwapChain should
-			// be resized to match the new window size.
+			// Instrument the Space Bar to toggle between fullscreen states. The window message loop callback will receive a WM_SIZE message
+			// once the window is in the fullscreen state. At that point, the IDXGISwapChain should be resized to match the new window size.
 			//
-			// NOTE: ALT+Enter will perform a similar operation; the code below is not
-			// required to enable that key combination.
+			// NOTE: ALT+Enter will perform a similar operation; the code below is not required to enable that key combination.
 			case VK.VK_SPACE:
 				if (TearingSupport)
 				{
@@ -110,17 +107,15 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 					}
 					catch
 					{
-						// Transitions to fullscreen mode can fail when running apps over
-						// terminal services or for some other unexpected reason. Consider
-						// notifying the user in some way when this happens.
+						// Transitions to fullscreen mode can fail when running apps over terminal services or for some other unexpected
+						// reason. Consider notifying the user in some way when this happens.
 						OutputDebugString("Fullscreen transition failed");
 						Debug.Assert(false);
 					}
 				}
 				break;
 
-			// Instrument the Right Arrow key to change the scene rendering resolution 
-			// to the next resolution option. 
+			// Instrument the Right Arrow key to change the scene rendering resolution to the next resolution option.
 			case VK.VK_RIGHT:
 				m_resolutionIndex = (m_resolutionIndex + 1) % (uint)m_resolutionOptionsCount;
 
@@ -131,8 +126,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				LoadSceneResolutionDependentResources();
 				break;
 
-			// Instrument the Left Arrow key to change the scene rendering resolution 
-			// to the previous resolution option.
+			// Instrument the Left Arrow key to change the scene rendering resolution to the previous resolution option.
 			case VK.VK_LEFT:
 				if (m_resolutionIndex == 0)
 				{
@@ -165,8 +159,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 					PopulateCommandLists();
 
 					// Execute the command lists.
-					ID3D12CommandList[] ppCommandLists = [m_sceneCommandList!, m_postCommandList!];
-					m_commandQueue!.ExecuteCommandLists(ppCommandLists.Length, ppCommandLists);
+					m_commandQueue!.ExecuteCommandLists([m_sceneCommandList!, m_postCommandList!]);
 				}
 
 				// When using sync interval 0, it is recommended to always pass the tearing flag when it is supported, even when presenting
@@ -174,7 +167,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				DXGI_PRESENT presentFlags = (TearingSupport && m_windowedMode) ? DXGI_PRESENT.DXGI_PRESENT_ALLOW_TEARING : 0;
 
 				// Present the frame.
-				m_swapChain!.Present(0, presentFlags);
+				m_swapChain!.Present(0, presentFlags).ThrowIfFailed();
 
 				MoveToNextFrame();
 			}
@@ -209,8 +202,8 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			}
 
 			// Resize the swap chain to the desired dimensions.
-			DXGI_SWAP_CHAIN_DESC desc = m_swapChain!.GetDesc();
-			m_swapChain.ResizeBuffers(FrameCount, (uint)width, (uint)height, desc.BufferDesc.Format, desc.Flags);
+			DXGI_SWAP_CHAIN_DESC1 desc = m_swapChain!.GetDesc1();
+			m_swapChain.ResizeBuffers(FrameCount, (uint)width, (uint)height, desc.Format, desc.Flags);
 
 			_ = m_swapChain.GetFullscreenState(out var fullscreenState);
 			m_windowedMode = !fullscreenState;
@@ -243,7 +236,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 		XMStoreFloat4x4(out m_sceneConstantBufferData.transform, transform.XMMatrixTranspose());
 
-		int offset = m_frameIndex * Marshal.SizeOf(typeof(SceneConstantBuffer));
+		int offset = m_frameIndex * Marshal.SizeOf<SceneConstantBuffer>();
 		Marshal.StructureToPtr(m_sceneConstantBufferData, m_pCbvDataBegin.Offset(offset), false);
 	}
 
@@ -257,8 +250,8 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 		// Create a root signature consisting of a descriptor table with a single CBV.
 		{
-			SafeNativeArray<D3D12_DESCRIPTOR_RANGE1> ranges = [new(D3D12_DESCRIPTOR_RANGE_TYPE.D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAGS.D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC)];
-			SafeNativeArray<D3D12_ROOT_PARAMETER1> rootParameters = [D3D12_ROOT_PARAMETER1.InitAsDescriptorTable(1, ranges, D3D12_SHADER_VISIBILITY.D3D12_SHADER_VISIBILITY_VERTEX)];
+			D3D12_DESCRIPTOR_RANGE1[] ranges = [new(D3D12_DESCRIPTOR_RANGE_TYPE.D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0, 0, D3D12_DESCRIPTOR_RANGE_FLAGS.D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC)];
+			D3D12_ROOT_PARAMETER1[] rootParameters = [D3D12_ROOT_PARAMETER1.InitAsDescriptorTable(ranges, D3D12_SHADER_VISIBILITY.D3D12_SHADER_VISIBILITY_VERTEX, out var rp1)];
 
 			// Allow input layout and deny uneccessary access to certain pipeline stages.
 			D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
@@ -268,9 +261,9 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				D3D12_ROOT_SIGNATURE_FLAGS.D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS |
 				D3D12_ROOT_SIGNATURE_FLAGS.D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS;
 
-			D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc = new(new D3D12_ROOT_SIGNATURE_DESC1(1, rootParameters, default, default, rootSignatureFlags));
+			D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc = new(new D3D12_ROOT_SIGNATURE_DESC1(rootParameters, default, rootSignatureFlags, out var rsd));
 
-			HRESULT.ThrowIfFailed(D3D12SerializeVersionedRootSignature(rootSignatureDesc, out var signature));
+			D3D12SerializeVersionedRootSignature(rootSignatureDesc, out var signature).ThrowIfFailed();
 			m_sceneRootSignature = m_device!.CreateRootSignature<ID3D12RootSignature>(0, signature);
 			NAME_D3D12_OBJECT(m_sceneRootSignature);
 		}
@@ -280,8 +273,8 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// We don't modify the SRV in the post-processing command list after
 			// SetGraphicsRootDescriptorTable is executed on the GPU so we can use the default
 			// range behavior: D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC_WHILE_SET_AT_EXECUTE
-			SafeNativeArray<D3D12_DESCRIPTOR_RANGE1> ranges = [new(D3D12_DESCRIPTOR_RANGE_TYPE.D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0)];
-			SafeNativeArray<D3D12_ROOT_PARAMETER1> rootParameters = [D3D12_ROOT_PARAMETER1.InitAsDescriptorTable(1, ranges, D3D12_SHADER_VISIBILITY.D3D12_SHADER_VISIBILITY_PIXEL)];
+			D3D12_DESCRIPTOR_RANGE1[] ranges = [new(D3D12_DESCRIPTOR_RANGE_TYPE.D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0)];
+			D3D12_ROOT_PARAMETER1[] rootParameters = [D3D12_ROOT_PARAMETER1.InitAsDescriptorTable(ranges, D3D12_SHADER_VISIBILITY.D3D12_SHADER_VISIBILITY_PIXEL, out var rp1)];
 
 			// Allow input layout and pixel shader access and deny uneccessary access to certain pipeline stages.
 			D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags =
@@ -291,7 +284,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				D3D12_ROOT_SIGNATURE_FLAGS.D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
 
 			// Create a sampler.
-			SafeCoTaskMemStruct<D3D12_STATIC_SAMPLER_DESC> sampler = new D3D12_STATIC_SAMPLER_DESC()
+			D3D12_STATIC_SAMPLER_DESC sampler = new()
 			{
 				Filter = D3D12_FILTER.D3D12_FILTER_MIN_MAG_MIP_LINEAR,
 				AddressU = D3D12_TEXTURE_ADDRESS_MODE.D3D12_TEXTURE_ADDRESS_MODE_BORDER,
@@ -309,9 +302,9 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			};
 			DumpVal(sampler, nameof(sampler));
 
-			D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc = new(new D3D12_ROOT_SIGNATURE_DESC1(1, rootParameters, 1, sampler, rootSignatureFlags));
+			D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc = new(new D3D12_ROOT_SIGNATURE_DESC1(rootParameters, [sampler], rootSignatureFlags, out var rsd));
 
-			HRESULT.ThrowIfFailed(D3DX12SerializeVersionedRootSignature(rootSignatureDesc, featureData.HighestVersion, out var signature, out _));
+			D3DX12SerializeVersionedRootSignature(rootSignatureDesc, featureData.HighestVersion, out var signature, out _).ThrowIfFailed();
 			m_postRootSignature = m_device!.CreateRootSignature<ID3D12RootSignature>(0, signature!);
 			NAME_D3D12_OBJECT(m_postRootSignature);
 		}
@@ -325,18 +318,17 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			D3DCOMPILE compileFlags = 0;
 #endif
 
-			HRESULT.ThrowIfFailed(D3DCompileFromFile(GetAssetFullPath("sceneShaders.hlsl"), IntPtr.Zero, null, "VSMain", "vs_5_0", compileFlags, 0, out var sceneVertexShader));
-			HRESULT.ThrowIfFailed(D3DCompileFromFile(GetAssetFullPath("sceneShaders.hlsl"), IntPtr.Zero, null, "PSMain", "ps_5_0", compileFlags, 0, out var scenePixelShader));
-
-			HRESULT.ThrowIfFailed(D3DCompileFromFile(GetAssetFullPath("postShaders.hlsl"), IntPtr.Zero, null, "VSMain", "vs_5_0", compileFlags, 0, out var postVertexShader));
-			HRESULT.ThrowIfFailed(D3DCompileFromFile(GetAssetFullPath("postShaders.hlsl"), IntPtr.Zero, null, "PSMain", "ps_5_0", compileFlags, 0, out var postPixelShader));
+			D3DCompileFromFile(GetAssetFullPath("sceneShaders.hlsl"), default, default, "VSMain", "vs_5_0", compileFlags, 0, out var pSceneVertexShaderData, out _).ThrowIfFailed();
+			D3DCompileFromFile(GetAssetFullPath("sceneShaders.hlsl"), default, default, "PSMain", "ps_5_0", compileFlags, 0, out var pScenePixelShaderData, out _).ThrowIfFailed();
+			D3DCompileFromFile(GetAssetFullPath("postShaders.hlsl"), default, default, "VSMain", "vs_5_0", compileFlags, 0, out var pPostVertexShaderData, out _).ThrowIfFailed();
+			D3DCompileFromFile(GetAssetFullPath("postShaders.hlsl"), default, default, "PSMain", "ps_5_0", compileFlags, 0, out var pPostPixelShaderData, out _).ThrowIfFailed();
 
 			// Define the vertex input layouts.
-			SafeNativeArray<D3D12_INPUT_ELEMENT_DESC> inputElementDescs = [
+			D3D12_INPUT_ELEMENT_DESC[] inputElementDescs = [
 				new("POSITION", DXGI_FORMAT.DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA),
 				new("COLOR", DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_FLOAT, 12, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA)
 			];
-			SafeNativeArray<D3D12_INPUT_ELEMENT_DESC> scaleInputElementDescs = [
+			D3D12_INPUT_ELEMENT_DESC[] scaleInputElementDescs = [
 				new("POSITION", DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA),
 				new("TEXCOORD", DXGI_FORMAT.DXGI_FORMAT_R32G32_FLOAT, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION.D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA)
 			];
@@ -344,26 +336,26 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// Describe and create the graphics pipeline state objects (PSOs).
 			D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = new()
 			{
-				InputLayout = new(inputElementDescs.Count, inputElementDescs),
+				InputLayout = new(inputElementDescs, out var ied),
 				pRootSignature = m_sceneRootSignature,
-				VS = new(sceneVertexShader),
-				PS = new(scenePixelShader),
+				VS = new(pSceneVertexShaderData),
+				PS = new(pScenePixelShaderData),
 				RasterizerState = new(),
 				BlendState = new(),
-				DepthStencilState = new() { DepthEnable = false, StencilEnable = false },
+				DepthStencilState = new(depthEnable: false, stencilEnable: false),
 				SampleMask = uint.MaxValue,
 				PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE.D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
-				SampleDesc = new() { Count = 1 }
+				SampleDesc = new(1, 0)
 			};
 			psoDesc.SetRTVFormats([DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM]);
 			DumpVal(psoDesc, nameof(psoDesc));
 			m_scenePipelineState = m_device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
 			NAME_D3D12_OBJECT(m_scenePipelineState);
 
-			psoDesc.InputLayout = new(scaleInputElementDescs.Count, scaleInputElementDescs);
+			psoDesc.InputLayout = new(scaleInputElementDescs, out ied);
 			psoDesc.pRootSignature = m_postRootSignature;
-			psoDesc.VS = new(postVertexShader);
-			psoDesc.PS = new(postPixelShader);
+			psoDesc.VS = new(pPostVertexShaderData);
+			psoDesc.PS = new(pPostPixelShaderData);
 			DumpVal(psoDesc, nameof(psoDesc));
 
 			m_postPipelineState = m_device!.CreateGraphicsPipelineState<ID3D12PipelineState>(psoDesc);
@@ -407,7 +399,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			uint vertexBufferSize = quadVertices.Size;
 
 			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
-				new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_DEFAULT),
+				new(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_DEFAULT),
 				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
 				D3D12_RESOURCE_DESC.Buffer(vertexBufferSize),
 				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST,
@@ -415,7 +407,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 				out m_sceneVertexBuffer));
 
 			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
-				new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
+				new(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
 				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
 				D3D12_RESOURCE_DESC.Buffer(vertexBufferSize),
 				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -432,14 +424,13 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			sceneVertexBufferUpload!.Unmap(0, default);
 
 			commandList!.CopyBufferRegion(m_sceneVertexBuffer!, 0, sceneVertexBufferUpload, 0, vertexBufferSize);
-			commandList.ResourceBarrier(1, [D3D12_RESOURCE_BARRIER.CreateTransition(m_sceneVertexBuffer!,
-				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
+			commandList.ResourceBarrier([D3D12_RESOURCE_BARRIER.CreateTransition(m_sceneVertexBuffer!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
 
 			// Initialize the vertex buffer views.
 			m_sceneVertexBufferView = new()
 			{
 				BufferLocation = m_sceneVertexBuffer!.GetGPUVirtualAddress(),
-				StrideInBytes = (uint)Marshal.SizeOf(typeof(SceneVertex)),
+				StrideInBytes = (uint)Marshal.SizeOf<SceneVertex>(),
 				SizeInBytes = vertexBufferSize
 			};
 		}
@@ -480,50 +471,46 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			postVertexBufferUpload!.Unmap(0, default);
 
 			commandList.CopyBufferRegion(m_postVertexBuffer!, 0, postVertexBufferUpload, 0, vertexBufferSize);
-			commandList.ResourceBarrier(1, [D3D12_RESOURCE_BARRIER.CreateTransition(m_postVertexBuffer!,
-				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
+			commandList.ResourceBarrier([D3D12_RESOURCE_BARRIER.CreateTransition(m_postVertexBuffer!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER)]);
 
 			// Initialize the vertex buffer views.
 			m_postVertexBufferView = new()
 			{
 				BufferLocation = m_postVertexBuffer!.GetGPUVirtualAddress(),
-				StrideInBytes = (uint)Marshal.SizeOf(typeof(PostVertex)),
+				StrideInBytes = (uint)Marshal.SizeOf<PostVertex>(),
 				SizeInBytes = vertexBufferSize
 			};
 		}
 
 		// Create the constant buffer.
 		{
-			var constantBufferByteSize = (uint)Marshal.SizeOf(typeof(SceneConstantBuffer));
+			var sceneConstantBufferSize = (uint)Marshal.SizeOf<SceneConstantBuffer>();
 
 			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
 				new(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),
 				D3D12_HEAP_FLAGS.D3D12_HEAP_FLAG_NONE,
-				D3D12_RESOURCE_DESC.Buffer((ulong)constantBufferByteSize * FrameCount),
+				D3D12_RESOURCE_DESC.Buffer((ulong)sceneConstantBufferSize * FrameCount),
 				D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_GENERIC_READ,
 				default,
 				out m_sceneConstantBuffer));
 
 			NAME_D3D12_OBJECT(m_sceneConstantBuffer!);
 
-			unsafe
+			// Describe and create constant buffer views.
+			D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = new()
 			{
-				// Describe and create constant buffer views.
-				D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = new()
-				{
-					BufferLocation = m_sceneConstantBuffer!.GetGPUVirtualAddress(),
-					SizeInBytes = constantBufferByteSize
-				};
+				BufferLocation = m_sceneConstantBuffer!.GetGPUVirtualAddress(),
+				SizeInBytes = sceneConstantBufferSize
+			};
 
-				D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = new(m_cbvSrvHeap!.GetCPUDescriptorHandleForHeapStart(), 1, m_cbvSrvDescriptorSize);
+			D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = new(m_cbvSrvHeap!.GetCPUDescriptorHandleForHeapStart(), 1, m_cbvSrvDescriptorSize);
 
-				for (uint n = 0; n < FrameCount; n++)
-				{
-					m_device!.CreateConstantBufferView(cbvDesc, cpuHandle);
+			for (uint n = 0; n < FrameCount; n++)
+			{
+				m_device!.CreateConstantBufferView(cbvDesc, cpuHandle);
 
-					cbvDesc.BufferLocation += constantBufferByteSize;
-					cpuHandle.Offset((int)m_cbvSrvDescriptorSize);
-				}
+				cbvDesc.BufferLocation += sceneConstantBufferSize;
+				cpuHandle.Offset((int)m_cbvSrvDescriptorSize);
 			}
 
 			// Map and initialize the constant buffer. We don't unmap this until the
@@ -537,7 +524,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 		// the default heap.
 		HRESULT.ThrowIfFailed(commandList.Close());
 		ID3D12CommandList[] ppCommandLists = [commandList];
-		m_commandQueue!.ExecuteCommandLists(ppCommandLists.Length, ppCommandLists);
+		m_commandQueue!.ExecuteCommandLists(ppCommandLists);
 
 		// Create synchronization objects and wait until assets have been uploaded to the GPU.
 		{
@@ -611,7 +598,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			Format = DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM,
 			BufferUsage = DXGI_USAGE.DXGI_USAGE_RENDER_TARGET_OUTPUT,
 			SwapEffect = DXGI_SWAP_EFFECT.DXGI_SWAP_EFFECT_FLIP_DISCARD,
-			SampleDesc = new() { Count = 1 },
+			SampleDesc = new(1, 0),
 		};
 
 		// Swap chain needs the queue so that it can force a flush on it.
@@ -702,12 +689,12 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 
 		// Create frame resources.
 		{
-			m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(out var rtvHandle);
+			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = m_rtvHeap!.GetCPUDescriptorHandleForHeapStart();
 
 			// Create a RTV for each frame.
 			for (uint n = 0; n < FrameCount; n++)
 			{
-				m_renderTargets![n] = m_swapChain!.GetBuffer<ID3D12Resource>(n);
+				m_swapChain!.GetBuffer(n, out m_renderTargets![n]).ThrowIfFailed();
 				m_device!.CreateRenderTargetView(m_renderTargets[n], default, rtvHandle);
 				rtvHandle.Offset(1, m_rtvDescriptorSize);
 
@@ -745,15 +732,13 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	// Fill the command list with all the render commands and dependent state.
 	private void PopulateCommandLists()
 	{
-		// Command list allocators can only be reset when the associated 
-		// command lists have finished execution on the GPU; apps should use 
+		// Command list allocators can only be reset when the associated command lists have finished execution on the GPU; apps should use
 		// fences to determine GPU execution progress.
 		HRESULT.ThrowIfFailed(m_sceneCommandAllocators[m_frameIndex].Reset());
 		HRESULT.ThrowIfFailed(m_postCommandAllocators[m_frameIndex].Reset());
 
-		// However, when ExecuteCommandList() is called on a particular command 
-		// list, that command list can then be reset at any time and must be before 
-		// re-recording.
+		// However, when ExecuteCommandList() is called on a particular command list, that command list can then be reset at any time and
+		// must be before re-recording.
 		HRESULT.ThrowIfFailed(m_sceneCommandList!.Reset(m_sceneCommandAllocators[m_frameIndex], m_scenePipelineState));
 		HRESULT.ThrowIfFailed(m_postCommandList!.Reset(m_postCommandAllocators[m_frameIndex], m_postPipelineState));
 
@@ -762,26 +747,24 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// Set necessary state.
 			m_sceneCommandList.SetGraphicsRootSignature(m_sceneRootSignature);
 
-			m_sceneCommandList.SetDescriptorHeaps(1, [m_cbvSrvHeap!]);
+			m_sceneCommandList.SetDescriptorHeaps([m_cbvSrvHeap!]);
 
 			D3D12_GPU_DESCRIPTOR_HANDLE cbvHandle = new(m_cbvSrvHeap!.GetGPUDescriptorHandleForHeapStart(), m_frameIndex + 1, m_cbvSrvDescriptorSize);
 			m_sceneCommandList.SetGraphicsRootDescriptorTable(0, cbvHandle);
 			m_sceneCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			m_sceneCommandList.RSSetViewports(1, [m_sceneViewport]);
-			m_sceneCommandList.RSSetScissorRects(1, [m_sceneScissorRect]);
+			m_sceneCommandList.RSSetViewports([m_sceneViewport]);
+			m_sceneCommandList.RSSetScissorRects([m_sceneScissorRect]);
 
 			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), FrameCount, m_rtvDescriptorSize);
-			m_sceneCommandList.OMSetRenderTargets(1, [rtvHandle], false, default);
+			m_sceneCommandList.OMSetRenderTargets([rtvHandle], false);
 
 			// Record commands.
-			m_sceneCommandList.ClearRenderTargetView(rtvHandle, ClearColor, 0, default);
+			m_sceneCommandList.ClearRenderTargetView(rtvHandle, ClearColor);
 			m_sceneCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-			m_sceneCommandList.IASetVertexBuffers(0, 1, [m_sceneVertexBufferView]);
+			m_sceneCommandList.IASetVertexBuffers(0, [m_sceneVertexBufferView]);
 
-			//using (new PIXEvent(m_sceneCommandList, "Draw a thin rectangle"))
-			PIXEvent.PIXBeginEvent(m_sceneCommandList, 0, "Draw a thin rectangle");
-			m_sceneCommandList.DrawInstanced(4, 1, 0, 0);
-			PIXEvent.PIXEndEvent(m_sceneCommandList);
+			using (new PIXEvent(m_sceneCommandList, "Draw a thin rectangle"))
+				m_sceneCommandList.DrawInstanced(4, 1, 0, 0);
 		}
 
 		HRESULT.ThrowIfFailed(m_sceneCommandList.Close());
@@ -791,42 +774,39 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 			// Set necessary state.
 			m_postCommandList.SetGraphicsRootSignature(m_postRootSignature);
 
-			m_postCommandList.SetDescriptorHeaps(1, [m_cbvSrvHeap!]);
+			m_postCommandList.SetDescriptorHeaps([m_cbvSrvHeap!]);
 
-			// Indicate that the back buffer will be used as a render target and the
-			// intermediate render target will be used as a SRV.
+			// Indicate that the back buffer will be used as a render target and the intermediate render target will be used as a SRV.
 			D3D12_RESOURCE_BARRIER[] barriers = [
 				D3D12_RESOURCE_BARRIER.CreateTransition(m_renderTargets![m_frameIndex]!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET),
 				D3D12_RESOURCE_BARRIER.CreateTransition(m_intermediateRenderTarget!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE)
 			];
 
-			m_postCommandList.ResourceBarrier(barriers.Length, barriers);
+			m_postCommandList.ResourceBarrier(barriers);
 
 			m_postCommandList.SetGraphicsRootDescriptorTable(0, m_cbvSrvHeap!.GetGPUDescriptorHandleForHeapStart());
 			m_postCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			m_postCommandList.RSSetViewports(1, [m_postViewport]);
-			m_postCommandList.RSSetScissorRects(1, [m_postScissorRect]);
+			m_postCommandList.RSSetViewports([m_postViewport]);
+			m_postCommandList.RSSetScissorRects([m_postScissorRect]);
 
 			D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = new(m_rtvHeap!.GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
-			m_postCommandList.OMSetRenderTargets(1, [rtvHandle], false, default);
+			m_postCommandList.OMSetRenderTargets([rtvHandle], false);
 
 			// Record commands.
-			m_postCommandList.ClearRenderTargetView(rtvHandle, LetterboxColor, 0, default);
+			m_postCommandList.ClearRenderTargetView(rtvHandle, LetterboxColor);
 			m_postCommandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY.D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-			m_postCommandList.IASetVertexBuffers(0, 1, [m_postVertexBufferView]);
+			m_postCommandList.IASetVertexBuffers(0, [m_postVertexBufferView]);
 
-			//using (new PIXEvent(m_postCommandList, "Draw texture to screen."))
-			PIXEvent.PIXBeginEvent(m_postCommandList, 0, "Draw texture to screen.");
-			m_postCommandList.DrawInstanced(4, 1, 0, 0);
-			PIXEvent.PIXEndEvent(m_postCommandList);
+			using (new PIXEvent(m_postCommandList, "Draw texture to screen."))
+				m_postCommandList.DrawInstanced(4, 1, 0, 0);
 
 			// Revert resource states back to original values.
-			barriers[0].Transition.StateBefore = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET;
-			barriers[0].Transition.StateAfter = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT;
-			barriers[1].Transition.StateBefore = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-			barriers[1].Transition.StateAfter = D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET;
+			barriers = [
+				D3D12_RESOURCE_BARRIER.CreateTransition(m_renderTargets![m_frameIndex]!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PRESENT),
+				D3D12_RESOURCE_BARRIER.CreateTransition(m_intermediateRenderTarget!, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATES.D3D12_RESOURCE_STATE_RENDER_TARGET)
+			];
 
-			m_postCommandList.ResourceBarrier(barriers.Length, barriers);
+			m_postCommandList.ResourceBarrier(barriers);
 		}
 
 		HRESULT.ThrowIfFailed(m_postCommandList.Close());
@@ -836,6 +816,7 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	private void ReleaseD3DResources()
 	{
 		m_fence = null;
+		m_renderTargets?.Fill(null);
 		m_renderTargets = null;
 		m_commandQueue = null;
 		m_swapChain = null;
@@ -847,14 +828,8 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	private void RestoreD3DResources()
 	{
 		// Give GPU a chance to finish its execution in progress.
-		try
-		{
-			WaitForGpu();
-		}
-		catch
-		{
-			// Do nothing, currently attached adapter is unresponsive.
-		}
+		try { WaitForGpu(); }
+		catch { } // Do nothing, currently attached adapter is unresponsive.
 		ReleaseD3DResources();
 		OnInit();
 	}
@@ -938,5 +913,14 @@ internal partial class D3D12Fullscreen(int width, int height, string name) : DXS
 	{
 		public D3DCOLORVALUE color = new(r, b, g, a);
 		public D2D_VECTOR_3F position = new(x, y, z);
+	}
+}
+
+internal static class Ext
+{
+	public static void Fill<T>(this IList<T> l, T? value = default)
+	{
+		for (int i = 0; i < l.Count; i++)
+			l[i] = value!;
 	}
 }

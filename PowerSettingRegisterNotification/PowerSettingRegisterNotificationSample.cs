@@ -83,7 +83,7 @@ Win32Error EnergySaverPowerSettingCallback([In, Optional] IntPtr Context, uint T
 	//
 	// Check the data size is expected
 	//
-	if (settingId != GUID_ENERGY_SAVER_STATUS || powerSetting.DataLength != Marshal.SizeOf(typeof(ENERGY_SAVER_STATUS)))
+	if (settingId != GUID_ENERGY_SAVER_STATUS || powerSetting.DataLength != Marshal.SizeOf<ENERGY_SAVER_STATUS>())
 	{
 		return Win32Error.ERROR_INVALID_PARAMETER;
 	}

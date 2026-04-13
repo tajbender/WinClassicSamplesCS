@@ -186,13 +186,13 @@ internal static class AclApi
 				if (!pACL.IsInvalid && AclInfo is not null)  // Add room for new ACEs
 				{
 					dwNewACLSize = (int)AclInfo.Value.AclBytesInUse +
-								   Marshal.SizeOf(typeof(ACCESS_ALLOWED_ACE)) +
+								   Marshal.SizeOf<ACCESS_ALLOWED_ACE>() +
 								   GetLengthSid(pSid) - sizeof(uint);
 				}
 				else
 				{
-					dwNewACLSize = Marshal.SizeOf(typeof(ACCESS_ALLOWED_ACE)) +
-								   Marshal.SizeOf(typeof(ACL)) +
+					dwNewACLSize = Marshal.SizeOf<ACCESS_ALLOWED_ACE>() +
+								   Marshal.SizeOf<ACL>() +
 								   GetLengthSid(pSid) - sizeof(uint);
 				}
 			}

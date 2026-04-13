@@ -202,7 +202,7 @@ internal class DUPLICATIONMANAGER : IDisposable
 				Data.DirtyCount = 0;
 				return ProcessFailure(default, "Failed to get frame move rects in DUPLICATIONMANAGER", "Error", hr, FrameInfoExpectedErrors);
 			}
-			Data.MoveCount = (int)BufSize / Marshal.SizeOf(typeof(DXGI_OUTDUPL_MOVE_RECT));
+			Data.MoveCount = (int)BufSize / Marshal.SizeOf<DXGI_OUTDUPL_MOVE_RECT>();
 
 			IntPtr DirtyRects = m_MetaDataBuffer.Offset(BufSize);
 			BufSize = FrameInfo.TotalMetadataBufferSize - BufSize;
@@ -215,7 +215,7 @@ internal class DUPLICATIONMANAGER : IDisposable
 				Data.DirtyCount = 0;
 				return ProcessFailure(default, "Failed to get frame dirty rects in DUPLICATIONMANAGER", "Error", hr, FrameInfoExpectedErrors);
 			}
-			Data.DirtyCount = (int)BufSize / Marshal.SizeOf(typeof(RECT));
+			Data.DirtyCount = (int)BufSize / Marshal.SizeOf<RECT>();
 
 			Data.MetaData = m_MetaDataBuffer;
 		}

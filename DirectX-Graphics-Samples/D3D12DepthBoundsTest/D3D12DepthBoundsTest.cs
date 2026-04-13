@@ -191,7 +191,7 @@
 
 			// Initialize the vertex buffer views.
 			m_vertexBufferView.BufferLocation = m_vertexBuffer!.GetGPUVirtualAddress();
-			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(Vertex));
+			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf<Vertex>();
 			m_vertexBufferView.SizeInBytes = vertexBufferSize;
 		}
 

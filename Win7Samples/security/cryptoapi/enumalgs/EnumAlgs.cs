@@ -23,7 +23,7 @@ static class EnumAlgs
 			uint dwFlags = 1; // CRYPT_FIRST
 
 			// Set size of data expected
-			var dwDataLen = (uint)Marshal.SizeOf(typeof(PROV_ENUMALGS));
+			var dwDataLen = (uint)Marshal.SizeOf<PROV_ENUMALGS>();
 
 			// Enumerate the supported algorithms.
 			while (true)

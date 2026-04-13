@@ -85,7 +85,7 @@ internal static class Utility
 						continue;
 					}
 
-					var result = memcmp(sidStart1, sidStart2, aceSize - Marshal.SizeOf(typeof(ACE_HEADER)) - Marshal.SizeOf(typeof(ACCESS_MASK)));
+					var result = memcmp(sidStart1, sidStart2, aceSize - Marshal.SizeOf<ACE_HEADER>() - Marshal.SizeOf<ACCESS_MASK>());
 					if (result == 0)
 					{
 						lpbAcePresent = true;

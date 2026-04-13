@@ -2735,7 +2735,7 @@ public class WriteSpeedDescriptor
 
 internal class AudioFile : ComFileStream
 {
-	private static readonly int hdrSize = Marshal.SizeOf(typeof(WAV_HEADER));
+	private static readonly int hdrSize = Marshal.SizeOf<WAV_HEADER>();
 	private const long SECTOR_SIZE = 2352;
 
 	public AudioFile(string fileName)

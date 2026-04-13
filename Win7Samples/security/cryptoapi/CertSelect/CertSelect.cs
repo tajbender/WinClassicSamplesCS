@@ -105,7 +105,7 @@ static class CertSelect
 				{
 					var CredUiInfo = new CREDUI_INFO
 					{
-						cbSize = Marshal.SizeOf(typeof(CREDUI_INFO)),
+						cbSize = Marshal.SizeOf<CREDUI_INFO>(),
 						pszCaptionText = "Select your credentials",
 						pszMessageText = "Please select a certificate"
 					};
