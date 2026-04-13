@@ -1,12 +1,11 @@
 @ -1,30 +0,0 @@
 # Win Classic Samples Browser
-### a fork of `WinClassicSamples` using Vanara in WinUI3 Apps.
-
+### a fork of `WinClassicSamples` using Vanara in WinUi3 Apps.
 # Introduction
-This Repository is an example of [WinClassicSamples](https://github.com/dahall/WinClassicSamplesCS/) using the Vanara 
-libraries in a modern `WinUi 3` on `WinAppSDK` environment.
 
-The original WinClassicSamples repository is a collection of samples that demonstrate the use of the Windows API in C#.
+This Repository is an example of [WinClassicSamples](https://github.com/dahall/WinClassicSamplesCS/) using the Vanara libraries in a modern `WinUi 3` on `WinAppSDK` environment.
+
+Original [WinClassicSamples](https://github.com/dahall/WinClassicSamplesCS/) repository is a collection of samples that demonstrate the use of the Windows API in C#, using `Vanara` as the modern Bridge from native `Win32` to Windows Runtime Abstraction layer.
 
 The goal is to demonstrate the use of the Vanara libraries in a side-by-side model with full featured modern WinUi environment.
 
