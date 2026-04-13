@@ -166,7 +166,7 @@ internal partial class D3D1211on12(int width, int height, string name) : DXSampl
 
 			// Initialize the vertex buffer view.
 			m_vertexBufferView.BufferLocation = m_vertexBuffer.GetGPUVirtualAddress();
-			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(Vertex));
+			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf<Vertex>();
 			m_vertexBufferView.SizeInBytes = vertexBufferSize;
 		}
 

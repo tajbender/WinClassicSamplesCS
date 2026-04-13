@@ -532,7 +532,7 @@ internal partial class CTTSApp
 
 		var ofn = new OPENFILENAME
 		{
-			lStructSize = (uint)Marshal.SizeOf(typeof(OPENFILENAME)),
+			lStructSize = (uint)Marshal.SizeOf<OPENFILENAME>(),
 			hwndOwner = Handle,
 			lpstrFilter = szFilter,
 			nFilterIndex = 1,
@@ -856,7 +856,7 @@ internal partial class CTTSApp
 					}
 
 					// Highlight word
-					nStart = (IntPtr)(Stat.ulInputWordPos / Marshal.SizeOf(typeof(byte)));
+					nStart = (IntPtr)(Stat.ulInputWordPos / Marshal.SizeOf<byte>());
 					nEnd = nStart.Offset(Stat.ulInputWordLen);
 					SendDlgItemMessage(Handle, IDE_EDITBOX, EditMessage.EM_SETSEL, nStart, nEnd);
 					if (IsDlgButtonChecked(Handle, IDC_EVENTS) != 0)

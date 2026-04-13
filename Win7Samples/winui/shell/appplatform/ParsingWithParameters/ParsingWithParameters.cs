@@ -47,7 +47,7 @@ internal static class SearchFolder
 	{
 		var pfsbd = new CFileSysBindData(pfd);
 		CreateBindCtx(0, out var pbc).ThrowIfFailed();
-		var bo = new BIND_OPTS { cbStruct = Marshal.SizeOf(typeof(BIND_OPTS)), grfMode = (int)STGM.STGM_CREATE };
+		var bo = new BIND_OPTS { cbStruct = Marshal.SizeOf<BIND_OPTS>(), grfMode = (int)STGM.STGM_CREATE };
 		pbc!.SetBindOptions(ref bo);
 		pbc.RegisterObjectParam(STR_FILE_SYS_BIND_DATA, pfsbd);
 		return pbc;

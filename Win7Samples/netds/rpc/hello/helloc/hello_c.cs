@@ -49,7 +49,7 @@ public class hello_c : ihello
 
 	public static readonly RPC_CLIENT_INTERFACE hello___RpcClientInterface = new()
 	{
-		Length = (uint)Marshal.SizeOf(typeof(RPC_CLIENT_INTERFACE)),
+		Length = (uint)Marshal.SizeOf<RPC_CLIENT_INTERFACE>(),
 		InterfaceId = new RPC_SYNTAX_IDENTIFIER(new Guid(0x906B0CE0, 0xC70B, 0x1067, 0xB3, 0x17, 0x00, 0xDD, 0x01, 0x06, 0x62, 0xDA), 1, 0),
 		TransferSyntax = new RPC_SYNTAX_IDENTIFIER(new Guid(0x8A885D04, 0x1CEB, 0x11C9, 0x9F, 0xE8, 0x08, 0x00, 0x2B, 0x10, 0x48, 0x60), 2, 0)
 	};

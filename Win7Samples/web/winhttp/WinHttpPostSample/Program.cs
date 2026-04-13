@@ -43,7 +43,7 @@ internal class Program
 
 		WINHTTP_URL_COMPONENTS urlComponents = new()
 		{
-			dwStructSize = (uint)Marshal.SizeOf(typeof(WINHTTP_URL_COMPONENTS)),
+			dwStructSize = (uint)Marshal.SizeOf<WINHTTP_URL_COMPONENTS>(),
 			dwUserNameLength = 1,
 			dwPasswordLength = 1,
 			dwHostNameLength = 1,
@@ -59,7 +59,7 @@ internal class Program
 
 		urlComponents = new()
 		{
-			dwStructSize = (uint)Marshal.SizeOf(typeof(WINHTTP_URL_COMPONENTS)),
+			dwStructSize = (uint)Marshal.SizeOf<WINHTTP_URL_COMPONENTS>(),
 			dwUserNameLength = 1,
 			dwPasswordLength = 1,
 			dwHostNameLength = 1,
@@ -205,7 +205,7 @@ done:
 		// From the server URL, we need a host, path, username and password.
 		WINHTTP_URL_COMPONENTS urlServerComponents = new()
 		{
-			dwStructSize = (uint)Marshal.SizeOf(typeof(WINHTTP_URL_COMPONENTS)),
+			dwStructSize = (uint)Marshal.SizeOf<WINHTTP_URL_COMPONENTS>(),
 			dwHostNameLength = 1,
 			dwUrlPathLength = 1,
 			dwUserNameLength = 1,
@@ -242,7 +242,7 @@ done:
 			// From the proxy URL, we need a host, username and password.
 			WINHTTP_URL_COMPONENTS urlProxyComponents = new()
 			{
-				dwStructSize = (uint)Marshal.SizeOf(typeof(WINHTTP_URL_COMPONENTS)),
+				dwStructSize = (uint)Marshal.SizeOf<WINHTTP_URL_COMPONENTS>(),
 				dwHostNameLength = 1,
 				dwUserNameLength = 1,
 				dwPasswordLength = 1

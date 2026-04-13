@@ -417,7 +417,7 @@ Exit:
 		_ = Win32Error.ERROR_SUCCESS;
 		WINHTTP_QUERY dwFlags = WINHTTP_QUERY.WINHTTP_QUERY_FLAG_NUMBER | WINHTTP_QUERY.WINHTTP_QUERY_STATUS_CODE;
 		uint StatusCode;
-		_ = Marshal.SizeOf(typeof(uint));
+		_ = Marshal.SizeOf<uint>();
 
 		Console.Write("OnHeadersAvailable\n");
 		Win32Error dwError;

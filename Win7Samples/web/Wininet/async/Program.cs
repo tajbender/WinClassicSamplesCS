@@ -226,7 +226,7 @@ internal class Program
 			//Prepare the Buffers to be passed to HttpSendRequestEx
 			INTERNET_BUFFERS buffersIn = new()
 			{
-				dwStructSize = (uint)Marshal.SizeOf(typeof(INTERNET_BUFFERS)),
+				dwStructSize = (uint)Marshal.SizeOf<INTERNET_BUFFERS>(),
 				dwBufferTotal = dwFileSize //content-length of data to post
 			};
 
@@ -299,7 +299,7 @@ Exit:
 					Console.Error.Write("Status: Cookie History\n");
 
 					//Verify we've a valid pointer with the correct size
-					if (lpvStatusInformation != default && dwStatusInformationLength == Marshal.SizeOf(typeof(InternetCookieHistory)))
+					if (lpvStatusInformation != default && dwStatusInformationLength == Marshal.SizeOf<InternetCookieHistory>())
 					{
 						cookieHistory = lpvStatusInformation.ToStructure<InternetCookieHistory>(dwStatusInformationLength);
 					}
@@ -363,7 +363,7 @@ ExitSwitch:
 				break;
 			case InternetStatus.INTERNET_STATUS_RESPONSE_RECEIVED:
 				//Verify we've a valid pointer with the correct size
-				if (lpvStatusInformation != default && dwStatusInformationLength == Marshal.SizeOf(typeof(uint)))
+				if (lpvStatusInformation != default && dwStatusInformationLength == Marshal.SizeOf<uint>())
 				{
 					dwBytes = lpvStatusInformation.ToStructure<uint>();
 					Console.Error.Write("Status: Response Received ({0} Bytes)\n", dwBytes);
@@ -462,7 +462,7 @@ ExitSwitch:
 				break;
 			case InternetStatus.INTERNET_STATUS_REQUEST_SENT:
 				//Verify we've a valid pointer with the correct size
-				if (lpvStatusInformation != default && dwStatusInformationLength == Marshal.SizeOf(typeof(uint)))
+				if (lpvStatusInformation != default && dwStatusInformationLength == Marshal.SizeOf<uint>())
 				{
 					dwBytes = lpvStatusInformation.ToStructure<uint>();
 					Console.Error.Write("Status: Request sent ({0} Bytes)\n", dwBytes);

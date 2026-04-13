@@ -106,45 +106,31 @@ internal abstract class DXSample
 
 	protected internal static void NAME_D3D12_OBJECT_INDEXED<T>(IReadOnlyList<T> obj, SizeT idx, [CallerArgumentExpression(nameof(obj))] string? objName = null) where T : ID3D12Object => SetNameIndexed(obj[idx], objName, idx);
 
-	protected internal static HRESULT ReadDataFromDDSFile(string filename, out byte[] data, ref uint offset, ref uint size)
+	protected internal static HRESULT ReadDataFromDDSFile(string filename, out ID3DBlob data, ref uint offset, ref uint size)
 	{
 		if (ReadDataFromFile(filename, out data).Failed)
-		{
 			return HRESULT.E_FAIL;
-		}
 
 		// DDS files always start with the same magic number.
 		const uint DDS_MAGIC = 0x20534444;
-		uint magicNumber = BitConverter.ToUInt32(data);
+		uint magicNumber = data.GetBufferPointer().ToStructure<uint>();
 		if (magicNumber != DDS_MAGIC)
-		{
 			return HRESULT.E_FAIL;
-		}
 
 		unsafe
 		{
-			fixed (byte* pData = data)
-			{
-				var ddsHeader = (DDS_HEADER*)(pData + sizeof(uint));
-				if (ddsHeader->size != sizeof(DDS_HEADER) || ddsHeader->ddsPixelFormat.size != sizeof(DDS_PIXELFORMAT))
-				{
-					return HRESULT.E_FAIL;
-				}
+			var ddsHeader = (DDS_HEADER*)(data.GetBufferPointer() + sizeof(uint));
+			if (ddsHeader->size != sizeof(DDS_HEADER) || ddsHeader->ddsPixelFormat.size != sizeof(DDS_PIXELFORMAT))
+				return HRESULT.E_FAIL;
 
-				nint ddsDataOffset = sizeof(uint) + sizeof(DDS_HEADER);
-				offset = (uint)ddsDataOffset;
-				size -= offset;
-			}
+			size -= (uint)(sizeof(uint) + sizeof(DDS_HEADER));
 		}
 
 		return HRESULT.S_OK;
 	}
 
-	protected internal static HRESULT ReadDataFromFile(string filename, out byte[] data)
-	{
-		data = System.IO.File.ReadAllBytes(filename);
-		return HRESULT.S_OK;
-	}
+	protected internal static HRESULT ReadDataFromFile(string filename, out ID3DBlob data) =>
+		D3DCompiler.D3DReadFileToBlob(filename, out data);
 
 	[Conditional("DEBUG")]
 	protected internal static void SetName(ID3D12Object pObject, string? name) => pObject.SetName(name ?? "");

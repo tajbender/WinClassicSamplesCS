@@ -63,7 +63,7 @@ internal class Program
 
 	private static void SetDialogIcon(HWND hdlg, SHSTOCKICONID siid)
 	{
-		SHSTOCKICONINFO sii = new() { cbSize = (uint)Marshal.SizeOf(typeof(SHSTOCKICONINFO)) };
+		SHSTOCKICONINFO sii = new() { cbSize = (uint)Marshal.SizeOf<SHSTOCKICONINFO>() };
 		if (SHGetStockIconInfo(siid, SHGSI.SHGSI_ICON | SHGSI.SHGSI_SMALLICON, ref sii).Succeeded)
 		{
 			SendMessage(hdlg, WindowMessage.WM_SETICON, WM_ICON_WPARAM.ICON_SMALL, (IntPtr)sii.hIcon);
@@ -481,7 +481,7 @@ internal class Program
 				{
 					SHELLEXECUTEINFO ei = new()
 					{
-						cbSize = Marshal.SizeOf(typeof(SHELLEXECUTEINFO)),
+						cbSize = Marshal.SizeOf<SHELLEXECUTEINFO>(),
 						fMask = ShellExecuteMaskFlags.SEE_MASK_INVOKEIDLIST,
 						hwnd = hdlg,
 						nShellExecuteShow = ShowWindowCommand.SW_NORMAL,

@@ -105,7 +105,7 @@ Cleanup:
 		{
 			CERT_STRONG_SIGN_PARA SigningPolicy = new()
 			{
-				cbSize = (uint)Marshal.SizeOf(typeof(CERT_STRONG_SIGN_PARA)),
+				cbSize = (uint)Marshal.SizeOf<CERT_STRONG_SIGN_PARA>(),
 				dwInfoChoice = CERT_INFO_CHOICE.CERT_STRONG_SIGN_OID_INFO_CHOICE,
 				pszOID = mem.Add(SignOID.szOID_CERT_STRONG_SIGN_OS_CURRENT, CharSet.Ansi)
 			};
@@ -145,7 +145,7 @@ Cleanup:
 
 		while (!CatInfoHandle.IsNull)
 		{
-			CATALOG_INFO catalogInfo = new() { cbStruct = (uint)Marshal.SizeOf(typeof(CATALOG_INFO)) };
+			CATALOG_INFO catalogInfo = new() { cbStruct = (uint)Marshal.SizeOf<CATALOG_INFO>() };
 			Found = true;
 
 			if (!CryptCATCatalogInfoFromContext(CatInfoHandle, ref catalogInfo))
@@ -185,7 +185,7 @@ Cleanup:
 		// Setup data structures for calling WinVerifyTrustEx
 		WINTRUST_FILE_INFO FileInfo = new()
 		{
-			cbStruct = (uint)Marshal.SizeOf(typeof(WINTRUST_FILE_INFO)),
+			cbStruct = (uint)Marshal.SizeOf<WINTRUST_FILE_INFO>(),
 			hFile = FileHandle,
 			pcwszFilePath = mem.Add(FileName, CharSet.Unicode)
 		};
@@ -194,7 +194,7 @@ Cleanup:
 		// and dwIndex to do this, also setting WSS_GET_SECONDARY_SIG_COUNT to have the number of secondary signatures returned.
 		WINTRUST_SIGNATURE_SETTINGS SignatureSettings = new()
 		{
-			cbStruct = (uint)Marshal.SizeOf(typeof(WINTRUST_SIGNATURE_SETTINGS)),
+			cbStruct = (uint)Marshal.SizeOf<WINTRUST_SIGNATURE_SETTINGS>(),
 			dwFlags = WSS.WSS_GET_SECONDARY_SIG_COUNT | WSS.WSS_VERIFY_SPECIFIC,
 			dwIndex = 0
 		};
@@ -203,7 +203,7 @@ Cleanup:
 		{
 			CERT_STRONG_SIGN_PARA StrongSigPolicy = new()
 			{
-				cbSize = (uint)Marshal.SizeOf(typeof(CERT_STRONG_SIGN_PARA)),
+				cbSize = (uint)Marshal.SizeOf<CERT_STRONG_SIGN_PARA>(),
 				dwInfoChoice = CERT_INFO_CHOICE.CERT_STRONG_SIGN_OID_INFO_CHOICE,
 				pszOID = mem.Add(SignOID.szOID_CERT_STRONG_SIGN_OS_CURRENT, CharSet.Ansi)
 			};
