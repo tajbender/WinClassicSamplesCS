@@ -1,9 +1,8 @@
-using ClassicSamplesBrowser.Helpers;
-using ClassicSamplesBrowser.Views;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml;
 using WinRT;
-using MainPage = ClassicSamplesBrowser.Templates.RyderShell.Views.MainPage;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Composition.SystemBackdrops;
+using ClassicSamplesBrowser.Views;
+using ClassicSamplesBrowser.Helpers;
 
 namespace ClassicSamplesBrowser;
 
@@ -23,10 +22,7 @@ public sealed partial class MainWindow : Window
 
     private void Window_Activated(object sender, WindowActivatedEventArgs args)
     {
-        if (_backdropConfig != null)
-        {
-            _backdropConfig.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
-        }
+        _backdropConfig.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
     }
 
     private bool TrySetMicaBackdrop()

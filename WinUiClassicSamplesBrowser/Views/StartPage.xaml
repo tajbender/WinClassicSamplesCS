@@ -10,15 +10,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- HEADER -->
-        <StackPanel Padding="32" Spacing="8">
-            <TextBlock Text="Vanara API Explorer"
-                       FontSize="32"
-                       FontWeight="SemiBold"/>
-            <TextBlock Text="Explore APIs, Samples, Wrappers and NuGet Versions"
-                       FontSize="16"
-                       Opacity="0.7"/>
+        <StackPanel Grid.Row="0"  Padding="32" Spacing="8">
+            <TextBlock Text="Vanara API Explorer" FontWeight="SemiBold" FontSize="32" />
+            <TextBlock Text="Explore APIs, Samples, Wrappers and NuGet Versions" FontSize="16" Opacity="0.7"/>
         </StackPanel>
 
         <!-- MAIN CONTENT -->
@@ -30,7 +24,6 @@
 
             <!-- LEFT: ACTIONS -->
             <StackPanel Spacing="16">
-
                 <!-- Version Selector -->
                 <StackPanel>
                     <TextBlock Text="Select Vanara Version"
@@ -40,11 +33,9 @@
                               PlaceholderText="Loading versions..."
                               Width="240"/>
                 </StackPanel>
-
                 <!-- Buttons -->
                 <Button Content="Open API Explorer"
                         Click="OpenExplorer_Click"
-                        Style="{StaticResource AccentButtonStyle}"
                         Width="240"/>
 
                 <Button Content="Open Samples Browser"

@@ -8,55 +8,55 @@
 		<UseWinUI>true</UseWinUI>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="Views\AboutPage.xaml" />
-	  <None Remove="Views\MainPage.xaml" />
-	  <None Remove="Views\SamplesPage.xaml" />
-	  <None Remove="Views\SettingsPage.xaml" />
+		<None Remove="Views\AboutPage.xaml" />
+		<None Remove="Views\MainPage.xaml" />
+		<None Remove="Views\SamplesPage.xaml" />
+		<None Remove="Views\SettingsPage.xaml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
-	  <PackageReference Include="Vanara.Core" Version="5.0.3" />
-	  <PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.3" />
-	  <PackageReference Include="Vanara.Windows.Shell" Version="5.0.3" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
+		<PackageReference Include="Vanara.Core" Version="5.0.3" />
+		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.3" />
+		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Assets\" />
-	  <Folder Include="Resources\I18N\" />
-	  <Folder Include="Services\" />
-	  <Folder Include="Templates\RyderShell\Project\" />
+		<Folder Include="Assets\" />
+		<Folder Include="Resources\I18N\" />
+		<Folder Include="Services\" />
+		<Folder Include="Templates\RyderShell\Project\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Templates\RyderShell\Styles\MainPage.xaml">
-	    <SubType>Designer</SubType>
-	  </Page>
-	  <Page Update="Templates\RyderShell\Views\MainPage.xaml">
-	    <SubType>Designer</SubType>
-	  </Page>
-	  <Page Update="Views\ApiExplorerPage.xaml">
-	    <SubType>Designer</SubType>
-	  </Page>
-	  <Page Update="Views\SettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Templates\RyderShell\Styles\MainPage.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Templates\RyderShell\Views\MainPage.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\ApiExplorerPage.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\SettingsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\AboutPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\AboutPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\SamplesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\SamplesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\StartPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\StartPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\MainPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\MainPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 </Project>
