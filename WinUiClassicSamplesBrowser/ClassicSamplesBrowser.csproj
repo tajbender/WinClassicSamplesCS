@@ -21,13 +21,10 @@
 	  <PackageReference Include="Vanara.Windows.Shell" Version="5.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Models\" />
-	  <Folder Include="Controls\" />
 	  <Folder Include="Assets\" />
 	  <Folder Include="Resources\I18N\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Templates\RyderShell\Project\" />
-	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Templates\RyderShell\Styles\MainPage.xaml">
