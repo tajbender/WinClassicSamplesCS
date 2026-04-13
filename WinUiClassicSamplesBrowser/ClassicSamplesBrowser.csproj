@@ -23,7 +23,8 @@
 	<ItemGroup>
 	  <Folder Include="Models\" />
 	  <Folder Include="Controls\" />
-	  <Folder Include="Resources\" />
+	  <Folder Include="Assets\" />
+	  <Folder Include="Resources\I18N\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Templates\RyderShell\Project\" />
 	  <Folder Include="ViewModels\" />
