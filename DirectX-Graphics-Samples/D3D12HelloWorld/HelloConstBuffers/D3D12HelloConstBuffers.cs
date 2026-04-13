@@ -240,13 +240,13 @@ internal class D3D12HelloConstBuffers(int width, int height, string name) : DXSa
 
 			// Initialize the vertex buffer view.
 			m_vertexBufferView.BufferLocation = m_vertexBuffer.GetGPUVirtualAddress();
-			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(Vertex));
+			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf<Vertex>();
 			m_vertexBufferView.SizeInBytes = vertexBufferSize;
 		}
 
 		// Create the constant buffer.
 		{
-			uint constantBufferSize = (uint)Marshal.SizeOf(typeof(SceneConstantBuffer)); // CB size is required to be 256-byte aligned.
+			uint constantBufferSize = (uint)Marshal.SizeOf<SceneConstantBuffer>(); // CB size is required to be 256-byte aligned.
 
 			HRESULT.ThrowIfFailed(m_device!.CreateCommittedResource(
 				new D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE.D3D12_HEAP_TYPE_UPLOAD),

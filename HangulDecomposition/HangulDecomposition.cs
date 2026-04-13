@@ -11,7 +11,7 @@ internal static class Program
 	{
 		// create Hangul Decomposition Transliteration service.
 		using var pGuid = new PinnedObject(ELS_GUID_TRANSLITERATION_HANGUL_DECOMPOSITION);
-		MAPPING_ENUM_OPTIONS enumOptions = new() { Size = Marshal.SizeOf(typeof(MAPPING_ENUM_OPTIONS)), pGuid = (IntPtr)pGuid };
+		MAPPING_ENUM_OPTIONS enumOptions = new() { Size = Marshal.SizeOf<MAPPING_ENUM_OPTIONS>(), pGuid = (IntPtr)pGuid };
 		int testCount = 1;
 
 		if (MappingGetServices(enumOptions, out var mappingServiceInfo).Succeeded)

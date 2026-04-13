@@ -71,7 +71,7 @@ internal static class ShellHelpers
 
 		var ei = new SHELLEXECUTEINFO
 		{
-			cbSize = Marshal.SizeOf(typeof(SHELLEXECUTEINFO)),
+			cbSize = Marshal.SizeOf<SHELLEXECUTEINFO>(),
 			fMask = ShellExecuteMaskFlags.SEE_MASK_INVOKEIDLIST,
 			hwnd = hwnd,
 			nShellExecuteShow = ShowWindowCommand.SW_NORMAL,

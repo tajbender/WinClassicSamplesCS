@@ -38,7 +38,7 @@ internal class Program
 	private static IBindCtx CreateBindCtxWithMode(STGM grfMode)
 	{
 		CreateBindCtx(0, out var ppbc).ThrowIfFailed();
-		BIND_OPTS boptions = new() { cbStruct = Marshal.SizeOf(typeof(BIND_OPTS)), grfMode = (int)grfMode };
+		BIND_OPTS boptions = new() { cbStruct = Marshal.SizeOf<BIND_OPTS>(), grfMode = (int)grfMode };
 		ppbc!.SetBindOptions(ref boptions);
 		return ppbc;
 	}

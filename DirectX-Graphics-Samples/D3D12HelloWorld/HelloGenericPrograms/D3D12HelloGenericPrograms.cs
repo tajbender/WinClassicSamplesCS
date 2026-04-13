@@ -267,7 +267,7 @@ internal class D3D12HelloGenericPrograms : DXSample
 				new() { position = new(-0.25f, -0.25f * m_aspectRatio, 0.0f), color = new(0.0f, 0.0f, 1.0f, 1.0f) }
 			];
 
-			uint vertexBufferSize = (uint)(Marshal.SizeOf(typeof(Vertex)) * triangleVertices.Length);
+			uint vertexBufferSize = (uint)(Marshal.SizeOf<Vertex>() * triangleVertices.Length);
 
 			// Note: using upload heaps to transfer static data like vert buffers is not recommended. Every time the GPU needs it, the
 			// upload heap will be marshalled over. Please read up on Default Heap usage. An upload heap is used here for code simplicity
@@ -282,7 +282,7 @@ internal class D3D12HelloGenericPrograms : DXSample
 
 			// Initialize the vertex buffer view.
 			m_vertexBufferView.BufferLocation = m_vertexBuffer.GetGPUVirtualAddress();
-			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(Vertex));
+			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf<Vertex>();
 			m_vertexBufferView.SizeInBytes = vertexBufferSize;
 		}
 

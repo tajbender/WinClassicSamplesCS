@@ -139,7 +139,7 @@ internal class D3D12HelloGenericPrograms(int width, int height, string name) : D
 
 			// Initialize the vertex buffer view.
 			m_vertexBufferView.BufferLocation = m_vertexBuffer.GetGPUVirtualAddress();
-			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf(typeof(Vertex));
+			m_vertexBufferView.StrideInBytes = (uint)Marshal.SizeOf<Vertex>();
 			m_vertexBufferView.SizeInBytes = vertexBufferSize;
 		}
 

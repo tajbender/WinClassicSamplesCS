@@ -275,7 +275,7 @@ static class cms_encrypt
 
 			var EncryptParams = new CRYPT_ENCRYPT_MESSAGE_PARA
 			{
-				cbSize = (uint)Marshal.SizeOf(typeof(CRYPT_ENCRYPT_MESSAGE_PARA)),
+				cbSize = (uint)Marshal.SizeOf<CRYPT_ENCRYPT_MESSAGE_PARA>(),
 				dwMsgEncodingType = CertEncodingType.X509_ASN_ENCODING | CertEncodingType.PKCS_7_ASN_ENCODING
 			};
 
@@ -314,7 +314,7 @@ static class cms_encrypt
 			{
 				var DecryptParams = new CRYPT_DECRYPT_MESSAGE_PARA
 				{
-					cbSize = (uint)Marshal.SizeOf(typeof(CRYPT_DECRYPT_MESSAGE_PARA)),
+					cbSize = (uint)Marshal.SizeOf<CRYPT_DECRYPT_MESSAGE_PARA>(),
 					dwMsgAndCertEncodingType = CertEncodingType.X509_ASN_ENCODING | CertEncodingType.PKCS_7_ASN_ENCODING,
 					cCertStore = 1,
 					rghCertStore = pphStoreHandle

@@ -451,7 +451,7 @@ internal class Program
 			hmon = MonitorFromWindow(hwnd, MonitorFlags.MONITOR_DEFAULTTONEAREST);
 		}
 
-		MONITORINFO minf = new() { cbSize = (uint)Marshal.SizeOf(typeof(MONITORINFO)) };
+		MONITORINFO minf = new() { cbSize = (uint)Marshal.SizeOf<MONITORINFO>() };
 		GetMonitorInfo(hmon, ref minf);
 
 		// Now slide things around until they fit.

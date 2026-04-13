@@ -535,7 +535,7 @@ static class Program
 			CimFileData cimFileData = GetFileData(cimFilePath);
 			CimFileData cimLinkData = GetFileData(cimLinkPath);
 
-			if (Interop.memcmp(cimFileData.FileIdInfo.FileId.Identifier, cimLinkData.FileIdInfo.FileId.Identifier, Marshal.SizeOf(typeof(FILE_ID_128))) != 0)
+			if (Interop.memcmp(cimFileData.FileIdInfo.FileId.Identifier, cimLinkData.FileIdInfo.FileId.Identifier, Marshal.SizeOf<FILE_ID_128>()) != 0)
 			{
 				Console.Error.WriteLine("did not match");
 			}

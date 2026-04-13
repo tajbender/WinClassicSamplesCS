@@ -437,7 +437,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 		}
 
 		// Set resources
-		uint Stride = (uint)Marshal.SizeOf(typeof(VERTEX));
+		uint Stride = (uint)Marshal.SizeOf<VERTEX>();
 		uint Offset = 0;
 		float[] blendFactor = [0.0f, 0.0f, 0.0f, 0.0f];
 		m_DeviceContext!.OMSetBlendState(default, blendFactor, 0xffffffff);
@@ -451,7 +451,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 		D3D11_BUFFER_DESC BufferDesc = new()
 		{
 			Usage = D3D11_USAGE.D3D11_USAGE_DEFAULT,
-			ByteWidth = (uint)(Marshal.SizeOf(typeof(VERTEX)) * NUMVERTICES),
+			ByteWidth = (uint)(Marshal.SizeOf<VERTEX>() * NUMVERTICES),
 			BindFlags = D3D11_BIND_FLAG.D3D11_BIND_VERTEX_BUFFER,
 			CPUAccessFlags = 0
 		};
@@ -581,7 +581,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 			return ProcessFailure(default, "Failed to allocate memory for new mouse shape buffer.", "Error", HRESULT.E_OUTOFMEMORY);
 		}
 
-		uint DesktopPitchInPixels = (uint)MappedSurface.Pitch / (uint)Marshal.SizeOf(typeof(uint));
+		uint DesktopPitchInPixels = (uint)MappedSurface.Pitch / (uint)Marshal.SizeOf<uint>();
 
 		// What to skip (pixel offset)
 		int SkipX = (GivenLeft < 0) ? (-1 * GivenLeft) : (0);
@@ -628,7 +628,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 					for (int Col = 0; Col < PtrWidth; ++Col)
 					{
 						// Set up mask
-						uint MaskVal = 0xFF000000 & Buffer32[(Col + SkipX) + ((Row + SkipY) * (PtrInfo.ShapeInfo.Pitch / Marshal.SizeOf(typeof(uint))))];
+						uint MaskVal = 0xFF000000 & Buffer32[(Col + SkipX) + ((Row + SkipY) * (PtrInfo.ShapeInfo.Pitch / Marshal.SizeOf<uint>()))];
 						if (MaskVal != 0)
 						{
 							// Mask was 0xFF
@@ -780,7 +780,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 		D3D11_BUFFER_DESC BDesc = new()
 		{
 			Usage = D3D11_USAGE.D3D11_USAGE_DEFAULT,
-			ByteWidth = (uint)Marshal.SizeOf(typeof(VERTEX)) * NUMVERTICES,
+			ByteWidth = (uint)Marshal.SizeOf<VERTEX>() * NUMVERTICES,
 			BindFlags = D3D11_BIND_FLAG.D3D11_BIND_VERTEX_BUFFER,
 			CPUAccessFlags = 0
 		};
@@ -800,7 +800,7 @@ D3D_FEATURE_LEVEL.D3D_FEATURE_LEVEL_9_1
 
 		// Set resources
 		float[] BlendFactor = new float[4];
-		uint Stride = (uint)Marshal.SizeOf(typeof(VERTEX));
+		uint Stride = (uint)Marshal.SizeOf<VERTEX>();
 		uint Offset = 0;
 		m_DeviceContext!.IASetVertexBuffers(0, 1, [VertexBufferMouse!], [Stride], [Offset]);
 		m_DeviceContext.OMSetBlendState(m_BlendState, BlendFactor, 0xFFFFFFFF);

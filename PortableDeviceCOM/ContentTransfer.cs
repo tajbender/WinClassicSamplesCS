@@ -278,7 +278,7 @@ static partial class Program
 		SafeLPTSTR defFileExt = new(defaultFileExtension);
 		OPENFILENAME openFileNameInfo = new()
 		{
-			lStructSize = (uint)Marshal.SizeOf(typeof(OPENFILENAME)),
+			lStructSize = (uint)Marshal.SizeOf<OPENFILENAME>(),
 			hwndOwner = default,
 			lpstrFile = filePath,
 			nMaxFile = (uint)filePath.Capacity,
@@ -349,7 +349,7 @@ static partial class Program
 		SafeLPTSTR defFileExt = new("JPG");
 		OPENFILENAME openFileNameInfo = new()
 		{
-			lStructSize = (uint)Marshal.SizeOf(typeof(OPENFILENAME)),
+			lStructSize = (uint)Marshal.SizeOf<OPENFILENAME>(),
 			hwndOwner = default,
 			lpstrFile = filePath,
 			nMaxFile = (uint)filePath.Capacity,
@@ -528,7 +528,7 @@ static partial class Program
 		SafeLPTSTR defFileExt = new(defaultFileExtension);
 		OPENFILENAME openFileNameInfo = new()
 		{
-			lStructSize = (uint)Marshal.SizeOf(typeof(OPENFILENAME)),
+			lStructSize = (uint)Marshal.SizeOf<OPENFILENAME>(),
 			hwndOwner = default,
 			lpstrFile = filePath,
 			nMaxFile = (uint)filePath.Capacity,

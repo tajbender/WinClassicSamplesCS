@@ -150,7 +150,7 @@ ATOM RegisterHostWindowClass()
 {
 	WNDCLASSEX wcex = new()
 	{
-		cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEX)),
+		cbSize = (uint)Marshal.SizeOf<WNDCLASSEX>(),
 		style = WindowClassStyles.CS_HREDRAW | WindowClassStyles.CS_VREDRAW,
 		lpfnWndProc = HostWndProc,
 		hInstance = hInst,

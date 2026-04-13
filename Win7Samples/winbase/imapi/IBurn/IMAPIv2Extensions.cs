@@ -264,7 +264,7 @@ internal static class IMAPIv2Extensions
 		{
 			// Read the DVD structure
 			recorder.ReadDvdStructure(0, 0, 0, 0, out var tmpDescriptor, out var tmpDescriptorSize);
-			if (tmpDescriptorSize < Marshal.SizeOf(typeof(DVD_LAYER_DESCRIPTOR)))
+			if (tmpDescriptorSize < Marshal.SizeOf<DVD_LAYER_DESCRIPTOR>())
 				return HRESULT.E_IMAPI_RECORDER_INVALID_RESPONSE_FROM_DEVICE;
 
 			// save the results
