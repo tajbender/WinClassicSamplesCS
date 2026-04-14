@@ -13,7 +13,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Views\AboutPage.xaml" />
-		<None Remove="Views\MainPage.xaml" />
 		<None Remove="Views\SamplesPage.xaml" />
 		<None Remove="Views\SettingsPage.xaml" />
 	</ItemGroup>
@@ -58,7 +57,7 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-		<Page Update="Views\MainPage.xaml">
+		<Page Update="Views\StartPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 	</ItemGroup>

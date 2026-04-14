@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Composition.SystemBackdrops;
 using ClassicSamplesBrowser.Helpers;
@@ -9,18 +10,41 @@ namespace ClassicSamplesBrowser;
 public sealed partial class MainWindow : Window
 {
     private MicaController _micaController = new();
-    private SystemBackdropConfiguration _sysBackdropConfiguration;
-    private WindowsSystemDispatcherQueueHelper _winDispatcherHelper =new();
+    private SystemBackdropConfiguration _sysBackdropConfiguration = new();
+    private WindowsSystemDispatcherQueueHelper _winDispatcherHelper = new();
 
     public MainWindow()
     {
-        InitializeComponent();
-        TrySetMicaBackdrop();
+        try
+        {
+            int charsWritten;
+            Span<char> buffer = stackalloc char[256];
 
-        RootFrame.Navigate(typeof(MainPage));
+            InitializeComponent();
+            Debug.WriteLine(TrySetMicaBackdrop().TryFormat(buffer, out charsWritten));
+        }
+        catch
+        {
+            // If Mica is not supported, we don't want to crash the app, so we catch all exceptions and continue without setting the backdrop.
+            throw;
+        }
+
+        try
+        {
+            var result = RootFrame.Navigate(typeof(StartPage));
+        }
+        catch
+        {
+            // If navigation fails, we don't want to crash the app, so we catch all exceptions and continue without navigating.
+            throw;
+        }
+        finally
+        {
+            Debug.Print("MainWindow.ctor() has initially navigated successfully.");
+        }
     }
 
-    private void Window_Activated(object sender, WindowActivatedEventArgs args)
+    internal void Window_Activated(object sender, WindowActivatedEventArgs args)
     {
         _sysBackdropConfiguration.IsInputActive = (args.WindowActivationState != WindowActivationState.Deactivated);
     }

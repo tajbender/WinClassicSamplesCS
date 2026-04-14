@@ -2,9 +2,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace ClassicSamplesBrowser.Views;
 
-public sealed partial class MainPage : Page
+public sealed partial class StartPage : Page
 {
-    public MainPage()
+    public StartPage()
     {
         InitializeComponent();
 
