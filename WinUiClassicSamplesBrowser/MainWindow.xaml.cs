@@ -8,9 +8,9 @@ namespace ClassicSamplesBrowser;
 
 public sealed partial class MainWindow : Window
 {
-    private MicaController _micaController;
+    private MicaController _micaController = new();
     private SystemBackdropConfiguration _sysBackdropConfiguration;
-    private WindowsSystemDispatcherQueueHelper _winDispatcherHelper;
+    private WindowsSystemDispatcherQueueHelper _winDispatcherHelper =new();
 
     public MainWindow()
     {
@@ -22,9 +22,7 @@ public sealed partial class MainWindow : Window
 
     private void Window_Activated(object sender, WindowActivatedEventArgs args)
     {
-        _micaController = new MicaController();
         _sysBackdropConfiguration.IsInputActive = (args.WindowActivationState != WindowActivationState.Deactivated);
-        _winDispatcherHelper = new WindowsSystemDispatcherQueueHelper();
     }
 
     private bool TrySetMicaBackdrop()
