@@ -11,6 +11,7 @@ using Vortice.Direct3D11;
 using Vortice.DXGI;
 using Vortice.WinUI;
 using Vortice.WinUI.Composition;
+using Windows.UI.Xaml.Interop;
 using WinRT;
 using static Vortice.Direct3D11.D3D11;
 
@@ -122,19 +123,18 @@ public sealed partial class MainWindow : Window
         using var factory = adapter.GetParent<IDXGIFactory2>();
 
         // Retrieve `SwapChainPanelNative`
-        var native = GetSwapChainPanelNative(SwapChainHost);
+        //ISwapChainPanelNative nativeSwapChainPanel = GetSwapChainPanelNative(SwapChainHost);
+        //nativeSwapChainPanel?.SetSwapChain(_swapChain);
         //native.SetSwapChain(_swapChain);
-
         //factory.CreateSwapChainForComposition(_device, ref swapDesc, null, out _swapChain);
         //panelNative.SetSwapChain(_swapChain!);
-
-        CreateRenderTarget();
+        //CreateRenderTarget();
     }
 
-    private object GetSwapChainPanelNative(SwapChainPanel swapChainHost)
-    {
-        return null;
-    }
+    //private ISwapChainPanelNative GetSwapChainPanelNative(SwapChainPanel swapChainHost)
+    //{
+    //    return null;
+    //}
 
     private void CreateRenderTarget()
     {
