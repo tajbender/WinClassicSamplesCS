@@ -1,0 +1,66 @@
+<Application
+    x:Class="ClassicSamplesBrowser.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:system="using:System"   
+    xmlns:ui="using:Microsoft.UI.Xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+            <SolidColorBrush x:Key="MicaBaseAltFillColorDefaultBrush" Color="{ThemeResource SystemBaseLowColor}" />
+            <SolidColorBrush x:Key="MicaBaseFillColorDefaultBrush" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="MicaBaseFillColorSecondaryBrush" Color="{ThemeResource SystemBaseHighColor}" />
+            <SolidColorBrush x:Key="TabViewButtonBackground" Color="{ThemeResource SystemBaseLowColor}" />
+            <SolidColorBrush x:Key="TabViewButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="TabViewScrollButtonBackground" Color="{ThemeResource SystemBaseLowColor}" />
+            <SolidColorBrush x:Key="TabViewScrollButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+            <system:Double x:Key="TabViewItemAddButtonFontSize">14</system:Double>
+            <system:Double x:Key="TabViewItemScrollButtonFontSize">14</system:Double>
+            <!--<Style TargetType="TabViewItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabViewItem">
+                            <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="HeaderContentPresenter" Grid.Column="0" Content="{TemplateBinding Header}" Margin="12,0,12,0" VerticalAlignment="Center" />
+                                <Button x:Name="CloseButton" Grid.Column="1" Width="28" Height="28" Margin="0,0,4,0" VerticalAlignment="Center">
+                                    <SymbolIcon Symbol="Cancel" />
+                                </Button>
+                            </Grid>
+                            --><!--<ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="RootGrid" Property="Background" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
+                                    <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="White" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>--><!--
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+            <!--<Style TargetType="TabView">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabView">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" Background="{ThemeResource MicaBaseAltFillColorDefaultBrush}">
+                                    <TabViewListView x:Name="TabListView" ItemsSource="{TemplateBinding TabItems}" SelectedItem="{TemplateBinding SelectedItem}" SelectionMode="Single" IsTabStop="False" />
+                                    <Button x:Name="AddButton" Width="32" Height="32" Margin="4" VerticalAlignment="Center">
+                                        <SymbolIcon Symbol="Add" />
+                                    </Button>
+                                </StackPanel>
+                                <ContentPresenter Grid.Row="1" Content="{TemplateBinding SelectedContent}" Margin="0" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

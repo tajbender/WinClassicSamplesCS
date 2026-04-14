@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Vanara.InteropServices;
+﻿using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Crypt32;
 using static Vanara.PInvoke.Kernel32;
@@ -10,13 +8,13 @@ namespace CodeSigning;
 
 internal class Program
 {
-	private static readonly SafeMemoryPool<CoTaskMemoryMethods> mem = new();
+	private static readonly SafeMemoryPool<CoTaskMemoryMethods> mem = [];
 
 	public static int Main(string[] args)
 	{
 		uint ArgStart = 0;
 		var UseStrongSigPolicy = false;
-		SafeHFILE FileHandle = null;
+		SafeHFILE FileHandle = new(default, false);
 		HRESULT Error;
 		if (args.Length is <2 or >3)
 		{
@@ -82,7 +80,7 @@ Cleanup:
 
 	private static void PrintUsage()
 	{
-		Console.Write("{0} [-p] <-c | -e> file\n", System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location));
+		Console.Write("{0} [-p] <-c | -e> file\n", System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly()?.Location));
 		Console.Write("Flags:\n");
 		Console.Write(" -p: Use signature policy of the current os (szOID_CERT_STRONG_SIGN_OS_CURRENT)\n");
 		Console.Write(" -c: Search for the file in system catalogs\n");
@@ -99,15 +97,15 @@ Cleanup:
 	{
 		Win32Error Error = Win32Error.ERROR_SUCCESS;
 		var Found = false;
-		SafeCoTaskMemHandle HashData = null;
+		SafeCoTaskMemHandle? HashData = null;
 
 		SafeHCATADMIN CatAdminHandle;
-		SafeHCATINFO CatInfoHandle = null;
+		SafeHCATINFO? CatInfoHandle = null;
 		if (UseStrongSigPolicy)
 		{
 			CERT_STRONG_SIGN_PARA SigningPolicy = new()
 			{
-				cbSize = (uint)Marshal.SizeOf(typeof(CERT_STRONG_SIGN_PARA)),
+				cbSize = (uint)Marshal.SizeOf<CERT_STRONG_SIGN_PARA>(),
 				dwInfoChoice = CERT_INFO_CHOICE.CERT_STRONG_SIGN_OID_INFO_CHOICE,
 				pszOID = mem.Add(SignOID.szOID_CERT_STRONG_SIGN_OS_CURRENT, CharSet.Ansi)
 			};
@@ -147,7 +145,7 @@ Cleanup:
 
 		while (!CatInfoHandle.IsNull)
 		{
-			CATALOG_INFO catalogInfo = new() { cbStruct = (uint)Marshal.SizeOf(typeof(CATALOG_INFO)) };
+			CATALOG_INFO catalogInfo = new() { cbStruct = (uint)Marshal.SizeOf<CATALOG_INFO>() };
 			Found = true;
 
 			if (!CryptCATCatalogInfoFromContext(CatInfoHandle, ref catalogInfo))
@@ -187,7 +185,7 @@ Cleanup:
 		// Setup data structures for calling WinVerifyTrustEx
 		WINTRUST_FILE_INFO FileInfo = new()
 		{
-			cbStruct = (uint)Marshal.SizeOf(typeof(WINTRUST_FILE_INFO)),
+			cbStruct = (uint)Marshal.SizeOf<WINTRUST_FILE_INFO>(),
 			hFile = FileHandle,
 			pcwszFilePath = mem.Add(FileName, CharSet.Unicode)
 		};
@@ -196,7 +194,7 @@ Cleanup:
 		// and dwIndex to do this, also setting WSS_GET_SECONDARY_SIG_COUNT to have the number of secondary signatures returned.
 		WINTRUST_SIGNATURE_SETTINGS SignatureSettings = new()
 		{
-			cbStruct = (uint)Marshal.SizeOf(typeof(WINTRUST_SIGNATURE_SETTINGS)),
+			cbStruct = (uint)Marshal.SizeOf<WINTRUST_SIGNATURE_SETTINGS>(),
 			dwFlags = WSS.WSS_GET_SECONDARY_SIG_COUNT | WSS.WSS_VERIFY_SPECIFIC,
 			dwIndex = 0
 		};
@@ -205,7 +203,7 @@ Cleanup:
 		{
 			CERT_STRONG_SIGN_PARA StrongSigPolicy = new()
 			{
-				cbSize = (uint)Marshal.SizeOf(typeof(CERT_STRONG_SIGN_PARA)),
+				cbSize = (uint)Marshal.SizeOf<CERT_STRONG_SIGN_PARA>(),
 				dwInfoChoice = CERT_INFO_CHOICE.CERT_STRONG_SIGN_OID_INFO_CHOICE,
 				pszOID = mem.Add(SignOID.szOID_CERT_STRONG_SIGN_OS_CURRENT, CharSet.Ansi)
 			};

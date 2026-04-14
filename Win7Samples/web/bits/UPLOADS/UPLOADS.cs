@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Vanara.IO;
+﻿using Vanara.IO;
 
 if (args.Length != 2)
 {
@@ -23,7 +21,7 @@ try
 	};
 	pJob.Error += (s, e) => {
 		Console.WriteLine("Job entered error state...");
-		Console.WriteLine($"Job {e.Job.DisplayName} encountered the following error: {e.Job.LastError.Message}");
+		Console.WriteLine($"Job {e.Job.DisplayName} encountered the following error: {e.Job.LastError!.Message}");
 		evt.Set();
 	};
 
@@ -40,5 +38,5 @@ try
 }
 catch (Exception ex)
 {
-	Console.WriteLine($"Failure at {new System.Diagnostics.StackTrace(ex).GetFrame(0).GetMethod().Name}: {ex.Message}");
+	Console.WriteLine($"Failure at {new System.Diagnostics.StackTrace(ex).GetFrame(0)!.GetMethod()!.Name}: {ex.Message}");
 }

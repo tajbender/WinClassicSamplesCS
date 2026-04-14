@@ -1,12 +1,10 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Vanara.InteropServices;
+﻿using Vanara.InteropServices;
 
 using static Vanara.PInvoke.DnsApi;
 using static Vanara.PInvoke.Ws2_32;
 
 DNS_RECORD myDnsRecord = new(); //pointer to DNS_RECORD structure
-string pOwnerName = default; //owner name and the data for CNAME resource record
+string? pOwnerName = default; //owner name and the data for CNAME resource record
 IN_ADDR? dnsSvr = default;//pinter to IP4_ARRAY structure
 
 if (args.Length > 7)
@@ -39,7 +37,7 @@ if (args.Length > 7)
 				case 'd':
 					if (myDnsRecord.wType == DNS_TYPE.DNS_TYPE_A)
 					{
-						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf(typeof(DNS_A_DATA)); //data structure for A records
+						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf<DNS_A_DATA>(); //data structure for A records
 						var HostipAddress = inet_addr(args[++i]);
 						myDnsRecord.Data = new DNS_A_DATA() { IpAddress = HostipAddress }; //convert string to proper address
 						if (HostipAddress == IN_ADDR.INADDR_NONE)
@@ -51,7 +49,7 @@ if (args.Length > 7)
 					}
 					else
 					{
-						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf(typeof(DNS_PTR_DATA)); //data structure for CNAME records
+						myDnsRecord.wDataLength = (ushort)Marshal.SizeOf<DNS_PTR_DATA>(); //data structure for CNAME records
 						myDnsRecord.Data = new DNS_PTR_DATA { pNameHost = args[++i] };
 						break;
 					}

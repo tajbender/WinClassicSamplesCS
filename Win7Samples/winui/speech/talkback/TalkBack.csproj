@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.SpeechApi" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="$(ProjectName)Res.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="call &quot;$(SolutionDir)BuildRC.cmd&quot; $(ProjectName) $(ProjectName)Res" IgnoreExitCode="true" />
+  </Target>
+
+</Project>

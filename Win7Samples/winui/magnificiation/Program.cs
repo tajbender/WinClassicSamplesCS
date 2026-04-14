@@ -1,5 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using Vanara.PInvoke;
+﻿using Vanara.PInvoke;
+using static Vanara.PInvoke.Kernel32;
 using static Vanara.PInvoke.Magnification;
 using static Vanara.PInvoke.User32;
 
@@ -51,7 +51,7 @@ const string WindowClassName = "MagnifierWindow";
 const string WindowTitle = "Screen Magnifier Sample";
 const uint timerInterval = 16; // close to the refresh rate @60hz
 
-HINSTANCE hInst = Kernel32.GetModuleHandle();
+HINSTANCE hInst = GetModuleHandle();
 HWND hwndMag = default, hwndHost = default;
 RECT hostWindowRect = default, magWindowRect = default;
 
@@ -75,7 +75,7 @@ ShowWindow(hwndHost, ShowWindowCommand.SW_NORMAL);
 UpdateWindow(hwndHost);
 
 // Create a timer to update the control.
-IntPtr timerId = SetTimer(hwndHost, default, timerInterval, UpdateMagWindow);
+var timerId = SetTimer(hwndHost, default, timerInterval, UpdateMagWindow);
 
 // Main message loop.
 MSG msg;
@@ -146,16 +146,16 @@ static SysCommand GET_SC_WPARAM(IntPtr wParam) => (SysCommand)(wParam.ToInt32() 
 //
 // PURPOSE: Registers the window class for the window that contains the magnification control.
 //
-ushort RegisterHostWindowClass()
+ATOM RegisterHostWindowClass()
 {
 	WNDCLASSEX wcex = new()
 	{
-		cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEX)),
+		cbSize = (uint)Marshal.SizeOf<WNDCLASSEX>(),
 		style = WindowClassStyles.CS_HREDRAW | WindowClassStyles.CS_VREDRAW,
 		lpfnWndProc = HostWndProc,
 		hInstance = hInst,
 		hCursor = LoadCursor(default, IDC_ARROW),
-		hbrBackground = (HBRUSH)(1 + SystemColorIndex.COLOR_BTNFACE),
+		hbrBackground = GetSysColorBrush(1 + SystemColorIndex.COLOR_BTNFACE),
 		lpszClassName = WindowClassName
 	};
 	return RegisterClassEx(wcex);
@@ -215,13 +215,12 @@ bool SetupMagnifier()
 	return ret;
 }
 
-
 //
 // FUNCTION: UpdateMagWindow()
 //
 // PURPOSE: Sets the source rectangle and updates the window. Called by a timer.
 //
-void UpdateMagWindow(HWND hwnd, uint uMsg, IntPtr idEvent, uint dwTime)
+void UpdateMagWindow(HWND hwnd, uint uMsg, nuint idEvent, uint dwTime)
 {
 	GetCursorPos(out POINT mousePoint);
 

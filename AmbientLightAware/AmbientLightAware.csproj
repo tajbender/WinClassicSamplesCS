@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.SensorsApi" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="AmbientLightAware.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

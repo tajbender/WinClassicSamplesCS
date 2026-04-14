@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.ActiveDS" />
+    <PackageReference Include="Vanara.PInvoke.Security" />
+  </ItemGroup>
+</Project>

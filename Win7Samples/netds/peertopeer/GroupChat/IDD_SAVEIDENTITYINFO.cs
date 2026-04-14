@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿namespace GroupChat;
 
-namespace GroupChat
+public partial class IDD_SAVEIDENTITYINFO : Form
 {
-	public partial class IDD_SAVEIDENTITYINFO : Form
+	public IDD_SAVEIDENTITYINFO()
 	{
-		public IDD_SAVEIDENTITYINFO()
-		{
-			InitializeComponent();
-		}
+		InitializeComponent();
 	}
 }

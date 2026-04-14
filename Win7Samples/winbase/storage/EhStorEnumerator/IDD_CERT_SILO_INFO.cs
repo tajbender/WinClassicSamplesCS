@@ -1,10 +1,9 @@
-﻿using System.Windows.Forms;
-using Vanara.PInvoke;
+﻿using Vanara.PInvoke;
 using static Vanara.PInvoke.EnhancedStorage;
 
-namespace EhStorEnumerator
-{
-    public partial class IDD_CERT_SILO_INFO : Form
+namespace EhStorEnumerator;
+
+public partial class IDD_CERT_SILO_INFO : Form
     {
         public IDD_CERT_SILO_INFO()
         {
@@ -14,7 +13,7 @@ namespace EhStorEnumerator
         public IDD_CERT_SILO_INFO(PortableDeviceApi.IPortableDevice device) : this()
         {
             IDC_FRIENDLY_NAME.Text = device.CertGetSiloFriendlyName();
-            string guid = null;
+            string? guid = null;
             try { guid = device.CertGetSiloGUID(); } catch { }
             IDC_SILO_GUID.Text = guid ?? "Cannot retrieve, device not trusted";
             (uint nStoredCertCount, uint nMaxCertCount)? cnt = null;
@@ -29,4 +28,3 @@ namespace EhStorEnumerator
                 IDC_SIGNING_ALGS.Items.Add(cap);
         }
     }
-}

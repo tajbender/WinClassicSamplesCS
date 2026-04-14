@@ -1,0 +1,12 @@
+﻿global using Vanara.Extensions;
+global using Vanara.InteropServices;
+global using Vanara.PInvoke;
+global using static Vanara.PInvoke.D3D12;
+global using static Vanara.PInvoke.D3DCompiler;
+global using static Vanara.PInvoke.DXC;
+global using static Vanara.PInvoke.DXGI;
+global using static Vanara.PInvoke.Kernel32;
+global using static Vanara.PInvoke.User32;
+
+DXSample sample = new D3D12HelloTexture(1280, 720, "D3D12 Hello Texture");
+Win32Application.Run(sample);

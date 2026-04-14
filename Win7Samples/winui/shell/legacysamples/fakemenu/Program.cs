@@ -30,22 +30,20 @@
 //      -   The fake-menu switches to keyboard focus highlighting
 //          once keyboard menu navigation is employed.
 
-using Vanara.PInvoke;
-using static Vanara.PInvoke.Kernel32;
-using static Vanara.PInvoke.Gdi32;
-using static Vanara.PInvoke.User32;
-using static Vanara.PInvoke.DwmApi;
-using static Vanara.PInvoke.UxTheme;
-using static Vanara.PInvoke.Macros;
-using System.Runtime.InteropServices;
-using Vanara.InteropServices;
 using Vanara.Extensions;
+using Vanara.PInvoke;
+using static Vanara.PInvoke.DwmApi;
+using static Vanara.PInvoke.Gdi32;
+using static Vanara.PInvoke.Kernel32;
+using static Vanara.PInvoke.Macros;
+using static Vanara.PInvoke.User32;
+using static Vanara.PInvoke.UxTheme;
 
 internal class Program
 {
 	// This is the array of predefined colors we put into the color picker.
-	static readonly COLORREF[] c_rgclrPredef = new COLORREF[]
-	{
+	static readonly COLORREF[] c_rgclrPredef =
+	[
 		new(0x00, 0x00, 0x00), // 0 = black
 		new(0x80, 0x00, 0x00), // 1 = maroon
 		new(0x00, 0x80, 0x00), // 2 = green
@@ -62,7 +60,7 @@ internal class Program
 		new(0xFF, 0x00, 0xFF), // D = fuchsia
 		new(0x00, 0xFF, 0xFF), // E = cyan
 		new(0xFF, 0xFF, 0xFF), // F = white
-	};
+	];
 
 	static COLORREF g_clrBackground = new(0xFF, 0xFF, 0xFF);
 	static SafeHINSTANCE? g_hInstance;
@@ -75,7 +73,7 @@ internal class Program
 	{
 		g_hInstance = GetModuleHandle();
 
-		WindowClass wc = new("ColorPick", g_hInstance, ColorPick_WndProc, hCursor: LoadCursor(default, IDC_ARROW), hbrBkgd: SystemColorIndex.COLOR_3DFACE + 1);
+		WindowClass wc = new("ColorPick", g_hInstance, ColorPick_WndProc, hCursor: LoadCursor(default, IDC_ARROW), hbrBkgd: GetSysColorBrush(SystemColorIndex.COLOR_3DFACE + 1));
 
 		VisibleWindow.Run(FakeMenuDemo_WndProc, "Fake Menu Demo - Right-click in window to change color");
 	}
@@ -453,7 +451,7 @@ internal class Program
 			hmon = MonitorFromWindow(hwnd, MonitorFlags.MONITOR_DEFAULTTONEAREST);
 		}
 
-		MONITORINFO minf = new() { cbSize = (uint)Marshal.SizeOf(typeof(MONITORINFO)) };
+		MONITORINFO minf = new() { cbSize = (uint)Marshal.SizeOf<MONITORINFO>() };
 		GetMonitorInfo(hmon, ref minf);
 
 		// Now slide things around until they fit.
@@ -521,7 +519,7 @@ internal class Program
 		ColorPick_ChooseLocation(hwndOwner, x, y, cx, cy, out POINT pt);
 
 		ColorPickState_Initialize(hwndOwner);
-		HWND hwndPopup = CreateWindowEx(dwExStyle, "ColorPick", "", dwStyle, pt.X, pt.Y, cx, cy, hwndOwner, default, g_hInstance);
+		HWND hwndPopup = CreateWindowEx(dwExStyle, "ColorPick", "", dwStyle, pt.X, pt.Y, cx, cy, hwndOwner, default, g_hInstance!);
 
 		// Show the window but don't activate it!
 		ShowWindow(hwndPopup, ShowWindowCommand.SW_SHOWNOACTIVATE);

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="OleDB.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.OleDb" />
+    <PackageReference Include="Vanara.PInvoke.SearchApi" />
+  </ItemGroup>
+</Project>

@@ -13,7 +13,6 @@
  * PURPOSE.                                                              *
  *-----------------------------------------------------------------------*/
 
-using System;
 using System.ComponentModel;
 using Vanara.Storage;
 
@@ -21,7 +20,7 @@ OpticalStorageEraseMediaOperation op = new();
 op.EraseProgress += Device_EraseProgress;
 op.Execute();
 
-static void Device_EraseProgress(object sender, ProgressChangedEventArgs e)
+static void Device_EraseProgress(object? sender, ProgressChangedEventArgs e)
 {
 	// each block is 2%
 	// ----=----1----=----2----=----3----=----4----=----5----=----6----=----7----=----8

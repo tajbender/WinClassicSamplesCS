@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Vanara.InteropServices;
-
-internal class ProxyResolver
+﻿internal class ProxyResolver
 {
 	// m_dwError - WIN32 Error codes returned from call back function. It's used by extended APIs.
 	private Win32Error m_dwError;
@@ -27,10 +24,10 @@ internal class ProxyResolver
 	private bool m_fReturnedLastProxy;
 
 	// m_hEvent - The handle to the event object. It's used after calling WinHttpGetProxyForUrlEx to wait for proxy results.
-	private System.Threading.ManualResetEvent m_hEvent;
+	private ManualResetEvent? m_hEvent;
 
 	// m_pwszProxyList - The current location in the m_wpiProxyInfo proxy list. Activated when WinHttpGetProxyForUrl is used.
-	private Queue<string> m_pwszProxyList;
+	private Queue<string>? m_pwszProxyList;
 
 	// m_wpiProxyInfo - The initial proxy and bypass list returned by calls to WinHttpGetIEProxyConfigForCurrentUser and WinHttpGetProxyForUrl.
 	private WINHTTP_PROXY_INFO_IN m_wpiProxyInfo;
@@ -121,8 +118,8 @@ internal class ProxyResolver
 			dwError = Win32Error.ERROR_SUCCESS;
 		}
 
-		string pwszProxy;
-		string pwszProxyBypass;
+		string? pwszProxy;
+		string? pwszProxyBypass;
 		bool fFailOverValid;
 		//
 		// Begin processing the proxy settings in the following order:
@@ -220,9 +217,9 @@ commit:
 
 		m_wpiProxyInfo.dwAccessType = pwszProxy is null ? WINHTTP_ACCESS_TYPE.WINHTTP_ACCESS_TYPE_NO_PROXY : WINHTTP_ACCESS_TYPE.WINHTTP_ACCESS_TYPE_NAMED_PROXY;
 
-		m_wpiProxyInfo.lpszProxy = pwszProxy;
+		m_wpiProxyInfo.lpszProxy = pwszProxy!;
 
-		m_wpiProxyInfo.lpszProxyBypass = pwszProxyBypass;
+		m_wpiProxyInfo.lpszProxyBypass = pwszProxyBypass!;
 
 		m_fInit = true;
 
@@ -267,7 +264,7 @@ quit:
 	public Win32Error SetNextProxySetting([In] HINTERNET hInternet, [In] Win32Error dwRequestError)
 	{
 		Win32Error dwError = Win32Error.ERROR_SUCCESS;
-		string pwszCursor = null;
+		string? pwszCursor = null;
 
 		if (!m_fInit)
 		{
@@ -288,8 +285,8 @@ quit:
 			// valid.
 			//
 
-			var proxyArray = m_wpiProxyInfo.lpszProxy?.Split(new[] { ' ', ';', '\t', '\n', '\v', '\f', '\r' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-			m_pwszProxyList = (proxyArray?.Length ?? 0) > 0 ? new Queue<string>(proxyArray) : new Queue<string>();
+			var proxyArray = m_wpiProxyInfo.lpszProxy?.Split([' ', ';', '\t', '\n', '\v', '\f', '\r'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+			m_pwszProxyList = (proxyArray?.Length ?? 0) > 0 ? new Queue<string>(proxyArray!) : new Queue<string>();
 			m_fReturnedFirstProxy = true;
 			goto commit;
 		}
@@ -314,7 +311,7 @@ quit:
 			goto quit;
 		}
 
-		if (!m_pwszProxyList.TryDequeue(out pwszCursor))
+		if (m_pwszProxyList is null || !m_pwszProxyList.TryDequeue(out pwszCursor))
 		{
 			//
 			// Hit the end of the list.
@@ -329,7 +326,7 @@ commit:
 		WINHTTP_PROXY_INFO_IN NextProxyInfo = new()
 		{
 			dwAccessType = m_wpiProxyInfo.dwAccessType,
-			lpszProxy = pwszCursor,
+			lpszProxy = pwszCursor!,
 			lpszProxyBypass = m_wpiProxyInfo.lpszProxyBypass
 		};
 
@@ -396,7 +393,7 @@ quit:
 			m_dwError = WinHttpGetProxyResult(hResolver, out m_wprProxyResult);
 		}
 
-		m_hEvent.Set();
+		m_hEvent?.Set();
 
 quit:
 		return;
@@ -433,7 +430,7 @@ quit:
 			decide whether execution can continue.
 
 	--*/
-	private Win32Error GetProxyForAutoSettings([In] HINTERNET hSession, string pwszUrl, [Optional] string pwszAutoConfigUrl, out string ppwszProxy, out string ppwszProxyBypass)
+	private Win32Error GetProxyForAutoSettings([In] HINTERNET hSession, string pwszUrl, [Optional] string? pwszAutoConfigUrl, out string? ppwszProxy, out string? ppwszProxyBypass)
 	{
 		Win32Error dwError = Win32Error.ERROR_SUCCESS;
 		WINHTTP_AUTOPROXY_OPTIONS waoOptions = default;
@@ -580,7 +577,7 @@ quit:
 
 		hResolver = default;
 
-		if (!m_hEvent.WaitOne())
+		if (!m_hEvent!.WaitOne())
 		{
 			dwError = Win32Error.GetLastError();
 			goto quit;

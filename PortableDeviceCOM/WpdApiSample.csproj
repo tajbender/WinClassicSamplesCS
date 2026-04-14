@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.PortableDeviceApi" />
+    <PackageReference Include="Vanara.PInvoke.Shlwapi" />
+    <PackageReference Include="Vanara.PInvoke.ComDlg32" />
+  </ItemGroup>
+</Project>

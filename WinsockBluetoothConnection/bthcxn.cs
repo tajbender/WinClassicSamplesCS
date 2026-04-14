@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Text;
-using Vanara.Extensions;
+﻿using Vanara.Extensions;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Kernel32;
@@ -56,7 +53,7 @@ namespace Vanara.PInvoke
 			/// <summary>RFCOMM channel associated with the socket. See Remarks.</summary>
 			public uint port;
 
-			public byte[] GetAddressBytes() => ((IntPtr)new PinnedObject(this)).ToArray<byte>(Marshal.SizeOf(typeof(SOCKADDR_BTH)));
+			public byte[] GetAddressBytes() => ((IntPtr)new PinnedObject(this)).ToArray<byte>(Marshal.SizeOf<SOCKADDR_BTH>()) ?? [];
 
 			public static explicit operator SOCKADDR(SOCKADDR_BTH sblth) => SOCKADDR.CreateFromStructure(sblth);
 		}
@@ -67,17 +64,15 @@ namespace WinsockBluetoothConnection
 {
 	using static Vanara.PInvoke.Bthprops;
 
-	public class ScopedAction : IDisposable
+	public class ScopedAction(Action onClose) : IDisposable
 	{
-		private Action OnClose;
-		public ScopedAction(Action onClose) => OnClose = onClose;
-		void IDisposable.Dispose() => OnClose?.Invoke();
+		void IDisposable.Dispose() => onClose?.Invoke();
 	}
 
 	static class BthCxn
 	{
 		// {B62C4E8D-62CC-404b-BBBF-BF3E3BBB1374}
-		static Guid g_guidServiceClass = new Guid(0xb62c4e8d, 0x62cc, 0x404b, 0xbb, 0xbf, 0xbf, 0x3e, 0x3b, 0xbb, 0x13, 0x74);
+		static Guid g_guidServiceClass = new(0xb62c4e8d, 0x62cc, 0x404b, 0xbb, 0xbf, 0xbf, 0x3e, 0x3b, 0xbb, 0x13, 0x74);
 
 		const string CXN_TEST_DATA_STRING = "~!@#$%^&*()-_=+?<>1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		static readonly int CXN_TRANSFER_DATA_LENGTH = CXN_TEST_DATA_STRING.Length;
@@ -246,7 +241,7 @@ namespace WinsockBluetoothConnection
 				//
 				iResult = CXN_SUCCESS;
 				var bContinueLookup = false;
-				uint ulPQSSize = (uint)Marshal.SizeOf(typeof(WSAQUERYSET));
+				uint ulPQSSize = (uint)Marshal.SizeOf<WSAQUERYSET>();
 				iResult = (Win32Error)WSALookupServiceBegin(new WSAQUERYSET(NS.NS_BTH), ulFlags, out var hLookup);
 
 				//
@@ -492,7 +487,7 @@ namespace WinsockBluetoothConnection
 				//
 				// CSADDR_INFO
 				//
-				var scktAddr = new SOCKET_ADDRESS { iSockaddrLength = Marshal.SizeOf(typeof(SOCKADDR_BTH)), lpSockaddr = pSockAddrBthLocal };
+				var scktAddr = new SOCKET_ADDRESS { iSockaddrLength = Marshal.SizeOf<SOCKADDR_BTH>(), lpSockaddr = pSockAddrBthLocal };
 				var csaddrInfo = new CSADDR_INFO
 				{
 					LocalAddr = scktAddr,
@@ -508,7 +503,7 @@ namespace WinsockBluetoothConnection
 				using var lpCSAddrInfo = SafeCoTaskMemHandle.CreateFromStructure(csaddrInfo);
 				var wsaQuerySet = new WSAQUERYSET
 				{
-					dwSize = (uint)Marshal.SizeOf(typeof(WSAQUERYSET)),
+					dwSize = (uint)Marshal.SizeOf<WSAQUERYSET>(),
 					lpServiceClassId = (IntPtr)pg_guidServiceClass,
 					lpszServiceInstanceName = $"{Environment.MachineName} {CXN_INSTANCE_STRING}",
 					lpszComment = "Example Service instance registered in the directory service through RnR",

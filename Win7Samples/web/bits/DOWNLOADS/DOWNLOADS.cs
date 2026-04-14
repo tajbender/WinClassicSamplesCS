@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Vanara.IO;
+﻿using Vanara.IO;
 
 if (args.Length != 2)
 {
@@ -39,5 +37,5 @@ try
 }
 catch (Exception ex)
 {
-	Console.WriteLine($"Failure at {new System.Diagnostics.StackTrace(ex).GetFrame(0).GetMethod().Name}: {ex.Message}");
+	Console.WriteLine($"Failure at {new System.Diagnostics.StackTrace(ex).GetFrame(0)!.GetMethod()!.Name}: {ex.Message}");
 }

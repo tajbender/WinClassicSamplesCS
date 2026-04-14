@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Vanara.InteropServices;
+﻿using Vanara.InteropServices;
 using Vanara.PInvoke;
 
 using static Vanara.PInvoke.HttpApi;
@@ -103,13 +101,13 @@ CleanUp:
 		Win32Error result = 0;
 
 		// Allocate a 2K buffer. Should be good for most requests, we'll grow this if required. We also need space for a HTTP_REQUEST structure.
-		using var pRequestBuffer = new SafeCoTaskMemHandle(Marshal.SizeOf(typeof(HTTP_REQUEST_V1)) + 2048);
+		using var pRequestBuffer = new SafeCoTaskMemHandle(Marshal.SizeOf<HTTP_REQUEST_V1>() + 2048);
 
 		// Wait for a new request -- This is indicated by a default request ID.
-		while (HttpReceiveHttpRequest(hReqQueue, HTTP_NULL_ID, 0, out HTTP_REQUEST pRequest).Succeeded)
+		while (HttpReceiveHttpRequest(hReqQueue, HTTP_NULL_ID, 0, out HTTP_REQUEST? pRequest).Succeeded)
 		{
 			// Worked!
-			switch (pRequest.Verb)
+			switch (pRequest!.Verb)
 			{
 				case HTTP_VERB.HttpVerbGET:
 					Console.Write("Got a GET request for {0} \n", pRequest.CookedUrl.pFullUrl);
@@ -162,8 +160,8 @@ CleanUp:
 		uint TempFileBytesWritten;
 		_ = (uint)uint.MaxValue.ToString().Length;
 		uint TotalBytesRead = 0;
-		SafeHFILE hTempFile = null;
-		System.Text.StringBuilder szTempName = new(MAX_PATH + 1);
+		SafeHFILE? hTempFile = null;
+		StringBuilder szTempName = new(MAX_PATH + 1);
 
 		// Allocate some space for an entity buffer. We'll grow this on demand.
 		uint EntityBufferLength = 2048;
@@ -282,7 +280,7 @@ CleanUp:
 							pRequest.RequestId,
 							0, // This is the last send.
 							1, // Entity Chunk Count.
-							new[] { dataChunk },
+							[dataChunk],
 							out _,
 							default,
 							0,
@@ -325,7 +323,7 @@ CleanUp:
 
 Done:
 
-		if (!hTempFile.IsInvalid)
+		if (hTempFile is not null && !hTempFile.IsInvalid)
 		{
 			hTempFile.Dispose();
 			DeleteFile(szTempName.ToString());
@@ -346,7 +344,7 @@ Done:
 	Return Value:
 	Success/Failure.
 	--***************************************************************************/
-	private static Win32Error SendHttpResponse([In] HREQQUEUEv1 hReqQueue, HTTP_REQUEST pRequest, [In] ushort StatusCode, string pReason, string entityString)
+	private static Win32Error SendHttpResponse([In] HREQQUEUEv1 hReqQueue, HTTP_REQUEST pRequest, [In] ushort StatusCode, string pReason, string? entityString)
 	{
 		// Initialize the HTTP response structure.
 		HTTP_RESPONSE_V1 response = INITIALIZE_HTTP_RESPONSE(StatusCode, pReason);
@@ -358,7 +356,7 @@ Done:
 		if (!(pEntityString is null || pEntityString.IsNull))
 		{
 			// Add an entity chunk
-			pDataChunk = new(new HTTP_DATA_CHUNK((SafeAllocatedMemoryHandle)pEntityString));
+			pDataChunk = new(new HTTP_DATA_CHUNK(pEntityString));
 
 			response.EntityChunkCount = 1;
 			response.pEntityChunks = pDataChunk;

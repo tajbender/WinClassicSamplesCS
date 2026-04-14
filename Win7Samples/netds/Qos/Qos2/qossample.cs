@@ -1,6 +1,4 @@
-﻿#pragma warning disable CA1416 // Validate platform compatibility
-using System.Net;
-using System.Runtime.InteropServices;
+﻿using System.Net;
 using Vanara;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
@@ -102,7 +100,7 @@ void socketCreate([In] string destination, out SOCKET socket, out ADDRESS_FAMILY
 	socket = WSASocket(addressFamily = destAddr.sa_family, SOCK.SOCK_DGRAM, 0, default, 0, WSA_FLAG.WSA_FLAG_OVERLAPPED);
 	if (socket.IsNull)
 	{
-		throw WSAGetLastError().GetException();
+		throw WSAGetLastError().GetException()!;
 	}
 
 	// Connect the new socket to the destination
@@ -212,7 +210,7 @@ void client([In] string[] args)
 	}
 
 	// Create a flow for our socket
-	Win32Error.ThrowLastErrorIfFalse(QOSAddSocketToFlow(qosHandle, socket, default, QOS_TRAFFIC_TYPE.QOSTrafficTypeExcellentEffort, 0, ref flowID));
+	Win32Error.ThrowLastErrorIfFalse(QOSAddSocketToFlow(qosHandle, socket, IntPtr.Zero, QOS_TRAFFIC_TYPE.QOSTrafficTypeExcellentEffort, 0, ref flowID));
 
 	// Read the data rate in bits/s passed on the command line
 	if (!uint.TryParse(args[2], out targetBitRate))
@@ -327,11 +325,11 @@ This instance of the QOS sample program is aiming to:
 			estimatesAvailable = true;
 
 			// Convert the bottleneck bandwidth from bps to mbps
-			bottleneck = (double)flowFund.BottleneckBandwidth;
+			bottleneck = flowFund.BottleneckBandwidth;
 			bottleneck /= 1000000.0;
 
 			// Convert available bandwidth from bps to mbps
-			available = (double)flowFund.AvailableBandwidth;
+			available = flowFund.AvailableBandwidth;
 			available /= 1000000.0;
 
 			Console.Write("DONE\n" +
@@ -627,7 +625,7 @@ This instance of the QOS sample program is aiming to:
 							// congested and bandwidth is available.
 							targetBandwidthWithOverhead = QOS_ADD_OVERHEAD(addressFamily, IPPROTO.IPPROTO_UDP, dataBuffer.Size, targetBitRate);
 
-							bufferSize = (uint)Marshal.SizeOf(typeof(ulong));
+							bufferSize = (uint)Marshal.SizeOf<ulong>();
 
 							result = QOSNotifyFlow(qosHandle, flowID, QOS_NOTIFY_FLOW.QOSNotifyAvailable, targetBandwidthWithOverhead, ref availableOverlapped);
 							if (result == false)
@@ -657,7 +655,6 @@ This instance of the QOS sample program is aiming to:
 
 							// Reset the current bit rate to the initial target rate
 							currentBitRate = targetBitRate;
-
 
 							// Update the shaping characteristics on our QOS flow 
 							// to smooth out our bursty traffic.
@@ -693,7 +690,7 @@ This instance of the QOS sample program is aiming to:
 						// The transmit packet has completed its send, 
 						// If it did so successfully, it's time to send the next 
 						// burst of packets.
-						var overlappedResult = WSAGetOverlappedResult(socket, sendOverlapped, out var ignoredNumOfBytesSent, false, out var ignoredFlags);
+						var overlappedResult = WSAGetOverlappedResult(socket, sendOverlapped, out var _, false, out var _);
 
 						if (overlappedResult == false)
 						{
@@ -820,14 +817,14 @@ void server()
 		HEVENT[] waitEvents = new HEVENT[2];
 
 		// Used for WSARecv
-		WSABUF[] buf = new WSABUF[] { new() { len = dataBuffer.Size, buf = dataBuffer } };
+		WSABUF[] buf = [new() { len = dataBuffer.Size, buf = dataBuffer }];
 
 		// No flags.
 		MsgFlags dwFlags = 0;
 
 		// Post a receive operation
 		// We only have one receive outstanding at a time. 
-		result = WSARecv(socket, buf, 1, out var numberOfBytesReceived, ref dwFlags, ref recvOverlapped, default);
+		result = WSARecv(socket, buf, 1, default, ref dwFlags, ref recvOverlapped, default);
 
 		if (result.Failed)
 		{
@@ -859,7 +856,7 @@ void server()
 				{
 					// The receive operation completed.
 					// Determine the true result of the receive call.
-					bool overlappedResult = WSAGetOverlappedResult(socket, recvOverlapped, out numberOfBytesReceived, false, out _);
+					bool overlappedResult = WSAGetOverlappedResult(socket, recvOverlapped, out var numberOfBytesReceived, false, out _);
 
 					if (overlappedResult == false)
 					{

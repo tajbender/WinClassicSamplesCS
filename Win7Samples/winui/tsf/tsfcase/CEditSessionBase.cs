@@ -2,14 +2,11 @@
 using Vanara.PInvoke;
 using static Vanara.PInvoke.MSCTF;
 
-namespace tsfcase
+namespace tsfcase;
+
+internal class CEditSessionBase(MSCTF.ITfContext pContext) : ITfEditSession
 {
-	internal class CEditSessionBase : ITfEditSession
-	{
-		protected ITfContext pContext;
+	protected ITfContext pContext = pContext;
 
-		public CEditSessionBase(ITfContext pContext) => this.pContext = pContext;
-
-		public virtual HRESULT DoEditSession([In] uint ec) => HRESULT.S_OK;
-	}
+	public virtual HRESULT DoEditSession([In] uint ec) => HRESULT.S_OK;
 }

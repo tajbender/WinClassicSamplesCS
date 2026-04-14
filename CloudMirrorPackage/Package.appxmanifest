@@ -12,7 +12,7 @@
 
   <Identity
     Name="Microsoft.SDKSamples.CloudMirror.CS"
-    Publisher="CN=Vanara"
+    Publisher="CN=dahal"
     Version="1.0.0.0" />
 
   <Properties>

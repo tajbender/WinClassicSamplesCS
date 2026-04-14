@@ -1,23 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Vanara.PInvoke.Ole" Version="3.4.17" />
-    <PackageReference Include="Vanara.PInvoke.Shared" Version="3.4.17" />
+    <PackageReference Include="Vanara.PInvoke.VssApi" />
+    <PackageReference Include="Vanara.PInvoke.Ole" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Vanara.PInvoke.VssApi">
-      <HintPath>..\..\..\..\..\Vanara\PInvoke\VssApi\bin\Debug\net6.0\Vanara.PInvoke.VssApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Vanara.PInvoke.VssApiMgd">
-      <HintPath>..\..\..\..\..\Vanara\PInvoke\VssApiMgd\bin\Debug\net6.0\Vanara.PInvoke.VssApiMgd.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

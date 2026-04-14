@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Vanara.Extensions;
+﻿using Vanara.Extensions;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Dhcp;
@@ -33,10 +31,10 @@ try
 	// DHCP cache. 
 	//
 	// the DHCP Client Options API arrays for getting the options 
-	SafeNativeArray<DHCPAPI_PARAMS> requests = new(new[] {
+	SafeNativeArray<DHCPAPI_PARAMS> requests = new([
 		new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_SUBNET_MASK }, // subnet mask
 		new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_ROUTER_ADDRESS }
-	}); // gateway address
+	]); // gateway address
 
 	// set-up the actual arrays
 	DHCPCAPI_PARAMS_ARRAY sendarray = new(); // we aren't sending anything

@@ -1,8 +1,5 @@
-﻿using System;
-using static Vanara.PInvoke.IpHlpApi;
+﻿using static Vanara.PInvoke.IpHlpApi;
 using static Vanara.PInvoke.Ws2_32;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace recvmsg;
 
@@ -79,7 +76,7 @@ static class Program
 			try
 			{
 #pragma warning disable CS0618 // Type or member is obsolete
-				pAdapterInfo = GetAdaptersInfo().ToList();
+				pAdapterInfo = [.. GetAdaptersInfo()];
 #pragma warning restore CS0618 // Type or member is obsolete
 			}
 			catch (Exception ex)

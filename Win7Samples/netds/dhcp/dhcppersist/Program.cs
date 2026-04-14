@@ -1,5 +1,4 @@
-﻿using System;
-using Vanara.Extensions;
+﻿using Vanara.Extensions;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Dhcp;
@@ -15,7 +14,7 @@ const string DHCP_PERSISTENT_APP_STRING = "DhcpRequestSample";
 * this is where it all happens
 */
 bool bAddPersist = false, bRemovePersist = false;
-string ptr = null;
+string? ptr = null;
 
 // check for persist options and adapter ID
 foreach (var p in args)
@@ -55,7 +54,7 @@ try
 		// building the request array in a more 'dynamic' way
 		//
 		// the DHCP Client Options API arrays for getting the options 
-		SafeNativeArray<DHCPAPI_PARAMS> requests = new(new[] { new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_TIME_SERVERS } }); // gateway address
+		SafeNativeArray<DHCPAPI_PARAMS> requests = new([new DHCPAPI_PARAMS { OptionId = DHCP_OPTION_ID.OPTION_TIME_SERVERS }]); // gateway address
 
 		// set-up the actual arrays
 		DHCPCAPI_PARAMS_ARRAY sendarray = new(); // we aren't sending anything

@@ -1,5 +1,4 @@
-﻿using System;
-using Vanara.PInvoke;
+﻿using Vanara.PInvoke;
 using static Vanara.PInvoke.UrlMon;
 
 namespace uri;
@@ -50,7 +49,7 @@ internal class Program
 		}
 		else
 		{
-			DisplayHelp(System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location));
+			DisplayHelp(System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly()!.Location));
 		}
 	}
 

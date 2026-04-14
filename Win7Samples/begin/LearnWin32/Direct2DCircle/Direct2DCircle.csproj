@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ApplicationManifest>DeclareDPIAware.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.Direct2D" />
+    <PackageReference Include="Vanara.PInvoke.User32" />
+  </ItemGroup>
+</Project>

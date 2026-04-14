@@ -4,22 +4,18 @@ using Vanara.InteropServices;
 using static Vanara.PInvoke.Kernel32;
 using static Vanara.PInvoke.WinMm;
 
-internal readonly struct RenderBuffer
+internal readonly struct RenderBuffer(uint length)
 {
-	public readonly byte[] buffer;
-
-	public RenderBuffer(uint length) => buffer = new byte[length];
+	public readonly byte[] buffer = new byte[length];
 }
 
 internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 {
-	private readonly bool enableAudioViewManagerService, enableStreamSwitch, isDefaultDevice;
+	private readonly bool enableAudioViewManagerService, enableStreamSwitch;
 	private readonly ERole endpointRole;
-	private readonly ERole role;
 	private IAudioClient audioClient;
 	private SafeEventHandle audioSamplesReadyEvent, shutdownEvent, streamSwitchEvent;
 	private IAudioSessionControl? audioSessionControl;
-	private IMMDevice? device;
 	private IMMDeviceEnumerator deviceEnumerator;
 	private IMMDevice endpoint;
 	private uint engineLatencyInMS;
@@ -59,7 +55,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 		// Load the MixFormat. This may differ depending on the shared mode used
 		audioClient.GetMixFormat(out SafeCoTaskMemHandle? mem).ThrowIfFailed();
 		SizeT sz = mem.Size;
-		mixFormat = new(mem.TakeOwnership(), true, sz);
+		mixFormat = new(mem.ReleaseOwnership(), true, sz);
 
 		FrameSize = mixFormat.Value.nBlockAlign;
 		CalculateMixFormatType().ThrowIfFailed();
@@ -79,7 +75,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 			// Register for session and endpoint change notifications.
 			//
 			// A stream switch is initiated when we receive a session disconnect notification or we receive a default device changed notification.
-			audioSessionControl.RegisterAudioSessionNotification(this);
+			audioSessionControl!.RegisterAudioSessionNotification(this);
 
 			deviceEnumerator.RegisterEndpointNotificationCallback(this);
 		}
@@ -201,7 +197,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 
 	// Called when the default render device changed. We just want to set an event which lets the stream switch logic know that it's ok to
 	// continue with the stream switch.
-	HRESULT IMMNotificationClient.OnDefaultDeviceChanged(EDataFlow Flow, ERole Role, string _)
+	HRESULT IMMNotificationClient.OnDefaultDeviceChanged(EDataFlow Flow, ERole Role, string? _)
 	{
 		if (Flow == EDataFlow.eRender && Role == endpointRole)
 		{
@@ -307,7 +303,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 			Console.Write("Unable to initialize COM in render thread\n");
 		}
 
-		SafeEventHandle?[] waitArray = new[] { shutdownEvent, streamSwitchEvent, audioSamplesReadyEvent };
+		SafeEventHandle[] waitArray = [shutdownEvent, streamSwitchEvent, audioSamplesReadyEvent];
 		bool stillPlaying = true;
 		while (stillPlaying)
 		{
@@ -372,7 +368,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 
 			// Step 4. If we can't get the new endpoint, we need to abort the stream switch. If there IS a new device, we should be able to
 			// retrieve it.
-			endpoint = deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.eRender, endpointRole);
+			endpoint = deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.eRender, endpointRole)!;
 
 			// Step 5 - Re-instantiate the audio client on the new endpoint.
 			audioClient = endpoint.Activate<IAudioClient>(CLSCTX.CLSCTX_INPROC_SERVER);
@@ -393,7 +389,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 
 			// Step 8: Re-register for session disconnect notifications.
 			audioSessionControl = audioClient.GetService<IAudioSessionControl>();
-			audioSessionControl.RegisterAudioSessionNotification(this);
+			audioSessionControl!.RegisterAudioSessionNotification(this);
 
 			// Reset the stream switch complete event because it's a manual reset event.
 			streamSwitchCompleteEvent?.Reset();
@@ -418,7 +414,7 @@ internal class CWASAPIRenderer : IMMNotificationClient, IAudioSessionEvents
 		{
 			try
 			{
-				IAudioViewManagerService audioViewManagerService = audioClient.GetService<IAudioViewManagerService>();
+				IAudioViewManagerService audioViewManagerService = audioClient.GetService<IAudioViewManagerService>()!;
 				// Pass the window that this audio stream is associated with. This is used by the system for purposes such as rendering
 				// spatial audio in Mixed Reality scenarios.
 				audioViewManagerService.SetAudioStreamWindow(GetConsoleWindow());

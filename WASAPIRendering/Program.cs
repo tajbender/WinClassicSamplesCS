@@ -1,5 +1,4 @@
-﻿global using System.Runtime.InteropServices;
-global using Vanara.PInvoke;
+﻿global using Vanara.PInvoke;
 global using static Vanara.PInvoke.CoreAudio;
 global using static Vanara.PInvoke.Ole32;
 global using static Vanara.PInvoke.PropSys;
@@ -7,8 +6,8 @@ using System.CommandLine;
 
 PROPERTYKEY PKEY_Device_FriendlyName = new(new(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 14);
 
-RootCommand rootCmd = new()
-{
+RootCommand rootCmd =
+[
 	new Option<uint>("-f", () => 440, "Sine wave frequency (Hz)") { IsRequired = true },
 	new Option<uint>("-l", () => 30, "Audio Render Latency (ms)") { IsRequired = true },
 	new Option<uint>("-d", () => 10, "Sine Wave Duration (s)") { IsRequired = true },
@@ -17,9 +16,9 @@ RootCommand rootCmd = new()
 	new Option<bool>("-multimedia", "Use the default multimedia device"),
 	new Option<string>("-endpoint", "Use the specified endpoint ID"),
 	new Option<bool>("-w", "Enable call to AudioViewManagerService"),
-};
+];
 rootCmd.SetHandler(Main);
-rootCmd.InvokeAsync(args);
+await rootCmd.InvokeAsync(args);
 
 void Main(System.CommandLine.Invocation.InvocationContext ctx) // uint TargetFrequency, uint TargetLatency, uint TargetDurationInSec, bool UseConsoleDevice, bool UseCommunicationsDevice, bool UseMultimediaDevice, string OutputEndpoint, bool EnableAudioViewManagerService)
 {
@@ -132,7 +131,7 @@ void Main(System.CommandLine.Invocation.InvocationContext ctx) // uint TargetFre
 			//
 			// The user didn't specify an output device, prompt the user for a device and use that.
 			//
-			IMMDeviceCollection deviceCollection = deviceEnumerator.EnumAudioEndpoints(EDataFlow.eRender, DEVICE_STATE.DEVICE_STATE_ACTIVE);
+			IMMDeviceCollection deviceCollection = deviceEnumerator.EnumAudioEndpoints(EDataFlow.eRender, DEVICE_STATE.DEVICE_STATE_ACTIVE)!;
 
 			Console.Write("Select an output device:\n");
 			Console.Write(" 0: Default Console Device\n");
@@ -148,7 +147,7 @@ void Main(System.CommandLine.Invocation.InvocationContext ctx) // uint TargetFre
 			if (uint.TryParse(choice, out var deviceIndex))
 			{
 				Console.Write("unrecognized device index: {0}\n", choice);
-				throw new HRESULT(HRESULT.E_UNEXPECTED).GetException();
+				throw new HRESULT(HRESULT.E_UNEXPECTED).GetException()!;
 			}
 			switch (deviceIndex)
 			{
@@ -191,7 +190,7 @@ void Main(System.CommandLine.Invocation.InvocationContext ctx) // uint TargetFre
 			DefaultDeviceRole = deviceRole;
 		}
 
-		DeviceToUse = deviceToUse;
+		DeviceToUse = deviceToUse!;
 	}
 }
 
@@ -201,7 +200,7 @@ void Main(System.CommandLine.Invocation.InvocationContext ctx) // uint TargetFre
 string GetDeviceName(IMMDeviceCollection DeviceCollection, uint DeviceIndex)
 {
 	DeviceCollection.Item(DeviceIndex, out var device).ThrowIfFailed();
-	IPropertyStore propertyStore = device.OpenPropertyStore(STGM.STGM_READ);
+	IPropertyStore propertyStore = device!.OpenPropertyStore(STGM.STGM_READ)!;
 	return $"{(propertyStore.GetValue(PKEY_Device_FriendlyName) as string) ?? "Unknown"} ({device.GetId()})";
 }
 
@@ -235,7 +234,7 @@ void GenerateSineSamples<T>(byte[] Buffer, uint Frequency, ushort ChannelCount, 
 			T* dataBuffer = (T*)pBuffer;
 			double theta = InitialTheta;
 
-			for (int i = 0; i < Buffer.Length / Marshal.SizeOf(typeof(T)); i += ChannelCount)
+			for (int i = 0; i < Buffer.Length / Marshal.SizeOf<T>(); i += ChannelCount)
 			{
 				double sinValue = Math.Sin(theta);
 				for (ushort j = 0; j < ChannelCount; j++)

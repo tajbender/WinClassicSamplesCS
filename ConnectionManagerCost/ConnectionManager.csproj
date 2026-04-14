@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.Kernel32" />
+    <PackageReference Include="Vanara.PInvoke.WcmApi" />
+    <PackageReference Include="Vanara.PInvoke.WlanApi" />
+  </ItemGroup>
+</Project>

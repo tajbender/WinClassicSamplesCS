@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\DetectBootSector\FMApi.cs" Link="FMApi.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Vanara.PInvoke.Kernel32" />
+    <PackageReference Include="Vanara.PInvoke.Security" />
+  </ItemGroup>
+</Project>

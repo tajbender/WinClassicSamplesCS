@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" />
+    <PackageReference Include="Vanara.PInvoke.UxTheme" />
+  </ItemGroup>
+</Project>

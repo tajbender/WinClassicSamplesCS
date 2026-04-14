@@ -27,7 +27,7 @@ const int OBS_COMPLETELYVISIBLE = 2;
 bool g_fTimerActive = false;
 
 using SafeHINSTANCE hInst = GetModuleHandle();
-WindowClass wc = new("Obscure", hInst, Obscure_WndProc, hbrBkgd: SystemColorIndex.COLOR_WINDOW + 1);
+WindowClass wc = new("Obscure", hInst, Obscure_WndProc, hbrBkgd: GetSysColorBrush(SystemColorIndex.COLOR_WINDOW + 1));
 
 using SafeHWND hwnd = CreateWindow(wc.ClassName, wc.ClassName, WindowStyles.WS_OVERLAPPEDWINDOW,
 	CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, default, default, hInst);
@@ -48,7 +48,7 @@ while (GetMessage(out msg) != 0)
 
 int GetClientObscuredness(HWND hwnd)
 {
-	using SafeHDC hdc = GetDC(hwnd);
+	using var hdc = GetDC(hwnd);
 	RegionFlags iType = GetClipBox(hdc, out RECT rc);
 
 	if (iType == RegionFlags.NULLREGION)
@@ -74,7 +74,7 @@ void Obscure_EnsureTimerStopped(HWND hwnd)
 {
 	if (g_fTimerActive)
 	{
-		KillTimer(hwnd, (IntPtr)1);
+		KillTimer(hwnd, 1);
 		g_fTimerActive = false;
 		InvalidateRect(hwnd, default, false);
 		SetWindowText(hwnd, "Covered (Paused)");
@@ -88,7 +88,7 @@ void Obscure_EnsureTimerStopped(HWND hwnd)
 * Otherwise, invalidate our rectangle so we will redraw with the new time.
 *
 *****************************************************************************/
-void Obscure_TimerProc(HWND hwnd, uint uiMsg, IntPtr idTimer, uint tm)
+void Obscure_TimerProc(HWND hwnd, uint uiMsg, nuint idTimer, uint tm)
 {
 	/*
 	* If the client area is totally obscured, then stop the timer so we don't waste any more CPU.
@@ -122,7 +122,7 @@ void Obscure_EnsureTimerRunning(HWND hwnd)
 {
 	if (!g_fTimerActive)
 	{
-		SetTimer(hwnd, (IntPtr)1, 100, Obscure_TimerProc);
+		SetTimer(hwnd, 1, 100, Obscure_TimerProc);
 		g_fTimerActive = true;
 	}
 }

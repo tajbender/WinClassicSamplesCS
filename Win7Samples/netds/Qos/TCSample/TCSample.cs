@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Runtime.InteropServices;
 using Vanara.Extensions;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Kernel32;
@@ -164,7 +163,7 @@ bool AddTcFlows(List<IFC_INFO> IfcList, TC_GEN_FLOW pTcFlow)
 	//
 	for (int i = 0; i < IfcList.Count; i++)
 	{
-		var err = TcAddFlow(IfcList[i].hIfc, default, 0, pTcFlow, out IfcList[i].hFlow);
+		var err = TcAddFlow(IfcList[i].hIfc!, default, 0, pTcFlow, out IfcList[i].hFlow);
 		if (err.Failed)
 		{
 			Console.Write("TcAddFlow Failed {0}\n", err);
@@ -189,7 +188,7 @@ bool AddTcFilters(List<IFC_INFO> IfcList, in TC_GEN_FILTER pTcFilter)
 	//
 	for (int i = 0; i < IfcList.Count; i++)
 	{
-		err = TcAddFilter(IfcList[i].hFlow, pTcFilter, out IfcList[i].hFilter);
+		err = TcAddFilter(IfcList[i].hFlow!, pTcFilter, out IfcList[i].hFilter);
 		if (err.Failed)
 		{
 			Console.Write("TcAddFilter Failed {0}\n", err);
@@ -231,7 +230,7 @@ bool ClearIfcList(List<IFC_INFO> pIfcList)
 //******************************************************************************
 bool MakeIfcList(HCLIENT hClient, out List<IFC_INFO> pIfcList)
 {
-	pIfcList = new List<IFC_INFO>();
+	pIfcList = [];
 
 	//
 	// Enumerate the TC enabled interfaces
@@ -318,7 +317,7 @@ bool CreateFlow(out TC_GEN_FLOW pTcFlowObj, ushort DSCPValue, ushort OnePValue, 
 	{
 		QOS_TRAFFIC_CLASS pTClassObject = new();
 		pTClassObject.ObjectHdr.ObjectType = QOS_OBJ_TYPE.QOS_OBJECT_TRAFFIC_CLASS;
-		pTClassObject.ObjectHdr.ObjectLength = (uint)Marshal.SizeOf(typeof(QOS_TRAFFIC_CLASS));
+		pTClassObject.ObjectHdr.ObjectLength = (uint)Marshal.SizeOf<QOS_TRAFFIC_CLASS>();
 		pTClassObject.TrafficClass = OnePValue; //802.1p tag to be used
 		pTcFlowObj.TcObjects[0] = pTClassObject;
 	}
@@ -327,7 +326,7 @@ bool CreateFlow(out TC_GEN_FLOW pTcFlowObj, ushort DSCPValue, ushort OnePValue, 
 	{
 		QOS_DS_CLASS pDSClassObject = new();
 		pDSClassObject.ObjectHdr.ObjectType = QOS_OBJ_TYPE.QOS_OBJECT_DS_CLASS;
-		pDSClassObject.ObjectHdr.ObjectLength = (uint)Marshal.SizeOf(typeof(QOS_DS_CLASS));
+		pDSClassObject.ObjectHdr.ObjectLength = (uint)Marshal.SizeOf<QOS_DS_CLASS>();
 		pDSClassObject.DSField = DSCPValue; //Services Type
 		pTcFlowObj.TcObjects[OnePValue != NOT_SPECIFIED ? 0 : 1] = pDSClassObject;
 	}
@@ -461,7 +460,7 @@ bool CreateFilter(out TC_GEN_FILTER pFilter, SOCKADDR_STORAGE Address, ushort Po
 	}
 
 	pFilter.AddressType = NDIS_PROTOCOL_ID.NDIS_PROTOCOL_ID_TCP_IP;
-	pFilter.PatternSize = (uint)Marshal.SizeOf(typeof(IP_PATTERN));
+	pFilter.PatternSize = (uint)Marshal.SizeOf<IP_PATTERN>();
 	pFilter.Pattern = pPattern.MarshalToPtr(Marshal.AllocHGlobal, out _);
 	pFilter.Mask = pMask.MarshalToPtr(Marshal.AllocHGlobal, out _);
 

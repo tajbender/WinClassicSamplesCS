@@ -1,0 +1,17 @@
+<Window
+    x:Class="ClassicSamplesBrowser.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ClassicSamplesBrowser"
+    Title="Classic Samples Browser"
+    Activated="Window_Activated">
+
+    <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="256" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" x:Name="HeaderImage" Source="Assets/Vanara/WinUi Sailing in the Seas of Cheese.png" />
+        <Frame Grid.Row="1" x:Name="RootFrame" />
+    </Grid>
+</Window>

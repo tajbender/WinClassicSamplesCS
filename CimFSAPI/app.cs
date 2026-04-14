@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using Vanara.PInvoke;
-using Vanara.Extensions;
+﻿using Vanara.Extensions;
 using Vanara.InteropServices;
+using Vanara.PInvoke;
 using static Vanara.PInvoke.AdvApi32;
 using static Vanara.PInvoke.CimFs;
 using static Vanara.PInvoke.Kernel32;
@@ -25,7 +21,7 @@ static class Program
 
 		try
 		{
-			TogglePrivileges(new[] { "SeSecurityPrivilege", "SeBackupPrivilege" }, true);
+			TogglePrivileges(["SeSecurityPrivilege", "SeBackupPrivilege"], true);
 
 			// Create a new image and add a file
 			AddFileToNewCim(cimPath, imageName, filePath, imageRelativePath);
@@ -179,7 +175,7 @@ static class Program
 		fileData.Sd = sd;
 
 		// Retrieve Alternate streams info
-		fileData.StreamData = GetAlternateDataStreams(filePath).Where(d => d.cStreamName != "::$DATA").ToList();
+		fileData.StreamData = [.. GetAlternateDataStreams(filePath).Where(d => d.cStreamName != "::$DATA")];
 
 		// Finally keep the handle used to retrieve the information
 		fileData.FileHandle = file;
@@ -221,7 +217,7 @@ static class Program
 
 		// Write alternate data streams.
 
-		if (cimFileData.StreamData.Count > 0)
+		if (cimFileData.StreamData?.Count > 0)
 		{
 
 			foreach (WIN32_FIND_STREAM_DATA streamData in cimFileData.StreamData)
@@ -539,7 +535,7 @@ static class Program
 			CimFileData cimFileData = GetFileData(cimFilePath);
 			CimFileData cimLinkData = GetFileData(cimLinkPath);
 
-			if (Interop.memcmp(cimFileData.FileIdInfo.FileId.Identifier, cimLinkData.FileIdInfo.FileId.Identifier, Marshal.SizeOf(typeof(FILE_ID_128))) != 0)
+			if (Interop.memcmp(cimFileData.FileIdInfo.FileId.Identifier, cimLinkData.FileIdInfo.FileId.Identifier, Marshal.SizeOf<FILE_ID_128>()) != 0)
 			{
 				Console.Error.WriteLine("did not match");
 			}
@@ -621,13 +617,13 @@ static class Program
 		public CIMFS_FILE_METADATA MetaData;
 
 		// buffer for reparse point data
-		public SafeAllocatedMemoryHandle ReparsePointData;
+		public SafeAllocatedMemoryHandle? ReparsePointData;
 
 		// While getting the data we also need to keep the sd alive
-		public SafePSECURITY_DESCRIPTOR Sd;
+		public SafePSECURITY_DESCRIPTOR? Sd;
 
 		// Alternate streams information
-		public List<WIN32_FIND_STREAM_DATA> StreamData;
+		public List<WIN32_FIND_STREAM_DATA>? StreamData;
 
 		public CimFileData(SafeHFILE hf, in FILE_BASIC_INFO fi, in FILE_ID_INFO fid)
 		{

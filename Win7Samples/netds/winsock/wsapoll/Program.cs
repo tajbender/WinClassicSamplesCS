@@ -1,12 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Vanara.Extensions;
+﻿using Vanara.Extensions;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Kernel32;
-using static Vanara.PInvoke.IpHlpApi;
 using static Vanara.PInvoke.Ws2_32;
 
 namespace recvmsg;
@@ -18,8 +13,8 @@ static class Program
 	const int DEFAULT_PORT = 12345;
 	const int DEFAULT_WAIT = 30000;
 	static readonly SafeCoTaskMemString TST_MSG = new("0123456789abcdefghijklmnopqrstuvwxyz\0");
-	static SafeEventHandle hCloseSignal = null;
-	static SafeHTHREAD hThread = null;
+	static SafeEventHandle? hCloseSignal = null;
+	static SafeHTHREAD? hThread = null;
 
 	public static int Main()
 	{
@@ -39,14 +34,14 @@ static class Program
 			using PinnedObject puNonBlockingMode = new(uNonBlockingMode);
 			ioctlsocket(lsock, WinSockIOControlCode.FIONBIO, puNonBlockingMode).ThrowIfFailed();
 
-			bind(lsock, addr, Marshal.SizeOf(typeof(SOCKADDR_IN6))).ThrowIfFailed();
+			bind(lsock, addr, Marshal.SizeOf<SOCKADDR_IN6>()).ThrowIfFailed();
 
 			listen(lsock, 1).ThrowIfFailed();
 
 			//Call WSAPoll for readability of listener (accepted)
-			WSAPOLLFD[] fdarray = { new() { fd = lsock, events = PollFlags.POLLRDNORM } };
+			WSAPOLLFD[] fdarray = [new() { fd = lsock, events = PollFlags.POLLRDNORM }];
 
-			SafeSOCKET asock = default;
+			SafeSOCKET? asock = default;
 			var ret = WSRESULT.ThrowLastErrorIf(WSAPoll(fdarray, 1, DEFAULT_WAIT), e => e == SOCKET_ERROR);
 			if (ret > 0 && fdarray[0].revents.IsFlagSet(PollFlags.POLLRDNORM))
 			{
@@ -67,7 +62,7 @@ static class Program
 			ret = WSRESULT.ThrowLastErrorIf(WSAPoll(fdarray, 1, DEFAULT_WAIT), e => e == SOCKET_ERROR);
 			if (ret > 0 && fdarray[0].revents.IsFlagSet(PollFlags.POLLWRNORM))
 			{
-				ret = WSRESULT.ThrowLastErrorIf(send(asock, TST_MSG, TST_MSG.Size, 0), i => i == SOCKET_ERROR);
+				ret = WSRESULT.ThrowLastErrorIf(send(asock!, TST_MSG, TST_MSG.Size, 0), i => i == SOCKET_ERROR);
 				Console.Write("Main: sent {0} bytes\n", ret);
 			}
 		}
@@ -98,10 +93,10 @@ static class Program
 			SOCKADDR_IN6 addrLoopback = (SOCKADDR_IN6)IN6_ADDR.Loopback;
 			addrLoopback.sin6_port = htons(DEFAULT_PORT);
 
-			connect(csock, (SOCKADDR)addrLoopback, Marshal.SizeOf(typeof(SOCKADDR_IN6))).ThrowIfFailed();
+			connect(csock, (SOCKADDR)addrLoopback, Marshal.SizeOf<SOCKADDR_IN6>()).ThrowIfFailed();
 
 			// Call WSAPoll for writeability on connecting socket
-			WSAPOLLFD[] fdarray = { new() { fd = csock, events = PollFlags.POLLWRNORM } };
+			WSAPOLLFD[] fdarray = [new() { fd = csock, events = PollFlags.POLLWRNORM }];
 
 			int ret = WSRESULT.ThrowLastErrorIf(WSAPoll(fdarray, (uint)fdarray.Length, DEFAULT_WAIT), e => e == SOCKET_ERROR);
 			if (ret > 0 && fdarray[0].revents.IsFlagSet(PollFlags.POLLWRNORM))
@@ -124,7 +119,7 @@ static class Program
 				Console.Write("ConnectThread: recvd {0} bytes\n", ret);
 			}
 
-			WaitForSingleObject(hCloseSignal, DEFAULT_WAIT);
+			WaitForSingleObject(hCloseSignal!, DEFAULT_WAIT);
 		}
 		catch (Exception ex)
 		{
