@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace ClassicSamplesBrowser.Views;
@@ -11,29 +13,18 @@ public sealed partial class StartPage : Page
         //ContentFrame.Navigate(typeof(HomePage));
     }
 
-//    private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-//    {
-//        if (args.SelectedItem is NavigationViewItem item)
-//        {
-//            var tag = item.Tag?.ToString();
-//
-//            switch (tag)
-//            {
-//                case "HomePage":
-//                    ContentFrame.Navigate(typeof(HomePage));
-//                    //HeaderTitle.Text = "Home";
-//                    break;
-//
-//                case "SamplesPage":
-//                    ContentFrame.Navigate(typeof(SamplesPage));
-//                    //HeaderTitle.Text = "Samples";
-//                    break;
-//
-//                case "AboutPage":
-//                    ContentFrame.Navigate(typeof(AboutPage));
-//                    //HeaderTitle.Text = "About";
-//                    break;
-//            }
-//        }
-//    }
+    private void LoadAssemblies_Click(object sender, RoutedEventArgs e)
+    {
+        Debug.WriteLine("LoadAssemblies_Click event handler called.");
+    }
+
+    private void OpenExplorer_Click(object sender, RoutedEventArgs e)
+    {
+        Debug.WriteLine("OpenExplorer_Click event handler called.");
+    }
+
+    private void OpenSamples_Click(object sender, RoutedEventArgs e)
+    {
+        Debug.WriteLine("OpenSamples_Click event handler called.");
+    }
 }

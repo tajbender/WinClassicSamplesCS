@@ -4,43 +4,86 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ClassicSamplesBrowser.Views">
 
-    <Grid>
-        <Button>Ätsch!</Button>
-        <!-- Ryder-Style Sidebar -->
-        <!--<NavigationView x:Name="NavView"
-                        PaneDisplayMode="LeftCompact"
-                        IsBackButtonVisible="Collapsed"
-                        IsSettingsVisible="True"
-                        CompactPaneLength="60"
-                        OpenPaneLength="240"
-                        SelectionChanged="NavView_SelectionChanged">
+    <Grid Background="{ThemeResource MicaBaseAltFillColorDefaultBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            --><!-- HeaderBar --><!--
-            <NavigationView.Header>
-                <Grid Height="48">
-                    <TextBlock x:Name="HeaderTitle"
-                               Text="Home"
-                               VerticalAlignment="Center"
-                               Margin="12,0,0,0"/>
-                </Grid>
-            </NavigationView.Header>
+        <!-- HEADER -->
+        <StackPanel Padding="32" Spacing="4">
+            <TextBlock Text="Vanara API Explorer"
+                       FontSize="32"
+                       FontWeight="SemiBold"/>
+            <TextBlock Text="Explore APIs, Samples or NuGet Versions"
+                       FontSize="16"
+                       Opacity="0.7"/>
+        </StackPanel>
 
-            --><!-- Navigation Items --><!--
-            <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home" Content="Home" Tag="HomePage" />
-                <NavigationViewItem Icon="Library" Content="Samples" Tag="SamplesPage" />
-                <NavigationViewItem Icon="Help" Content="About" Tag="AboutPage" />
-            </NavigationView.MenuItems>
+        <!-- MAIN CONTENT -->
+        <Grid Grid.Row="1" Padding="32">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
 
-            --><!-- Content --><!--
-            <Frame x:Name="ContentFrame" />
+            <!-- LEFT: ACTIONS -->
+            <StackPanel Spacing="20">
 
-        </NavigationView>-->
+                <!-- Version Selector -->
+                <StackPanel>
+                    <TextBlock Text="Vanara Version"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,4"/>
+                    <ComboBox x:Name="VersionSelector"
+                              PlaceholderText="Loading versions..."
+                              Width="260"/>
+                </StackPanel>
 
-        <!--<Frame x:Name="ContentFrame" />
+                <!-- Load Assemblies -->
+                <Button Content="Load Assemblies"
+                        Click="LoadAssemblies_Click"
+                        Width="260"
+                        Style="{StaticResource AccentButtonStyle}"/>
 
-        <Border Height="28" VerticalAlignment="Bottom">
-            <TextBlock x:Name="StatusText" Margin="12,0,0,0" Opacity="0.7" Text="Ready." VerticalAlignment="Center" />
-        </Border>-->
+                <!-- Open API Explorer -->
+                <Button Content="Open API Explorer"
+                        Click="OpenExplorer_Click"
+                        Width="260"/>
+
+                <!-- Open Samples Browser -->
+                <Button Content="Open Samples Browser"
+                        Click="OpenSamples_Click"
+                        Width="260"/>
+
+                <!-- Project Builder -->
+                <Button Content="Project Builder (coming soon)"
+                        Width="260"
+                        IsEnabled="False"/>
+            </StackPanel>
+
+            <!-- RIGHT: INFO PANEL -->
+            <StackPanel Grid.Column="1" Padding="32" Spacing="12">
+                <TextBlock Text="What this tool does"
+                           FontSize="20"
+                           FontWeight="SemiBold"/>
+
+                <TextBlock Text="This Explorer lets you browse Vanara APIs, inspect types, view samples, explore NuGet versions, and understand wrapper relationships. It is powered by reflection, NuGet metadata, and the Vanara test suite."
+                           TextWrapping="Wrap"
+                           Opacity="0.8"/>
+
+                <TextBlock Text="Core Features"
+                           FontWeight="SemiBold"
+                           Margin="0,12,0,0"/>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="• API Tree (Namespaces → Types → Members)"/>
+                    <TextBlock Text="• NuGet Version Selector"/>
+                    <TextBlock Text="• Sample Mapping (Unit Tests → API)"/>
+                    <TextBlock Text="• Wrapper Detection (IShellItem → ShellItem)"/>
+                    <TextBlock Text="• Reflection‑based Metadata"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
