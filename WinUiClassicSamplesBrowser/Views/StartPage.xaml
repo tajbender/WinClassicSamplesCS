@@ -12,6 +12,7 @@
 
         <!-- HEADER -->
         <StackPanel Padding="32" Spacing="4">
+            <SwapChainPanel Height="256"/>
             <TextBlock Text="Vanara API Explorer"
                        FontSize="32"
                        FontWeight="SemiBold"/>

@@ -1,9 +1,19 @@
-using System.Diagnostics;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Composition.SystemBackdrops;
 using ClassicSamplesBrowser.Helpers;
 using ClassicSamplesBrowser.Views;
+using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System.Diagnostics;
+using Vortice.Direct3D;
+using Vortice.Direct3D11;
+using Vortice.DXGI;
+using Vortice.WinUI;
+using Vortice.WinUI.Composition;
 using WinRT;
+using static Vortice.Direct3D11.D3D11;
+
 
 namespace ClassicSamplesBrowser;
 
@@ -13,6 +23,13 @@ public sealed partial class MainWindow : Window
     private SystemBackdropConfiguration _sysBackdropConfiguration = new();
     private WindowsSystemDispatcherQueueHelper _winDispatcherHelper = new();
 
+    private ID3D11Device? _device;
+    private ID3D11DeviceContext? _context;
+    private IDXGISwapChain1? _swapChain;
+    private ID3D11RenderTargetView? _rtv;
+    private DispatcherTimer? _timer;
+    private float _angle;
+
     public MainWindow()
     {
         try
@@ -21,6 +38,7 @@ public sealed partial class MainWindow : Window
             Span<char> buffer = stackalloc char[256];
 
             InitializeComponent();
+            InitializeDirectX();
             Debug.WriteLine(TrySetMicaBackdrop().TryFormat(buffer, out charsWritten));
         }
         catch
@@ -72,5 +90,66 @@ public sealed partial class MainWindow : Window
         _micaController.SetSystemBackdropConfiguration(_sysBackdropConfiguration);
 
         return true;
+    }
+
+    private void InitializeDirectX()
+    {
+        // Device + Context
+        D3D11CreateDevice(
+            null,
+            DriverType.Hardware,
+            DeviceCreationFlags.BgraSupport,
+            new[] { FeatureLevel.Level_11_0 },
+            out _device,
+            out _,
+            out _context);
+
+        // SwapChain-Desc
+        var swapDesc = new SwapChainDescription1
+        {
+            Width = 0,
+            Height = 0,
+            Format = Format.B8G8R8A8_UNorm,
+            BufferUsage = Usage.RenderTargetOutput,
+            BufferCount = 2,
+            SampleDescription = new SampleDescription(1, 0),
+            Scaling = Scaling.Stretch,
+            SwapEffect = SwapEffect.FlipDiscard,
+        };
+
+        using var dxgiDevice = _device!.QueryInterface<IDXGIDevice>();
+        using var adapter = dxgiDevice.GetAdapter();
+        using var factory = adapter.GetParent<IDXGIFactory2>();
+
+        // Retrieve `SwapChainPanelNative`
+        var native = GetSwapChainPanelNative(SwapChainHost);
+        //native.SetSwapChain(_swapChain);
+
+        //factory.CreateSwapChainForComposition(_device, ref swapDesc, null, out _swapChain);
+        //panelNative.SetSwapChain(_swapChain!);
+
+        CreateRenderTarget();
+    }
+
+    private object GetSwapChainPanelNative(SwapChainPanel swapChainHost)
+    {
+        return null;
+    }
+
+    private void CreateRenderTarget()
+    {
+        try
+        {
+            using var backBuffer = _swapChain!.GetBuffer<ID3D11Texture2D>(0);
+            _rtv = _device!.CreateRenderTargetView(backBuffer);
+        }
+        catch(Exception ex)
+        {
+            Debug.Print($"CreateRenderTarget() Failed to create render target: {ex.Message}");
+        }
+        finally
+        {
+            Debug.Print("CreateRenderTarget() has completed.");
+        }
     }
 }
