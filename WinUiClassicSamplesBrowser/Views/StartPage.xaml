@@ -5,20 +5,14 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Grid RowDefinitions="Auto,*,Auto">
-        <TextBlock Grid.Row="0" Text="Ready." Foreground="{ThemeResource TextFillColorPrimaryBrush}" VerticalAlignment="Center" />
-        <Border Grid.Row="1" Background="{ThemeResource SystemBaseMediumColor}" Height="180" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <muxc:TabView x:Name="MainTabs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabWidthMode="SizeToContent">
-                <muxc:TabViewItem Header="Explorer">
-                    <TextBlock Text="Explorer Content…" />
-                </muxc:TabViewItem>
-                <muxc:TabViewItem Header="API">
-                    <TextBlock Text="API Content…" />
-                </muxc:TabViewItem>
-            </muxc:TabView>
-        </Border>
+    <Grid RowDefinitions="42,*,42" VerticalAlignment="Top">
+        <Image Grid.Row="0" Height="256" Source="/Assets/Vanara/WinUi%20Sailing%20in%20the%20Seas%20of%20Cheese.png"></Image>
+        <ListView Grid.Row="1" Height="512"></ListView>
         <Border Grid.Row="2" Background="#22000000" Height="28" VerticalAlignment="Bottom" Padding="12,0">
-            <TextBlock Text="Ready." Foreground="{ThemeResource TextFillColorPrimaryBrush}" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal">
+                <Image Grid.Row="0" Height="256" Source="/Assets/Vanara/WinUi%20Sailing%20in%20the%20Seas%20of%20Cheese.png"></Image>
+                <TextBlock Text="Ready." Foreground="{ThemeResource TextFillColorPrimaryBrush}" VerticalAlignment="Center" />
+            </StackPanel>
         </Border>
     </Grid>
 </Page>
