@@ -11,25 +11,24 @@
             <RowDefinition Height="256"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <!-- DirectX Layer -->
-            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel"
-                                 HorizontalAlignment="Stretch"
-                                 VerticalAlignment="Stretch"/>
-            <!-- WinUi on the sea. -->
-            <Image Source="/Assets/WinUi-SailBoat-Header-32bit.png"
-                   Width="256"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Stretch"
+            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <!-- DirectX Overlay: WinUi on the sea. -->
+            <Image x:Name="WinUiSailBoatHeader"
+                   HorizontalAlignment="Center"
+                   IsHitTestVisible="False"
                    Margin="32,0,0,16"
                    Opacity="0.92"
-                   IsHitTestVisible="False"/>
-            <Border Width="220"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Margin="32,0,0,16">
+                   Source="/Assets/WinUi-SailBoat-Header-32bit.png"
+                   VerticalAlignment="Stretch"
+                   Width="256"/>
+            <Border HorizontalAlignment="Right"
+                    Margin="32,0,0,16"
+                    VerticalAlignment="Stretch" Width="220">
                 <Border.Background>
                     <ImageBrush ImageSource="/Assets/Vanara/Insert-AMIGA-Disk.png"/>
                 </Border.Background>
@@ -47,31 +46,24 @@
             </StackPanel>
         </Grid>
 
-        <Grid ColumnSpacing="16" RowSpacing="16">
+        <Grid Grid.Row="1" ColumnSpacing="16" RowSpacing="16">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
-            <!-- Tile 1 -->
             <controls:FeatureTile Grid.Row="0" Grid.Column="0"
                                Icon="&#xE8A5;"
                                Title="API Explorer"
                                Subtitle="Browse types &amp; members"/>
-
-            <!-- Tile 2 -->
             <controls:FeatureTile Grid.Row="0" Grid.Column="1"
                                Icon="&#xE8EF;"
                                Title="Samples Browser"
                                Subtitle="View sample code"/>
-
-            <!-- Tile 3 -->
             <controls:FeatureTile Grid.Row="0" Grid.Column="2"
                                Icon="&#xE71E;"
                                Title="NuGet Versions"
@@ -81,7 +73,7 @@
         <!-- TODO: Add
               Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" -->
-        <Grid Grid.Row="1" Width="160" Height="160"
+        <Grid Grid.Row="2" Width="160" Height="160"
               BorderThickness="1"
               CornerRadius="12"
               Padding="16">
@@ -93,7 +85,7 @@
         </Grid>
 
         <!-- MAIN CONTENT -->
-        <Grid Grid.Row="2" Padding="32">
+        <Grid Grid.Row="3" Padding="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
