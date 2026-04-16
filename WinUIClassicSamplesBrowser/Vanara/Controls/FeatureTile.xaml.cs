@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -10,39 +11,78 @@ public sealed partial class FeatureTile : UserControl
     public FeatureTile()
     {
         InitializeComponent();
-        SetupHoverAnimation();
+        SetupInteractions();
     }
+
+    // Dependency Properties
+    public static readonly DependencyProperty TitleProperty =
+        DependencyProperty.Register(nameof(Title), typeof(string), typeof(FeatureTile),
+            new PropertyMetadata(string.Empty, (d, e) =>
+            {
+                ((FeatureTile)d).TitleElement.Text = (string)e.NewValue;
+            }));
+
+    public static readonly DependencyProperty SubtitleProperty =
+        DependencyProperty.Register(nameof(Subtitle), typeof(string), typeof(FeatureTile),
+            new PropertyMetadata(string.Empty, (d, e) =>
+            {
+                ((FeatureTile)d).SubtitleElement.Text = (string)e.NewValue;
+            }));
+
+    public static readonly DependencyProperty IconProperty =
+        DependencyProperty.Register(nameof(Icon), typeof(string), typeof(FeatureTile),
+            new PropertyMetadata(string.Empty, (d, e) =>
+            {
+                ((FeatureTile)d).IconElement.Glyph = (string)e.NewValue;
+            }));
 
     public string Title
     {
-        get => TitleElement.Text;
-        set => TitleElement.Text = value;
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
     }
 
     public string Subtitle
     {
-        get => SubtitleElement.Text;
-        set => SubtitleElement.Text = value;
+        get => (string)GetValue(SubtitleProperty);
+        set => SetValue(SubtitleProperty, value);
     }
 
     public string Icon
     {
-        get => IconElement.Glyph;
-        set => IconElement.Glyph = value;
+        get => (string)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
     }
 
-    private void SetupHoverAnimation()
+    private void SetupInteractions()
     {
         Root.PointerEntered += (_, __) =>
         {
-            Root.Translation = new System.Numerics.Vector3(0, -2, 0);
+            ScaleTransform.ScaleX = 1.03;
+            ScaleTransform.ScaleY = 1.03;
             Root.Opacity = 0.95;
         };
 
         Root.PointerExited += (_, __) =>
         {
-            Root.Translation = new System.Numerics.Vector3(0, 0, 0);
+            ScaleTransform.ScaleX = 1.0;
+            ScaleTransform.ScaleY = 1.0;
             Root.Opacity = 1.0;
         };
+
+        Root.PointerPressed += (_, __) =>
+        {
+            ScaleTransform.ScaleX = 0.97;
+            ScaleTransform.ScaleY = 0.97;
+        };
+
+        Root.PointerReleased += (_, __) =>
+        {
+            ScaleTransform.ScaleX = 1.03;
+            ScaleTransform.ScaleY = 1.03;
+            Click?.Invoke(this, EventArgs.Empty);
+        };
     }
+
+    public event EventHandler Click;
 }
