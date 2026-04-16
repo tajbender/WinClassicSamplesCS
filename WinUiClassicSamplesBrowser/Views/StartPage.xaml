@@ -2,23 +2,35 @@
     x:Class="ClassicSamplesBrowser.Views.StartPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:ClassicSamplesBrowser.Views">
 
     <Grid Background="{ThemeResource MicaBaseAltFillColorDefaultBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="200"/>
+            <!-- DirectX Header -->
             <RowDefinition Height="*"/>
+            <!-- Main Content -->
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
-        <StackPanel Padding="32" Spacing="4">
-            <TextBlock Text="Vanara API Explorer"
-                       FontSize="32"
-                       FontWeight="SemiBold"/>
-            <TextBlock Text="Browse APIs, Samples, Wrappers, NuGet Versions"
-                       FontSize="16"
-                       Opacity="0.7"/>
-        </StackPanel>
+        <!-- DIRECTX HEADER -->
+        <Grid Grid.Row="0">
+            <muxc:SwapChainPanel x:Name="DxHeader"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"/>
+
+            <!-- Overlay-Text -->
+            <StackPanel Padding="32"
+                        Spacing="4"
+                        VerticalAlignment="Center">
+                <TextBlock Text="Vanara API Explorer"
+                           FontSize="32"
+                           FontWeight="SemiBold"/>
+                <TextBlock Text="Browse APIs, Samples, Wrappers, NuGet Versions"
+                           FontSize="16"
+                           Opacity="0.7"/>
+            </StackPanel>
+        </Grid>
 
         <!-- MAIN CONTENT -->
         <Grid Grid.Row="1" Padding="32">
@@ -40,22 +52,18 @@
                               Width="260"/>
                 </StackPanel>
 
-                <!-- Load Assemblies -->
                 <Button Content="Load Assemblies"
                         Click="LoadAssemblies_Click"
                         Width="260"/>
 
-                <!-- Open API Explorer -->
                 <Button Content="Open API Explorer"
                         Click="OpenExplorer_Click"
                         Width="260"/>
 
-                <!-- Open Samples Browser -->
                 <Button Content="Open Samples Browser"
                         Click="OpenSamples_Click"
                         Width="260"/>
 
-                <!-- Project Builder -->
                 <Button Content="Project Builder (coming soon)"
                         Width="260"
                         IsEnabled="False"/>
