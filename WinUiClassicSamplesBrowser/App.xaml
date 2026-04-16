@@ -16,31 +16,37 @@
             <SolidColorBrush x:Key="TabViewScrollButtonForeground" Color="{ThemeResource SystemBaseMediumColor}" />
             <system:Double x:Key="TabViewItemAddButtonFontSize">14</system:Double>
             <system:Double x:Key="TabViewItemScrollButtonFontSize">14</system:Double>
-            <!--<Style TargetType="TabViewItem">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="TabViewItem">
-                            <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter x:Name="HeaderContentPresenter" Grid.Column="0" Content="{TemplateBinding Header}" Margin="12,0,12,0" VerticalAlignment="Center" />
-                                <Button x:Name="CloseButton" Grid.Column="1" Width="28" Height="28" Margin="0,0,4,0" VerticalAlignment="Center">
-                                    <SymbolIcon Symbol="Cancel" />
-                                </Button>
-                            </Grid>
-                            --><!--<ControlTemplate.Triggers>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+
+
+
+<!--<Style TargetType="TabViewItem">
+      <Setter Property="Template">
+          <Setter.Value>
+              <ControlTemplate TargetType="TabViewItem">
+                  <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                      <Grid.ColumnDefinitions>
+                          <ColumnDefinition />
+                          <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
+                      <ContentPresenter x:Name="HeaderContentPresenter" Grid.Column="0" Content="{TemplateBinding Header}" Margin="12,0,12,0" VerticalAlignment="Center" />
+                      <Button x:Name="CloseButton" Grid.Column="1" Width="28" Height="28" Margin="0,0,4,0" VerticalAlignment="Center">
+                          <SymbolIcon Symbol="Cancel" />
+                      </Button>
+                  </Grid>
+                            <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="RootGrid" Property="Background" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
                                     <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="White" />
                                 </Trigger>
-                            </ControlTemplate.Triggers>--><!--
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>-->
-            <!--<Style TargetType="TabView">
+            </Style>
+            <Style TargetType="TabView">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabView">
@@ -61,6 +67,3 @@
                     </Setter.Value>
                 </Setter>
             </Style>-->
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
