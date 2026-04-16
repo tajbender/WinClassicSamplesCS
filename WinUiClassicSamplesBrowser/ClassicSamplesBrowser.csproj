@@ -8,9 +8,13 @@
 		<UseWinUI>true</UseWinUI>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Content Remove="Assets\Vanara\Insert-Amiga-Disk.png" />
+	  <Compile Remove="DOCS\WinForms Sampler\**" />
+	  <EmbeddedResource Remove="DOCS\WinForms Sampler\**" />
+	  <None Remove="DOCS\WinForms Sampler\**" />
+	  <Page Remove="DOCS\WinForms Sampler\**" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Remove="Assets\Vanara\Insert-AMIGA-Disk.png" />
 		<None Remove="Assets\Vanara\WinUi-Sailing.png" />
 		<None Remove="Vanara\Controls\FeatureTile.xaml" />
 		<None Remove="Views\AboutPage.xaml" />
@@ -34,6 +38,9 @@
 		<Folder Include="Templates\RyderShell\Project\" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Update="Assets\Vanara\Insert-AMIGA-Disk.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\Vanara\WinUi-Sailing.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
@@ -76,5 +83,8 @@
 		<Page Update="Views\MainPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <PRIResource Remove="DOCS\WinForms Sampler\**" />
 	</ItemGroup>
 </Project>

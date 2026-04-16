@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" x:Name="DirectXHeaderGrid">
             <!-- DirectX Layer -->
             <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <!-- DirectX Overlay: WinUi on the sea. -->
