@@ -81,6 +81,7 @@
                     <TextBlock Text="• Sample Mapping (Unit Tests → API)"/>
                     <TextBlock Text="• Wrapper Detection (IShellItem → ShellItem)"/>
                     <TextBlock Text="• Reflection‑based Metadata"/>
+                    <TextBlock Text="• TaskScheduler Integration"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

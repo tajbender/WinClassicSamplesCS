@@ -17,7 +17,7 @@ public sealed partial class MainWindow : Window
         InitializeComponent();
         TrySetMicaBackdrop();
 
-        RootFrame.Navigate(typeof(MainPage));
+        RootFrame.Navigate(typeof(StartPage));
     }
 
     private void Window_Activated(object sender, WindowActivatedEventArgs args)
