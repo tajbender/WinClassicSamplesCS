@@ -19,9 +19,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
-		<PackageReference Include="Vanara.Core" Version="5.0.3" />
-		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.3" />
-		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.3" />
+		<PackageReference Include="ICSharpCode.Decompiler" Version="10.0.0.8330" />
+		<PackageReference Include="SharpZipLib" Version="1.4.2" />
+		<PackageReference Include="Vanara.Core" Version="5.0.4" />
+		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.4" />
+		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.4" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Services\" />
