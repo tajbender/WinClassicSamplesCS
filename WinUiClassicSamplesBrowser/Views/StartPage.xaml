@@ -9,24 +9,28 @@
     <Grid Background="{ThemeResource MicaBaseAltFillColorDefaultBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="256"/>
+            <RowDefinition Height="256"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" x:Name="DirectXHeaderGrid">
+        <Grid Grid.Row="0" x:Name="DirectXHeaderGrid" MaxHeight="256">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition>*</ColumnDefinition>
+                <ColumnDefinition>*</ColumnDefinition>
                 <ColumnDefinition>*</ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!-- DirectX Layer -->
             <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <!-- Overlay: WinUi on the sea. -->
+            <Image Grid.Column ="0" Source="/Assets/Vanara/Vanara-64px.png" HorizontalAlignment="Left" Visibility="Collapsed"/>
             <!-- Overlay-Text -->
-            <StackPanel>
+            <StackPanel Grid.Column ="1" Orientation="Vertical">
                 <TextBlock FontSize="32" FontWeight="SemiBold" Text="Vanara API Explorer"/>
                 <TextBlock FontSize="16" Opacity="0.7" Text="Browse APIs, Samples, Wrappers, NuGet Versions"/>
             </StackPanel>
-            <Image x:Name="WinUiSailBoatHeader"
+            <Image Grid.Column ="1" x:Name="WinUiSailBoatHeader"
                    HorizontalAlignment="Right"
                    IsHitTestVisible="False"
                    Margin="32,0,0,16"
