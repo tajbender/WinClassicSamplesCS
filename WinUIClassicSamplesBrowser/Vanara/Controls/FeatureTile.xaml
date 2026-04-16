@@ -1,0 +1,36 @@
+<UserControl
+    x:Class="ClassicSamplesBrowser.Vanara.Controls.FeatureTile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Width="160"
+    Height="160">
+
+    <!--  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+    -->
+    <Grid x:Name="Root"
+          CornerRadius="12"
+          BorderThickness="1"
+          Padding="16">
+
+        <StackPanel Spacing="8" VerticalAlignment="Center">
+            <FontIcon x:Name="IconElement"
+                      FontSize="32"
+                      Glyph="&#xE8A5;"/>
+
+            <TextBlock x:Name="TitleElement"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Text="Title"/>
+
+            <TextBlock x:Name="SubtitleElement"
+                       FontSize="12"
+                       Opacity="0.6"
+                       Text="Subtitle"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
+    

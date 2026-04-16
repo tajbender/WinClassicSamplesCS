@@ -3,39 +3,31 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:local="using:ClassicSamplesBrowser.Views">
+    xmlns:local="using:ClassicSamplesBrowser.Views"
+    xmlns:controls="using:ClassicSamplesBrowser.Vanara.Controls">
 
     <Grid Background="{ThemeResource MicaBaseAltFillColorDefaultBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <!-- DirectX Header -->
+            <RowDefinition Height="256"/>
             <RowDefinition Height="*"/>
-            <!-- Main Content -->
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- DIRECTX HEADER -->
         <Grid Grid.Row="0">
             <!-- DirectX Layer -->
             <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel"
                                  HorizontalAlignment="Stretch"
                                  VerticalAlignment="Stretch"/>
             <!-- WinUi on the sea. -->
-            <Image Source="/Assets/Vanara/WinUi-Sailing.png"
+            <Image Source="/Assets/WinUi-SailBoat-Header-32bit.png"
                    Width="256"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Stretch"
                    Margin="32,0,0,16"
                    Opacity="0.92"
                    IsHitTestVisible="False"/>
-            <Image Visibility="Collapsed"
-                   Source="/Assets/Vanara/WinUi-Sailing.png"
-                   Width="220"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Bottom"
-                   Margin="32,0,0,16"
-                   IsHitTestVisible="False"/>
             <Border Width="220"
-                    HorizontalAlignment="Right"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Margin="32,0,0,16">
                 <Border.Background>
@@ -55,8 +47,53 @@
             </StackPanel>
         </Grid>
 
+        <Grid ColumnSpacing="16" RowSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Tile 1 -->
+            <controls:FeatureTile Grid.Row="0" Grid.Column="0"
+                               Icon="&#xE8A5;"
+                               Title="API Explorer"
+                               Subtitle="Browse types &amp; members"/>
+
+            <!-- Tile 2 -->
+            <controls:FeatureTile Grid.Row="0" Grid.Column="1"
+                               Icon="&#xE8EF;"
+                               Title="Samples Browser"
+                               Subtitle="View sample code"/>
+
+            <!-- Tile 3 -->
+            <controls:FeatureTile Grid.Row="0" Grid.Column="2"
+                               Icon="&#xE71E;"
+                               Title="NuGet Versions"
+                               Subtitle="Explore releases"/>
+        </Grid>
+
+        <!-- TODO: Add
+              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+              BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" -->
+        <Grid Grid.Row="1" Width="160" Height="160"
+              BorderThickness="1"
+              CornerRadius="12"
+              Padding="16">
+            <StackPanel Spacing="8" VerticalAlignment="Center">
+                <FontIcon Glyph="&#xE8A5;" FontSize="32"/>
+                <TextBlock Text="API Explorer" FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock FontSize="12" Opacity="0.6" Text="Browse types &amp; members" />
+            </StackPanel>
+        </Grid>
+
         <!-- MAIN CONTENT -->
-        <Grid Grid.Row="1" Padding="32">
+        <Grid Grid.Row="2" Padding="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -64,7 +101,6 @@
 
             <!-- LEFT: ACTIONS -->
             <StackPanel Spacing="20">
-
                 <!-- Version Selector -->
                 <StackPanel>
                     <TextBlock Text="Vanara Version"
@@ -94,18 +130,9 @@
 
             <!-- RIGHT: INFO PANEL -->
             <StackPanel Grid.Column="1" Padding="32" Spacing="12">
-                <TextBlock Text="What this tool does"
-                           FontSize="20"
-                           FontWeight="SemiBold"/>
-
-                <TextBlock Text="This Explorer lets you browse Vanara APIs, inspect types, view samples, explore NuGet versions, and understand wrapper relationships. It is powered by reflection, NuGet metadata, and the Vanara test suite."
-                           TextWrapping="Wrap"
-                           Opacity="0.8"/>
-
-                <TextBlock Text="Core Features"
-                           FontWeight="SemiBold"
-                           Margin="0,12,0,0"/>
-
+                <TextBlock FontSize="20" FontWeight="SemiBold" Text="What this tool does."/>
+                <TextBlock Opacity="0.8" Text="This Explorer lets you browse Vanara APIs, inspect types, view samples, explore NuGet versions, and understand wrapper relationships. It is powered by reflection, NuGet metadata, and the Vanara test suite." TextWrapping="Wrap"/>
+                <TextBlock FontWeight="SemiBold" Margin="0,12,0,0" Text="Core Features"/>
                 <StackPanel Spacing="4">
                     <TextBlock Text="• API Tree (Namespaces → Types → Members)"/>
                     <TextBlock Text="• NuGet Version Selector"/>

@@ -12,6 +12,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Assets\Vanara\WinUi-Sailing.png" />
+		<None Remove="Vanara\Controls\FeatureTile.xaml" />
 		<None Remove="Views\AboutPage.xaml" />
 		<None Remove="Views\MainPage.xaml" />
 		<None Remove="Views\SamplesPage.xaml" />
@@ -36,6 +37,11 @@
 	  <Content Update="Assets\Vanara\WinUi-Sailing.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Vanara\Controls\FeatureTile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Templates\RyderShell\Styles\MainPage.xaml">
