@@ -15,39 +15,30 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" x:Name="DirectXHeaderGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition>*</ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <!-- DirectX Layer -->
             <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            <!-- DirectX Overlay: WinUi on the sea. -->
+            <!-- Overlay: WinUi on the sea. -->
+            <!-- Overlay-Text -->
+            <StackPanel>
+                <TextBlock FontSize="32" FontWeight="SemiBold" Text="Vanara API Explorer"/>
+                <TextBlock FontSize="16" Opacity="0.7" Text="Browse APIs, Samples, Wrappers, NuGet Versions"/>
+            </StackPanel>
             <Image x:Name="WinUiSailBoatHeader"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Right"
                    IsHitTestVisible="False"
                    Margin="32,0,0,16"
                    Opacity="0.92"
                    Source="/Assets/WinUi-SailBoat-Header-32bit.png"
                    VerticalAlignment="Stretch"
                    Width="256"/>
-            <Border HorizontalAlignment="Right"
-                    Margin="32,0,0,16"
-                    VerticalAlignment="Stretch" Width="220">
-                <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Vanara/Insert-AMIGA-Disk.png"/>
-                </Border.Background>
-            </Border>
-            <!-- Overlay-Text -->
-            <StackPanel Padding="32"
-                        Spacing="4"
-                        VerticalAlignment="Center">
-                <TextBlock Text="Vanara API Explorer"
-                           FontSize="32"
-                           FontWeight="SemiBold"/>
-                <TextBlock Text="Browse APIs, Samples, Wrappers, NuGet Versions"
-                           FontSize="16"
-                           Opacity="0.7"/>
-            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1" ColumnSpacing="16" RowSpacing="16">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -57,35 +48,29 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <controls:FeatureTile Grid.Row="0" Grid.Column="0"
-                               Icon="&#xE8A5;"
-                               Title="API Explorer"
-                               Subtitle="Browse types &amp; members"/>
+                                  Icon="&#xE71E;"
+                                  Title="NuGet Versions"
+                                  Subtitle="Explore releases"/>
             <controls:FeatureTile Grid.Row="0" Grid.Column="1"
-                               Icon="&#xE8EF;"
-                               Title="Samples Browser"
-                               Subtitle="View sample code"/>
+                                  Icon="&#xE8A5;"
+                                  Title="API Explorer"
+                                  Subtitle="Browse types &amp; members"/>
             <controls:FeatureTile Grid.Row="0" Grid.Column="2"
-                               Icon="&#xE71E;"
-                               Title="NuGet Versions"
-                               Subtitle="Explore releases"/>
+                                  Icon="&#xE8A5;"
+                                  Title="API Explorer"
+                                  Subtitle="Browse types &amp; members"/>
+            <controls:FeatureTile Grid.Row="0" Grid.Column="3"
+                                  Icon="&#xE8EF;"
+                                  Title="Samples Browser"
+                                  Subtitle="View sample code"/>
         </Grid>
 
-        <!-- TODO: Add
+        <!--  TODO: Add
               Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" -->
-        <Grid Grid.Row="2" Width="160" Height="160"
-              BorderThickness="1"
-              CornerRadius="12"
-              Padding="16">
-            <StackPanel Spacing="8" VerticalAlignment="Center">
-                <FontIcon Glyph="&#xE8A5;" FontSize="32"/>
-                <TextBlock Text="API Explorer" FontSize="18" FontWeight="SemiBold"/>
-                <TextBlock FontSize="12" Opacity="0.6" Text="Browse types &amp; members" />
-            </StackPanel>
-        </Grid>
 
         <!-- MAIN CONTENT -->
-        <Grid Grid.Row="3" Padding="32">
+        <Grid Grid.Row="2" Padding="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
