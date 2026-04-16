@@ -9,9 +9,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Content Remove="Assets\Vanara\Insert-Amiga-Disk.png" />
-	  <Content Remove="Assets\Vanara\WinUi-Sailing.png" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Remove="Assets\Vanara\WinUi-Sailing.png" />
 		<None Remove="Views\AboutPage.xaml" />
 		<None Remove="Views\MainPage.xaml" />
 		<None Remove="Views\SamplesPage.xaml" />
@@ -31,6 +31,11 @@
 		<Folder Include="Resources\i18n\" />
 		<Folder Include="Services\" />
 		<Folder Include="Templates\RyderShell\Project\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Assets\Vanara\WinUi-Sailing.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Templates\RyderShell\Styles\MainPage.xaml">

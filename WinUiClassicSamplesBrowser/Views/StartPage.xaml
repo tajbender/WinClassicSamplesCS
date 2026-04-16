@@ -15,10 +15,33 @@
 
         <!-- DIRECTX HEADER -->
         <Grid Grid.Row="0">
-            <muxc:SwapChainPanel x:Name="DxHeader"
+            <!-- DirectX Layer -->
+            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel"
                                  HorizontalAlignment="Stretch"
                                  VerticalAlignment="Stretch"/>
-
+            <!-- WinUi on the sea. -->
+            <Image Source="/Assets/Vanara/WinUi-Sailing.png"
+                   Width="256"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Stretch"
+                   Margin="32,0,0,16"
+                   Opacity="0.92"
+                   IsHitTestVisible="False"/>
+            <Image Visibility="Collapsed"
+                   Source="/Assets/Vanara/WinUi-Sailing.png"
+                   Width="220"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="32,0,0,16"
+                   IsHitTestVisible="False"/>
+            <Border Width="220"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="32,0,0,16">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Assets/Vanara/Insert-AMIGA-Disk.png"/>
+                </Border.Background>
+            </Border>
             <!-- Overlay-Text -->
             <StackPanel Padding="32"
                         Spacing="4"
