@@ -6,7 +6,7 @@
     xmlns:local="using:ClassicSamplesBrowser.Views"
     xmlns:controls="using:ClassicSamplesBrowser.Vanara.Controls">
 
-    <Grid Background="{ThemeResource MicaBaseAltFillColorDefaultBrush}">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="256"/>
             <RowDefinition Height="256"/>
@@ -17,27 +17,27 @@
 
         <Grid Grid.Row="0" x:Name="DirectXHeaderGrid" MaxHeight="256">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition>*</ColumnDefinition>
-                <ColumnDefinition>*</ColumnDefinition>
+                <ColumnDefinition>Auto</ColumnDefinition>
+                <ColumnDefinition>Auto</ColumnDefinition>
                 <ColumnDefinition>*</ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <!-- DirectX Layer -->
-            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <!-- DirectX Background Layer -->
+            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" Grid.Column="0" Grid.ColumnSpan="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <!-- Overlay: WinUi on the sea. -->
-            <Image Grid.Column ="0" Source="/Assets/Vanara/Vanara-64px.png" HorizontalAlignment="Left" Visibility="Collapsed"/>
+            <Image x:Name="VanaraLogo" Grid.Column="0" MaxHeight="64" Source="/Assets/Vanara/Vanara-64px.png" VerticalAlignment="Center"/>
             <!-- Overlay-Text -->
-            <StackPanel Grid.Column ="1" Orientation="Vertical">
+            <StackPanel Grid.Column ="1" Orientation="Vertical" VerticalAlignment="Center">
                 <TextBlock FontSize="32" FontWeight="SemiBold" Text="Vanara API Explorer"/>
                 <TextBlock FontSize="16" Opacity="0.7" Text="Browse APIs, Samples, Wrappers, NuGet Versions"/>
             </StackPanel>
-            <Image Grid.Column ="1" x:Name="WinUiSailBoatHeader"
-                   HorizontalAlignment="Right"
-                   IsHitTestVisible="False"
-                   Margin="32,0,0,16"
-                   Opacity="0.92"
-                   Source="/Assets/WinUi-SailBoat-Header-32bit.png"
+            <Image x:Name="WinUiSailBoatHeader"
+                   Grid.Column="2" 
                    VerticalAlignment="Stretch"
-                   Width="256"/>
+                   Source="/Assets/WinUi-SailBoat-Header-32bit.png"
+                   Opacity="0.92"
+                   Margin="32,0,0,16"
+                   IsHitTestVisible="False"
+                   HorizontalAlignment="Right"/>
         </Grid>
 
         <Grid Grid.Row="1" ColumnSpacing="16" RowSpacing="16">
@@ -51,13 +51,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <controls:FeatureTile Grid.Row="0" Grid.Column="0"
+            <controls:FeatureTile Grid.Column="0" Grid.Row="0" 
                                   Icon="&#xE71E;"
                                   Title="NuGet Versions"
                                   Subtitle="Explore releases"/>
-            <controls:FeatureTile Grid.Row="0" Grid.Column="1"
+            <controls:FeatureTile Grid.Column="1" Grid.Row="0" 
                                   Icon="&#xE8A5;"
-                                  Title="API Explorer"
+                                  Title="GitHub Repository"
                                   Subtitle="Browse types &amp; members"/>
             <controls:FeatureTile Grid.Row="0" Grid.Column="2"
                                   Icon="&#xE8A5;"
