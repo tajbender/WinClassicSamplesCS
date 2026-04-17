@@ -9,29 +9,48 @@
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="256"/>
-            <RowDefinition Height="256"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" x:Name="DirectXHeaderGrid" MaxHeight="256">
+        <Grid x:Name="DirectXHeaderGrid" Grid.Row="0"  MaxHeight="256">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition>Auto</ColumnDefinition>
                 <ColumnDefinition>Auto</ColumnDefinition>
                 <ColumnDefinition>*</ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
             <!-- DirectX Background Layer -->
-            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" Grid.Column="0" Grid.ColumnSpan="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <muxc:SwapChainPanel x:Name="DxHeaderSwapChainPanel" 
+                                 Grid.Column="0" Grid.ColumnSpan="3"  
+                                 Grid.Row="0" Grid.RowSpan="2"
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Stretch"/>
             <!-- Overlay: WinUi on the sea. -->
-            <Image x:Name="VanaraLogo" Grid.Column="0" MaxHeight="64" Source="/Assets/Vanara/Vanara-64px.png" VerticalAlignment="Center"/>
+            <Image x:Name="VanaraLogo" Grid.Column="0" Grid.Row="0"  MaxHeight="64" Source="/Assets/Vanara/Vanara-64px.png" VerticalAlignment="Center"/>
             <!-- Overlay-Text -->
-            <StackPanel Grid.Column ="1" Orientation="Vertical" VerticalAlignment="Center">
+            <StackPanel Grid.Column ="1" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
                 <TextBlock FontSize="32" FontWeight="SemiBold" Text="Vanara API Explorer"/>
                 <TextBlock FontSize="16" Opacity="0.7" Text="Browse APIs, Samples, Wrappers, NuGet Versions"/>
             </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Orientation="Horizontal">
+                <controls:FeatureTile Grid.Column="0" Grid.Row="0" 
+                                      Icon="&#xE71E;"
+                                      Title="NuGet Versions"
+                                      Subtitle="Explore releases"/>
+                <controls:FeatureTile Grid.Column="1" Grid.Row="0" 
+                                      Icon="&#xE8A5;" Subtitle="Browse types &amp; members" Title="GitHub Repository"/>
+                <controls:FeatureTile Grid.Column="2" Grid.Row="0" 
+                                      Icon="&#xE8A5;" Subtitle="Browse types &amp; members" Title="API Explorer"/>
+                <controls:FeatureTile Grid.Column="3" Grid.Row="0"
+                                      Icon="&#xE8EF;" Subtitle="View sample code" Title="Samples Browser"/>
+            </StackPanel>
             <Image x:Name="WinUiSailBoatHeader"
                    Grid.Column="2" 
+                   Grid.Row="0"
                    VerticalAlignment="Stretch"
                    Source="/Assets/WinUi-SailBoat-Header-32bit.png"
                    Opacity="0.92"
@@ -40,7 +59,7 @@
                    HorizontalAlignment="Right"/>
         </Grid>
 
-        <Grid Grid.Row="1" ColumnSpacing="16" RowSpacing="16">
+        <!--<Grid Grid.Row="1" ColumnSpacing="16" RowSpacing="16">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -67,14 +86,14 @@
                                   Icon="&#xE8EF;"
                                   Title="Samples Browser"
                                   Subtitle="View sample code"/>
-        </Grid>
+        </Grid>-->
 
         <!--  TODO: Add
               Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" -->
 
         <!-- MAIN CONTENT -->
-        <Grid Grid.Row="2" Padding="32">
+        <Grid Grid.Row="1" Padding="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
