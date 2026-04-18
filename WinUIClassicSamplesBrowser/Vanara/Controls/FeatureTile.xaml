@@ -4,24 +4,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    mc:Ignorable="d"
-    Width="160"
-    Height="160">
+    mc:Ignorable="d">
 
     <!--  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
           BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" -->
-    <Grid x:Name="Root"
-          BorderThickness="1"
-          CornerRadius="12"
-          Padding="16">
-
+    <Grid x:Name="Root" BorderThickness="1" CornerRadius="12" Padding="16" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.RenderTransform>
             <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1"/>
         </Grid.RenderTransform>
-        <StackPanel Spacing="8" VerticalAlignment="Center">
-            <FontIcon x:Name="IconElement" FontSize="32" Glyph="&#xE8A5;"/>
-            <TextBlock x:Name="TitleElement" FontSize="18" FontWeight="SemiBold" Text="Title"/>
-            <TextBlock x:Name="SubtitleElement" FontSize="12" Opacity="0.6" Text="Subtitle"/>
-        </StackPanel>
+        <FontIcon x:Name="IconElement" Grid.Row="0" FontSize="32" Glyph="&#xE8A5;"/>
+        <TextBlock x:Name="TitleElement" Grid.Row="0" FontSize="18" FontWeight="SemiBold" Text="Title" VerticalAlignment="Bottom"/>
+        <TextBlock x:Name="SubtitleElement" Grid.Row="1" FontSize="12" Opacity="0.6" Text="Subtitle" VerticalAlignment="Bottom"/>
     </Grid>
 </UserControl>
