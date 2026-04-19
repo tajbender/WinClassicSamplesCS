@@ -18,6 +18,9 @@ public sealed partial class MainWindow : Window
         TrySetMicaBackdrop();
 
         RootFrame.Navigate(typeof(StartPage));
+
+        StatusBar.Show("Ready.", "\uE73E");
+        //StatusBar.Show("Error loading assemblies", "\uE783");
     }
 
     private void Window_Activated(object sender, WindowActivatedEventArgs args)

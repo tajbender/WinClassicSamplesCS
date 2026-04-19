@@ -3,11 +3,48 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ClassicSamplesBrowser"
+    xmlns:controls="using:ClassicSamplesBrowser.Vanara.Controls"
     Title="Classic Samples Browser"
     Activated="Window_Activated">
 
     <Grid x:Name="RootGrid">
+        <Grid ColumnDefinitions="Auto,Auto,Auto,*"
+              Height="48"
+              VerticalAlignment="Center"
+              Padding="12,0">
+
+            <!-- Logo -->
+            <Image Source="Assets/Vanara/Vanara-64px.png"
+                   Width="32"
+                   Height="32"
+                   VerticalAlignment="Center"/>
+
+            <!-- Vanara -->
+            <TextBlock Text="Vanara"
+                       FontSize="20"
+                       FontWeight="SemiBold"
+                       Margin="8,0,16,0"
+                       VerticalAlignment="Center"/>
+
+            <!-- Jñāna (vertical) -->
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        Margin="0,-4,16,0">
+                <TextBlock Text="J"  FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock Text="Ñ"  FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock Text="Ā"  FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock Text="N"  FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock Text="A"  FontSize="18" FontWeight="SemiBold"
+                           Margin="0,0,0,-2"/>
+                <!-- Baseline-Tuning -->
+            </StackPanel>
+
+            <!-- Breadcrumb -->
+            <BreadcrumbBar Grid.Column="3" VerticalAlignment="Center"/>
+        </Grid>
         <Frame x:Name="RootFrame" />
+        <!-- Floating Status Bar -->
+        <controls:FloatingStatusBar x:Name="StatusBar" HorizontalAlignment="Center" Margin="0,0,0,24" VerticalAlignment="Bottom" />
     </Grid>
 
 </Window>
