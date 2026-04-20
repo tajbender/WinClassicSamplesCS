@@ -6,18 +6,16 @@ namespace ClassicSamplesBrowser;
 
 public partial class App : Application
 {
-    private readonly MainWindow _mainWindow;
-
     public static string WinAppSdkVersionInfo { get; } = Microsoft.WindowsAppSDK.Release.FormattedVersionTag;
 
-    public MainWindow MainWindow => _mainWindow;
+    public MainWindow MainWindow { get; }
 
     public App()
     {
         try
         {
             this.InitializeComponent();
-            _mainWindow = new MainWindow();
+            MainWindow = new MainWindow();
         }
         finally
         {
@@ -41,21 +39,14 @@ public partial class App : Application
 
     private static string GetWinAppSdkFormattedVersionTag()
     {
-        string version = "{unknown.}";
-
         try
         {
-            // Use the version information as needed
-            version = Microsoft.WindowsAppSDK.Release.FormattedVersionTag;
+            return Microsoft.WindowsAppSDK.Release.FormattedVersionTag ?? $"unknown."; ;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return $"Error fetching version: `{e.Message}`. hResult = `{e.HResult}`.";  // throw;
         }
-//        var formattedVersionTag = Microsoft.WindowsAppSDK.Release.FormattedVersionTag;
-//        var version = formattedVersionTag;
-//
-        return version;
     }
 }
