@@ -1,11 +1,7 @@
 using ClassicSamplesBrowser.Models.Contracts;
 using ClassicSamplesBrowser.Services;
-using ClassicSamplesBrowser.Vanara.NuGet;
-using ClassicSamplesBrowser.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
-using NuGet.Common;
-using NuGet.Protocol.Core.Types;
 using System.Diagnostics;
 
 namespace ClassicSamplesBrowser.Views;
