@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ClassicSamplesBrowser.Services;
+namespace Jnana.Services;
 
 public interface ISettingsSerializer : INotifyPropertyChanged
 {

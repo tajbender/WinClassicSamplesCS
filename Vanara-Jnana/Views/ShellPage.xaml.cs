@@ -1,4 +1,4 @@
-using ClassicSamplesBrowser.Services;
+using Jnana.Services;
 using CommunityToolkit.Mvvm.Input;
 using Jnana.ViewModels;
 using Microsoft.UI.Xaml;
@@ -18,7 +18,7 @@ using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-namespace ClassicSamplesBrowser.Views;
+namespace Jnana.Views;
 
 public sealed partial class ShellPage : Page
 {

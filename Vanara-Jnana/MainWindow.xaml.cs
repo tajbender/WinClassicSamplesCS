@@ -1,17 +1,15 @@
-using ClassicSamplesBrowser.Helpers;
-using ClassicSamplesBrowser.Views;
+using Jnana.Helpers;
+using Jnana.Views;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI;
-using System.Drawing;
+using System.Diagnostics;
 using Vanara.PInvoke;
 using Windows.Graphics;
 using WinRT;
-using ClassicSamplesBrowser.Services;
-using System.Diagnostics;
 
-namespace ClassicSamplesBrowser;
+namespace Jnana;
 
 public sealed partial class MainWindow : Window
 {

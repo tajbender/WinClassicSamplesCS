@@ -1,4 +1,4 @@
-﻿using ClassicSamplesBrowser.Vanara.NuGet;
+﻿using Jnana.Vanara.NuGet;
 //using NuGet.Common;
 //using NuGet.Protocol.Core.Types;
 using Windows.ApplicationModel;

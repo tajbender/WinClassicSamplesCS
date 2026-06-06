@@ -1,10 +1,10 @@
-using ClassicSamplesBrowser.Models.Contracts;
-using ClassicSamplesBrowser.Services;
+using Jnana.Models.Contracts;
+using Jnana.Services;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
 
-namespace ClassicSamplesBrowser.Views;
+namespace Jnana.Views;
 
 /// <summary><completionlist cref="StartPage"></completionlist>
 /// StartPage is the main page that is shown when the app is launched

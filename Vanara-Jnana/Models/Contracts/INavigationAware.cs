@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassicSamplesBrowser.Models.Contracts;
+namespace Jnana.Models.Contracts;
 
 public interface INavigationAware
 {

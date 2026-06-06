@@ -1,8 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ClassicSamplesBrowser" 
-    xmlns:controls="using:ClassicSamplesBrowser.Vanara.Controls">
+    xmlns:local="using:Jnana" 
+    xmlns:controls="using:Jnana.Vanara.Controls">
 
     <!--<Style TargetType="controls:CustomizableAppBar" >
         <Setter Property="Template">

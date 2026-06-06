@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace ClassicSamplesBrowser.Vanara.Controls;
+namespace Jnana.Vanara.Controls;
 
 public sealed partial class FloatingStatusBar : UserControl,
     INotifyPropertyChanged

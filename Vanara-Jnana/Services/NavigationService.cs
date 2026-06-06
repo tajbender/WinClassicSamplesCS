@@ -1,13 +1,12 @@
-﻿using ClassicSamplesBrowser.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Jnana.Views;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Win32;
 using System.Diagnostics;
 using Vanara.PInvoke;
-using static ClassicSamplesBrowser.Services.INavigationService;
+using static Jnana.Services.INavigationService;
 
-namespace ClassicSamplesBrowser.Services;
+namespace Jnana.Services;
 
 public interface INavigationService
 {

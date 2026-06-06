@@ -1,6 +1,6 @@
-﻿using ClassicSamplesBrowser.Vanara.Reflection;
+﻿using Jnana.Vanara.Reflection;
 
-namespace ClassicSamplesBrowser.Vanara.Services;
+namespace Jnana.Vanara.Services;
 
 internal class AssemblyLoaderService
 {

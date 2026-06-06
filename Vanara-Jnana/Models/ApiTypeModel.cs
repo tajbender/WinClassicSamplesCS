@@ -1,4 +1,4 @@
-﻿namespace ClassicSamplesBrowser.Models;
+﻿namespace Jnana.Models;
 
 internal class ApiTypeModel
 {

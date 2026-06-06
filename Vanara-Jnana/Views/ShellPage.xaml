@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="ClassicSamplesBrowser.Views.ShellPage"
-    xmlns:controls="using:ClassicSamplesBrowser.Vanara.Controls"
+    x:Class="Jnana.Views.ShellPage"
+    xmlns:controls="using:Jnana.Vanara.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:ClassicSamplesBrowser.Views"
+    xmlns:local="using:Jnana.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

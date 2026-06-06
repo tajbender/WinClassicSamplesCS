@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassicSamplesBrowser.Vanara.Contracts.Shell32.Providers;
+namespace Jnana.Vanara.Contracts.Shell32.Providers;
 
 public sealed class ClipboardProvider : INamespaceProvider
 {

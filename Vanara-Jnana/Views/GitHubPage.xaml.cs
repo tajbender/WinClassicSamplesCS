@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 
-namespace ClassicSamplesBrowser.Views;
+namespace Jnana.Views;
 
 public sealed partial class GitHubPage : Page
 {

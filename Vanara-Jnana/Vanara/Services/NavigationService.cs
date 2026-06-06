@@ -5,10 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ClassicSamplesBrowser.Views;
+using Jnana.Views;
 
-namespace ClassicSamplesBrowser.Vanara.Services;
-
+namespace Jnana.Vanara.Services;
 
 public static class NavigationService
 {

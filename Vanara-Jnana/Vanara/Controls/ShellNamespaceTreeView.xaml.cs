@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace ClassicSamplesBrowser.Vanara.Controls;
+namespace Jnana.Vanara.Controls;
 
 public sealed partial class ShellNamespaceTreeView : UserControl
 {

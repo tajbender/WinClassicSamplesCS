@@ -7,7 +7,7 @@
 //using NuGet.Protocol.Core.Types;
 //using PackageDependency = NuGet.Packaging.Core.PackageDependency;
 
-namespace ClassicSamplesBrowser.Vanara.NuGet;
+namespace Jnana.Vanara.NuGet;
 
 internal static class NuGetUtils
 {

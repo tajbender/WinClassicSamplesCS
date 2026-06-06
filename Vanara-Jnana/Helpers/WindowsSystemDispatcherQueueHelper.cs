@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Dispatching;
 
-namespace ClassicSamplesBrowser.Helpers;
+namespace Jnana.Helpers;
 
 public class WindowsSystemDispatcherQueueHelper
 {

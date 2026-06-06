@@ -1,4 +1,4 @@
-﻿namespace ClassicSamplesBrowser.Vanara.Shell;
+﻿namespace Jnana.Vanara.Shell;
 
 internal class ShellFolderItem
 {
