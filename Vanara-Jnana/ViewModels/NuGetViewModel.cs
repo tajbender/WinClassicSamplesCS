@@ -3,7 +3,7 @@
 //using NuGet.Protocol.Core.Types;
 using Windows.ApplicationModel;
 
-namespace ClassicSamplesBrowser.ViewModels;
+namespace Jnana.ViewModels;
 
 internal class NuGetViewModel
 {

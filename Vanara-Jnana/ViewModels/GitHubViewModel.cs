@@ -1,4 +1,4 @@
-﻿namespace ClassicSamplesBrowser.ViewModels;
+﻿namespace Jnana.ViewModels;
 
 internal class GitHubViewModel
 {

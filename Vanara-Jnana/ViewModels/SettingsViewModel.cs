@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassicSamplesBrowser.ViewModels;
+namespace Jnana.ViewModels;
 
 internal class SettingsViewModel
 {
