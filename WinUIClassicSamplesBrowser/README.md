@@ -11,14 +11,12 @@ A Sample Application for browsing the [WinClassicSamplesCS](https://github.com/d
   - Universal Windows Platform development
   - .NET desktop development
   - Desktop development with C++
-- [Windows App SDK](https://docs.microsoft.com/windows/apps/windows-app-sdk/) version 1.4 or later
+- [Windows App SDK](https://docs.microsoft.com/windows/apps/windows-app-sdk/) version 1.6 or later
 
 The following libraries and tools are used in this project:
 - [Vanara](https://github.com/dahall/Vanara) A set of .NET libraries for Windows implementing PInvoke calls to many native Windows APIs with supporting wrappers.
-- [WinUI 3](https://docs.microsoft.com/windows/apps/winui/) for building the user interface, including the following Extensions:
-  - [Template Studio for WinUI](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftTemplateStudio) Visual Studio extension
-  - [WinUIEx](https://dotmorten.github.io/WinUIEx/) WinUI Extensions library
-
+- [WinUI 3](https://docs.microsoft.com/windows/apps/winui/) for building the user interface
+- [Template Studio for WinUI](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftTemplateStudio) Visual Studio extension
 
 ## Getting Started with Template Studio for WinUI
 
