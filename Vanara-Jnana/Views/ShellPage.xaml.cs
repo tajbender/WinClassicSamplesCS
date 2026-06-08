@@ -16,7 +16,7 @@ public sealed partial class ShellPage : Page
     private NavigationService _navigationService { get; }
     // TODO: Consider making this a user setting that can be persisted across sessions, or determining it based on the last visited area
     // TODO: @dahall this is where you currently set the default navigation target...
-    private readonly INavigationService.Area defaultNavigationTarget = INavigationService.Area.NuGets;
+    private readonly INavigationService.Area defaultNavigationTarget = INavigationService.Area.BoulderDash;
 
     public ShellPage()
     {

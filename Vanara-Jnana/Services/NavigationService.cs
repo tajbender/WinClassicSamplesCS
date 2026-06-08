@@ -16,7 +16,8 @@ public interface INavigationService
         Samples,
         Disassembler,
         Utilities,
-        Settings
+        Settings,
+        BoulderDash,
     }
 
     void NavigateTo(Area area);
@@ -47,6 +48,7 @@ public partial class NavigationService : ObservableObject, INavigationService
         Area.Disassembler => new DisassemblerPage(),
         Area.Utilities => new UtilitiesPage(),
         Area.Settings => new SettingsPage(),
+        Area.BoulderDash => new BoulderDashPage(),
         _ => new VoidPage()
     };
 
@@ -62,6 +64,7 @@ public partial class NavigationService : ObservableObject, INavigationService
             { Area.Disassembler, typeof(DisassemblerPage) },
             { Area.Utilities, typeof(UtilitiesPage) },
             { Area.Settings, typeof(SettingsPage) },
+            { Area.BoulderDash, typeof(BoulderDashPage) },
             { Area.Void, typeof(VoidPage) },
         };
     }
