@@ -41,9 +41,11 @@ public partial class NavigationService : ObservableObject, INavigationService
 
     public Page CurrentPage => CurrentArea switch
     {
-        Area.GitHub => new GitHubPage(),
         Area.NuGets => new NuGetsPage(),
+        Area.GitHub => new GitHubPage(),
         Area.Samples => new SamplesPage(),
+        Area.Disassembler => new DisassemblerPage(),
+        Area.Utilities => new UtilitiesPage(),
         Area.Settings => new SettingsPage(),
         _ => new VoidPage()
     };
@@ -54,11 +56,12 @@ public partial class NavigationService : ObservableObject, INavigationService
 
         _areaPageMap = new()
         {
-            { Area.GitHub, typeof(GitHubPage) },
             { Area.NuGets, typeof(NuGetsPage) },
+            { Area.GitHub, typeof(GitHubPage) },
             { Area.Samples, typeof(SamplesPage) },
-            { Area.Settings, typeof(SettingsPage) },
+            { Area.Disassembler, typeof(DisassemblerPage) },
             { Area.Utilities, typeof(UtilitiesPage) },
+            { Area.Settings, typeof(SettingsPage) },
             { Area.Void, typeof(VoidPage) },
         };
     }
